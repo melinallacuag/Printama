@@ -467,7 +467,8 @@
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                app:cornerRadius="10sp" />
+                app:cornerRadius="10sp"
+                android:onClick="serafin"/>
 
             <Button
                 android:id="@+id/btnpuntos"
@@ -480,7 +481,8 @@
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                app:cornerRadius="10sp" />
+                app:cornerRadius="10sp"
+                android:onClick="puntos"/>
 
             <Button
                 android:id="@+id/btnimpresion"

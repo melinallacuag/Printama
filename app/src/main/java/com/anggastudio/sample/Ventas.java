@@ -37,6 +37,14 @@ public class Ventas extends AppCompatActivity {
         NotaDespachoFragment notaDespachoFragment = new NotaDespachoFragment();
         notaDespachoFragment.show(getSupportFragmentManager(),"Nota Despacho");
     }
+    public void  serafin(View view){
+        SerafinFragment serafinFragment = new SerafinFragment();
+        serafinFragment.show(getSupportFragmentManager(),"Serafin");
+    }
+    public void  puntos(View view){
+        PuntosFragment puntosFragment = new PuntosFragment();
+        puntosFragment.show(getSupportFragmentManager(),"Puntoa");
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
