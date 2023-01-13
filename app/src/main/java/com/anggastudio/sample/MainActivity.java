@@ -36,18 +36,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_print_text_left).setOnClickListener(v -> printTextLeft());
         findViewById(R.id.btn_print_text_center).setOnClickListener(v -> printTextCenter());
         findViewById(R.id.btn_print_text_right).setOnClickListener(v -> printTextRight());
-        findViewById(R.id.btn_print_text_style).setOnClickListener(v -> printTextStyles());
-        findViewById(R.id.btn_print_text_justify).setOnClickListener(v -> printTextJustified());
-        findViewById(R.id.btn_print_image_left).setOnClickListener(v -> printImageLeft());
-        findViewById(R.id.btn_print_image_center).setOnClickListener(v -> printImageCenter());
-        findViewById(R.id.btn_print_image_right).setOnClickListener(v -> printImageRight());
-        findViewById(R.id.btn_print_image_ori).setOnClickListener(v -> printImageOri());
-        findViewById(R.id.btn_print_image_full).setOnClickListener(v -> printImageFull());
-        findViewById(R.id.btn_print_background).setOnClickListener(v -> printImageBackground());
-        findViewById(R.id.btn_print_image_photo).setOnClickListener(v -> printImagePhoto());
-        findViewById(R.id.btn_print_layout).setOnClickListener(v -> printView());
-        findViewById(R.id.btn_print_receipt).setOnClickListener(v -> printQrReceipt());
-        findViewById(R.id.btn_print_receipt2).setOnClickListener(v -> printQrReceipt2());
 
         getSavedPrinter();
     }
