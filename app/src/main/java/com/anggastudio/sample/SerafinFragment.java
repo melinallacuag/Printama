@@ -12,21 +12,26 @@ import android.widget.Button;
 
 public class SerafinFragment extends DialogFragment {
 
-Button btncancelar;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_serafin, container, false);
 
+        Button closeButton = view.findViewById(R.id.btncancelarserafin);
+        Button imprimir = view.findViewById(R.id.btnagregarserafin);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        imprimir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
-        return inflater.inflate(R.layout.fragment_serafin, container, false);
-
-
+        return view;
     }
 }

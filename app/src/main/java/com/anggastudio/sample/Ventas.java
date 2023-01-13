@@ -16,26 +16,32 @@ public class Ventas extends AppCompatActivity {
     public void  libre(View view){
         LibreFragment libreFragment = new LibreFragment();
         libreFragment.show(getSupportFragmentManager(),"Libre");
+        libreFragment.setCancelable(false);
     }
     public void  soles(View view){
         SolesFragment solesFragment = new SolesFragment();
         solesFragment.show(getSupportFragmentManager(),"Soles");
+        solesFragment.setCancelable(false);
     }
     public void  galones(View view){
         GalonesFragment galonesFragment = new GalonesFragment();
         galonesFragment.show(getSupportFragmentManager(),"Galones");
+        galonesFragment.setCancelable(false);
     }
     public void  boleta(View view){
         BoletaFragment boletaFragment = new BoletaFragment();
         boletaFragment.show(getSupportFragmentManager(),"Boleta");
+        boletaFragment.setCancelable(false);
     }
     public void  factura(View view){
         FacturaFragment facturaFragment = new FacturaFragment();
         facturaFragment.show(getSupportFragmentManager(),"Factura");
+        facturaFragment.setCancelable(false);
     }
     public void  notadespacho(View view){
         NotaDespachoFragment notaDespachoFragment = new NotaDespachoFragment();
         notaDespachoFragment.show(getSupportFragmentManager(),"Nota Despacho");
+        notaDespachoFragment.setCancelable(false);
     }
     public void  serafin(View view){
         SerafinFragment serafinFragment = new SerafinFragment();

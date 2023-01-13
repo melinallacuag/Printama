@@ -12,11 +12,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class FacturaFragment extends DialogFragment {
-    private static android.content.Context Context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_boleta, container, false);
+        View view = inflater.inflate(R.layout.fragment_factura, container, false);
 
         Button closeButton = view.findViewById(R.id.btncancelarfacturacion);
         Button tipoPago = view.findViewById(R.id.btntipopago);
@@ -37,7 +37,7 @@ public class FacturaFragment extends DialogFragment {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                dismiss();
 
             }
         });
