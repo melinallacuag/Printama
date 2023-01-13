@@ -40,6 +40,7 @@ public class Ventas extends AppCompatActivity {
     public void  serafin(View view){
         SerafinFragment serafinFragment = new SerafinFragment();
         serafinFragment.show(getSupportFragmentManager(),"Serafin");
+        serafinFragment.setCancelable(false);
     }
     public void  puntos(View view){
         PuntosFragment puntosFragment = new PuntosFragment();
