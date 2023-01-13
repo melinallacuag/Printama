@@ -12,6 +12,31 @@ import com.anggastudio.printama.Printama;
 
 public class Ventas extends AppCompatActivity {
 
+
+    public void  libre(View view){
+        LibreFragment libreFragment = new LibreFragment();
+        libreFragment.show(getSupportFragmentManager(),"Libre");
+    }
+    public void  soles(View view){
+        SolesFragment solesFragment = new SolesFragment();
+        solesFragment.show(getSupportFragmentManager(),"Soles");
+    }
+    public void  galones(View view){
+        GalonesFragment galonesFragment = new GalonesFragment();
+        galonesFragment.show(getSupportFragmentManager(),"Galones");
+    }
+    public void  boleta(View view){
+        BoletaFragment boletaFragment = new BoletaFragment();
+        boletaFragment.show(getSupportFragmentManager(),"Boleta");
+    }
+    public void  factura(View view){
+        FacturaFragment facturaFragment = new FacturaFragment();
+        facturaFragment.show(getSupportFragmentManager(),"Factura");
+    }
+    public void  notadespacho(View view){
+        NotaDespachoFragment notaDespachoFragment = new NotaDespachoFragment();
+        notaDespachoFragment.show(getSupportFragmentManager(),"Nota Despacho");
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -359,7 +359,8 @@
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                app:cornerRadius="10sp" />
+                app:cornerRadius="10sp"
+                android:onClick="libre"/>
             <Button
                 android:id="@+id/btnsoles"
                 android:layout_width="wrap_content"
@@ -371,7 +372,8 @@
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                app:cornerRadius="10sp" />
+                app:cornerRadius="10sp"
+                android:onClick="soles"/>
 
             <Button
                 android:id="@+id/btngalones"
@@ -384,7 +386,8 @@
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                app:cornerRadius="10sp" />
+                app:cornerRadius="10sp"
+                android:onClick="galones"/>
         </LinearLayout>
 
 
@@ -418,7 +421,8 @@
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                app:cornerRadius="10sp" />
+                app:cornerRadius="10sp"
+                android:onClick="boleta"/>
 
             <Button
                 android:id="@+id/btnfactura"
@@ -431,7 +435,8 @@
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                app:cornerRadius="10sp" />
+                app:cornerRadius="10sp"
+                android:onClick="factura"/>
 
             <Button
                 android:id="@+id/btnnotadespacho"
@@ -444,7 +449,8 @@
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                app:cornerRadius="10sp" />
+                app:cornerRadius="10sp"
+                android:onClick="notadespacho"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
