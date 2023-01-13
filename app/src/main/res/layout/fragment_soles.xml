@@ -70,7 +70,7 @@
                 android:background="@drawable/input_border"
                 android:drawablePadding="12sp"
                 android:hint="0.00"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:paddingLeft="20sp"
                 android:textColor="#123456"
                 android:textColorHint="#404143"

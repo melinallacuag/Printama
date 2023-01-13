@@ -5,11 +5,11 @@
     <color name="colorAccent">@color/colorPrimary</color>
 
     <color name="colorWhite">#ffffff</color>
-    <color name="colorWhiteAlpha">#90ffffff</color>
+    <color name="colorWhiteAlpha">#90312DC3</color>
     <color name="colorBlack">#000000</color>
     <color name="colorBlackAlpha">#90000000</color>
 
-    <color name="colorGray5">#555555</color>
+    <color name="colorGray5">#831F1F</color>
     <color name="colorGrayB">#bbbbbb</color>
     <color name="colorGrayC">#cccccc</color>
     <color name="colorGrayD">#dddddd</color>
