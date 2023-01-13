@@ -50,7 +50,8 @@ public class Ventas extends AppCompatActivity {
     }
     public void  puntos(View view){
         PuntosFragment puntosFragment = new PuntosFragment();
-        puntosFragment.show(getSupportFragmentManager(),"Puntoa");
+        puntosFragment.show(getSupportFragmentManager(),"Puntos");
+        puntosFragment.setCancelable(false);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
