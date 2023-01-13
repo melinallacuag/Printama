@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PagoEfectivoFragment">
+
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="PAGO EN EFECTIVO"
+                android:textColor="#071C65"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"
+            android:background="@drawable/cardlogin"
+            android:backgroundTint="#41C9F3"
+            android:padding="15sp"
+            android:text="Se realizara el modo de Pago en Efectivo"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btncancelartipopagoefectivo"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5sp"
+
+                android:layout_marginEnd="20sp"
+                android:layout_weight="1"
+                android:backgroundTint="#D51A30"
+                android:text="Cancelar"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                app:cornerRadius="10sp" />
+
+            <Button
+                android:id="@+id/btnagregartipopagoefectivo"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5sp"
+                android:layout_weight="1"
+                android:text="Aceptar"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                app:cornerRadius="10sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
