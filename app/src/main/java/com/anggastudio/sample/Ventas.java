@@ -82,6 +82,23 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
 
         totalmonto =  findViewById(R.id.txtimporte);
 
+      //  generarventa.setOnClickListener(new View.OnClickListener() {
+                              //              @Override
+                                //            public void onClick(View view) {
+                                  //              try {
+                                      //              PreparedStatement stm = Conexion.conexionDB().prepareStatement(
+                                         //                   "UPDATE PUMP_LADOS_MANGUERAS2 SET Valor_Ref = 20.00 WHERE Lado_SVEN = '"+ user.getText().toString() + "' AND Id_Articulo_SVEN = '"+ name.getText().toString() + "'");
+                                       //             stm.executeUpdate();
+                                       //             Toast.makeText(getApplicationContext(),"Process Successful", Toast.LENGTH_SHORT).show();
+                                    //            }catch (Exception exception){
+                                    //                Log.e("error",exception.getMessage());
+                                  //              }
+                                  //          }
+
+                                 //       }
+
+      //  );
+
         ImageButton configuracion = findViewById(R.id.btnconfiguracion);
         configuracion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,8 +213,6 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
         DecimalFormat df = new DecimalFormat("#.###");
         int resultados = Integer.parseInt(df.format(numInt2/numInt ));
         String numString3 = Integer.toString(resultados);
-
-
 
         Printama.with(this).connect(printama -> {
             printama.setSmallText();
