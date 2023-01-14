@@ -36,7 +36,6 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
         libreFragment.show(getSupportFragmentManager(),"Libre");
         libreFragment.setCancelable(false);
     }
-
     public void  galones(View view){
         GalonesFragment galonesFragment = new GalonesFragment();
         galonesFragment.show(getSupportFragmentManager(),"Galones");
@@ -67,21 +66,17 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
         puntosFragment.show(getSupportFragmentManager(),"Puntos");
         puntosFragment.setCancelable(false);
     }
-    
     public void  soles(View view){
         SolesFragment solesFragment = new SolesFragment();
         solesFragment.show(getSupportFragmentManager(),"Soles");
         solesFragment.setCancelable(false);
     }
     TextView totalmonto;
-    Button configuracion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventas);
-
         totalmonto =  findViewById(R.id.txtimporte);
-
       //  generarventa.setOnClickListener(new View.OnClickListener() {
                               //              @Override
                                 //            public void onClick(View view) {
@@ -107,25 +102,21 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
             }
         });
 
-        findViewById(R.id.btnboleta).setOnClickListener(v -> boleta());
-
         CardView Cara17 = (CardView) findViewById(R.id.cara17);
         CardView Cara18 = (CardView) findViewById(R.id.cara18);
         final TextView textcara = (TextView) findViewById(R.id.textcara);
-
-            Cara17.setOnClickListener(new View.OnClickListener() {
+        Cara17.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     textcara.setText("17");
                 }
             });
-            Cara18.setOnClickListener(new View.OnClickListener() {
+        Cara18.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     textcara.setText("18");
                 }
             });
-
 
         CardView diesel = (CardView) findViewById(R.id.diesel);
         CardView gas90 = (CardView) findViewById(R.id.gas90);
@@ -145,7 +136,6 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
                 textmanguera.setText("GAS 90");
             }
         });
-
         gas95.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,7 +149,7 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
             }
         });
 
-
+        findViewById(R.id.btnboleta).setOnClickListener(v -> boleta());
     }
 
 
@@ -168,7 +158,7 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
         Bitmap logo = Printama.getBitmapFromVector(this, R.drawable.robles_sinfondo);
 
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         String FechaHora = sdf.format(cal.getTime());
 
 
@@ -181,9 +171,10 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
 
         TextView txtimporte = (TextView) findViewById(R.id.txtimporte);
         String importe =  txtimporte.getText().toString();
+        double totalimporte = Double.parseDouble(importe);
 
-        int numInt2 = Integer.parseInt(importe);
-
+     //   NumeroaLetras numeroALetras = new NumeroaLetras();
+      //  String text22 = numeroALetras.convert(totalimporte);
 
 
         String precio = null;
@@ -207,12 +198,12 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
 
 
         String finalPrecio = precio;
-        int numInt = Integer.parseInt(finalPrecio);
-
+        double totalprecio = Double.parseDouble(finalPrecio);
 
         DecimalFormat df = new DecimalFormat("#.###");
-        int resultados = Integer.parseInt(df.format(numInt2/numInt ));
-        String numString3 = Integer.toString(resultados);
+        double resultados = Double.parseDouble(df.format(totalimporte/totalprecio ));
+        String resultadoscantidad = String.valueOf(resultados);
+
 
         Printama.with(this).connect(printama -> {
             printama.setSmallText();
@@ -229,24 +220,24 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
-            printama.printTextln("Fecha-Hora:"+ FechaHora);
-            printama.printTextln("Turno:02", Printama.LEFT);
+            printama.printTextln("Fecha-Hora:"+ FechaHora + "Turno:02",Printama.LEFT);
             printama.printTextln("Cajero: FABIOLA MARIBEL HERRERA HUERTA", Printama.LEFT);
             printama.printTextln("Lado:"+cara, Printama.LEFT);
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
             printama.printTextJustify("PRODUCTO","U/MED.","PRECIO","CANT","IMPORTE\n");
-            printama.printTextJustify(manguera,"GLL" , finalPrecio, numString3, importe+"\n");
+            printama.printTextJustify(manguera,"GLL" , finalPrecio, resultadoscantidad, importe+"\n");
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
-            printama.printTextln("TOTAL VENTA: "+ importe, Printama.RIGHT);
+            printama.addNewLine(1);
+            printama.printTextln("TOTAL VENTA S/: "+ importe, Printama.RIGHT);
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
             printama.printTextln("CONDICION DE PAGO:", Printama.LEFT);
-            printama.printTextln("CONTADO: "+ importe, Printama.RIGHT);
+            printama.printTextln("CONTADO S/: "+ importe, Printama.RIGHT);
             printama.printTextln("SON: VEINTE CON 00/100 SOLES", Printama.LEFT);
             printama.setNormalText();
             printama.printDoubleDashedLine();
