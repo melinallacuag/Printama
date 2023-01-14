@@ -352,6 +352,7 @@ public class Printama {
 
 
 
+
     public void printTextJustifyBold(String text1, String text2) {
         String justifiedText = getJustifiedText(text1, text2);
         printTextBold(justifiedText);

@@ -20,7 +20,9 @@ import com.anggastudio.sample.mock.Mock;
 import com.anggastudio.sample.model.PrintBody;
 import com.anggastudio.sample.model.PrintModel;
 
+import java.sql.PreparedStatement;
 import java.text.BreakIterator;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -79,6 +81,7 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
         setContentView(R.layout.activity_ventas);
 
         totalmonto =  findViewById(R.id.txtimporte);
+
         ImageButton configuracion = findViewById(R.id.btnconfiguracion);
         configuracion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +163,9 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
         String manguera = textmanguera.getText().toString();
 
         TextView txtimporte = (TextView) findViewById(R.id.txtimporte);
-        String importe = txtimporte.getText().toString();
+        String importe =  txtimporte.getText().toString();
+
+        int numInt2 = Integer.parseInt(importe);
 
 
 
@@ -185,10 +190,14 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
 
 
         String finalPrecio = precio;
+        int numInt = Integer.parseInt(finalPrecio);
 
 
-     //   String resultado = importe/finalPrecio;
-      //  System.out.println("Resultado de la operación: " + resultado);
+        DecimalFormat df = new DecimalFormat("#.###");
+        int resultados = Integer.parseInt(df.format(numInt2/numInt ));
+        String numString3 = Integer.toString(resultados);
+
+
 
         Printama.with(this).connect(printama -> {
             printama.setSmallText();
@@ -213,7 +222,7 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
             printama.printDoubleDashedLine();
             printama.setSmallText();
             printama.printTextJustify("PRODUCTO","U/MED.","PRECIO","CANT","IMPORTE\n");
-            printama.printTextJustify(manguera,"GLL" , finalPrecio,"5.000", importe+"\n");
+            printama.printTextJustify(manguera,"GLL" , finalPrecio, numString3, importe+"\n");
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
@@ -234,6 +243,6 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
 
     @Override
     public void applyTexts(String textsol) {
-        totalmonto.setText(textsol);
+        totalmonto.setText(textsol+".00");
     }
 }
