@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.BreakIterator;
 
@@ -35,7 +34,6 @@ public class SolesFragment extends DialogFragment {
         Button btncancelar = view.findViewById(R.id.btncancelarsoles);
         Button agregar = view.findViewById(R.id.btnagregarsoles);
         EditText edsol = view.findViewById(R.id.inputmotosoles);
-
         btncancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,15 +45,8 @@ public class SolesFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String textsol = edsol.getText().toString();
-                int value = Integer.parseInt(textsol);
-                if (value < 5){
-                    Toast.makeText(getContext(),"El valor debe ser mayor a S/5.00",Toast.LENGTH_SHORT).show();
-                }else{
-                    dialogInterface.applyTexts(textsol);
-                    Toast.makeText(getContext(), "Todo correcto", Toast.LENGTH_SHORT).show();
-                    dismiss();
-                }
-
+                dialogInterface.applyTexts(textsol);
+                dismiss();
             }
         });
 
