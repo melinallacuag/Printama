@@ -220,7 +220,7 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
-            printama.printTextln("Fecha-Hora:"+ FechaHora + "Turno:02",Printama.LEFT);
+            printama.printTextln("Fecha-Hora:"+ FechaHora + "   Turno:02",Printama.LEFT);
             printama.printTextln("Cajero: FABIOLA MARIBEL HERRERA HUERTA", Printama.LEFT);
             printama.printTextln("Lado:"+cara, Printama.LEFT);
             printama.setNormalText();
