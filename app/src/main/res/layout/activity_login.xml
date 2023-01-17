@@ -33,38 +33,43 @@
             android:textColor="#001E8A"
             android:textSize="25sp"
             android:textStyle="bold" />
-        <EditText
-            android:id="@+id/usuario"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textusuario"
             android:layout_width="match_parent"
-            android:layout_height="55sp"
-            android:layout_marginTop="10sp"
-            android:background="@drawable/input_border"
-            android:drawableLeft="@drawable/icon_user"
-            android:drawablePadding="15sp"
+            android:layout_height="wrap_content"
             android:hint="Ingresar Usuario"
-            android:inputType="text"
-            android:letterSpacing="0.05"
-            android:paddingLeft="10sp"
-            android:textColor="#3C4048"
-            android:textColorHint="#3C4048"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-        <EditText
-            android:id="@+id/contraseña"
+            app:boxBackgroundMode="outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/icon_user"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textcontraseña"
             android:layout_width="match_parent"
-            android:layout_height="55sp"
-            android:layout_marginTop="10sp"
-            android:background="@drawable/input_border"
-            android:drawableLeft="@drawable/icon_password"
-            android:drawablePadding="15sp"
+            android:layout_height="wrap_content"
             android:hint="Ingresar Contraseña"
-            android:inputType="text"
-            android:letterSpacing="0.05"
-            android:paddingLeft="10sp"
-            android:textColor="#3C4048"
-            android:textColorHint="#3C4048"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            app:boxBackgroundMode="outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/icon_password"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/contraseña"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/btnlogin"
             android:layout_width="match_parent"
