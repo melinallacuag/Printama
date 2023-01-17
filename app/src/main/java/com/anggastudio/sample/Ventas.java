@@ -173,9 +173,9 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
         String importe =  txtimporte.getText().toString();
         double totalimporte = Double.parseDouble(importe);
 
-     //   NumeroaLetras numeroALetras = new NumeroaLetras();
-      //  String text22 = numeroALetras.convert(totalimporte);
 
+        Numero_Letras numToWord = new Numero_Letras();
+        String letraimporte = numToWord.Convertir(importe,true);
 
         String precio = null;
 
@@ -238,7 +238,7 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
             printama.setSmallText();
             printama.printTextln("CONDICION DE PAGO:", Printama.LEFT);
             printama.printTextln("CONTADO S/: "+ importe, Printama.RIGHT);
-            printama.printTextln("SON: VEINTE CON 00/100 SOLES", Printama.LEFT);
+            printama.printTextln("SON:"+letraimporte, Printama.LEFT);
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.feedPaper();
