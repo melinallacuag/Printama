@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.anggastudio.sample.mock.Mock;
 import com.anggastudio.sample.model.PrintBody;
 import com.anggastudio.sample.model.PrintModel;
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
@@ -250,18 +252,6 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
             printama.printTextln("CONDICION DE PAGO:", Printama.LEFT);
             printama.printTextln("CONTADO S/: "+ importe, Printama.RIGHT);
             printama.printTextln("SON: "+letraimporte, Printama.LEFT);
-            QRCodeWriter writer = new QRCodeWriter();
-            printama.setNormalText();
-            printama.printDoubleDashedLine();
-            BitMatrix bitMatrix;
-          //  BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            try {
-                bitMatrix = writer.encode(nota, BarcodeFormat.QR_CODE, 300, 300);
-               // Bitmap bitmap = barcodeEncoder.encodeBitmap("content", BarcodeFormat.QR_CODE, 400, 400);
-
-            } catch (WriterException e) {
-                e.printStackTrace();
-            }
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.feedPaper();
