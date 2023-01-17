@@ -17,36 +17,48 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.BreakIterator;
 
 
 public class SolesFragment extends DialogFragment {
 
-    EditText edsol;
+    Button btncancelar, agregar;
+    EditText montosoles;
+    TextInputLayout alertsoles;
     Custom_DialogInterface dialogInterface;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_soles, container, false);
 
-        Button btncancelar = view.findViewById(R.id.btncancelarsoles);
-        Button agregar = view.findViewById(R.id.btnagregarsoles);
-        EditText edsol = view.findViewById(R.id.inputmotosoles);
+        btncancelar   = view.findViewById(R.id.btncancelarsoles);
+        agregar       = view.findViewById(R.id.btnagregarsoles);
+        montosoles    = view.findViewById(R.id.montosoles);
+        alertsoles    = view.findViewById(R.id.textsoles);
+
         btncancelar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                dismiss();
-            }
+            public void onClick(View v) { dismiss();}
         });
+
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String textsol = edsol.getText().toString();
-                dialogInterface.applyTexts(textsol);
-                dismiss();
+                String textsol = montosoles.getText().toString().trim();
+                int    value   = Integer.parseInt(textsol);
+                if (value < 5) {
+                    alertsoles.setError("El valor debe ser mayor a S/5.00");
+                }else {
+                    dialogInterface.applyTexts(textsol);
+                    Toast.makeText(getContext(), "Se agrego correct5amente", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }
             }
         });
 
@@ -61,6 +73,4 @@ public class SolesFragment extends DialogFragment {
     public  interface  Custom_DialogInterface{
         void applyTexts(String textsol);
     }
-
-
 }
