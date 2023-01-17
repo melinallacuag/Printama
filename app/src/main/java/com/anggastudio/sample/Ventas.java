@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,10 @@ import com.anggastudio.printama.Printama;
 import com.anggastudio.sample.mock.Mock;
 import com.anggastudio.sample.model.PrintBody;
 import com.anggastudio.sample.model.PrintModel;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.sql.PreparedStatement;
 import java.text.BreakIterator;
@@ -95,6 +100,7 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
       //  );
 
         ImageButton configuracion = findViewById(R.id.btnconfiguracion);
+
         configuracion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,8 +108,8 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
             }
         });
 
-        CardView Cara17 = (CardView) findViewById(R.id.cara17);
-        CardView Cara18 = (CardView) findViewById(R.id.cara18);
+        CardView Cara17         = (CardView) findViewById(R.id.cara17);
+        CardView Cara18         = (CardView) findViewById(R.id.cara18);
         final TextView textcara = (TextView) findViewById(R.id.textcara);
         Cara17.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,9 +125,9 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
             });
 
         CardView diesel = (CardView) findViewById(R.id.diesel);
-        CardView gas90 = (CardView) findViewById(R.id.gas90);
-        CardView gas95 = (CardView) findViewById(R.id.gas95);
-        CardView gas97 = (CardView) findViewById(R.id.gas97);
+        CardView gas90  = (CardView) findViewById(R.id.gas90);
+        CardView gas95  = (CardView) findViewById(R.id.gas95);
+        CardView gas97  = (CardView) findViewById(R.id.gas97);
         final TextView textmanguera = (TextView) findViewById(R.id.textmanguera);
 
         diesel.setOnClickListener(new View.OnClickListener() {
@@ -154,57 +160,59 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
 
 
     private  void boleta(){
-
+        //LOGO
         Bitmap logo = Printama.getBitmapFromVector(this, R.drawable.robles_sinfondo);
 
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-        String FechaHora = sdf.format(cal.getTime());
+        //Fecha y Hora
+        Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+        SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        String FechaHora      = sdf.format(cal.getTime());
 
+        //Texto de Cara
+        TextView textcaras    = (TextView) findViewById(R.id.textcara);
+        String cara           = textcaras.getText().toString();
 
-
-        TextView textcaras = (TextView) findViewById(R.id.textcara);
-        String cara = textcaras.getText().toString();
-
+        //Texto de Manguera
         TextView textmanguera = (TextView) findViewById(R.id.textmanguera);
-        String manguera = textmanguera.getText().toString();
-
-        TextView txtimporte = (TextView) findViewById(R.id.txtimporte);
-        String importe =  txtimporte.getText().toString();
-        double totalimporte = Double.parseDouble(importe);
-
-
-        Numero_Letras numToWord = new Numero_Letras();
-        String letraimporte = numToWord.Convertir(importe,true);
-
-        String precio = null;
-
+        String manguera       = textmanguera.getText().toString();
+        String precio         = null;
         switch (manguera) {
             case "DIESEL":
                 precio = "18.90";
                 break;
             case "GAS 90":
-                 precio = "16.69";
+                precio = "16.69";
                 break;
             case "GAS 95":
-                 precio = "18.39";
+                precio = "18.39";
                 break;
             case "GAS 97":
-                 precio = "19.79";
+                precio = "19.79";
                 break;
             default:
-                Log.d("MyApp", "NULL");
+                Log.d("Error", "NULL");
         }
-
-
         String finalPrecio = precio;
         double totalprecio = Double.parseDouble(finalPrecio);
 
-        DecimalFormat df = new DecimalFormat("#.###");
-        double resultados = Double.parseDouble(df.format(totalimporte/totalprecio ));
+        //Texto Importe
+        TextView txtimporte   = (TextView) findViewById(R.id.txtimporte);
+        String importe        =  txtimporte.getText().toString();
+        double totalimporte   = Double.parseDouble(importe);
+
+        //Convertir decimal y Operacion de Cantidad por GALONES
+        DecimalFormat df          = new DecimalFormat("#.###");
+        double resultados         = Double.parseDouble(df.format(totalimporte/totalprecio ));
         String resultadoscantidad = String.valueOf(resultados);
 
+        //Convertir numero a letras
+        Numero_Letras numToWord = new Numero_Letras();
+        String letraimporte     = numToWord.Convertir(importe,true);
 
+        String exoneradas = " 0.00";
+        String nota       = "Some Text";
+
+        //Impresion de la Boleta
         Printama.with(this).connect(printama -> {
             printama.setSmallText();
             printama.printImage(logo, 200);
@@ -232,13 +240,28 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
             printama.printDoubleDashedLine();
             printama.setSmallText();
             printama.addNewLine(1);
+            printama.printTextln("OP. GRAVADAS S/: "+ importe, Printama.RIGHT);
+            printama.printTextln("OP. EXONERADAS S/: "+exoneradas , Printama.RIGHT);
+            printama.printTextln("OP. EXONERADAS S/: "+importe, Printama.RIGHT);
             printama.printTextln("TOTAL VENTA S/: "+ importe, Printama.RIGHT);
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
             printama.printTextln("CONDICION DE PAGO:", Printama.LEFT);
             printama.printTextln("CONTADO S/: "+ importe, Printama.RIGHT);
-            printama.printTextln("SON:"+letraimporte, Printama.LEFT);
+            printama.printTextln("SON: "+letraimporte, Printama.LEFT);
+            QRCodeWriter writer = new QRCodeWriter();
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            BitMatrix bitMatrix;
+          //  BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            try {
+                bitMatrix = writer.encode(nota, BarcodeFormat.QR_CODE, 300, 300);
+               // Bitmap bitmap = barcodeEncoder.encodeBitmap("content", BarcodeFormat.QR_CODE, 400, 400);
+
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.feedPaper();

@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findViewById(R.id.btn_printer_settings).setOnClickListener(v -> showPrinterList());
         findViewById(R.id.btn_print_text_left).setOnClickListener(v -> printTextLeft());
-        findViewById(R.id.btn_print_text_center).setOnClickListener(v -> printTextCenter());
-        findViewById(R.id.btn_print_text_right).setOnClickListener(v -> printTextRight());
+        findViewById(R.id.btn_print_text_center).setOnClickListener(v -> printQrReceipt());
+        findViewById(R.id.btn_print_text_right).setOnClickListener(v -> printQrReceipt2());
 
         getSavedPrinter();
     }
