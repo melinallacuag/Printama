@@ -30,7 +30,6 @@ public class SolesFragment extends DialogFragment {
     Button btncancelar, agregar;
     EditText montosoles;
     TextInputLayout alertsoles;
-    Custom_DialogInterface dialogInterface;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,27 +49,13 @@ public class SolesFragment extends DialogFragment {
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String textsol = montosoles.getText().toString().trim();
-                int    value   = Integer.parseInt(textsol);
-                if (value < 5) {
-                    alertsoles.setError("El valor debe ser mayor a S/5.00");
-                }else {
-                    dialogInterface.applyTexts(textsol);
-                    Toast.makeText(getContext(), "Se agrego correct5amente", Toast.LENGTH_SHORT).show();
-                    dismiss();
-                }
+                dismiss();
             }
         });
 
         return view;
     }
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        dialogInterface = (Custom_DialogInterface) context;
-    }
 
-    public  interface  Custom_DialogInterface{
-        void applyTexts(String textsol);
-    }
+
+
 }

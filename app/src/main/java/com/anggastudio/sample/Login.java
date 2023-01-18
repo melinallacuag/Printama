@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
@@ -33,6 +34,15 @@ public class Login extends AppCompatActivity {
         alertuser      = findViewById(R.id.textusuario);
         alertpassword  = findViewById(R.id.textcontraseña);
 
+        ImageButton configuracion = findViewById(R.id.btnconfiguracion);
+
+        configuracion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Login.this,MainActivity.class));
+            }
+        });
+
         btniniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,7 +58,7 @@ public class Login extends AppCompatActivity {
                     alertpassword.setError("Ingresar contraseña");
                 }else{
                     alertpassword.setErrorEnabled(false);
-                    startActivity(new Intent(Login.this,Ventas.class));
+                    startActivity(new Intent(Login.this,Menu.class));
                 }
             }
         });

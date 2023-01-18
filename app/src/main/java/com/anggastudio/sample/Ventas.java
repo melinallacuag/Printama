@@ -36,7 +36,7 @@ import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class Ventas extends AppCompatActivity implements SolesFragment.Custom_DialogInterface{
+public class Ventas extends AppCompatActivity {
 
     public void  libre(View view){
         LibreFragment libreFragment = new LibreFragment();
@@ -260,8 +260,5 @@ public class Ventas extends AppCompatActivity implements SolesFragment.Custom_Di
     }
 
 
-    @Override
-    public void applyTexts(String textsol) {
-        totalmonto.setText(textsol+".00");
-    }
+
 }
