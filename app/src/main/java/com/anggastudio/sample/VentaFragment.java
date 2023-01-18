@@ -16,12 +16,15 @@ import android.widget.TextView;
 
 import com.anggastudio.printama.Printama;
 
+import java.text.BreakIterator;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class VentaFragment extends Fragment {
+public class VentaFragment extends Fragment implements SolesFragment.Custom_DialogInterface{
+
+
     TextView totalmonto;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -246,5 +249,8 @@ public class VentaFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void applyTexts(String textsol) {
+        totalmonto.setText(textsol+".00");
+    }
 }

@@ -26,11 +26,10 @@ import java.text.BreakIterator;
 
 
 public class SolesFragment extends DialogFragment {
-
     Button btncancelar, agregar;
     EditText montosoles;
     TextInputLayout alertsoles;
-
+    Custom_DialogInterface dialogInterface;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -38,24 +37,35 @@ public class SolesFragment extends DialogFragment {
 
         btncancelar   = view.findViewById(R.id.btncancelarsoles);
         agregar       = view.findViewById(R.id.btnagregarsoles);
-        montosoles    = view.findViewById(R.id.montosoles);
+        montosoles    =   view.findViewById(R.id.montosoles);
         alertsoles    = view.findViewById(R.id.textsoles);
 
         btncancelar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { dismiss();}
+            public void onClick(View view) { dismiss();}
         });
 
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                dismiss();
+            public void onClick(View view) {
+                String textsol = montosoles.getText().toString().trim();
+
+                if (!textsol.equals("")){
+                    dialogInterface.applyTexts(textsol);
+                }
+               dismiss();
             }
         });
 
         return view;
     }
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        dialogInterface  = (Custom_DialogInterface)  getTargetFragment();
+    }
 
-
-
+    public interface Custom_DialogInterface {
+        void applyTexts(String textsol);
+    }
 }
