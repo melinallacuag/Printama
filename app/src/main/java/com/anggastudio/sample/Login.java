@@ -66,9 +66,9 @@ public class Login extends AppCompatActivity {
                     alertuser.setErrorEnabled(false);
                 }
                 if (contraseñaUser.length()>6){
-                    alertuser.setError("Debe ser menor a 6 digitos");
+                    alertpassword.setError("Debe ser menor a 6 digitos");
                 }else {
-                    alertuser.setErrorEnabled(false);
+                    alertpassword.setErrorEnabled(false);
                 }
             }
         });
