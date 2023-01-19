@@ -26,6 +26,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="SOLES"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#071C65"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -43,6 +44,7 @@
             app:startIconDrawable="@drawable/icon_money">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/montosoles"
+                android:fontFamily="@font/nunito_extrabold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number" />
@@ -61,6 +63,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="#D51A30"
                 android:text="Cancelar"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textAllCaps="true"
                 android:textColor="#fff"
                 android:textSize="15sp"
@@ -74,6 +77,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="Agregar"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textAllCaps="true"
                 android:textColor="#fff"
                 android:textSize="15sp"

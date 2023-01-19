@@ -275,47 +275,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btnCierreZ"
-            android:layout_width="wrap_content"
-            android:layout_height="180sp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="5dp"
-            android:layout_marginBottom="10dp"
-            android:clickable="true"
-            android:foreground="@drawable/selectcard"
-            app:cardBackgroundColor="#D96ED6C3"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="2sp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="80sp"
-                    android:layout_height="80sp"
-                    android:src="@drawable/icon_cierrez"
-                    android:layout_marginBottom="2sp" />
-
-                <TextView
-                    android:id="@+id/cierre_z"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:letterSpacing="0.15"
-                    android:text="Cierre Z"
-                    android:textAlignment="center"
-                    android:textColor="#fff"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/btnCambioTurno"
@@ -327,7 +286,7 @@
             android:layout_marginBottom="10dp"
             android:clickable="true"
             android:foreground="@drawable/selectcard"
-            app:cardBackgroundColor="#D92BEC38"
+            app:cardBackgroundColor="#D92B92EC"
             app:cardCornerRadius="10dp"
             app:cardElevation="2sp">
 
@@ -349,7 +308,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extrabold"
                     android:letterSpacing="0.15"
-                    android:text="Cambio Turno"
+                    android:text="Cambio de Turno"
                     android:textAlignment="center"
                     android:textColor="#fff"
                     android:textSize="16sp"
@@ -359,7 +318,47 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnInicioDia"
+            android:layout_width="wrap_content"
+            android:layout_height="180sp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:foreground="@drawable/selectcard"
+            app:cardBackgroundColor="#D96ED6C3"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2sp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="80sp"
+                    android:layout_height="80sp"
+                    android:src="@drawable/icon_iniciodia"
+                    android:layout_marginBottom="2sp" />
+
+                <TextView
+                    android:id="@+id/cierre_z"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:letterSpacing="0.15"
+                    android:text="Inicio de Día"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
     </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

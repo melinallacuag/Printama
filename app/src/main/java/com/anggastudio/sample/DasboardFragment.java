@@ -16,7 +16,6 @@ import java.text.BreakIterator;
 
 public class DasboardFragment extends Fragment{
 
-    TextView totalmonto;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -24,8 +23,8 @@ public class DasboardFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_dasboard, container, false);
         CardView btnventa       = view.findViewById(R.id.btnventa);
         CardView btncierrex     = view.findViewById(R.id.btnCierreX);
-        CardView btncierrez     = view.findViewById(R.id.btnCierreZ);
         CardView btncambioturno = view.findViewById(R.id.btnCambioTurno);
+        CardView btniniciodia   = view.findViewById(R.id.btnInicioDia);
         btnventa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,18 +39,18 @@ public class DasboardFragment extends Fragment{
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,cierreXFragment).commit();
             }
         });
-        btncierrez.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CierreZFragment cierreZFragment = new CierreZFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,cierreZFragment).commit();
-            }
-        });
         btncambioturno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CambioTurnoFragment cambioTurnoFragment = new CambioTurnoFragment();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,cambioTurnoFragment).commit();
+            }
+        });
+        btniniciodia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InicioDiaFragment inicioDiaFragment = new InicioDiaFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,inicioDiaFragment).commit();
             }
         });
        return view;

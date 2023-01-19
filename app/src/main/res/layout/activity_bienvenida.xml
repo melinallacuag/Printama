@@ -40,7 +40,7 @@
         android:layout_marginBottom="128dp"
         android:fontFamily="@font/nunito_semibold"
         android:padding="5sp"
-        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        android:text="Sistema Inteligente para Estaciones de Servicio."
         android:textAlignment="center"
         android:textColor="#fff"
         android:textSize="16sp"

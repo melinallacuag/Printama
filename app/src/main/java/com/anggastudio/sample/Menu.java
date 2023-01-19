@@ -42,13 +42,14 @@ public class Menu extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.nav_cierrex:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CierreXFragment()).commit();
                 break;
-            case R.id.nav_cierrez:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CierreZFragment()).commit();
-                break;
+
             case R.id.nav_cambioturno:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CambioTurnoFragment()).commit();
                 break;
 
+            case R.id.nav_iniciodia:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new InicioDiaFragment()).commit();
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

@@ -43,4 +43,9 @@
         android:name="com.anggastudio.sample.CambioTurnoFragment"
         android:label="fragment_cambio_turno"
         tools:layout="@layout/fragment_cambio_turno" />
+    <fragment
+        android:id="@+id/nav_iniciodia"
+        android:name="com.anggastudio.sample.InicioDiaFragment"
+        android:label="fragment_inicio_dia"
+        tools:layout="@layout/fragment_inicio_dia" />
 </navigation>

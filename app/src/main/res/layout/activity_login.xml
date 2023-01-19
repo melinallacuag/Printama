@@ -56,6 +56,8 @@
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:endIconMode="clear_text"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
             android:layout_marginBottom="10sp"
             app:startIconDrawable="@drawable/icon_user"
             >
@@ -63,6 +65,7 @@
                 android:id="@+id/usuario"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -78,12 +81,15 @@
             app:boxCornerRadiusTopEnd="15dp"
             app:endIconMode="clear_text"
             android:layout_marginBottom="10sp"
+            app:counterEnabled="true"
+            app:counterMaxLength="6"
             app:startIconDrawable="@drawable/icon_password"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/contraseña"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
