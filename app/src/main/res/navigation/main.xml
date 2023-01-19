@@ -24,4 +24,8 @@
         android:name="com.anggastudio.sample.DasboardFragment"
         android:label="fragment_dasboard"
         tools:layout="@layout/fragment_dasboard" />
+    <fragment
+        android:id="@+id/ventaFragment"
+        android:name="com.anggastudio.sample.VentaFragment"
+        android:label="VentaFragment" />
 </navigation>

@@ -7,20 +7,32 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_dasboard"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/icon_dasboard"
             android:title="Dasboard"/>
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="Home"/>
+            android:id="@+id/nav_venta"
+            android:icon="@drawable/icon_salefuel"
+            android:title="Venta"/>
         <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="Settings"/>
+            android:id="@+id/nav_cierrex"
+            android:icon="@drawable/icon_cierrex"
+            android:title="Cierre X"/>
         <item
-            android:id="@+id/nav_share"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="Share"/>
+            android:id="@+id/nav_cierrez"
+            android:icon="@drawable/icon_cierrez"
+            android:title="Cierre Z"/>
+        <item
+            android:id="@+id/nav_cambioturno"
+            android:icon="@drawable/icon_cambioturno"
+            android:title="Cambio Turno"/>
+        <item
+            android:id="@+id/nav_iniciodia"
+            android:icon="@drawable/icon_iniciodia"
+            android:title="Inicio de Día"/>
+        <item
+            android:id="@+id/nav_consultacomprobante"
+            android:icon="@drawable/icon_consultacomprobante"
+            android:title="Consultar Comprobante"/>
 
     </group>
 </menu>

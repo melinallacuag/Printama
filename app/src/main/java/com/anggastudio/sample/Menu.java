@@ -36,13 +36,13 @@ public class Menu extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.nav_dasboard:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DasboardFragment()).commit();
                 break;
-            case R.id.nav_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            case R.id.nav_venta:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VentaFragment()).commit();
                 break;
-            case R.id.nav_settings:
+            case R.id.nav_cierrex:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
                 break;
-            case R.id.nav_share:
+            case R.id.nav_cierrez:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShareFragment()).commit();
                 break;
 
