@@ -39,9 +39,11 @@
             android:layout_marginTop="10dp"
             android:letterSpacing="0.1"
             android:text="Iniciar Sesión"
+            android:fontFamily="@font/nunito_black"
             android:textAlignment="center"
             android:textColor="#001E8A"
             android:textSize="25sp"
+            android:layout_marginBottom="10sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -54,10 +56,13 @@
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:endIconMode="clear_text"
+            android:layout_marginBottom="10sp"
             app:startIconDrawable="@drawable/icon_user"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/usuario"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -72,10 +77,13 @@
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:endIconMode="clear_text"
+            android:layout_marginBottom="10sp"
             app:startIconDrawable="@drawable/icon_password"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/contraseña"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -92,6 +100,7 @@
             android:textColor="#FFFFFF"
             android:textSize="18dp"
             android:background="@drawable/button"
+            android:fontFamily="@font/nunito_black"
             app:cornerRadius="15sp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
