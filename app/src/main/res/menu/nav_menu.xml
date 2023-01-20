@@ -20,7 +20,7 @@
         <item
             android:id="@+id/nav_cambioturno"
             android:icon="@drawable/icon_cambioturno"
-            android:title="Cambio Turno"/>
+            android:title="Cambio de Turno"/>
         <item
             android:id="@+id/nav_iniciodia"
             android:icon="@drawable/icon_iniciodia"

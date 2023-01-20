@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".CierreXFragment">
 
     <ScrollView
@@ -19,11 +20,11 @@
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_margin="20dp"
             android:elevation="2sp"
-            android:orientation="vertical"
+            android:layout_margin="20dp"
             android:padding="20dp"
+            android:background="@drawable/contenedor_detalle"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -32,30 +33,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30sp"
-                android:text="CIERRE PARCIAL DE CAJA(X)"
+                android:text="VENTAS POR CARA"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="#1E2025"
                 android:textSize="18sp"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textStyle="bold" />
-
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
                 android:layout_marginTop="10sp"
                 android:layout_marginBottom="10sp" />
-
-
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1sp"
-                android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp" />
-
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,7 +55,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="Promociones:"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Cara Nro.01:"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -76,7 +66,35 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
+                    android:text="120.00"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="T.Gratuita:"
+                    android:textColor="#1E2025"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
                     android:text="0.00"
+                    android:fontFamily="@font/nunito_extrabold"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -85,9 +103,171 @@
             <View
                 android:layout_width="100sp"
                 android:layout_height="1sp"
+                android:layout_marginTop="10sp"
                 android:layout_gravity="end"
+                android:layout_marginBottom="10sp"
+                android:background="@drawable/separador" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="Total S/"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="120.00"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
+                android:background="@drawable/separador" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="VENTAS POR TIPO PAGO"
+                android:fontFamily="@font/nunito_extrabold"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="#1E2025"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1sp"
                 android:layout_marginTop="10sp"
                 android:layout_marginBottom="10sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="350sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="EFECTIVO:"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="100.00"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="350sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="TARJETA DE CREDITO:"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="20.00"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="350sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="SERAFINES:"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="0.00"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="350sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="T.Gratuita:"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="0.00"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_width="100sp"
+                android:layout_height="1sp"
+                android:layout_marginTop="10sp"
+                android:layout_gravity="end"
+                android:layout_marginBottom="10sp"
+                android:background="@drawable/separador" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,6 +280,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:text="Total Neto S/"
+                    android:fontFamily="@font/nunito_extrabold"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -109,13 +290,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="203.86"
+                    android:text="120.00"
+                    android:fontFamily="@font/nunito_extrabold"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
-
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -125,7 +310,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="Tot. Incremento:"
+                    android:text="Tot.Descuento:"
+                    android:fontFamily="@font/nunito_extrabold"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -136,18 +322,44 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:text="0.00"
+                    android:fontFamily="@font/nunito_extrabold"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="350sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="Tot.Incremento:"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="0.00"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
             <View
                 android:layout_width="100sp"
                 android:layout_height="1sp"
-                android:layout_gravity="end"
                 android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp" />
-
+                android:layout_gravity="end"
+                android:layout_marginBottom="10sp"
+                android:background="@drawable/separador" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,6 +371,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:text="Total Bruto S/"
+                    android:fontFamily="@font/nunito_extrabold"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -168,18 +381,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="203.86"
+                    android:text="120.00"
+                    android:fontFamily="@font/nunito_extrabold"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
             <Button
+                android:id="@+id/imprimircierrex"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_marginTop="15sp"
                 android:layout_marginBottom="15sp"
                 android:text="Imprimir"
+                android:textSize="10sp"
+                android:fontFamily="@font/nunito_black"
                 app:cornerRadius="10sp" />
         </LinearLayout>
 
