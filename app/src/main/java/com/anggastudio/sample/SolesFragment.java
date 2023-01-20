@@ -41,7 +41,15 @@ public class SolesFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 String textsol = montosoles.getText().toString().trim();
-                dialogInterface.applyTexts(textsol);
+
+                if (textsol == "") {
+                    textsol = "0";
+                    dialogInterface.applyTexts(textsol);
+                }
+
+
+
+
                 int numsol   = Integer.parseInt(textsol);
                 if (numsol < 5){
                     alertsoles.setError("El valor debe ser minimo 5 ");
@@ -78,7 +86,7 @@ public class SolesFragment extends DialogFragment {
     @Override
     public void onAttach(@NonNull  Context context){
         super.onAttach(context);
-        dialogInterface  = (Custom_DialogInterface)  getParentFragment();
+        dialogInterface  = (Custom_DialogInterface)  this.getTargetFragment();
     }
 
 }

@@ -90,7 +90,7 @@
                 android:id="@+id/contraseña"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:maxLength="6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
