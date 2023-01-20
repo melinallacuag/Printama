@@ -636,7 +636,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="2sp"
-                android:rowCount="1">
+                android:rowCount="2">
 
                 <GridLayout
                     android:id="@+id/btndetalles"
@@ -661,7 +661,6 @@
                         android:layout_height="match_parent"
                         android:layout_marginEnd="2sp"
                         android:gravity="center"
-                        android:text="01"
                         android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
@@ -684,7 +683,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2sp"
                         android:gravity="center"
-                        android:text="75847125"
                         android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
@@ -724,7 +722,92 @@
                         android:textSize="10sp"
                         android:textStyle="bold" />
                 </GridLayout>
+                <GridLayout
+                    android:id="@+id/btndetalles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4sp"
+                    android:background="@drawable/input_border"
+                    android:backgroundTint="#fff"
+                    android:clickable="true"
+                    android:columnCount="7"
+                    android:elevation="2sp"
+                    android:foreground="@drawable/selectcard"
+                    android:padding="10sp"
+                    android:rowCount="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gridLayout3">
 
+                    <TextView
+                        android:id="@+id/textcara"
+                        android:layout_width="32sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="center"
+                        android:text="18"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:textColor="#071C65"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="40sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="center"
+                        android:text="Boleta"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:textColor="#071C65"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textmanguera"
+                        android:layout_width="45sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="center"
+                        android:text="Diesel"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:textColor="#071C65"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="62sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="center"
+                        android:text="11111111"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:textColor="#071C65"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="center"
+                        android:text="CLIENTE VARIOS"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:textColor="#071C65"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtimporte"
+                        android:layout_width="40sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="center"
+                        android:text="20.00"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:textColor="#071C65"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </GridLayout>
             </GridLayout>
 
         </HorizontalScrollView>

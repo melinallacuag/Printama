@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -28,8 +30,8 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
 
     TextView totalmonto;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
@@ -107,7 +109,7 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
             public void onClick(View view) {
                 SolesFragment solesFragment = new SolesFragment();
                 solesFragment.show(getActivity().getSupportFragmentManager(), "Soles");
-
+                solesFragment.setCancelable(false);
             }
         });
         btngalones.setOnClickListener(new View.OnClickListener() {
@@ -244,7 +246,7 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
             printama.addNewLine(1);
             printama.printTextln("OP. GRAVADAS S/: "+ importe, Printama.RIGHT);
             printama.printTextln("OP. EXONERADAS S/: "+exoneradas , Printama.RIGHT);
-            printama.printTextln("OP. EXONERADAS S/: "+importe, Printama.RIGHT);
+            printama.printTextln("IGV S/: "+importe, Printama.RIGHT);
             printama.printTextln("TOTAL VENTA S/: "+ importe, Printama.RIGHT);
             printama.setNormalText();
             printama.printDoubleDashedLine();
@@ -264,4 +266,6 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
     public void applyTexts(String textsol) {
         totalmonto.setText(textsol+".00");
     }
+
+
 }
