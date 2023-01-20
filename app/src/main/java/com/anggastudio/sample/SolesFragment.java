@@ -17,50 +17,55 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.BreakIterator;
 
 
 public class SolesFragment extends DialogFragment {
-
-    EditText edsol;
+    Button btncancelar, agregar;
+    EditText montosoles;
+    TextInputLayout alertsoles;
     Custom_DialogInterface dialogInterface;
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_soles, container, false);
 
-        Button btncancelar = view.findViewById(R.id.btncancelarsoles);
-        Button agregar = view.findViewById(R.id.btnagregarsoles);
-        EditText edsol = view.findViewById(R.id.inputmotosoles);
+        btncancelar   = view.findViewById(R.id.btncancelarsoles);
+        agregar       = view.findViewById(R.id.btnagregarsoles);
+        montosoles    =   view.findViewById(R.id.montosoles);
+        alertsoles    = view.findViewById(R.id.textsoles);
+
         btncancelar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                dismiss();
-            }
+            public void onClick(View view) { dismiss();}
         });
+
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String textsol = edsol.getText().toString();
-                dialogInterface.applyTexts(textsol);
-                dismiss();
+            public void onClick(View view) {
+                String textsol = montosoles.getText().toString().trim();
+
+                if (!textsol.equals("")){
+                    dialogInterface.applyTexts(textsol);
+                }
+               dismiss();
             }
         });
 
         return view;
     }
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(Context context){
         super.onAttach(context);
-        dialogInterface = (Custom_DialogInterface) context;
+        dialogInterface  = (Custom_DialogInterface)  getTargetFragment();
     }
 
-    public  interface  Custom_DialogInterface{
+    public interface Custom_DialogInterface {
         void applyTexts(String textsol);
     }
-
-
 }

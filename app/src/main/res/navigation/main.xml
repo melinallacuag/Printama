@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.anggastudio.sample.ShareFragment"
+        android:label="fragment_share"
+        tools:layout="@layout/fragment_share" />
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.anggastudio.sample.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_share"
+        android:name="com.anggastudio.sample.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/nav_dasboard"
+        android:name="com.anggastudio.sample.DasboardFragment"
+        android:label="fragment_dasboard"
+        tools:layout="@layout/fragment_dasboard" />
+    <fragment
+        android:id="@+id/ventaFragment"
+        android:name="com.anggastudio.sample.VentaFragment"
+        android:label="VentaFragment" />
+    <fragment
+        android:id="@+id/nav_cierrex"
+        android:name="com.anggastudio.sample.CierreXFragment"
+        android:label="fragment_cierre_x"
+        tools:layout="@layout/fragment_cierre_x" />
+    <fragment
+        android:id="@+id/nav_cierrez"
+        android:name="com.anggastudio.sample.CierreZFragment"
+        android:label="fragment_cierre_z"
+        tools:layout="@layout/fragment_cierre_z" />
+    <fragment
+        android:id="@+id/nav_cambioturno"
+        android:name="com.anggastudio.sample.CambioTurnoFragment"
+        android:label="fragment_cambio_turno"
+        tools:layout="@layout/fragment_cambio_turno" />
+    <fragment
+        android:id="@+id/nav_iniciodia"
+        android:name="com.anggastudio.sample.InicioDiaFragment"
+        android:label="fragment_inicio_dia"
+        tools:layout="@layout/fragment_inicio_dia" />
+</navigation>
