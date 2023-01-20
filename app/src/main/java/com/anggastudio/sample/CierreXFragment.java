@@ -8,57 +8,46 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CierreXFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.anggastudio.printama.Printama;
+
+
 public class CierreXFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public CierreXFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CierreXFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CierreXFragment newInstance(String param1, String param2) {
-        CierreXFragment fragment = new CierreXFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cierre_x, container, false);
+        View view = inflater.inflate(R.layout.fragment_cierre_x, container, false);
+        view.findViewById(R.id.imprimircierrex).setOnClickListener(v -> cierrex());
+        return view;
+    }
+    private  void cierrex() {
+        String importe = "120.00";
+        Printama.with(getContext()).connect(printama -> {
+            printama.setSmallText();
+            printama.addNewLine(1);
+            printama.printText("VENTAS POR CARA\n", Printama.CENTER);
+            printama.printTextJustify("Cara Nro.1","120.00\n");
+            printama.printTextJustify("T.Gratuita","0.00\n");
+            printama.printTextln("Total S/: "+ importe, Printama.RIGHT);
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.addNewLine(1);
+            printama.printText("VENTAS POR TIPO DE PAGO\n", Printama.CENTER);
+            printama.printTextJustify("EFECTIVO","100.00\n");
+            printama.printTextJustify("TARJETA DE CREDITO","20.00\n");
+            printama.printTextJustify("SERAFINES","0.00\n");
+            printama.printTextJustify("T.Gratuita","0.00\n");
+            printama.printTextln("Total Neto S/: "+ importe, Printama.RIGHT);
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.printTextJustify("Tot.Descuento","0.00\n");
+            printama.printTextJustify("Tot.Incremento","0.00\n");
+            printama.printTextln("Total Bruto S/: "+ importe, Printama.RIGHT);
+            printama.feedPaper();
+            printama.close();
+        });
     }
 }
