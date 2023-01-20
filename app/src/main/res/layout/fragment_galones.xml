@@ -43,7 +43,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusTopEnd="15dp"
-                app:endIconMode="clear_text">
+                app:endIconMode="clear_text"
+                app:startIconDrawable="@drawable/icon_galones">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputmontogalones"
                     android:fontFamily="@font/nunito_semibold"

@@ -61,9 +61,13 @@ public class NotaDespachoFragment extends DialogFragment {
                 if (textnplaca.isEmpty()){
                     alertplaca.setError("Ingresar placa");
                 }else {
+                    kilometraje.setText("145");
+                    idcliente.setText("11467845");
+                    ruc.setText("11457845124");
+                    nombre.setText("JHON PINO");
+                    direccion.setText("JR. UNIÓN");
                     alertplaca.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO ", Toast.LENGTH_SHORT).show();
-                    dismiss();
                 }
             }
         });
@@ -125,12 +129,13 @@ public class NotaDespachoFragment extends DialogFragment {
                 if (textidcliente.isEmpty()){
                     alertidcliente.setError("Ingresar Cliente");
                 }else {
+                    ruc.setText("11457845124");
+                    nombre.setText("JHON PINO");
+                    direccion.setText("JR. UNIÓN");
                     alertidcliente.setErrorEnabled(false);
                     ClientesFragment dialog = new ClientesFragment();
                     dialog.show(getFragmentManager(), "Buscar Cliente");
                 }
-
-
             }
         });
 

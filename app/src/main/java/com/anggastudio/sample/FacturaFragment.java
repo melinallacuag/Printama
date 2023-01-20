@@ -54,10 +54,11 @@ public class FacturaFragment extends DialogFragment {
                 String textruc    = ruc.getText().toString().trim();
                 if (textruc.isEmpty()){
                     alertruc.setError("Ingresar RUC");
-                }else {
+                }else{
+                    nombre.setText("JHON PINO");
+                    direccion.setText("JR. UNIÓN");
                     alertruc.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO ", Toast.LENGTH_SHORT).show();
-                    dismiss();
                 }
             }
         });
@@ -69,9 +70,11 @@ public class FacturaFragment extends DialogFragment {
                 if (textnplaca.isEmpty()){
                     alertplaca.setError("Ingresar placa");
                 }else {
+                    ruc.setText("104578141578");
+                    nombre.setText("JHON PINO");
+                    direccion.setText("JR. UNIÓN");
                     alertplaca.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO ", Toast.LENGTH_SHORT).show();
-                    dismiss();
                 }
             }
         });

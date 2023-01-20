@@ -563,8 +563,9 @@
                 android:layout_marginEnd="2sp"
                 android:gravity="center"
                 android:text="Cara"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -572,19 +573,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
                 android:gravity="center"
-                android:text="Op."
+                android:text="OP."
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="40sp"
+                android:layout_width="45sp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
                 android:gravity="center"
                 android:text="Producto"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -593,8 +596,9 @@
                 android:layout_marginEnd="2sp"
                 android:gravity="center"
                 android:text="IDCliente"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -603,8 +607,9 @@
                 android:layout_marginEnd="2sp"
                 android:gravity="center"
                 android:text="Razon Social"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -612,8 +617,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Total"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
         </GridLayout>
 
@@ -656,8 +662,9 @@
                         android:layout_marginEnd="2sp"
                         android:gravity="center"
                         android:text="01"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -666,19 +673,21 @@
                         android:layout_marginEnd="2sp"
                         android:gravity="center"
                         android:text="Boleta"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textmanguera"
-                        android:layout_width="40sp"
+                        android:layout_width="45sp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2sp"
                         android:gravity="center"
                         android:text="75847125"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -687,8 +696,9 @@
                         android:layout_marginEnd="2sp"
                         android:gravity="center"
                         android:text="11111111"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -697,8 +707,9 @@
                         android:layout_marginEnd="2sp"
                         android:gravity="center"
                         android:text="CLIENTE VARIOS"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -708,18 +719,10 @@
                         android:layout_marginEnd="2sp"
                         android:gravity="center"
                         android:text="10.00"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
-                        android:textSize="12sp"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
-
-                    <ImageButton
-
-                        android:layout_width="5sp"
-                        android:layout_height="20sp"
-                        android:layout_gravity="center"
-                        android:background="@android:color/transparent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/icon_detalletrans" />
                 </GridLayout>
 
             </GridLayout>

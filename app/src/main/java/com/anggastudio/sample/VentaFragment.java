@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
 
@@ -163,6 +164,7 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
 
     }
     private  void boleta() {
+        Toast.makeText(getContext(), "SE IMPRIMIO", Toast.LENGTH_SHORT).show();
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.robles_sinfondo);
         //Fecha y Hora
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));

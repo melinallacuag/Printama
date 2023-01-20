@@ -1,5 +1,6 @@
 package com.anggastudio.sample;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.text.AllCapsTransformationMethod;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -29,6 +31,7 @@ public class BoletaFragment extends DialogFragment {
     TextInputEditText placa,dni,nombre,direccion;
     TextInputLayout alertplaca,alertdni, alertnombre, alertdireccion;
 
+    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class BoletaFragment extends DialogFragment {
         buscarplaca   = view.findViewById(R.id.btntarjeta);
         buscardni     = view.findViewById(R.id.btnrenic);
 
+
+
         placa     = view.findViewById(R.id.inputnplaca);
         dni       = view.findViewById(R.id.inputdni);
         nombre    = view.findViewById(R.id.inputnombre);
@@ -50,6 +55,7 @@ public class BoletaFragment extends DialogFragment {
         alertdni       = view.findViewById(R.id.textdni);
         alertnombre    = view.findViewById(R.id.textnombre);
         alertdireccion = view.findViewById(R.id.textdireccion);
+
 
         cerrarboleta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,9 +71,11 @@ public class BoletaFragment extends DialogFragment {
                 if (textnplaca.isEmpty()){
                     alertplaca.setError("Ingresar placa");
                 }else {
+                    dni.setText("75994784");
+                    nombre.setText("JHON PINO");
+                    direccion.setText("JR. UNIÓN");
                     alertplaca.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO ", Toast.LENGTH_SHORT).show();
-                    dismiss();
                 }
             }
         });
@@ -79,9 +87,10 @@ public class BoletaFragment extends DialogFragment {
                 if (textdni.isEmpty()){
                     alertdni.setError("Ingresar DNI");
                 }else {
+                    nombre.setText("JHON PINO");
+                    direccion.setText("JR. UNIÓN");
                     alertdni.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO ", Toast.LENGTH_SHORT).show();
-                    dismiss();
                 }
             }
         });
@@ -128,10 +137,10 @@ public class BoletaFragment extends DialogFragment {
         generar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                placa.setText("7845d78d");
+                placa.setText("7845D78D");
                 dni.setText("75994784");
-                nombre.setText("Jhon Pino");
-                direccion.setText("Jr. Unión");
+                nombre.setText("JHON PINO");
+                direccion.setText("JR. UNIÓN");
             }
         });
 
