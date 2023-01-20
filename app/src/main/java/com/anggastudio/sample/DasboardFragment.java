@@ -43,15 +43,15 @@ public class DasboardFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 CambioTurnoFragment cambioTurnoFragment = new CambioTurnoFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,cambioTurnoFragment).commit();
+                cambioTurnoFragment.show(getActivity().getSupportFragmentManager(), "Cambio de Turno");
             }
         });
         btniniciodia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 InicioDiaFragment inicioDiaFragment = new InicioDiaFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,inicioDiaFragment).commit();
-            }
+                inicioDiaFragment.show(getActivity().getSupportFragmentManager(), "Inicio de Día");
+              }
         });
        return view;
     }

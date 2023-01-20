@@ -1,14 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CambioTurnoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="CAMBIO TURNO" />
+    <LinearLayout
+        android:layout_width="380sp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="@font/nunito_extrabold"
+            android:text="CAMBIO DE TURNO"
+            android:textColor="#071C65"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:fontFamily="@font/nunito_extralight"
+            android:gravity="center_horizontal"
+            android:text="¿Desea cambiar cambio de turno?"
+            android:textAlignment="center"
+            android:textColor="#071C65"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btncancelarcambioturno"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1"
+                android:backgroundTint="#D51A30"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="cancelar"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="10sp"
+                app:cornerRadius="10sp" />
+
+            <Button
+                android:id="@+id/btnagregarcambioturno"
+                android:layout_width="wrap_content"
+                android:layout_height="60sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10sp"
+                android:layout_weight="1"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="aceptar"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="10sp"
+                app:cornerRadius="10sp" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
