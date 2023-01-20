@@ -37,7 +37,7 @@ public class SolesFragment extends DialogFragment {
 
         btncancelar   = view.findViewById(R.id.btncancelarsoles);
         agregar       = view.findViewById(R.id.btnagregarsoles);
-        montosoles    =   view.findViewById(R.id.montosoles);
+        montosoles    = view.findViewById(R.id.montosoles);
         alertsoles    = view.findViewById(R.id.textsoles);
 
         btncancelar.setOnClickListener(new View.OnClickListener() {

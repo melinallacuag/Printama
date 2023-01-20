@@ -15,22 +15,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="PAGO EN EFECTIVO"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#071C65"
                 android:textSize="25sp"
                 android:textStyle="bold" />
-
-        </LinearLayout>
 
 
         <TextView
@@ -42,6 +36,7 @@
             android:background="@drawable/cardlogin"
             android:backgroundTint="#41C9F3"
             android:padding="15sp"
+            android:fontFamily="@font/nunito_extralight"
             android:text="Se realizara el modo de Pago en Efectivo"
             android:textAlignment="center"
             android:textColor="#fff"
@@ -59,15 +54,16 @@
                 android:layout_height="60sp"
                 android:layout_gravity="center"
                 android:layout_marginTop="5sp"
-
+                android:fontFamily="@font/nunito_extrabold"
                 android:layout_marginEnd="20sp"
                 android:layout_weight="1"
                 android:backgroundTint="#D51A30"
                 android:text="Cancelar"
                 android:textAllCaps="true"
                 android:textColor="#fff"
-                android:textSize="15sp"
-                app:cornerRadius="10sp" />
+                android:textSize="10sp"
+                app:cornerRadius="10sp"
+                android:layout_marginRight="20sp" />
 
             <Button
                 android:id="@+id/btnagregartipopagoefectivo"
@@ -77,9 +73,10 @@
                 android:layout_marginTop="5sp"
                 android:layout_weight="1"
                 android:text="Aceptar"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textAllCaps="true"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 app:cornerRadius="10sp" />
         </LinearLayout>
 

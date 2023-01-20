@@ -9,27 +9,46 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 
 public class PagoCreditoFragment extends DialogFragment {
 
+    Button btncancelar,agregarcredito;
+    TextInputEditText soles;
+    TextInputLayout alertsoles;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pago_credito, container, false);
 
-        Button btncancelar = view.findViewById(R.id.btncancelartipopagocredito);
-        Button agregar = view.findViewById(R.id.btnagregartipopagocredito);
+
+        btncancelar    = view.findViewById(R.id.btncancelartipopagocredito);
+        agregarcredito = view.findViewById(R.id.btnagregartipopagocredito);
+
+        soles        = view.findViewById(R.id.inputmontosoles);
+        alertsoles   = view.findViewById(R.id.textsoles);
+
         btncancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-        agregar.setOnClickListener(new View.OnClickListener() {
+        agregarcredito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                String textsoles = soles.getText().toString().trim();
+                if (textsoles.isEmpty()){
+                    alertsoles.setError("Ingresar soles");
+                }else {
+                    alertsoles.setErrorEnabled(false);
+                    Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }
             }
         });
 

@@ -30,22 +30,25 @@ public class TipoPagoFragment extends DialogFragment {
         efectivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PagoEfectivoFragment dialog = new PagoEfectivoFragment();
-                dialog.show(getFragmentManager(), "Tipo de Pago efectivo");
+                PagoEfectivoFragment pagoEfectivoFragment = new PagoEfectivoFragment();
+                pagoEfectivoFragment.show(getFragmentManager(), "Efectivo");
+                pagoEfectivoFragment.setCancelable(false);
             }
         });
         credito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PagoCreditoFragment dialog = new PagoCreditoFragment();
-                dialog.show(getFragmentManager(), "Tipo de Pago");
+                PagoCreditoFragment pagoCreditoFragment = new PagoCreditoFragment();
+                pagoCreditoFragment.show(getFragmentManager(), "Credito");
+                pagoCreditoFragment.setCancelable(false);
             }
         });
         tarjeta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PagoTarjetaFragment dialog = new PagoTarjetaFragment();
-                dialog.show(getFragmentManager(), "Tipo de Pago");
+                PagoTarjetaFragment pagoTarjetaFragment = new PagoTarjetaFragment();
+                pagoTarjetaFragment.show(getFragmentManager(), "Tarjeta");
+                pagoTarjetaFragment.setCancelable(false);
             }
         });
 

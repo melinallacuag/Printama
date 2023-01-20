@@ -510,7 +510,7 @@
                 app:cornerRadius="10sp" />
 
             <Button
-                android:id="@+id/canje"
+                android:id="@+id/btnimprimir"
                 android:layout_width="wrap_content"
                 android:layout_height="50sp"
                 android:layout_rowWeight="1"

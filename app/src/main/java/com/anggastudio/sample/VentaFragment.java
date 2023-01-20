@@ -88,6 +88,7 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
         Button btnlibre = view.findViewById(R.id.btnlibre);
         Button btnsoles = view.findViewById(R.id.btnsoles);
         Button btngalones = view.findViewById(R.id.btngalones);
+        Button btnboleta = view.findViewById(R.id.btnboleta);
         Button btnfactura = view.findViewById(R.id.btnfactura);
         Button btnnotadespacho = view.findViewById(R.id.btnnotadespacho);
         Button btnserafin = view.findViewById(R.id.btnserafin);
@@ -97,7 +98,7 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
             public void onClick(View view) {
                 LibreFragment libreFragment = new LibreFragment();
                 libreFragment.show(getActivity().getSupportFragmentManager(), "Libre");
-
+                libreFragment.setCancelable(false);
             }
         });
         btnsoles.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +114,15 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
             public void onClick(View view) {
                 GalonesFragment galonesFragment = new GalonesFragment();
                 galonesFragment.show(getActivity().getSupportFragmentManager(), "Galones");
-
+                galonesFragment.setCancelable(false);
+            }
+        });
+        btnboleta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BoletaFragment boletaFragment = new BoletaFragment();
+                boletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
+                boletaFragment.setCancelable(false);
             }
         });
         btnfactura.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +130,7 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
             public void onClick(View view) {
                 FacturaFragment facturaFragment = new FacturaFragment();
                 facturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
-
+                facturaFragment.setCancelable(false);
             }
         });
         btnnotadespacho.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +138,7 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
             public void onClick(View view) {
                 NotaDespachoFragment notaDespachoFragment = new NotaDespachoFragment();
                 notaDespachoFragment.show(getActivity().getSupportFragmentManager(), "Nota de Despacho");
-
+                notaDespachoFragment.setCancelable(false);
             }
         });
         btnserafin.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +146,7 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
             public void onClick(View view) {
                 SerafinFragment serafinFragment = new SerafinFragment();
                 serafinFragment.show(getActivity().getSupportFragmentManager(), "Serafin");
-
+                serafinFragment.setCancelable(false);
             }
         });
         btnpuntos.setOnClickListener(new View.OnClickListener() {
@@ -149,7 +158,7 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
             }
         });
 
-        view.findViewById(R.id.btnboleta).setOnClickListener(v -> boleta());
+        view.findViewById(R.id.btnimprimir).setOnClickListener(v -> boleta());
         return view;
 
     }

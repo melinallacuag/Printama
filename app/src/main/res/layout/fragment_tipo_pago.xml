@@ -15,11 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,16 +23,15 @@
                 android:text="TIPO DE PAGO"
                 android:textColor="#071C65"
                 android:textSize="25sp"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textStyle="bold" />
-
-
-        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15sp"
             android:text="Forma de Pago:"
+            android:fontFamily="@font/nunito_extrabold"
             android:textColor="#071C65"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -56,6 +50,7 @@
                 android:layout_weight="1"
                 android:checked="false"
                 android:text="Efectivo"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#123456"
                 android:textColorHint="#404143"
                 android:textSize="14sp" />
@@ -67,6 +62,7 @@
                 android:layout_weight="1"
                 android:checked="false"
                 android:text="Tarjeta"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#123456"
                 android:textColorHint="#404143"
                 android:textSize="14sp" />
@@ -78,6 +74,7 @@
                 android:layout_weight="1"
                 android:checked="false"
                 android:text="Credito"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#123456"
                 android:textColorHint="#404143"
                 android:textSize="14sp" />
@@ -85,28 +82,20 @@
 
         </RadioGroup>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
             <Button
                 android:id="@+id/btncancelartipopago"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="60sp"
                 android:layout_gravity="center"
                 android:layout_marginTop="5sp"
                 android:layout_weight="1"
                 android:backgroundTint="#D51A30"
                 android:text="Cancelar"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textAllCaps="true"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 app:cornerRadius="10sp" />
-
-
-        </LinearLayout>
 
     </LinearLayout>
 

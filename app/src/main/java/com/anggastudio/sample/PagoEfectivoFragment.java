@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class PagoEfectivoFragment extends DialogFragment {
 
@@ -28,6 +29,8 @@ public class PagoEfectivoFragment extends DialogFragment {
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(getContext(), "PAGO EN EFECTIVO", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

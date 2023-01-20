@@ -15,22 +15,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="TIPO DE TARJETA"
+                android:fontFamily="@font/nunito_extrabold"
+                android:layout_marginBottom="10sp"
                 android:textColor="#071C65"
                 android:textSize="25sp"
                 android:textStyle="bold" />
-
-        </LinearLayout>
 
 
         <RadioGroup
@@ -47,6 +42,7 @@
                 android:layout_weight="1"
                 android:checked="true"
                 android:text="Visa"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#123456"
                 android:textColorHint="#404143"
                 android:textSize="14sp" />
@@ -58,6 +54,7 @@
                 android:layout_weight="1"
                 android:checked="false"
                 android:text="Yape"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#123456"
                 android:textColorHint="#404143"
                 android:textSize="14sp" />
@@ -69,34 +66,30 @@
                 android:layout_weight="1"
                 android:checked="false"
                 android:text="MasterCard"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#123456"
                 android:textColorHint="#404143"
                 android:textSize="14sp" />
         </RadioGroup>
-
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textsoles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:text="Monto Soles:"
-            android:textColor="#071C65"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/inputmontosoles"
-            android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_marginTop="10sp"
-            android:background="@drawable/input_border"
-            android:drawablePadding="12sp"
-            android:hint="0.00"
-            android:inputType="numberDecimal"
-            android:paddingLeft="20sp"
-            android:textColor="#123456"
-            android:textColorHint="#404143"
-            android:textSize="14sp" />
-
+            android:hint="Monto Soles"
+            app:boxBackgroundMode="outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/icon_money">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputmontosoles"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -108,15 +101,16 @@
                 android:layout_height="60sp"
                 android:layout_gravity="center"
                 android:layout_marginTop="5sp"
-
+                android:fontFamily="@font/nunito_black"
                 android:layout_marginEnd="20sp"
                 android:layout_weight="1"
                 android:backgroundTint="#D51A30"
                 android:text="Cancelar"
                 android:textAllCaps="true"
                 android:textColor="#fff"
-                android:textSize="15sp"
-                app:cornerRadius="10sp" />
+                android:textSize="10sp"
+                app:cornerRadius="10sp"
+                android:layout_marginRight="20sp" />
 
             <Button
                 android:id="@+id/btnagregarTarjetatipo"
@@ -126,9 +120,10 @@
                 android:layout_marginTop="5sp"
                 android:layout_weight="1"
                 android:text="Aceptar"
+                android:fontFamily="@font/nunito_black"
                 android:textAllCaps="true"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 app:cornerRadius="10sp" />
         </LinearLayout>
 

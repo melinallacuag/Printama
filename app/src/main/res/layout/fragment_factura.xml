@@ -11,18 +11,10 @@
         android:layout_width="380sp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="30dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="20dp"
+       android:padding="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
@@ -32,146 +24,142 @@
                 android:text="FACTURACIÓN"
                 android:textColor="#071C65"
                 android:textSize="25sp"
+                android:layout_marginBottom="10sp"
+                android:fontFamily="@font/nunito_black"
                 android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/btncerrar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_weight="1"
-                android:background="@android:color/transparent" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15sp"
-            android:text="N° Placa:"
-            android:textColor="#071C65"
-            android:textSize="16sp"
-            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/inputnplaca"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textnplaca"
                 android:layout_width="match_parent"
-                android:layout_height="50sp"
-                android:layout_gravity="left"
+                android:layout_height="wrap_content"
+                android:hint="N° Placa"
+                app:boxBackgroundMode="outline"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusTopEnd="15dp"
+                app:endIconMode="clear_text"
                 android:layout_weight="1"
-                android:background="@drawable/input_border"
-                android:hint="Ingresar N° Placa"
-                android:inputType="text"
-                android:maxLength="11"
-                android:paddingLeft="20sp"
-                android:textColor="#123456"
-                android:textColorHint="#404143"
-                android:textSize="14sp" />
-
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputnplaca"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:textSize="14sp"
+                    android:inputType="text"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
             <Button
                 android:id="@+id/btntarjeta"
                 android:layout_width="180sp"
-                android:layout_height="50sp"
-                android:layout_gravity="right"
+                android:layout_height="60sp"
                 android:layout_marginStart="10sp"
-                android:layout_weight="1"
                 android:text="buscar"
-                android:textSize="11sp"
-                app:cornerRadius="10sp" />
+                android:textSize="10sp"
+                android:fontFamily="@font/nunito_extrabold"
+                android:layout_weight="1"
+                app:cornerRadius="10sp"
+                android:layout_marginTop="2sp"
+                android:layout_marginLeft="10sp" />
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:text="RUC:"
-            android:textColor="#071C65"
-            android:textSize="16sp"
-            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/inputruc"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textruc"
                 android:layout_width="match_parent"
-                android:layout_height="50sp"
-                android:layout_gravity="left"
-                android:layout_weight="1"
-                android:background="@drawable/input_border"
+                android:layout_height="wrap_content"
                 android:hint="Ingresar RUC"
-                android:inputType="number"
-                android:maxLength="11"
-                android:paddingLeft="20sp"
-                android:textColor="#123456"
-                android:textColorHint="#404143"
-                android:textSize="14sp" />
+                app:boxBackgroundMode="outline"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusTopEnd="15dp"
+                app:endIconMode="clear_text"
+                android:layout_weight="1"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputruc"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:textSize="14sp"
+                    android:inputType="number"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnrenic"
+                android:id="@+id/btnsunat"
                 android:layout_width="180sp"
-                android:layout_height="50sp"
-                android:layout_gravity="right"
+                android:layout_height="60sp"
                 android:layout_marginStart="10sp"
-                android:layout_weight="1"
                 android:text="SUNAT"
-                android:textSize="12sp"
-                app:cornerRadius="10sp" />
+                android:textSize="10sp"
+                android:layout_weight="1"
+                app:cornerRadius="10sp"
+                android:fontFamily="@font/nunito_extrabold"
+                android:layout_marginTop="2sp"
+                android:layout_marginLeft="10sp" />
+
 
         </LinearLayout>
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textrazonsocial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:text="Razon Social"
-            android:textColor="#071C65"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:hint="Razón Social"
+            app:boxBackgroundMode="outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:endIconMode="clear_text"
+            android:layout_weight="1"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputrazonsocial"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-        <EditText
-            android:id="@+id/inputrazonsocial"
-            android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_marginTop="10sp"
-            android:background="@drawable/input_border"
-            android:drawablePadding="12sp"
-            android:hint="Ingresar Razon Social"
-            android:inputType="text"
-            android:paddingLeft="20sp"
-            android:textColor="#123456"
-            android:textColorHint="#404143"
-            android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textdireccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
-            android:text="Dirección"
-            android:textColor="#071C65"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:hint="Dirección"
+            app:boxBackgroundMode="outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:endIconMode="clear_text"
+            android:layout_weight="1"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputdireccion"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-        <EditText
-            android:id="@+id/inputdireccion"
-            android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_marginTop="10sp"
-            android:background="@drawable/input_border"
-            android:drawablePadding="12sp"
-            android:hint="Ingresar Dirección"
-            android:inputType="text"
-            android:paddingLeft="20sp"
-            android:textColor="#123456"
-            android:textColorHint="#404143"
-            android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btntipopago"
@@ -181,9 +169,10 @@
             android:backgroundTint="#0FA10A"
             android:gravity="center"
             android:text="Tipo de pago"
+            android:fontFamily="@font/nunito_extrabold"
             android:textAllCaps="true"
             android:textColor="#fff"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:cornerRadius="10sp" />
 
         <LinearLayout
@@ -196,27 +185,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10sp"
                 android:layout_marginEnd="20sp"
                 android:layout_weight="1"
                 android:backgroundTint="#D51A30"
                 android:text="Cancelar"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textAllCaps="true"
                 android:textColor="#fff"
-                android:textSize="15sp"
-                app:cornerRadius="10sp" />
+                android:textSize="10sp"
+                app:cornerRadius="10sp"
+                android:layout_marginRight="20sp" />
 
             <Button
                 android:id="@+id/btnagregarfacturacion"
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10sp"
                 android:layout_weight="1"
                 android:text="Agregar"
+                android:fontFamily="@font/nunito_extrabold"
                 android:textAllCaps="true"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 app:cornerRadius="10sp" />
         </LinearLayout>
     </LinearLayout>
