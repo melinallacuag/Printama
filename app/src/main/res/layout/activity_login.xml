@@ -65,6 +65,7 @@
                 android:id="@+id/usuario"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
+                android:maxLength="10"
                 android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -90,6 +91,7 @@
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
                 android:inputType="text"
+                android:maxLength="6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>

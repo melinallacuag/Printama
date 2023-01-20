@@ -43,13 +43,18 @@ public class GalonesFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String textgalones = galones.getText().toString().trim();
-                if (textgalones.isEmpty()){
-                    alertgalones.setError("Ingresar galones");
+                int numgalones   = Integer.parseInt(textgalones);
+
+                if (numgalones < 1){
+                    alertgalones.setError("El valor debe ser minimo 1 ");
+                }else if(999 < numgalones){
+                    alertgalones.setError("El valor debe ser maximo 999");
                 }else {
                     alertgalones.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
+
             }
         });
         return view;

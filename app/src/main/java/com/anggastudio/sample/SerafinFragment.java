@@ -30,7 +30,7 @@ public class SerafinFragment extends DialogFragment {
         imprimirserafin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "SE IMPRIMIO SERAFIN", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "SE GENERO SERAFIN", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

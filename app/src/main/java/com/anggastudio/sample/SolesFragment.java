@@ -49,11 +49,20 @@ public class SolesFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 String textsol = montosoles.getText().toString().trim();
-
-                if (!textsol.equals("")){
-                    dialogInterface.applyTexts(textsol);
+                int numsol   = Integer.parseInt(textsol);
+                if (numsol < 5){
+                    alertsoles.setError("El valor debe ser minimo 5 ");
+                }else if(9999 < numsol){
+                    alertsoles.setError("El valor debe ser maximo 9999");
+                }else {
+                    alertsoles.setErrorEnabled(false);
+                    Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                    dismiss();
                 }
-               dismiss();
+               // if (!textsol.equals("")){
+                //    dialogInterface.applyTexts(textsol);
+                //}
+
             }
         });
 

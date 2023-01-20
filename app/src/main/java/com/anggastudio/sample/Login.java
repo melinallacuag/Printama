@@ -60,16 +60,6 @@ public class Login extends AppCompatActivity {
                     alertpassword.setErrorEnabled(false);
                     startActivity(new Intent(Login.this,Menu.class));
                 }
-                if (usuarioUser.length()>10){
-                    alertuser.setError("Debe ser menor a 10 digitos");
-                }else {
-                    alertuser.setErrorEnabled(false);
-                }
-                if (contraseñaUser.length()>6){
-                    alertpassword.setError("Debe ser menor a 6 digitos");
-                }else {
-                    alertpassword.setErrorEnabled(false);
-                }
             }
         });
     }
