@@ -80,7 +80,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusTopEnd="15dp"
-            app:endIconMode="clear_text"
+            app:endIconMode="password_toggle"
             android:layout_marginBottom="10sp"
             app:counterEnabled="true"
             app:counterMaxLength="6"

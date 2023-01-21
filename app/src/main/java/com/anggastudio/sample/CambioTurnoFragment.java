@@ -32,7 +32,7 @@ public class CambioTurnoFragment extends DialogFragment {
         btncambio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "SE REALIZO EL CAMBIO DE TURNO", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "SE GENERO EL CAMBIO DE TURNO", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

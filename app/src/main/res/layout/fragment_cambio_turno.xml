@@ -32,7 +32,7 @@
             android:layout_marginTop="15sp"
             android:fontFamily="@font/nunito_extralight"
             android:gravity="center_horizontal"
-            android:text="¿Desea cambiar cambio de turno?"
+            android:text="¿Desea generar el cambio de turno?"
             android:textAlignment="center"
             android:textColor="#071C65"
             android:textSize="20sp"

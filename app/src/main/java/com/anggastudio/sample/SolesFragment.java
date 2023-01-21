@@ -2,6 +2,8 @@ package com.anggastudio.sample;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Objects;
 
 
 public class SolesFragment extends DialogFragment {
@@ -23,7 +26,7 @@ public class SolesFragment extends DialogFragment {
     TextInputLayout alertsoles;
 
     @Override
-    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_soles, container, false);
 
@@ -37,19 +40,16 @@ public class SolesFragment extends DialogFragment {
             public void onClick(View view) { dismiss();}
         });
 
+
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String textsol = montosoles.getText().toString().trim();
 
-                if (textsol == "") {
+                if (textsol != null) {
                     textsol = "0";
                     dialogInterface.applyTexts(textsol);
                 }
-
-
-
-
                 int numsol   = Integer.parseInt(textsol);
                 if (numsol < 5){
                     alertsoles.setError("El valor debe ser minimo 5 ");
@@ -60,9 +60,8 @@ public class SolesFragment extends DialogFragment {
                     Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
+                dialogInterface.applyTexts(String.valueOf(textsol));
 
-
-         //       dismiss();
 
             }
         });
@@ -70,23 +69,22 @@ public class SolesFragment extends DialogFragment {
         return view;
     }
 
-    private  Custom_DialogInterface dialogInterface ;
+
 
 
     public interface Custom_DialogInterface {
         void applyTexts(String textsol);
     }
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        dialogInterface = null;
-    }
-
+    private  Custom_DialogInterface dialogInterface ;
 
     @Override
-    public void onAttach(@NonNull  Context context){
+    public void onAttach(Context context){
         super.onAttach(context);
-        dialogInterface  = (Custom_DialogInterface)  this.getTargetFragment();
+        try {
+            dialogInterface = (Custom_DialogInterface) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() );
+        }
     }
 
 }
