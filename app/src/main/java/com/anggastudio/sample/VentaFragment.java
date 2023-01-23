@@ -33,10 +33,8 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
-            totalmonto= null;
             totalmonto =  view.findViewById(R.id.txtimporte);
 
-     //   totalmonto.setText(textsol);
 
         //cara
         CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
@@ -266,6 +264,6 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
 
     @Override
     public void applyTexts(String textsol) {
-        totalmonto.setText(textsol);
+     //   totalmonto.setText(textsol+".00");
     }
 }
