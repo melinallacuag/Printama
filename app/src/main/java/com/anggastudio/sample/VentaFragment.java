@@ -279,8 +279,7 @@ public class VentaFragment extends Fragment{
             printama.printTextln("SON: "+letraimporte, Printama.LEFT);
             printama.printDashedLine();
             printama.addNewLine();
-
-            printama.printQrCode(qrBit);
+            printQrCode(qrBit);
             printama.addNewLine();
             printama.feedPaper();
             printama.close();

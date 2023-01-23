@@ -909,10 +909,6 @@ public class Printama {
         util.setWideTallBold();
     }
 
-    public void printQrCode(Bitmap qrBit) {
-
-    }
-
 
     //----------------------------------------------------------------------------------------------
     // INTERFACES
