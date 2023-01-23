@@ -1,6 +1,7 @@
 package com.anggastudio.sample;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -10,9 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.anggastudio.printama.Printama;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -269,8 +276,35 @@ public class VentaFragment extends Fragment{
             printama.printTextln("CONDICION DE PAGO:", Printama.LEFT);
             printama.printTextln("CONTADO S/: "+ importe, Printama.RIGHT);
             printama.printTextln("SON: "+letraimporte, Printama.LEFT);
-            printama.setNormalText();
-            printama.printDoubleDashedLine();
+            printama.printDashedLine();
+            printama.addNewLine();
+
+           // ImageView imageViewQrCode = findViewById(R.id.imageViewQrCode);
+          //  imageViewQrCode.setImageBitmap(bitmap);
+
+            QRCodeWriter writer = new QRCodeWriter();
+            BitMatrix bitMatrix;
+            try {
+                bitMatrix = writer.encode(nota, BarcodeFormat.QR_CODE, 300, 300);
+                int width = bitMatrix.getWidth();
+                int height = bitMatrix.getHeight();
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        int color = Color.WHITE;
+                        if (bitMatrix.get(x, y)) color = Color.BLACK;
+                        bitmap.setPixel(x, y, color);
+                    }
+                }
+                if (bitmap != null) {
+                    printama.printImage(bitmap);
+                }
+
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+
+            printama.addNewLine();
             printama.feedPaper();
             printama.close();
         });

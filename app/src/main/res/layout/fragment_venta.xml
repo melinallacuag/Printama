@@ -624,20 +624,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gridLayout2" />
 
-        <GridLayout
-            android:id="@+id/gridLayout3"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50sp"
-            android:layout_gravity="center"
-            android:layout_marginTop="5sp"
-            android:background="@drawable/input_border"
             android:backgroundTint="#071C65"
-            android:columnCount="6"
-            android:padding="15sp"
-            android:rowCount="1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9">
+            android:gravity="center"
+            android:background="@drawable/input_border">
 
             <TextView
                 android:layout_width="32sp"
@@ -703,197 +696,99 @@
                 android:textColor="#fff"
                 android:textSize="10sp"
                 android:textStyle="bold" />
-        </GridLayout>
-
-        <HorizontalScrollView
+        </LinearLayout>
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gridLayout3">
+            android:layout_height="match_parent">
 
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="2sp"
-                android:rowCount="2">
-
-                <GridLayout
-                    android:id="@+id/btndetalles"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/ddd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4sp"
-                    android:background="@drawable/input_border"
+                    app:cardCornerRadius="10dp"
+                    android:layout_margin="5dp"
                     android:backgroundTint="#fff"
-                    android:clickable="true"
-                    android:columnCount="7"
-                    android:elevation="2sp"
-                    android:foreground="@drawable/selectcard"
-                    android:padding="10sp"
-                    android:rowCount="1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/gridLayout3">
+                    android:background="@drawable/input_border">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:columnCount="6"
+                        android:elevation="2sp"
+                        android:gravity="center">
+                        <TextView
+                            android:id="@+id/textcara"
+                            android:layout_width="32sp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="2sp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:gravity="center"
+                            android:textColor="#071C65"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/textcara"
-                        android:layout_width="32sp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="40sp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2sp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:gravity="center"
+                            android:text="Boleta"
+                            android:textColor="#071C65"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="40sp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:text="Boleta"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/textmanguera"
+                            android:layout_width="45sp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2sp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:gravity="center"
+                            android:textColor="#071C65"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/textmanguera"
-                        android:layout_width="45sp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="62sp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2sp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:gravity="center"
+                            android:text="11111111"
+                            android:textColor="#071C65"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="62sp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:text="11111111"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="100sp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2sp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:gravity="center"
+                            android:text="CLIENTE VARIOS"
+                            android:textColor="#071C65"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="100sp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:text="CLIENTE VARIOS"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/txtimporte"
+                            android:layout_width="40sp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="2sp"
+                            android:fontFamily="@font/nunito_extrabold"
+                            android:gravity="center"
+                            android:textColor="#071C65"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/txtimporte"
-                        android:layout_width="40sp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:text="10.00"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
-                </GridLayout>
+                    </LinearLayout>
 
-                <GridLayout
-                    android:id="@+id/btndetalles"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4sp"
-                    android:background="@drawable/input_border"
-                    android:backgroundTint="#fff"
-                    android:clickable="true"
-                    android:columnCount="7"
-                    android:elevation="2sp"
-                    android:foreground="@drawable/selectcard"
-                    android:padding="10sp"
-                    android:rowCount="1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/gridLayout3">
 
-                    <TextView
-                        android:id="@+id/textcara"
-                        android:layout_width="32sp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:text="18"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
+                </androidx.cardview.widget.CardView>
 
-                    <TextView
-                        android:layout_width="40sp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:text="Boleta"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
+        </ScrollView>
 
-                    <TextView
-                        android:id="@+id/textmanguera"
-                        android:layout_width="45sp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:text="Diesel"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="62sp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:text="11111111"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="100sp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:text="CLIENTE VARIOS"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txtimporte"
-                        android:layout_width="40sp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="2sp"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:text="20.00"
-                        android:textColor="#071C65"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
-                </GridLayout>
-            </GridLayout>
-
-        </HorizontalScrollView>
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
