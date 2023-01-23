@@ -31,7 +31,7 @@
             android:id="@+id/logoGrifo"
             android:layout_width="match_parent"
             android:layout_height="100sp"
-            app:srcCompat="@drawable/robles_sinfondo" />
+            app:srcCompat="@drawable/logo_app" />
 
         <TextView
             android:layout_width="fill_parent"

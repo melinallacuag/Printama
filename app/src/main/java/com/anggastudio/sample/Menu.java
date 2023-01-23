@@ -48,13 +48,13 @@ public class Menu extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.nav_cambioturno:
                 CambioTurnoFragment cambioTurnoFragment = new CambioTurnoFragment();
                 cambioTurnoFragment.show(getSupportFragmentManager(), "Cambio de Turno");
-              //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CambioTurnoFragment()).commit();
+                cambioTurnoFragment.setCancelable(false);
                 break;
 
             case R.id.nav_iniciodia:
                 InicioDiaFragment inicioDiaFragment = new InicioDiaFragment();
                 inicioDiaFragment.show(getSupportFragmentManager(), "Inicio de Día");
-               // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new InicioDiaFragment()).commit();
+                inicioDiaFragment.setCancelable(false);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

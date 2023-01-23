@@ -1,31 +1,24 @@
 package com.anggastudio.sample;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.anggastudio.printama.Printama;
-
-import java.text.BreakIterator;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class VentaFragment extends Fragment implements SolesFragment.Custom_DialogInterface{
+public class VentaFragment extends Fragment{
 
 
     TextView totalmonto;
@@ -33,13 +26,14 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
-            totalmonto =  view.findViewById(R.id.txtimporte);
 
+        totalmonto =  view.findViewById(R.id.txtimporte);
 
-        //cara
+        //Selección de Cara
         CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
         CardView Cara18         = (CardView) view.findViewById(R.id.cara18);
         final TextView textcara = (TextView) view.findViewById(R.id.textcara);
+
         Cara17.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,11 +47,12 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
             }
         });
 
-        //manguera
+        //Selección de Manguera
         CardView diesel = (CardView) view.findViewById(R.id.diesel);
         CardView gas90  = (CardView) view.findViewById(R.id.gas90);
         CardView gas95  = (CardView) view.findViewById(R.id.gas95);
         CardView gas97  = (CardView) view.findViewById(R.id.gas97);
+        CardView glp    = (CardView) view.findViewById(R.id.glp);
         final TextView textmanguera = (TextView) view.findViewById(R.id.textmanguera);
 
         diesel.setOnClickListener(new View.OnClickListener() {
@@ -84,17 +79,34 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
                 textmanguera.setText("GAS 97");
             }
         });
+        glp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textmanguera.setText("GLP");
+            }
+        });
 
 
 
-        Button btnlibre = view.findViewById(R.id.btnlibre);
-        Button btnsoles = view.findViewById(R.id.btnsoles);
-        Button btngalones = view.findViewById(R.id.btngalones);
-        Button btnboleta = view.findViewById(R.id.btnboleta);
-        Button btnfactura = view.findViewById(R.id.btnfactura);
+        Button btnlibre        = view.findViewById(R.id.btnlibre);
+        Button btnsoles        = view.findViewById(R.id.btnsoles);
+        Button btngalones      = view.findViewById(R.id.btngalones);
+        Button btnboleta       = view.findViewById(R.id.btnboleta);
+        Button btnfactura      = view.findViewById(R.id.btnfactura);
         Button btnnotadespacho = view.findViewById(R.id.btnnotadespacho);
-        Button btnserafin = view.findViewById(R.id.btnserafin);
-        Button btnpuntos = view.findViewById(R.id.btnpuntos);
+        Button btnserafin      = view.findViewById(R.id.btnserafin);
+        Button btnpuntos       = view.findViewById(R.id.btnpuntos);
+
+        ImageButton regreso       = view.findViewById(R.id.volverdasboard);
+
+        regreso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DasboardFragment dasboardFragment  = new DasboardFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
+            }
+        });
+
         btnlibre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,11 +174,12 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
 
         view.findViewById(R.id.btnimprimir).setOnClickListener(v -> boleta());
         return view;
-
     }
     private  void boleta() {
+
         Toast.makeText(getContext(), "SE IMPRIMIO", Toast.LENGTH_SHORT).show();
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.robles_sinfondo);
+
         //Fecha y Hora
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
         SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
@@ -192,6 +205,9 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
                 break;
             case "GAS 97":
                 precio = "19.79";
+                break;
+            case "GLP":
+                precio = "8.00";
                 break;
             default:
                 Log.d("Error", "NULL");
@@ -259,11 +275,5 @@ public class VentaFragment extends Fragment implements SolesFragment.Custom_Dial
             printama.close();
         });
 
-    }
-
-
-    @Override
-    public void applyTexts(String textsol) {
-     //   totalmonto.setText(textsol+".00");
     }
 }

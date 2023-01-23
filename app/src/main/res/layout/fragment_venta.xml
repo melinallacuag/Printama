@@ -5,30 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DasboardFragment">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat2"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_gravity="center"
+        android:background="#001E89"
+        android:paddingStart="10sp"
+        android:paddingLeft="20sp"
+        android:paddingEnd="20sp"
+        android:paddingRight="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/volverdasboard"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_gravity="center"
+            android:background="#001E89"
+            android:src="@drawable/icon_flecha" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/nunito_black"
+            android:gravity="center"
+            android:text="VENTAS"
+            android:textColor="#fff"
+            android:textSize="15sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayoutCompat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="40sp"
         android:orientation="vertical"
-        android:padding="20sp"
+        android:paddingStart="20sp"
+        android:paddingTop="10sp"
+        android:paddingEnd="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2">
+
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5sp"
+            android:fontFamily="@font/nunito_extrabold"
             android:text="CARA"
             android:textColor="#3C4048"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:fontFamily="@font/nunito_extrabold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.073"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <HorizontalScrollView
             android:id="@+id/ScrollCara"
             android:layout_width="match_parent"
@@ -38,6 +80,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5">
+
             <GridLayout
                 android:id="@+id/gridCara"
                 android:layout_width="wrap_content"
@@ -81,12 +124,12 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_black"
                             android:gravity="center"
                             android:text="17"
                             android:textAlignment="center"
                             android:textColor="#1619BC"
                             android:textSize="20sp"
-                            android:fontFamily="@font/nunito_black"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -121,12 +164,12 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_black"
                             android:gravity="center"
                             android:text="18"
                             android:textAlignment="center"
                             android:textColor="#1619BC"
                             android:textSize="20sp"
-                            android:fontFamily="@font/nunito_black"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -139,11 +182,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
+            android:fontFamily="@font/nunito_extrabold"
             android:text="MANGUERA"
             android:textColor="#3C4048"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:fontFamily="@font/nunito_extrabold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -204,12 +247,12 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_black"
                             android:gravity="center"
                             android:text="DIESEL"
                             android:textAlignment="center"
-                            android:textColor="#F8D420"
+                            android:textColor="#2C291B"
                             android:textSize="20sp"
-                            android:fontFamily="@font/nunito_black"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -243,12 +286,12 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_black"
                             android:gravity="center"
                             android:text="GAS 95"
                             android:textAlignment="center"
-                            android:textColor="#EC1B1B"
+                            android:textColor="#0066C9"
                             android:textSize="20sp"
-                            android:fontFamily="@font/nunito_black"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -282,12 +325,12 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_black"
                             android:gravity="center"
                             android:text="GAS 97"
                             android:textAlignment="center"
-                            android:textColor="#000000"
+                            android:textColor="#FDC207"
                             android:textSize="20sp"
-                            android:fontFamily="@font/nunito_black"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -321,28 +364,67 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_black"
                             android:gravity="center"
                             android:text="GAS 90"
                             android:textAlignment="center"
-                            android:textColor="#033DD1"
+                            android:textColor="#0B8E79"
                             android:textSize="20sp"
-                            android:fontFamily="@font/nunito_black"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/glp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="5sp"
+                    android:clickable="true"
+                    android:foreground="@drawable/selectcard"
+                    app:cardBackgroundColor="#fff"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5sp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8sp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="120sp"
+                            android:layout_height="80sp"
+                            android:layout_marginBottom="5sp"
+                            android:src="@drawable/icon_manguera" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_black"
+                            android:gravity="center"
+                            android:text="GLP"
+                            android:textAlignment="center"
+                            android:textColor="#0A2164"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </GridLayout>
         </HorizontalScrollView>
+
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
+            android:fontFamily="@font/nunito_extrabold"
             android:text="MODALIDAD"
             android:textColor="#3C4048"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:fontFamily="@font/nunito_extrabold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -362,8 +444,8 @@
                 android:layout_margin="2sp"
                 android:layout_weight="1"
                 android:background="@drawable/button"
-                android:text="LIBRE"
                 android:fontFamily="@font/nunito_black"
+                android:text="LIBRE"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
@@ -378,11 +460,11 @@
                 android:layout_margin="2sp"
                 android:layout_weight="1"
                 android:background="@drawable/button"
+                android:fontFamily="@font/nunito_black"
                 android:text="SOLES"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:fontFamily="@font/nunito_black"
                 app:cornerRadius="10sp" />
 
             <Button
@@ -394,11 +476,11 @@
                 android:layout_margin="2sp"
                 android:layout_weight="1"
                 android:background="@drawable/button"
+                android:fontFamily="@font/nunito_black"
                 android:text="GALONES"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:fontFamily="@font/nunito_black"
                 app:cornerRadius="10sp" />
         </LinearLayout>
 
@@ -408,11 +490,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
+            android:fontFamily="@font/nunito_extrabold"
             android:text="OPERACIÓN"
             android:textColor="#3C4048"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:fontFamily="@font/nunito_extrabold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.005"
             app:layout_constraintStart_toStartOf="parent"
@@ -431,12 +513,12 @@
                 android:layout_margin="2sp"
                 android:layout_weight="1"
                 android:background="@drawable/button"
+                android:fontFamily="@font/nunito_black"
                 android:onClick="boletas"
                 android:text="BOLETA"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:fontFamily="@font/nunito_black"
                 app:cornerRadius="10sp" />
 
             <Button
@@ -448,12 +530,12 @@
                 android:layout_margin="2sp"
                 android:layout_weight="1"
                 android:background="@drawable/button"
+                android:fontFamily="@font/nunito_black"
                 android:onClick="factura"
                 android:text="FACTURA"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:fontFamily="@font/nunito_black"
                 app:cornerRadius="10sp" />
 
             <Button
@@ -465,11 +547,11 @@
                 android:layout_margin="2sp"
                 android:layout_weight="1"
                 android:background="@drawable/button"
+                android:fontFamily="@font/nunito_black"
                 android:text="NOTA DESPACHO"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:fontFamily="@font/nunito_black"
                 app:cornerRadius="10sp" />
         </LinearLayout>
 
@@ -486,11 +568,11 @@
                 android:layout_margin="2sp"
                 android:layout_weight="1"
                 android:background="@drawable/button"
+                android:fontFamily="@font/nunito_black"
                 android:text="SERAFIN"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:fontFamily="@font/nunito_black"
                 app:cornerRadius="10sp" />
 
             <Button
@@ -502,11 +584,11 @@
                 android:layout_margin="2sp"
                 android:layout_weight="1"
                 android:background="@drawable/button"
+                android:fontFamily="@font/nunito_black"
                 android:text="PUNTOS"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:fontFamily="@font/nunito_black"
                 app:cornerRadius="10sp" />
 
             <Button
@@ -518,11 +600,11 @@
                 android:layout_margin="2sp"
                 android:layout_weight="1"
                 android:background="@drawable/button"
+                android:fontFamily="@font/nunito_black"
                 android:text="imprimir"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:fontFamily="@font/nunito_black"
                 app:cornerRadius="10sp" />
         </LinearLayout>
 
@@ -532,11 +614,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
+            android:fontFamily="@font/nunito_extrabold"
             android:text="TRANSACCIONES"
             android:textColor="#3C4048"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:fontFamily="@font/nunito_extrabold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -561,9 +643,9 @@
                 android:layout_width="32sp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
+                android:fontFamily="@font/nunito_extrabold"
                 android:gravity="center"
                 android:text="Cara"
-                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -572,9 +654,9 @@
                 android:layout_width="40sp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
+                android:fontFamily="@font/nunito_extrabold"
                 android:gravity="center"
                 android:text="OP."
-                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -583,9 +665,9 @@
                 android:layout_width="45sp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
+                android:fontFamily="@font/nunito_extrabold"
                 android:gravity="center"
                 android:text="Producto"
-                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -594,9 +676,9 @@
                 android:layout_width="62sp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
+                android:fontFamily="@font/nunito_extrabold"
                 android:gravity="center"
                 android:text="IDCliente"
-                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -605,9 +687,9 @@
                 android:layout_width="100sp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
+                android:fontFamily="@font/nunito_extrabold"
                 android:gravity="center"
                 android:text="Razon Social"
-                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -615,9 +697,9 @@
             <TextView
                 android:layout_width="40sp"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_extrabold"
                 android:gravity="center"
                 android:text="Total"
-                android:fontFamily="@font/nunito_extrabold"
                 android:textColor="#fff"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -660,8 +742,8 @@
                         android:layout_width="32sp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="2sp"
-                        android:gravity="center"
                         android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -670,9 +752,9 @@
                         android:layout_width="40sp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="Boleta"
-                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -682,8 +764,8 @@
                         android:layout_width="45sp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2sp"
-                        android:gravity="center"
                         android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -692,9 +774,9 @@
                         android:layout_width="62sp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="11111111"
-                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -703,9 +785,9 @@
                         android:layout_width="100sp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="CLIENTE VARIOS"
-                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -715,13 +797,14 @@
                         android:layout_width="40sp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="10.00"
-                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />
                 </GridLayout>
+
                 <GridLayout
                     android:id="@+id/btndetalles"
                     android:layout_width="match_parent"
@@ -744,9 +827,9 @@
                         android:layout_width="32sp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="18"
-                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -755,9 +838,9 @@
                         android:layout_width="40sp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="Boleta"
-                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -767,9 +850,9 @@
                         android:layout_width="45sp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="Diesel"
-                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -778,9 +861,9 @@
                         android:layout_width="62sp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="11111111"
-                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -789,9 +872,9 @@
                         android:layout_width="100sp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="CLIENTE VARIOS"
-                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -801,9 +884,9 @@
                         android:layout_width="40sp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="20.00"
-                        android:fontFamily="@font/nunito_extrabold"
                         android:textColor="#071C65"
                         android:textSize="10sp"
                         android:textStyle="bold" />

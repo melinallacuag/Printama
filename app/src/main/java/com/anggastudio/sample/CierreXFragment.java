@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.anggastudio.printama.Printama;
 
@@ -18,10 +19,27 @@ public class CierreXFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cierre_x, container, false);
-        view.findViewById(R.id.imprimircierrex).setOnClickListener(v -> cierrex());
+        ImageButton regreso       = view.findViewById(R.id.volverdasboard);
+
+        regreso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DasboardFragment dasboardFragment  = new DasboardFragment();
+                //  VentaFragment ventaFragment = new VentaFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
+            }
+        });
+        view.findViewById(R.id.imprimircierrex).setOnClickListener(
+                v -> cierrex()
+
+        );
         return view;
     }
     private  void cierrex() {
+        DasboardFragment dasboardFragment  = new DasboardFragment();
+
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
+
         String importe = "120.00";
         Printama.with(getContext()).connect(printama -> {
             printama.setSmallText();

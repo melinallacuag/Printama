@@ -44,6 +44,7 @@ public class DasboardFragment extends Fragment{
             public void onClick(View view) {
                 CambioTurnoFragment cambioTurnoFragment = new CambioTurnoFragment();
                 cambioTurnoFragment.show(getActivity().getSupportFragmentManager(), "Cambio de Turno");
+                cambioTurnoFragment.setCancelable(false);
             }
         });
         btniniciodia.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +52,7 @@ public class DasboardFragment extends Fragment{
             public void onClick(View view) {
                 InicioDiaFragment inicioDiaFragment = new InicioDiaFragment();
                 inicioDiaFragment.show(getActivity().getSupportFragmentManager(), "Inicio de Día");
+                inicioDiaFragment.setCancelable(false);
               }
         });
        return view;

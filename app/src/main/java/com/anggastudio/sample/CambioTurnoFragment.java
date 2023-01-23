@@ -1,5 +1,6 @@
 package com.anggastudio.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -32,8 +33,14 @@ public class CambioTurnoFragment extends DialogFragment {
         btncambio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "SE GENERO EL CAMBIO DE TURNO", Toast.LENGTH_SHORT).show();
-                dismiss();
+                try {
+                    Toast.makeText(getContext(), "SE GENERO EL CAMBIO DE TURNO", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), Login.class);
+                    startActivity(intent);
+                    finalize();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
             }
         });
 
