@@ -1,7 +1,6 @@
 package com.anggastudio.sample;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -11,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.anggastudio.printama.Printama;
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
@@ -239,6 +238,8 @@ public class VentaFragment extends Fragment{
         String exoneradas = " 0.00";
         String nota       = "Some Text";
 
+        Bitmap qrBit = printQRCode(nota.toString());
+
         Printama.with(getContext()).connect(printama -> {
             printama.setSmallText();
             printama.printImage(logo, 200);
@@ -279,35 +280,45 @@ public class VentaFragment extends Fragment{
             printama.printDashedLine();
             printama.addNewLine();
 
-           // ImageView imageViewQrCode = findViewById(R.id.imageViewQrCode);
-          //  imageViewQrCode.setImageBitmap(bitmap);
-
-            QRCodeWriter writer = new QRCodeWriter();
-            BitMatrix bitMatrix;
-            try {
-                bitMatrix = writer.encode(nota, BarcodeFormat.QR_CODE, 300, 300);
-                int width = bitMatrix.getWidth();
-                int height = bitMatrix.getHeight();
-                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-                for (int x = 0; x < width; x++) {
-                    for (int y = 0; y < height; y++) {
-                        int color = Color.WHITE;
-                        if (bitMatrix.get(x, y)) color = Color.BLACK;
-                        bitmap.setPixel(x, y, color);
-                    }
-                }
-                if (bitmap != null) {
-                    printama.printImage(bitmap);
-                }
-
-            } catch (WriterException e) {
-                e.printStackTrace();
-            }
-
+            printama.printQrCode(qrBit);
             printama.addNewLine();
             printama.feedPaper();
             printama.close();
         });
 
     }
+
+    private Bitmap printQRCode(String toString) {
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(nota, BarcodeFormat.QR_CODE, 300,300);
+            QRCodeWriter writer = new QRCodeWriter();
+            int width = bitMatrix.getWidth();
+            int height = bitMatrix.getHeight();
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+            return bitmap;
+        }catch(WriterException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    String nota       = "Some Text";
+    private Bitmap printQrCode(Bitmap qrBit) {
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(nota, BarcodeFormat.QR_CODE, 300,300);
+            QRCodeWriter writer = new QRCodeWriter();
+            int width = bitMatrix.getWidth();
+            int height = bitMatrix.getHeight();
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+            return bitmap;
+        }catch(WriterException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
 }
