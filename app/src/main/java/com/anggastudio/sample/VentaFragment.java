@@ -1,6 +1,7 @@
 package com.anggastudio.sample;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -238,7 +239,6 @@ public class VentaFragment extends Fragment{
         String exoneradas = " 0.00";
         String nota       = "Some Text";
 
-        Bitmap qrBit = printQRCode(nota.toString());
 
         Printama.with(getContext()).connect(printama -> {
             printama.setSmallText();
@@ -279,7 +279,26 @@ public class VentaFragment extends Fragment{
             printama.printTextln("SON: "+letraimporte, Printama.LEFT);
             printama.printDashedLine();
             printama.addNewLine();
-            printQrCode(qrBit);
+            QRCodeWriter writer = new QRCodeWriter();
+            BitMatrix bitMatrix;
+            try {
+                bitMatrix = writer.encode(nota, BarcodeFormat.QR_CODE, 300, 300);
+                int width = bitMatrix.getWidth();
+                int height = bitMatrix.getHeight();
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        int color = Color.WHITE;
+                        if (bitMatrix.get(x, y)) color = Color.BLACK;
+                        bitmap.setPixel(x, y, color);
+                    }
+                }
+                if (bitmap != null) {
+                    printama.printImage(bitmap);
+                }
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
             printama.addNewLine();
             printama.feedPaper();
             printama.close();
@@ -287,36 +306,7 @@ public class VentaFragment extends Fragment{
 
     }
 
-    private Bitmap printQRCode(String toString) {
-        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-        try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(nota, BarcodeFormat.QR_CODE, 300,300);
-            QRCodeWriter writer = new QRCodeWriter();
-            int width = bitMatrix.getWidth();
-            int height = bitMatrix.getHeight();
-            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-            return bitmap;
-        }catch(WriterException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
 
-    String nota       = "Some Text";
-    private Bitmap printQrCode(Bitmap qrBit) {
-        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-        try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(nota, BarcodeFormat.QR_CODE, 300,300);
-            QRCodeWriter writer = new QRCodeWriter();
-            int width = bitMatrix.getWidth();
-            int height = bitMatrix.getHeight();
-            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-            return bitmap;
-        }catch(WriterException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
 
 
 

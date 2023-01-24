@@ -110,5 +110,14 @@
             android:background="@drawable/button"
             android:fontFamily="@font/nunito_black"
             app:cornerRadius="15sp"/>
+
+        <TextView
+            android:id="@+id/imei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:layout_gravity="center"
+            android:text="TextView" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
