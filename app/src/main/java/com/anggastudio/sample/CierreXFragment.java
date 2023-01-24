@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
 
@@ -36,10 +37,6 @@ public class CierreXFragment extends Fragment {
         return view;
     }
     private  void cierrex() {
-        DasboardFragment dasboardFragment  = new DasboardFragment();
-
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
-
         String importe = "120.00";
         Printama.with(getContext()).connect(printama -> {
             printama.setSmallText();
@@ -66,6 +63,11 @@ public class CierreXFragment extends Fragment {
             printama.printTextln("Total Bruto S/: "+ importe, Printama.RIGHT);
             printama.feedPaper();
             printama.close();
-        });
+        }, this::showToast);
+        DasboardFragment dasboardFragment  = new DasboardFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
+    }
+    private void showToast(String message) {
+        Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
     }
 }

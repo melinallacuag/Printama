@@ -1,5 +1,6 @@
 package com.anggastudio.sample;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.anggastudio.printama.Printama;
@@ -19,7 +21,14 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import net.glxn.qrgen.android.MatrixToImageWriter;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,14 +36,45 @@ import java.util.TimeZone;
 
 public class VentaFragment extends Fragment{
 
-
-    TextView totalmonto;
+    ImageView imageQR;
+    TextView totalmonto, cliente, operacion;
+    @SuppressLint("WrongThread")
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
-        totalmonto =  view.findViewById(R.id.txtimporte);
+        totalmonto  =  view.findViewById(R.id.txtimporte);
+        operacion   = view.findViewById(R.id.op);
+        cliente     = view.findViewById(R.id.idcliente);
+        String rucempresa ="20603939949";
+        String factura ="F001-0000004";
+        String igv ="3.05";
+        String fecha ="2022/12/21";
+        String ruccliente ="20554542728";
+        StringBuilder sb = new StringBuilder();
+        sb.append(rucempresa.toString());
+        sb.append(factura.toString());
+        sb.append(igv.toString());
+        sb.append(fecha.toString());
+        sb.append(totalmonto.getText().toString());
+      //  sb.append(cliente.getText().toString());
+        sb.append(ruccliente.toString());
+
+
+        String digitogenerado = sb.toString();
+
+        //imageQR = view.findViewById(R.id.image_qr);
+
+        try {
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            ImageView imageViewQrCode = view.findViewById(R.id.image_qr);
+            imageViewQrCode.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
 
         //Selección de Cara
         CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
@@ -183,9 +223,10 @@ public class VentaFragment extends Fragment{
         return view;
     }
     private  void boleta() {
-
-        Toast.makeText(getContext(), "SE IMPRIMIO", Toast.LENGTH_SHORT).show();
+       // imageQR = (ImageView) imageQR.findViewById(R.id.image_qr);
+       // in_encrypt = (TextView) in_encrypt.findViewById(R.id.idcliente);
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logorobles);
+        Bitmap QR = Printama.getBitmapFromVector(getContext(), R.drawable.icon_app);
 
         //Fecha y Hora
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
@@ -237,8 +278,16 @@ public class VentaFragment extends Fragment{
         String letraimporte     = numToWord.Convertir(importe,true);
 
         String exoneradas = " 0.00";
-        String nota       = "Some Text";
 
+        totalmonto  = getView().findViewById(R.id.txtimporte);
+        operacion   = getView().findViewById(R.id.op);
+        cliente     = getView().findViewById(R.id.idcliente);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(cliente.getText().toString());
+        sb.append(operacion.getText().toString());
+
+        String digitogenerado = sb.toString();
 
         Printama.with(getContext()).connect(printama -> {
             printama.setSmallText();
@@ -277,37 +326,25 @@ public class VentaFragment extends Fragment{
             printama.printTextln("CONDICION DE PAGO:", Printama.LEFT);
             printama.printTextln("CONTADO S/: "+ importe, Printama.RIGHT);
             printama.printTextln("SON: "+letraimporte, Printama.LEFT);
-            printama.printDashedLine();
-            printama.addNewLine();
-            QRCodeWriter writer = new QRCodeWriter();
-            BitMatrix bitMatrix;
+            printama.setSmallText();
             try {
-                bitMatrix = writer.encode(nota, BarcodeFormat.QR_CODE, 300, 300);
-                int width = bitMatrix.getWidth();
-                int height = bitMatrix.getHeight();
-                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-                for (int x = 0; x < width; x++) {
-                    for (int y = 0; y < height; y++) {
-                        int color = Color.WHITE;
-                        if (bitMatrix.get(x, y)) color = Color.BLACK;
-                        bitmap.setPixel(x, y, color);
-                    }
-                }
-                if (bitmap != null) {
-                    printama.printImage(bitmap);
-                }
+                BitMatrix bitMatrix = new MultiFormatWriter().encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
+                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+              //  ImageView imageViewQrCode = imageViewQrCode.findViewById(R.id.image_qr);
+                printama.printImage(bitmap);
+            //    imageViewQrCode.setImageBitmap(bitmap);
             } catch (WriterException e) {
                 e.printStackTrace();
             }
-            printama.addNewLine();
             printama.feedPaper();
             printama.close();
-        });
-
+        }, this::showToast);
     }
 
-
-
+    private void showToast(String message) {
+        Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
+    }
 
 
 }

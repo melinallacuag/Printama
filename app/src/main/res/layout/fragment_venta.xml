@@ -414,7 +414,13 @@
                 </androidx.cardview.widget.CardView>
             </GridLayout>
         </HorizontalScrollView>
-
+        <ImageView
+            android:id="@+id/image_qr"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/icon_app"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
@@ -727,6 +733,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/op"
                             android:layout_width="40sp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2sp"
@@ -749,6 +756,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/idcliente"
                             android:layout_width="62sp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2sp"
