@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void printQrReceipt() {
         PrintModel printModel = Mock.getPrintModelMock();
-        Bitmap logo = Printama.getBitmapFromVector(this, R.drawable.logo_gopay_print);
+        Bitmap logo = Printama.getBitmapFromVector(this, R.drawable.logo_app);
         PrintHeader header = printModel.getPrintHeader();
         PrintBody body = printModel.getPrintBody();
         PrintFooter footer = printModel.getPrintFooter();
@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void printQrReceipt2() {
-        Bitmap logo = Printama.getBitmapFromVector(this, R.drawable.logo_gopay_print);
+        Bitmap logo = Printama.getBitmapFromVector(this, R.drawable.logo_app);
         String nota = "Some Text";
         Printama.with(this).connect(printama -> {
             printama.printImage(logo, 200);

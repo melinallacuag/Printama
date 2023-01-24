@@ -31,7 +31,6 @@ public class BoletaFragment extends DialogFragment {
     TextInputEditText placa,dni,nombre,direccion;
     TextInputLayout alertplaca,alertdni, alertnombre, alertdireccion;
 
-    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -143,8 +142,6 @@ public class BoletaFragment extends DialogFragment {
                 direccion.setText("JR. UNIÓN");
             }
         });
-
-
 
         return view;
     }

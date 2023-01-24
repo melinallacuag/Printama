@@ -163,7 +163,7 @@ public class Ventas extends AppCompatActivity {
 
     private  void boleta(){
         //LOGO
-        Bitmap logo = Printama.getBitmapFromVector(this, R.drawable.robles_sinfondo);
+        Bitmap logo = Printama.getBitmapFromVector(this, R.drawable.logorobles);
 
         //Fecha y Hora
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));

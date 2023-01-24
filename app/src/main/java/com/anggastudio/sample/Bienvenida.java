@@ -15,7 +15,7 @@ public class Bienvenida extends AppCompatActivity {
 
     Animation logoAnim, tituloAnim, parrafoAnim;
     ImageView logo;
-    TextView titulo, slogan;
+    TextView  titulo, slogan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +26,13 @@ public class Bienvenida extends AppCompatActivity {
         tituloAnim  = AnimationUtils.loadAnimation(this,R.anim.titulo_animation);
         parrafoAnim = AnimationUtils.loadAnimation(this,R.anim.parrafo_animation);
 
-        logo   = findViewById(R.id.logoapp);
+        logo    = findViewById(R.id.logoapp);
         titulo  = findViewById(R.id.bienvenida);
         slogan  = findViewById(R.id.parrafo);
 
         logo.startAnimation(logoAnim);
         titulo.startAnimation(tituloAnim);
         slogan.startAnimation(parrafoAnim);
-
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -42,12 +41,6 @@ public class Bienvenida extends AppCompatActivity {
                 finish();
             }
         },3000);
-
-
-
     }
-
-
-
 
 }

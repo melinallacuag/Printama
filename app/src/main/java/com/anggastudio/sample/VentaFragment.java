@@ -184,7 +184,7 @@ public class VentaFragment extends Fragment{
     private  void boleta() {
 
         Toast.makeText(getContext(), "SE IMPRIMIO", Toast.LENGTH_SHORT).show();
-        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.robles_sinfondo);
+        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logorobles);
 
         //Fecha y Hora
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
