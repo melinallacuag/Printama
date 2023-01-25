@@ -10,7 +10,7 @@
         android:layout_width="380sp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20sp"
+        android:padding="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

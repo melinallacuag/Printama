@@ -52,12 +52,12 @@ public class SolesFragment extends DialogFragment {
             public void onClick(View view) {
                 textsol = (TextView) getActivity().findViewById(R.id.txtimporte);
 
+
                 BigDecimal bd = new BigDecimal(montosoles.getText().toString());
                 bd = bd.setScale(2, RoundingMode.HALF_UP);
                 textsol.setText(bd.toString());
 
            //     textsol.setText( montosoles.getText().toString());
-
 
                String textsol = montosoles.getText().toString().trim();
                 int numsol   = Integer.parseInt(textsol);
@@ -70,6 +70,8 @@ public class SolesFragment extends DialogFragment {
                     Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
+
+
 
 
             }

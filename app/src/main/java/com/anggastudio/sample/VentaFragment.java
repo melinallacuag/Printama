@@ -1,11 +1,17 @@
 package com.anggastudio.sample;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.print.PrintHelper;
+
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,27 +50,27 @@ public class VentaFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
+        imageQR = view.findViewById(R.id.image_qr);
         totalmonto  =  view.findViewById(R.id.txtimporte);
         operacion   = view.findViewById(R.id.op);
         cliente     = view.findViewById(R.id.idcliente);
+
+
         String rucempresa ="20603939949";
         String factura ="F001-0000004";
         String igv ="3.05";
         String fecha ="2022/12/21";
         String ruccliente ="20554542728";
+
         StringBuilder sb = new StringBuilder();
         sb.append(rucempresa.toString());
         sb.append(factura.toString());
         sb.append(igv.toString());
         sb.append(fecha.toString());
-        sb.append(totalmonto.getText().toString());
-      //  sb.append(cliente.getText().toString());
         sb.append(ruccliente.toString());
-
 
         String digitogenerado = sb.toString();
 
-        //imageQR = view.findViewById(R.id.image_qr);
 
         try {
             BitMatrix bitMatrix = new MultiFormatWriter().encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
@@ -75,6 +81,7 @@ public class VentaFragment extends Fragment{
         } catch (WriterException e) {
             e.printStackTrace();
         }
+
 
         //Selección de Cara
         CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
@@ -222,11 +229,12 @@ public class VentaFragment extends Fragment{
         view.findViewById(R.id.btnimprimir).setOnClickListener(v -> boleta());
         return view;
     }
+
+
+
     private  void boleta() {
-       // imageQR = (ImageView) imageQR.findViewById(R.id.image_qr);
-       // in_encrypt = (TextView) in_encrypt.findViewById(R.id.idcliente);
+
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logorobles);
-        Bitmap QR = Printama.getBitmapFromVector(getContext(), R.drawable.icon_app);
 
         //Fecha y Hora
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
@@ -294,7 +302,7 @@ public class VentaFragment extends Fragment{
             printama.printImage(logo, 200);
             printama.addNewLine(1);
             printama.printText("GRIFO ROBLES S.A.C\n", Printama.CENTER);
-            printama.printTextln("PRINCIPAL: AV.SAN BORJA SUR NRO.810\n"+
+           /* printama.printTextln("PRINCIPAL: AV.SAN BORJA SUR NRO.810\n"+
                     "DTO.402 LIMA-LIMA-SAN BORJA", Printama.CENTER);
             printama.printTextln("SUCURSAL: CAR. CENTRAL MARGEN NRO.S/N\n" +
                     "JUNIN - HUANCAYO - PILCOMAYO", Printama.CENTER);
@@ -321,22 +329,33 @@ public class VentaFragment extends Fragment{
             printama.printTextln("IGV S/: "+importe, Printama.RIGHT);
             printama.printTextln("TOTAL VENTA S/: "+ importe, Printama.RIGHT);
             printama.setNormalText();
-            printama.printDoubleDashedLine();
+            printama.printDoubleDashedLine();*/
             printama.setSmallText();
             printama.printTextln("CONDICION DE PAGO:", Printama.LEFT);
             printama.printTextln("CONTADO S/: "+ importe, Printama.RIGHT);
             printama.printTextln("SON: "+letraimporte, Printama.LEFT);
-            printama.setSmallText();
-            try {
-                BitMatrix bitMatrix = new MultiFormatWriter().encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
-                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-              //  ImageView imageViewQrCode = imageViewQrCode.findViewById(R.id.image_qr);
-                printama.printImage(bitmap);
-            //    imageViewQrCode.setImageBitmap(bitmap);
-            } catch (WriterException e) {
-                e.printStackTrace();
-            }
+            printama.addNewLine();
+
+        /*    ImageView imageViewQrCode = getView().findViewById(R.id.image_qr);
+           Bitmap bitMatrix = ((BitmapDrawable) imageViewQrCode.getDrawable()).getBitmap();
+            printama.printImage( bitMatrix);*/
+
+ /*
+            PrintHelper printHelper = new PrintHelper(getContext());
+            printHelper.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+            Bitmap bitmap = ((BitmapDrawable) imageQR.getDrawable()).getBitmap();
+              printama.printImage(bitmap, 200);
+*/
+            /*setImageBitmap*/
+
+            Bitmap bitmap = ((BitmapDrawable) imageQR.getDrawable()).getBitmap();
+            printama.printImage(bitmap, 200);
+
+           /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.id.image_qr);
+            printama.printImage(bitmap, 200);*/
+           // printHelper.printBitmap("Print Bitmap", bitmap);
+
+
             printama.feedPaper();
             printama.close();
         }, this::showToast);
