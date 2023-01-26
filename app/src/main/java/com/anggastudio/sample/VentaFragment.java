@@ -1,13 +1,17 @@
 package com.anggastudio.sample;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.print.PrintHelper;
 
@@ -22,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.anggastudio.printama.Printama;
+import com.anggastudio.sample.util.Util;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -42,6 +47,7 @@ import java.util.TimeZone;
 
 public class VentaFragment extends Fragment{
 
+    private static final int REQUEST_CODE_PERMISSION = 1;
     ImageView imageQR;
     TextView totalmonto, cliente, operacion;
     @SuppressLint("WrongThread")
@@ -49,6 +55,13 @@ public class VentaFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
+
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted, request it
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION);
+        } else {
+            // Permission has already been granted, continue with writing to external storage
+        }
 
         imageQR = view.findViewById(R.id.image_qr);
         totalmonto  =  view.findViewById(R.id.txtimporte);
@@ -78,7 +91,16 @@ public class VentaFragment extends Fragment{
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             ImageView imageViewQrCode = view.findViewById(R.id.image_qr);
             imageViewQrCode.setImageBitmap(bitmap);
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/QRCode.png";
+            FileOutputStream fos = new FileOutputStream(path);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
         } catch (WriterException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -332,13 +354,33 @@ public class VentaFragment extends Fragment{
             printama.printDoubleDashedLine();*/
             printama.setSmallText();
             printama.printTextln("CONDICION DE PAGO:", Printama.LEFT);
-            printama.printTextln("CONTADO S/: "+ importe, Printama.RIGHT);
-            printama.printTextln("SON: "+letraimporte, Printama.LEFT);
+            printama.printTextln("CONTADO S/: " + importe, Printama.RIGHT);
+            printama.printTextln("SON: " + letraimporte, Printama.LEFT);
             printama.addNewLine();
+            try {
+                BitMatrix bitMatrix = new MultiFormatWriter().encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
+                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                ImageView imageViewQrCode = getView().findViewById(R.id.image_qr);
+                imageViewQrCode.setImageBitmap(bitmap);
+                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/QRCode.png";
+                FileOutputStream fos = new FileOutputStream(path);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.flush();
+                fos.close();
+            } catch (WriterException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        /*    ImageView imageViewQrCode = getView().findViewById(R.id.image_qr);
+       /*   ImageView imageViewQrCode = getView().findViewById(R.id.image_qr);
            Bitmap bitMatrix = ((BitmapDrawable) imageViewQrCode.getDrawable()).getBitmap();
-            printama.printImage( bitMatrix);*/
+            printama.printImage( bitMatrix);/
+           // printama.printImage(Util.getQrCode(bitMatrix);
+
 
  /*
             PrintHelper printHelper = new PrintHelper(getContext());
@@ -348,18 +390,33 @@ public class VentaFragment extends Fragment{
 */
             /*setImageBitmap*/
 
-            Bitmap bitmap = ((BitmapDrawable) imageQR.getDrawable()).getBitmap();
-            printama.printImage(bitmap, 200);
+    /*        Bitmap bitmap = ((BitmapDrawable) imageQR.getDrawable()).getBitmap();
+            printama.printImage(bitmap, 200);*/
 
            /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.id.image_qr);
             printama.printImage(bitmap, 200);*/
-           // printHelper.printBitmap("Print Bitmap", bitmap);
+            // printHelper.printBitmap("Print Bitmap", bitmap);
 
 
+            //String barcode_data = "010000000100";
+
+          /*  try {
+                BitMatrix bitMatrix = new MultiFormatWriter().encode(barcode_data, BarcodeFormat.CODE_128, 350, 120);
+                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                ImageView imageViewQrCode = getView().findViewById(R.id.image_qr);
+                imageViewQrCode.setImageBitmap(bitmap);
+
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }*/
+         //   printama.printImage(Util.getQrCode(imageViewQrCode.getQrCode()), 300);
+         //   printama.printImage(iv);
             printama.feedPaper();
             printama.close();
         }, this::showToast);
     }
+
 
     private void showToast(String message) {
         Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
