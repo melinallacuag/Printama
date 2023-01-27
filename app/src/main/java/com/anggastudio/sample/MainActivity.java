@@ -115,11 +115,18 @@ public class MainActivity extends AppCompatActivity {
             printama.printTextJustify("text1", "text2");
             printama.printTextJustify("text1", "text2", "text3");
             printama.printTextJustify("text1", "text2", "text3", "text4");
+            printama.printTextJustify("text1", "text2", "text3", "text4","text5");
+            printama.printTextJustify("text1", "text2", "text3", "text4","text5","text6");
+            printama.printTextJustify("text1", "text2", "text3", "text4","text5","text6","text7");
+            printama.printTextJustify("text1", "text2", "text3", "text4","text5","text6","text7","text8");
 
             printama.printTextJustifyBold("text1", "text2");
             printama.printTextJustifyBold("text1", "text2", "text3");
             printama.printTextJustifyBold("text1", "text2", "text3", "text4");
-
+            printama.printTextJustifyBold("text1", "text2", "text3", "text4","text5");
+            printama.printTextJustifyBold("text1", "text2", "text3", "text4","text5","text6");
+            printama.printTextJustifyBold("text1", "text2", "text3", "text4","text5","text6","text7");
+            printama.printTextJustifyBold("text1", "text2", "text3", "text4","text5","text6","text7","text8");
             printama.setNormalText();
             printama.feedPaper();
             printama.close();

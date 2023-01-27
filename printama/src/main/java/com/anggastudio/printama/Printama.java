@@ -349,6 +349,18 @@ public class Printama {
         String justifiedText = getJustifiedText(text1, text2, text3,text4,text5);
         printText(justifiedText);
     }
+    public void printTextJustify(String text1, String text2, String text3,String text4, String text5, String text6) {
+        String justifiedText = getJustifiedText(text1, text2, text3,text4,text5,text6);
+        printText(justifiedText);
+    }
+    public void printTextJustify(String text1, String text2, String text3,String text4, String text5, String text6,String text7) {
+        String justifiedText = getJustifiedText(text1, text2, text3,text4,text5,text6,text7);
+        printText(justifiedText);
+    }
+    public void printTextJustify(String text1, String text2, String text3,String text4, String text5,String text6,String text7,String text8) {
+        String justifiedText = getJustifiedText(text1, text2, text3,text4,text5,text6,text7,text8);
+        printText(justifiedText);
+    }
 
 
 
@@ -365,6 +377,22 @@ public class Printama {
 
     public void printTextJustifyBold(String text1, String text2, String text3, String text4) {
         String justifiedText = getJustifiedText(text1, text2, text3, text4);
+        printTextBold(justifiedText);
+    }
+    public void printTextJustifyBold(String text1, String text2, String text3, String text4, String text5) {
+        String justifiedText = getJustifiedText(text1, text2, text3, text4, text5);
+        printTextBold(justifiedText);
+    }
+    public void printTextJustifyBold(String text1, String text2, String text3, String text4, String text5, String text6) {
+        String justifiedText = getJustifiedText(text1, text2, text3, text4, text5,text6);
+        printTextBold(justifiedText);
+    }
+    public void printTextJustifyBold(String text1, String text2, String text3, String text4, String text5 ,String text6, String text7) {
+        String justifiedText = getJustifiedText(text1, text2, text3, text4, text5, text6, text7);
+        printTextBold(justifiedText);
+    }
+    public void printTextJustifyBold(String text1, String text2, String text3, String text4, String text5 ,String text6,String text7, String text8) {
+        String justifiedText = getJustifiedText(text1, text2, text3, text4, text5, text6, text7, text8);
         printTextBold(justifiedText);
     }
 
@@ -396,6 +424,37 @@ public class Printama {
         justifiedText = text1234 + getSpaces(text1234,text5) + text5;
         return justifiedText;
     }
+    private String getJustifiedText(String text1, String text2, String text3, String text4, String text5, String text6) {
+        String justifiedText = "";
+        String text12 = text1 + getSpaces(text1, text2, text3, text4,text5,text6) + text2;
+        String text123 = text12 + getSpaces(text12, text3, text4,text5,text6) + text3;
+        String text1234 = text123 + getSpaces(text123, text4,text5,text6) + text4;
+        String text12345 = text1234 + getSpaces(text1234, text5,text6) + text5;
+        justifiedText = text12345 + getSpaces(text12345,text6) + text6;
+        return justifiedText;
+    }
+    private String getJustifiedText(String text1, String text2, String text3, String text4, String text5, String text6, String text7) {
+        String justifiedText = "";
+        String text12 = text1 + getSpaces(text1, text2, text3, text4,text5,text6,text7) + text2;
+        String text123 = text12 + getSpaces(text12, text3, text4,text5,text6,text7) + text3;
+        String text1234 = text123 + getSpaces(text123, text4,text5,text6,text7) + text4;
+        String text12345 = text1234 + getSpaces(text1234, text5,text6,text7) + text5;
+        String text123456 = text12345 + getSpaces(text12345, text6,text7) + text6;
+        justifiedText = text123456 + getSpaces(text123456,text7) + text7;
+        return justifiedText;
+    }
+    private String getJustifiedText(String text1, String text2, String text3, String text4, String text5, String text6, String text7, String text8) {
+        String justifiedText = "";
+        String text12 = text1 + getSpaces(text1, text2, text3, text4,text5,text6,text7,text8) + text2;
+        String text123 = text12 + getSpaces(text12, text3, text4,text5,text6,text7,text8) + text3;
+        String text1234 = text123 + getSpaces(text123, text4,text5,text6,text7,text8) + text4;
+        String text12345 = text1234 + getSpaces(text1234, text5,text6,text7,text8) + text5;
+        String text123456 = text12345 + getSpaces(text12345, text6,text7,text8) + text6;
+        String text1234567 = text123456 + getSpaces(text123456, text7,text8) + text7;
+        justifiedText = text1234567 + getSpaces(text1234567,text8) + text8;
+        return justifiedText;
+    }
+
 
     private String getSpaces(String text1, String text2) {
         int text1Length = text1.length();
@@ -446,6 +505,52 @@ public class Printama {
         }
         return spaces.toString();
     }
+    private String getSpaces(String text1, String text2, String text3, String text4, String text5, String text6) {
+        int text1Length = text1.length();
+        int text2Length = text2.length();
+        int text3Length = text3.length();
+        int text4Length = text4.length();
+        int text5Length = text5.length();
+        int text6Length = text6.length();
+        int spacesCount = (MAX_CHAR - text1Length - text2Length - text3Length - text4Length - text5Length - text6Length) / 5;
+        StringBuilder spaces = new StringBuilder();
+        for (int i = 0; i < spacesCount; i++) {
+            spaces.append(" ");
+        }
+        return spaces.toString();
+    }
+    private String getSpaces(String text1, String text2, String text3, String text4, String text5, String text6, String text7) {
+        int text1Length = text1.length();
+        int text2Length = text2.length();
+        int text3Length = text3.length();
+        int text4Length = text4.length();
+        int text5Length = text5.length();
+        int text6Length = text6.length();
+        int text7Length = text7.length();
+        int spacesCount = (MAX_CHAR - text1Length - text2Length - text3Length - text4Length - text5Length - text6Length- text7Length) / 6;
+        StringBuilder spaces = new StringBuilder();
+        for (int i = 0; i < spacesCount; i++) {
+            spaces.append(" ");
+        }
+        return spaces.toString();
+    }
+    private String getSpaces(String text1, String text2, String text3, String text4, String text5, String text6, String text7, String text8) {
+        int text1Length = text1.length();
+        int text2Length = text2.length();
+        int text3Length = text3.length();
+        int text4Length = text4.length();
+        int text5Length = text5.length();
+        int text6Length = text6.length();
+        int text7Length = text7.length();
+        int text8Length = text8.length();
+        int spacesCount = (MAX_CHAR - text1Length - text2Length - text3Length - text4Length - text5Length - text6Length- text7Length) / 6;
+        StringBuilder spaces = new StringBuilder();
+        for (int i = 0; i < spacesCount; i++) {
+            spaces.append(" ");
+        }
+        return spaces.toString();
+    }
+
 
     //----------------------------------------------------------------------------------------------
     // PRINT TEXT WITH FORMATTING

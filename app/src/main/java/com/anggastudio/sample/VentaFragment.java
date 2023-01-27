@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.print.PrintHelper;
 
 import android.os.Environment;
+import android.print.PrintJob;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.anggastudio.printama.Printama;
-import com.anggastudio.sample.util.Util;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -35,6 +35,8 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import net.glxn.qrgen.android.MatrixToImageWriter;
+import net.glxn.qrgen.android.QRCode;
+import net.glxn.qrgen.core.image.ImageType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -56,18 +58,7 @@ public class VentaFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted, request it
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION);
-        } else {
-            // Permission has already been granted, continue with writing to external storage
-        }
-
-        imageQR = view.findViewById(R.id.image_qr);
         totalmonto  =  view.findViewById(R.id.txtimporte);
-        operacion   = view.findViewById(R.id.op);
-        cliente     = view.findViewById(R.id.idcliente);
-
 
         String rucempresa ="20603939949";
         String factura ="F001-0000004";
@@ -84,13 +75,12 @@ public class VentaFragment extends Fragment{
 
         String digitogenerado = sb.toString();
 
-
         try {
             BitMatrix bitMatrix = new MultiFormatWriter().encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-            ImageView imageViewQrCode = view.findViewById(R.id.image_qr);
-            imageViewQrCode.setImageBitmap(bitmap);
+          //  ImageView imageViewQrCode = view.findViewById(R.id.image_qr);
+           // imageViewQrCode.setImageBitmap(bitmap);
             String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/QRCode.png";
             FileOutputStream fos = new FileOutputStream(path);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
@@ -248,13 +238,21 @@ public class VentaFragment extends Fragment{
             }
         });
 
-        view.findViewById(R.id.btnimprimir).setOnClickListener(v -> boleta());
+        view.findViewById(R.id.btnimprimir).setOnClickListener(v -> facturacion(turno,cajero,kilometraje,placa,dni,clientes,umed,direccion));
         return view;
     }
 
+    String cajero = "RUBEN ESCOBAR";
+    int turno = 01;
+    int kilometraje = 0100000000;
+    String placa = "BKC-926";
+    long dni = Long.parseLong("20600064062");
+    String clientes = "CONNEXA DISTRIBUICIONES SAC";
+    long tarjeta = Long.parseLong("7020130000000309");
+    String umed = "GLL";
+    String direccion = "AV FERROCARRIL N 590 HUANCAYO";
 
-
-    private  void boleta() {
+    private  void boleta(int turno ,String cajero,String umed) {
 
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logorobles);
 
@@ -310,12 +308,11 @@ public class VentaFragment extends Fragment{
         String exoneradas = " 0.00";
 
         totalmonto  = getView().findViewById(R.id.txtimporte);
-        operacion   = getView().findViewById(R.id.op);
+
         cliente     = getView().findViewById(R.id.idcliente);
 
         StringBuilder sb = new StringBuilder();
         sb.append(cliente.getText().toString());
-        sb.append(operacion.getText().toString());
 
         String digitogenerado = sb.toString();
 
@@ -324,7 +321,7 @@ public class VentaFragment extends Fragment{
             printama.printImage(logo, 200);
             printama.addNewLine(1);
             printama.printText("GRIFO ROBLES S.A.C\n", Printama.CENTER);
-           /* printama.printTextln("PRINCIPAL: AV.SAN BORJA SUR NRO.810\n"+
+            printama.printTextln("PRINCIPAL: AV.SAN BORJA SUR NRO.810\n"+
                     "DTO.402 LIMA-LIMA-SAN BORJA", Printama.CENTER);
             printama.printTextln("SUCURSAL: CAR. CENTRAL MARGEN NRO.S/N\n" +
                     "JUNIN - HUANCAYO - PILCOMAYO", Printama.CENTER);
@@ -334,14 +331,14 @@ public class VentaFragment extends Fragment{
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
-            printama.printTextln("Fecha-Hora:"+ FechaHora + "   Turno:02",Printama.LEFT);
-            printama.printTextln("Cajero: FABIOLA MARIBEL HERRERA HUERTA", Printama.LEFT);
+            printama.printTextln("Fecha-Hora:"+ FechaHora + "   Turno:"+turno,Printama.LEFT);
+            printama.printTextln("Cajero:"+cajero, Printama.LEFT);
             printama.printTextln("Lado:"+cara, Printama.LEFT);
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
             printama.printTextJustify("PRODUCTO","U/MED.","PRECIO","CANT","IMPORTE\n");
-            printama.printTextJustify(manguera,"GLL" , finalPrecio, resultadoscantidad, importe+"\n");
+            printama.printTextJustify(manguera,umed , finalPrecio, resultadoscantidad, importe+"\n");
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
@@ -351,72 +348,236 @@ public class VentaFragment extends Fragment{
             printama.printTextln("IGV S/: "+importe, Printama.RIGHT);
             printama.printTextln("TOTAL VENTA S/: "+ importe, Printama.RIGHT);
             printama.setNormalText();
-            printama.printDoubleDashedLine();*/
+            printama.printDoubleDashedLine();
             printama.setSmallText();
             printama.printTextln("CONDICION DE PAGO:", Printama.LEFT);
             printama.printTextln("CONTADO S/: " + importe, Printama.RIGHT);
             printama.printTextln("SON: " + letraimporte, Printama.LEFT);
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la factura de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
             printama.addNewLine();
-            try {
-                BitMatrix bitMatrix = new MultiFormatWriter().encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
-                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-                ImageView imageViewQrCode = getView().findViewById(R.id.image_qr);
-                imageViewQrCode.setImageBitmap(bitmap);
-                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/QRCode.png";
-                FileOutputStream fos = new FileOutputStream(path);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                fos.flush();
-                fos.close();
-            } catch (WriterException e) {
-                e.printStackTrace();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-       /*   ImageView imageViewQrCode = getView().findViewById(R.id.image_qr);
-           Bitmap bitMatrix = ((BitmapDrawable) imageViewQrCode.getDrawable()).getBitmap();
-            printama.printImage( bitMatrix);/
-           // printama.printImage(Util.getQrCode(bitMatrix);
-
-
- /*
-            PrintHelper printHelper = new PrintHelper(getContext());
-            printHelper.setScaleMode(PrintHelper.SCALE_MODE_FIT);
-            Bitmap bitmap = ((BitmapDrawable) imageQR.getDrawable()).getBitmap();
-              printama.printImage(bitmap, 200);
-*/
-            /*setImageBitmap*/
-
-    /*        Bitmap bitmap = ((BitmapDrawable) imageQR.getDrawable()).getBitmap();
-            printama.printImage(bitmap, 200);*/
-
-           /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.id.image_qr);
-            printama.printImage(bitmap, 200);*/
-            // printHelper.printBitmap("Print Bitmap", bitmap);
-
-
-            //String barcode_data = "010000000100";
-
-          /*  try {
-                BitMatrix bitMatrix = new MultiFormatWriter().encode(barcode_data, BarcodeFormat.CODE_128, 350, 120);
-                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-                ImageView imageViewQrCode = getView().findViewById(R.id.image_qr);
-                imageViewQrCode.setImageBitmap(bitmap);
-
-            } catch (WriterException e) {
-                e.printStackTrace();
-            }*/
-         //   printama.printImage(Util.getQrCode(imageViewQrCode.getQrCode()), 300);
-         //   printama.printImage(iv);
             printama.feedPaper();
             printama.close();
         }, this::showToast);
     }
 
+    private  void facturacion(int turno ,String cajero,int kilometraje,String placa,long dni,String clientes ,String umed,String direccion) {
+        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logorobles);
+
+        //Fecha y Hora
+        Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+        SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        String FechaHora      = sdf.format(cal.getTime());
+
+        //Texto de Cara
+        TextView textcaras    = (TextView) getView().findViewById(R.id.textcara);
+        String cara           = textcaras.getText().toString();
+
+        //Texto de Manguera
+        TextView textmanguera = (TextView) getView().findViewById(R.id.textmanguera);
+        String manguera       = textmanguera.getText().toString();
+        String precio         = null;
+        switch (manguera) {
+            case "DIESEL":
+                precio = "18.90";
+                break;
+            case "GAS 90":
+                precio = "16.69";
+                break;
+            case "GAS 95":
+                precio = "18.39";
+                break;
+            case "GAS 97":
+                precio = "19.79";
+                break;
+            case "GLP":
+                precio = "8.00";
+                break;
+            default:
+                Log.d("Error", "NULL");
+        }
+        String finalPrecio = precio;
+        double totalprecio = Double.parseDouble(finalPrecio);
+
+        //Texto Importe
+        TextView txtimporte   = (TextView) getView().findViewById(R.id.txtimporte);
+        String importe        =  txtimporte.getText().toString();
+        double totalimporte   = Double.parseDouble(importe);
+
+        //Convertir decimal y Operacion de Cantidad por GALONES
+        DecimalFormat df          = new DecimalFormat("#.###");
+        double resultados         = Double.parseDouble(df.format(totalimporte/totalprecio ));
+        String resultadoscantidad = String.valueOf(resultados);
+
+        //Convertir numero a letras
+        Numero_Letras numToWord = new Numero_Letras();
+        String letraimporte     = numToWord.Convertir(importe,true);
+
+        String exoneradas = " 0.00";
+
+        totalmonto  = getView().findViewById(R.id.txtimporte);
+        cliente     = getView().findViewById(R.id.idcliente);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(cliente.getText().toString());
+
+        String digitogenerado = sb.toString();
+
+        Printama.with(getContext()).connect(printama -> {
+            printama.setSmallText();
+            printama.printImage(logo, 200);
+            printama.addNewLine(1);
+            printama.printText("GRIFO ROBLES S.A.C\n", Printama.CENTER);
+            printama.printTextln("PRINCIPAL: AV.SAN BORJA SUR NRO.810\n"+
+                    "DTO.402 LIMA-LIMA-SAN BORJA", Printama.CENTER);
+            printama.printTextln("SUCURSAL: CAR. CENTRAL MARGEN NRO.S/N\n" +
+                    "JUNIN - HUANCAYO - PILCOMAYO", Printama.CENTER);
+            printama.printTextln("RUC: 20602130259", Printama.CENTER);
+            printama.printTextln("FACTURA DE VENTA ELECTRONICA", Printama.CENTER);
+            printama.printText("F001-0000004\n",Printama.CENTER);
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.printTextln("Fecha-Hora:"+ FechaHora + "   Turno: "+turno,Printama.LEFT);
+            printama.printTextln("Cajero: "+cajero, Printama.LEFT);
+            printama.printTextln("Lado:"+cara + "         Kilometraje: "+kilometraje, Printama.LEFT);
+            printama.printTextln("Placa:"+placa, Printama.LEFT);
+            printama.printTextln("RUC / DNI:"+dni, Printama.LEFT);
+            printama.printTextln("Cliente:"+clientes, Printama.LEFT);
+            printama.printTextln("Dirección:"+direccion, Printama.LEFT);
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.printTextJustify("PRODUCTO","U/MED.","PRECIO","CANT","IMPORTE\n");
+            printama.printTextJustify(manguera,umed , finalPrecio, resultadoscantidad, importe+"\n");
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.addNewLine(1);
+            printama.printTextln("OP. GRAVADAS S/: "+ importe, Printama.RIGHT);
+            printama.printTextln("OP. EXONERADAS S/: "+exoneradas , Printama.RIGHT);
+            printama.printTextln("IGV S/: "+importe, Printama.RIGHT);
+            printama.printTextln("TOTAL VENTA S/: "+ importe, Printama.RIGHT);
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.printTextln("CONDICION DE PAGO:", Printama.LEFT);
+            printama.printTextln("CONTADO S/: " + importe, Printama.RIGHT);
+            printama.printTextln("SON: " + letraimporte, Printama.LEFT);
+            printama.setSmallText();
+            printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la factura de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
+            printama.addNewLine();
+            printama.feedPaper();
+            printama.close();
+        }, this::showToast);
+    }
+
+    private  void notadespacho(int turno ,String cajero,int kilometraje,String placa,long dni,String clientes,long tarjeta,String umed) {
+        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logorobles);
+
+        //Fecha y Hora
+        Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+        SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        String FechaHora      = sdf.format(cal.getTime());
+
+        //Texto de Cara
+        TextView textcaras    = (TextView) getView().findViewById(R.id.textcara);
+        String cara           = textcaras.getText().toString();
+
+        //Texto de Manguera
+        TextView textmanguera = (TextView) getView().findViewById(R.id.textmanguera);
+        String manguera       = textmanguera.getText().toString();
+        String precio         = null;
+        switch (manguera) {
+            case "DIESEL":
+                precio = "18.90";
+                break;
+            case "GAS 90":
+                precio = "16.69";
+                break;
+            case "GAS 95":
+                precio = "18.39";
+                break;
+            case "GAS 97":
+                precio = "19.79";
+                break;
+            case "GLP":
+                precio = "8.00";
+                break;
+            default:
+                Log.d("Error", "NULL");
+        }
+        String finalPrecio = precio;
+        double totalprecio = Double.parseDouble(finalPrecio);
+
+        //Texto Importe
+        TextView txtimporte   = (TextView) getView().findViewById(R.id.txtimporte);
+        String importe        =  txtimporte.getText().toString();
+        double totalimporte   = Double.parseDouble(importe);
+
+        //Convertir decimal y Operacion de Cantidad por GALONES
+        DecimalFormat df          = new DecimalFormat("#.###");
+        double resultados         = Double.parseDouble(df.format(totalimporte/totalprecio ));
+        String resultadoscantidad = String.valueOf(resultados);
+
+        //Convertir numero a letras
+        Numero_Letras numToWord = new Numero_Letras();
+        String letraimporte     = numToWord.Convertir(importe,true);
+
+        String exoneradas = " 0.00";
+
+        totalmonto  = getView().findViewById(R.id.txtimporte);
+        cliente     = getView().findViewById(R.id.idcliente);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(cliente.getText().toString());
+
+        String digitogenerado = sb.toString();
+
+        Printama.with(getContext()).connect(printama -> {
+            printama.setSmallText();
+            printama.printImage(logo, 200);
+            printama.addNewLine(1);
+            printama.printText("GRIFO ROBLES S.A.C\n", Printama.CENTER);
+            printama.printTextln("PRINCIPAL: AV.SAN BORJA SUR NRO.810\n"+
+                    "DTO.402 LIMA-LIMA-SAN BORJA", Printama.CENTER);
+            printama.printTextln("SUCURSAL: CAR. CENTRAL MARGEN NRO.S/N\n" +
+                    "JUNIN - HUANCAYO - PILCOMAYO", Printama.CENTER);
+            printama.printTextln("NOTA DE DESPACHO", Printama.CENTER);
+            printama.printText("015-0017680\n",Printama.CENTER);
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.printTextln("Fecha-Hora:"+ FechaHora + "   Turno: "+turno,Printama.LEFT);
+            printama.printTextln("Cajero: "+cajero, Printama.LEFT);
+            printama.printTextln("Lado:"+cara + "         Kilometraje: "+kilometraje, Printama.LEFT);
+            printama.printTextln("Placa:"+placa, Printama.LEFT);
+            printama.printTextln("RUC / DNI:"+dni, Printama.LEFT);
+            printama.printTextln("Cliente:"+clientes, Printama.LEFT);
+            printama.printTextln("#Tarjeta:"+ tarjeta + "  Chofer:",Printama.LEFT);
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.printTextJustify("PRODUCTO","U/MED.","PRECIO","CANT","IMPORTE\n");
+            printama.printTextJustify(manguera,umed, finalPrecio, resultadoscantidad, importe+"\n");
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.addNewLine(1);
+            printama.printTextln("DESCUENTO S/: "+ importe, Printama.RIGHT);
+            printama.printTextln("TOTAL VENTA S/: "+ importe, Printama.RIGHT);
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.printTextln("NOMBRE:", Printama.LEFT);
+            printama.printTextln("DNI:", Printama.LEFT);
+            printama.printTextln("FIRMA:", Printama.LEFT);
+            printama.feedPaper();
+            printama.close();
+        }, this::showToast);
+    }
 
     private void showToast(String message) {
         Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();

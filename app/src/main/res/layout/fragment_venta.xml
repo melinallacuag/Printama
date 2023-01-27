@@ -74,7 +74,7 @@
         <HorizontalScrollView
             android:id="@+id/ScrollCara"
             android:layout_width="match_parent"
-            android:layout_height="140sp"
+            android:layout_height="120sp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -116,8 +116,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
-                            android:layout_height="80sp"
+                            android:layout_width="100sp"
+                            android:layout_height="65sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_grifocara" />
 
@@ -156,8 +156,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
-                            android:layout_height="80sp"
+                            android:layout_width="100sp"
+                            android:layout_height="65sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_grifocara" />
 
@@ -178,7 +178,6 @@
                     android:id="@+id/image_qr"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/icon_app"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp" />
             </GridLayout>
@@ -202,7 +201,7 @@
         <HorizontalScrollView
             android:id="@+id/ScrollManguera"
             android:layout_width="match_parent"
-            android:layout_height="140sp"
+            android:layout_height="120sp"
             android:layout_marginTop="2sp"
             android:layout_marginEnd="20sp"
             android:orientation="horizontal"
@@ -246,8 +245,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
-                            android:layout_height="80sp"
+                            android:layout_width="100sp"
+                            android:layout_height="65sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_manguera" />
 
@@ -285,8 +284,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
-                            android:layout_height="80sp"
+                            android:layout_width="100sp"
+                            android:layout_height="65sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_manguera" />
 
@@ -324,8 +323,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
-                            android:layout_height="80sp"
+                            android:layout_width="100sp"
+                            android:layout_height="65sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_manguera" />
 
@@ -363,8 +362,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
-                            android:layout_height="80sp"
+                            android:layout_width="100sp"
+                            android:layout_height="65sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_manguera" />
 
@@ -402,8 +401,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
-                            android:layout_height="80sp"
+                            android:layout_width="100sp"
+                            android:layout_height="65sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_manguera" />
 
@@ -521,8 +520,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/button"
                 android:fontFamily="@font/nunito_black"
-                android:onClick="boletas"
-                android:text="BOLETA"
+                android:onClick="boleta"
+                android:text=" BOLETA"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
@@ -555,7 +554,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button"
                 android:fontFamily="@font/nunito_black"
-                android:text="N DESPACHO"
+                android:text="N/Dpcho."
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
@@ -611,7 +610,7 @@
                 android:text="imprimir"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textSize="13sp"
+                android:textSize="10sp"
                 app:cornerRadius="10sp" />
         </LinearLayout>
 
@@ -634,10 +633,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:backgroundTint="#071C65"
+            android:layout_height="40sp"
             android:gravity="center"
-            android:background="@drawable/input_border">
+            android:background="@drawable/button">
 
             <TextView
                 android:layout_width="32sp"
@@ -706,10 +704,10 @@
         </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/ddd"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/h"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="10dp"
@@ -734,7 +732,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/op"
+                            android:id="@+id/operacion"
                             android:layout_width="40sp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2sp"
@@ -794,11 +792,7 @@
 
 
                 </androidx.cardview.widget.CardView>
-
         </ScrollView>
-
-
-
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

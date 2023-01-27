@@ -90,8 +90,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
-                            android:layout_height="80sp"
+                            android:layout_width="100sp"
+                            android:layout_height="65sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_grifocara" />
 
@@ -129,7 +129,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
+                            android:layout_width="100sp"
                             android:layout_height="80sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_grifocara" />
@@ -212,7 +212,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
+                            android:layout_width="100sp"
                             android:layout_height="80sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_manguera" />
@@ -250,7 +250,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
+                            android:layout_width="100sp"
                             android:layout_height="80sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_manguera" />
@@ -288,7 +288,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
+                            android:layout_width="100sp"
                             android:layout_height="80sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_manguera" />
@@ -326,7 +326,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="120sp"
+                            android:layout_width="100sp"
                             android:layout_height="80sp"
                             android:layout_marginBottom="5sp"
                             android:src="@drawable/icon_manguera" />
