@@ -289,10 +289,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void printQrReceipt2() {
-        Bitmap logo = Printama.getBitmapFromVector(this, R.drawable.logo_app);
+       // Bitmap logo = Printama.getBitmapFromVector(this, R.drawable.logo_app);
         String nota = "Some Text";
         Printama.with(this).connect(printama -> {
-            printama.printImage(logo, 200);
+          //  printama.printImage(logo, 200);
             printama.addNewLine();
             printama.printTextln("Title Text", Printama.CENTER);
             printama.setNormalText();
