@@ -295,8 +295,8 @@ public class MainActivity extends AppCompatActivity {
           //  printama.printImage(logo, 200);
             printama.addNewLine();
             printama.printTextln("Title Text", Printama.CENTER);
-            printama.setNormalText();
-            printama.printTextln("Some Text", Printama.CENTER);
+            printama.printTextln("Title Text", Printama.CENTER);
+            printama.printTextln("Title Text", Printama.CENTER);
             printama.printDashedLine();
             printama.addNewLine();
             QRCodeWriter writer = new QRCodeWriter();
