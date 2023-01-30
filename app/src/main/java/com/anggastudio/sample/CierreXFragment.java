@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,13 +31,10 @@ public class CierreXFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
             }
         });
-        view.findViewById(R.id.imprimircierrex).setOnClickListener(
-                v -> cierrex()
-
-        );
+        view.findViewById(R.id.imprimircierrex).setOnClickListener(v -> cierrex());
         return view;
     }
-    private  void cierrex() {
+   /* private  void cierrex() {
         String importe = "120.00";
         Printama.with(getContext()).connect(printama -> {
             printama.setSmallText();
@@ -66,6 +64,13 @@ public class CierreXFragment extends Fragment {
         }, this::showToast);
         DasboardFragment dasboardFragment  = new DasboardFragment();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
+    }*/
+    private void cierrex() {
+        View view = getView().findViewById(R.id.linearLayout2);
+        Printama.with(getContext()).connect(printama -> {
+            printama.printFromView(view);
+            new Handler().postDelayed(printama::close, 2000);
+        }, this::showToast);
     }
     private void showToast(String message) {
         Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();

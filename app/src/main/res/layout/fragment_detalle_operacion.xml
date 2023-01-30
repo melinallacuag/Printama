@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="15sp"
+    android:layout_marginTop="2sp"
+    android:layout_marginEnd="15sp"
+    tools:context=".DetalleOperacionFragment">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingLeft="10sp">
+
+        <LinearLayout
+            android:id="@+id/detalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:src="@drawable/logorobles" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="GRIFO ROBLES S.A.C"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="PRINCIPAL: AV.SAN BORJA SUR NRO.810  LIMA-LIMA-SAN BORJA"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="SUCURSAL: CAR.CENTRAL MARGEN NRO.S/N JUNÍN-HUANCAYO-PILCOMAYO"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="RUC:20602130259"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="----------------------------------------------------------------"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="BOLETA DE VENTA ELECTRONICA"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="B006-0142546"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="----------------------------------------------------------------"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Fecha-Hora: "
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="28/01/23 12:31  "
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Turno: "
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="01"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Cajero: "
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="RUBEN ESCOBAR"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Lado: "
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/ladodd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="18"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="----------------------------------------------------------------"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="PRODUCTO "
+                    android:textAlignment="viewStart"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="U/MED"
+                    android:textAlignment="viewStart"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="PRECIO"
+                    android:textAlignment="viewStart"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="CANT"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="IMPORTE"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="GAS 95 "
+                    android:textAlignment="viewStart"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="GLL"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="18.39"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.761"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/importes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="14.00"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="----------------------------------------------------------------"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="OP. GRAVADAS S/: "
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="14.00"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="OP. EXONERADAS S/: "
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="14.00"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="I.G.V 18% S/: "
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="TOTAL VENTA S/: "
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="14.00"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="----------------------------------------------------------------"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="CONDICION DE PAGO: "
+                    android:textAlignment="viewStart"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="CONTADO S/: "
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="14.00"
+                    android:textAlignment="textEnd"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="40sp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="SON: "
+                    android:textAlignment="viewStart"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="CATORCE CON 00/100 SOLES"
+                    android:textAlignment="viewStart"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="----------------------------------------------------------------"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="100sp"
+                android:layout_height="100sp"
+                android:layout_gravity="center"
+                android:src="@drawable/qr" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la boleta de venta electronica. Consulte desde"
+                    android:textColor="#000"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="http://4-fact.com/sven/auth/consulta"
+                    android:textColor="#000"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btneditar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="imoprimir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

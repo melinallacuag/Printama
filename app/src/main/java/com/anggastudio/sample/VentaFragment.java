@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.print.PrintHelper;
 
 import android.os.Environment;
+import android.os.Handler;
 import android.print.PrintJob;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,7 +52,8 @@ public class VentaFragment extends Fragment{
 
     private static final int REQUEST_CODE_PERMISSION = 1;
     ImageView imageQR;
-    TextView totalmonto, cliente, operacion;
+    TextView totalmonto, cliente, operacion,cari,total,textsols;
+    CardView gria;
     @SuppressLint("WrongThread")
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -59,8 +61,22 @@ public class VentaFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
         totalmonto  =  view.findViewById(R.id.txtimporte);
+        CardView gria       = view.findViewById(R.id.card);
+        //montosoles    = view.findViewById(R.id.t);
+        gria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-      /*  String rucempresa ="20603939949";
+                DetalleOperacionFragment detalleOperacionFragment = new DetalleOperacionFragment();
+            //    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,detalleOperacionFragment).commit();
+                textsols = (TextView) getActivity().findViewById(R.id.ladodd);
+                textsols.setText("hola");
+
+
+
+            }
+        });
+        String rucempresa ="20603939949";
         String factura ="F001-0000004";
         String igv ="3.05";
         String fecha ="2022/12/21";
@@ -73,14 +89,14 @@ public class VentaFragment extends Fragment{
         sb.append(fecha.toString());
         sb.append(ruccliente.toString());
 
-        String digitogenerado = sb.toString();*/
+        String digitogenerado = sb.toString();
 
-     /*   try {
+       try {
             BitMatrix bitMatrix = new MultiFormatWriter().encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-          //  ImageView imageViewQrCode = view.findViewById(R.id.image_qr);
-           // imageViewQrCode.setImageBitmap(bitmap);
+            ImageView imageViewQrCode = view.findViewById(R.id.image_qr);
+            imageViewQrCode.setImageBitmap(bitmap);
             String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/QRCode.png";
             FileOutputStream fos = new FileOutputStream(path);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
@@ -92,7 +108,7 @@ public class VentaFragment extends Fragment{
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
 
         //Selección de Cara
@@ -318,9 +334,11 @@ public class VentaFragment extends Fragment{
         sb.append(cliente.getText().toString());
 
         String digitogenerado = sb.toString();
-
+        View view = getView().findViewById(R.id.cara18);
         Printama.with(getContext()).connect(printama -> {
             printama.setSmallText();
+            printama.printFromView(view);
+            new Handler().postDelayed(printama::close, 2000);
             printama.printImage(logo, 200);
             printama.addNewLine(1);
             printama.setSmallText();
@@ -334,7 +352,7 @@ public class VentaFragment extends Fragment{
             printama.printTextln("B006-0142546",Printama.CENTER);
             printama.setNormalText();
             printama.printDoubleDashedLine();
-            printama.setSmallText();
+       /*     printama.setSmallText();
             printama.printTextln("Fecha-Hora:"+ FechaHora + "   Turno:"+turno,Printama.LEFT);
             printama.printTextln("Cajero:"+cajero, Printama.LEFT);
             printama.printTextln("Lado:"+cara, Printama.LEFT);
@@ -350,7 +368,8 @@ public class VentaFragment extends Fragment{
             printama.printTextln("OP. GRAVADAS S/: "+ importe, Printama.RIGHT);
             printama.printTextln("OP. EXONERADAS S/: "+exoneradas , Printama.RIGHT);
             printama.printTextln("I.G.V. 18% S/: "+importe, Printama.RIGHT);
-            printama.printTextln("TOTAL VENTA S/: "+ importe, Printama.RIGHT);
+            printama.printTextln("TOTAL VENTA S/: "+ importe, Printama.RIGHT);*/
+
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
