@@ -1,19 +1,30 @@
 package com.anggastudio.sample;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -25,6 +36,30 @@ public class DetalleOperacionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detalle_operacion, container, false);
+        String rucempresa ="20603939949";
+        String factura ="F001-0000004";
+        String igv ="3.05";
+        String fecha ="2022/12/21";
+        String ruccliente ="20554542728";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(rucempresa.toString());
+        sb.append(factura.toString());
+        sb.append(igv.toString());
+        sb.append(fecha.toString());
+        sb.append(ruccliente.toString());
+
+        String digitogenerado = sb.toString();
+
+        try {
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            ImageView imageViewQrCode = view.findViewById(R.id.codigoqr);
+            imageViewQrCode.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
         lado  =  view.findViewById(R.id.ladodd);
         //Fecha y Hora
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));

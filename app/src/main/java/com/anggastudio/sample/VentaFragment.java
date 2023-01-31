@@ -68,9 +68,9 @@ public class VentaFragment extends Fragment{
             public void onClick(View view) {
 
                 DetalleOperacionFragment detalleOperacionFragment = new DetalleOperacionFragment();
-            //    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,detalleOperacionFragment).commit();
-                textsols = (TextView) getActivity().findViewById(R.id.ladodd);
-                textsols.setText("hola");
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,detalleOperacionFragment).commit();
+                //textsols = (TextView) getActivity().findViewById(R.id.ladodd);
+                //textsols.setText("hola");
 
 
 

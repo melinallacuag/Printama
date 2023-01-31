@@ -570,10 +570,10 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/codigoqr"
                 android:layout_width="100sp"
                 android:layout_height="100sp"
-                android:layout_gravity="center"
-                android:src="@drawable/qr" />
+                android:layout_gravity="center" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -619,6 +619,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
