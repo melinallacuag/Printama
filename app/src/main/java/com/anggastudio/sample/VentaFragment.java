@@ -63,53 +63,25 @@ public class VentaFragment extends Fragment{
         totalmonto  =  view.findViewById(R.id.txtimporte);
         CardView gria       = view.findViewById(R.id.card);
         //montosoles    = view.findViewById(R.id.t);
-        gria.setOnClickListener(new View.OnClickListener() {
+
+
+        TextView cara = view.findViewById(R.id.textcara);
+        TextView producto = view.findViewById(R.id.textmanguera);
+        TextView importetotal = view.findViewById(R.id.txtimporte);
+
+
+        gria.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
-                DetalleOperacionFragment detalleOperacionFragment = new DetalleOperacionFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,detalleOperacionFragment).commit();
-                //textsols = (TextView) getActivity().findViewById(R.id.ladodd);
-                //textsols.setText("hola");
-
-
-
+                Bundle bundle = new Bundle();
+                bundle.putString("cara",cara.getText().toString());
+                bundle.putString("producto",producto.getText().toString());
+                bundle.putString("importetotal",importetotal.getText().toString());
+                DetalleOperacionFragment fragment = new DetalleOperacionFragment();
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
             }
         });
-        String rucempresa ="20603939949";
-        String factura ="F001-0000004";
-        String igv ="3.05";
-        String fecha ="2022/12/21";
-        String ruccliente ="20554542728";
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(rucempresa.toString());
-        sb.append(factura.toString());
-        sb.append(igv.toString());
-        sb.append(fecha.toString());
-        sb.append(ruccliente.toString());
-
-        String digitogenerado = sb.toString();
-
-       try {
-            BitMatrix bitMatrix = new MultiFormatWriter().encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
-            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-            ImageView imageViewQrCode = view.findViewById(R.id.image_qr);
-            imageViewQrCode.setImageBitmap(bitmap);
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/QRCode.png";
-            FileOutputStream fos = new FileOutputStream(path);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.flush();
-            fos.close();
-        } catch (WriterException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
 
         //Selección de Cara
         CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
@@ -167,8 +139,6 @@ public class VentaFragment extends Fragment{
                 textmanguera.setText("GLP");
             }
         });
-
-
 
         Button btnlibre        = view.findViewById(R.id.btnlibre);
         Button btnsoles        = view.findViewById(R.id.btnsoles);
