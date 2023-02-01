@@ -208,7 +208,7 @@ public class VentaFragment extends Fragment{
                 notaDespachoFragment.setCancelable(false);
             }
         });
-/*        btnserafin.setOnClickListener(new View.OnClickListener() {
+       btnserafin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SerafinFragment serafinFragment = new SerafinFragment();
@@ -224,7 +224,6 @@ public class VentaFragment extends Fragment{
 
             }
         });
-*/
         view.findViewById(R.id.btnimprimir).setOnClickListener(v -> boletasin(turno,cajero,umed));
         return view;
     }
@@ -405,6 +404,7 @@ public class VentaFragment extends Fragment{
             } catch (WriterException e) {
                 e.printStackTrace();
             }
+            printama.setSmallText();
             printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la boleta de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
             printama.addNewLine();
             printama.feedPaper();
