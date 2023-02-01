@@ -44,6 +44,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -207,7 +208,7 @@ public class VentaFragment extends Fragment{
                 notaDespachoFragment.setCancelable(false);
             }
         });
-        btnserafin.setOnClickListener(new View.OnClickListener() {
+/*        btnserafin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SerafinFragment serafinFragment = new SerafinFragment();
@@ -223,7 +224,7 @@ public class VentaFragment extends Fragment{
 
             }
         });
-
+*/
         view.findViewById(R.id.btnimprimir).setOnClickListener(v -> boletasin(turno,cajero,umed));
         return view;
     }
@@ -247,7 +248,7 @@ public class VentaFragment extends Fragment{
 
         //Fecha y Hora
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
-        SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String FechaHora      = sdf.format(cal.getTime());
 
         //Texto de Cara
@@ -258,26 +259,34 @@ public class VentaFragment extends Fragment{
         TextView textmanguera = (TextView) getView().findViewById(R.id.textmanguera);
         String manguera       = textmanguera.getText().toString();
         String precio         = null;
+        String producto       = null;
+
         switch (manguera) {
             case "DIESEL":
                 precio = "18.90";
+                producto = "DIESEL B5 S50";
                 break;
             case "GAS 90":
                 precio = "16.69";
+                producto = "GASOHOL 90";
                 break;
             case "GAS 95":
                 precio = "18.39";
+                producto = "GASOHOL 95";
                 break;
             case "GAS 97":
                 precio = "19.79";
+                producto = "GASOHOL 97";
                 break;
             case "GLP":
                 precio = "8.00";
+                producto = "GLP";
                 break;
             default:
                 Log.d("Error", "NULL");
         }
         String finalPrecio = precio;
+        String productos = producto;
         double totalprecio = Double.parseDouble(finalPrecio);
 
         //Texto Importe
@@ -285,10 +294,28 @@ public class VentaFragment extends Fragment{
         String importe        =  txtimporte.getText().toString();
         double totalimporte   = Double.parseDouble(importe);
 
+        double subtotal = (totalimporte/1.18);
+        double roundOff = Math.round(subtotal*100.0)/100.0;
+        String valorventa  = String.valueOf(roundOff);
+
+        double impuesto = (totalimporte-roundOff);
+        double impuestoOff = Math.round(impuesto*100.0)/100.0;
+        String igv = String.valueOf(impuestoOff);
+
+       // double a = 123.13698;
+       // double roundOff = Math.round(a*100)/100;
+
+
         //Convertir decimal y Operacion de Cantidad por GALONES
-        DecimalFormat df          = new DecimalFormat("#.###");
+       /* DecimalFormat df          = new DecimalFormat("#.###");
         double resultados         = Double.parseDouble(df.format(totalimporte/totalprecio ));
-        String resultadoscantidad = String.valueOf(resultados);
+        String resultadoscantidad = String.valueOf(resultados);*/
+
+        double resultados      = totalimporte/totalprecio ;
+        double decimal = Math.round(resultados*1000.0)/1000.0;
+       // String decimal         = String.format("%.3f", (resultados));
+        String cantidadgalones = String.valueOf(decimal);
+        String galon           = cantidadgalones.replace(",",".");
 
         //Convertir numero a letras
         Numero_Letras numToWord = new Numero_Letras();
@@ -300,17 +327,29 @@ public class VentaFragment extends Fragment{
 
         cliente     = getView().findViewById(R.id.idcliente);
 
+        //Generar Codigo QR
+        String rucempresa ="20603939949";
+        String boleta ="B001-0000004";
+        String igv5 ="3.05";
+        String fecha ="2022/12/21";
+        String ruccliente ="20554542728";
+        //Fecha y Hora del Comprobante
+
         StringBuilder sb = new StringBuilder();
-        sb.append(cliente.getText().toString());
+        sb.append(rucempresa.toString());
+        sb.append(boleta.toString());
+        sb.append(igv5.toString());
+        sb.append(importe.toString());
+        sb.append(fecha.toString());
 
         String digitogenerado = sb.toString();
+
+
         View view = getView().findViewById(R.id.cara18);
         Printama.with(getContext()).connect(printama -> {
             printama.setSmallText();
-            printama.printFromView(view);
-            new Handler().postDelayed(printama::close, 2000);
-            printama.printImage(logo, 200);
-            printama.addNewLine(1);
+            printama.addNewLine();
+            printama.printImage(logo,200, Printama.CENTER);
             printama.setSmallText();
             printama.printTextln("GRIFO ROBLES S.A.C", Printama.CENTER);
             printama.printTextln("PRINCIPAL: AV.SAN BORJA SUR NRO.810", Printama.CENTER);
@@ -322,33 +361,50 @@ public class VentaFragment extends Fragment{
             printama.printTextln("B006-0142546",Printama.CENTER);
             printama.setNormalText();
             printama.printDoubleDashedLine();
-       /*     printama.setSmallText();
-            printama.printTextln("Fecha-Hora:"+ FechaHora + "   Turno:"+turno,Printama.LEFT);
-            printama.printTextln("Cajero:"+cajero, Printama.LEFT);
-            printama.printTextln("Lado:"+cara, Printama.LEFT);
-            printama.setNormalText();
-            printama.printDoubleDashedLine();
-            printama.setSmallText();
-            printama.printTextJustify("PRODUCTO","U/MED.","PRECIO","CANT","IMPORTE\n");
-            printama.printTextJustify(manguera,umed , finalPrecio, resultadoscantidad, importe+"\n");
-            printama.setNormalText();
-            printama.printDoubleDashedLine();
-            printama.setSmallText();
             printama.addNewLine(1);
-            printama.printTextln("OP. GRAVADAS S/: "+ importe, Printama.RIGHT);
+            printama.setSmallText();
+            printama.printTextln("Fecha - Hora : "+ FechaHora + "   Turno:"+turno,Printama.LEFT);
+            printama.printTextln("Cajero : "+cajero, Printama.LEFT);
+            printama.printTextln("Lado   : "+cara, Printama.LEFT);
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextln("PRODUCTO      "+"U/MED   "+"PRECIO   "+"CANTIDAD  "+"IMPORTE",Printama.RIGHT);
+            printama.printTextln(productos +"   " + umed+"    " + finalPrecio+"    " + galon +"    "+ importe,Printama.RIGHT);
+            printama.setNormalText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.printTextln("OP. GRAVADAS S/: "+ valorventa, Printama.RIGHT);
             printama.printTextln("OP. EXONERADAS S/: "+exoneradas , Printama.RIGHT);
-            printama.printTextln("I.G.V. 18% S/: "+importe, Printama.RIGHT);
-            printama.printTextln("TOTAL VENTA S/: "+ importe, Printama.RIGHT);*/
-
+            printama.printTextln("I.G.V. 18% S/: "+igv, Printama.RIGHT);
+            printama.printTextln("TOTAL VENTA S/: "+ importe, Printama.RIGHT);
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.setSmallText();
             printama.printTextln("CONDICION DE PAGO:", Printama.LEFT);
             printama.printTextln("CONTADO S/: " + importe, Printama.RIGHT);
             printama.printTextln("SON: " + letraimporte, Printama.LEFT);
-            printama.setNormalText();
-            printama.printDoubleDashedLine();
-            printama.setSmallText();
+            QRCodeWriter writer = new QRCodeWriter();
+            BitMatrix bitMatrix;
+            try {
+                bitMatrix = writer.encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
+                int width = bitMatrix.getWidth();
+                int height = bitMatrix.getHeight();
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        int color = Color.WHITE;
+                        if (bitMatrix.get(x, y)) color = Color.BLACK;
+                        bitmap.setPixel(x, y, color);
+                    }
+                }
+                if (bitmap != null) {
+                    printama.printImage(bitmap);
+                }
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
             printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la boleta de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
             printama.addNewLine();
             printama.feedPaper();

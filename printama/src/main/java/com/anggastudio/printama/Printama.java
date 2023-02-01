@@ -197,7 +197,7 @@ public class Printama {
 
     public void printDoubleDashedLine() {
         util.setAlign(LEFT);
-        util.printText("================================");
+        util.printText("================================================");
     }
 
     public void addNewLine() {

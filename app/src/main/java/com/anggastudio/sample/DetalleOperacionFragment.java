@@ -54,7 +54,7 @@ public class DetalleOperacionFragment extends Fragment {
 
         //Fecha y Hora del Comprobante
         Calendar fechahora    = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
-        SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String FechaHora      = sdf.format(fechahora.getTime());
         fechaemision.setText(FechaHora);
 
@@ -101,11 +101,23 @@ public class DetalleOperacionFragment extends Fragment {
         String importe        =  importetotal.getText().toString();
         double totalimporte   = Double.parseDouble(importe);
 
-        //Convertir decimal y Operacion de Cantidad por GALONES
-        DecimalFormat df          = new DecimalFormat("#.###");
+       // Convertir decimal y Operacion de Cantidad por GALONES
+       /* DecimalFormat df          = new DecimalFormat("#.###");
         double resultados         = Double.parseDouble(df.format(totalimporte/totalprecio ));
-        String resultadoscantidad = String.valueOf(resultados);
-        cantidad.setText(resultadoscantidad);
+        String resultadoscantidad = String.valueOf(resultados);*/
+    /*    double resultados         = totalimporte/totalprecio ;
+        String galones = String.format("%.3f", (resultados));
+        cantidad.setText(galones);*/
+
+        double resultados      = totalimporte/totalprecio ;
+        double decimal = Math.round(resultados*1000.0)/1000.0;
+        // String decimal         = String.format("%.3f", (resultados));
+        String cantidadgalones = String.valueOf(decimal);
+        String galon           = cantidadgalones.replace(",",".");
+        cantidad.setText(galon);
+
+
+
 
         //Convertir numero a letras
         Numero_Letras numToWord = new Numero_Letras();
