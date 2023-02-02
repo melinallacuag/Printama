@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.anggastudio.printama.Printama;
@@ -55,12 +56,18 @@ public class VentaFragment extends Fragment{
     ImageView imageQR;
     TextView totalmonto, cliente, operacion,cari,total,textsols;
     CardView gria;
+
+    String[] color = {"card","card2"};
+    int i=0;
+    TextView textView;
     @SuppressLint("WrongThread")
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
+        textView = view.findViewById(R.id.tv_color);
+        textView.setText(color[i]);
         totalmonto  =  view.findViewById(R.id.txtimporte);
         CardView griaboleta        = view.findViewById(R.id.cardboleta);
         CardView griafactura       = view.findViewById(R.id.cardfactura);
@@ -262,7 +269,14 @@ public class VentaFragment extends Fragment{
         return view;
     }
 
-
+    public void cambiarColor(View view){
+        if (i<=3){
+            textView.setText(color[i]);
+            i++;
+        }else {
+            Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+        }
+    }
     int turno           = 1;
     String cajero       = "RUBEN ESCOBAR";
     long kilometraje    = Long.parseLong("00000000000");

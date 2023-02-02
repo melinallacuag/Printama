@@ -428,7 +428,10 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ScrollManguera" />
-
+        <TextView
+            android:id="@+id/tv_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -807,7 +810,6 @@
                             android:fontFamily="@font/nunito_extrabold"
                             android:gravity="center"
                             android:textColor="#071C65"
-                            android:text="17"
                             android:textSize="10sp"
                             android:textStyle="bold" />
 
@@ -830,7 +832,6 @@
                             android:layout_marginEnd="2sp"
                             android:fontFamily="@font/nunito_extrabold"
                             android:gravity="center"
-                            android:text="DIESEL"
                             android:textColor="#071C65"
                             android:textSize="10sp"
                             android:textStyle="bold" />
@@ -865,7 +866,6 @@
                             android:layout_marginEnd="2sp"
                             android:fontFamily="@font/nunito_extrabold"
                             android:gravity="center"
-                            android:text="52.00"
                             android:textColor="#071C65"
                             android:textSize="10sp"
                             android:textStyle="bold" />
