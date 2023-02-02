@@ -62,27 +62,30 @@ public class VentaFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
         totalmonto  =  view.findViewById(R.id.txtimporte);
-        CardView gria       = view.findViewById(R.id.card);
-        //montosoles    = view.findViewById(R.id.t);
+        CardView griaboleta        = view.findViewById(R.id.cardboleta);
+        CardView griafactura       = view.findViewById(R.id.cardfactura);
+        CardView grianotadespacho  = view.findViewById(R.id.cardnotadespacho);
+        CardView griaserafin       = view.findViewById(R.id.cardserafin);
 
-
-        TextView cara = view.findViewById(R.id.textcara);
         TextView producto = view.findViewById(R.id.textmanguera);
+        TextView cara = view.findViewById(R.id.textcara);
         TextView importetotal = view.findViewById(R.id.txtimporte);
+        TextView operacion = view.findViewById(R.id.txtoperacion);
 
-
-        gria.setOnClickListener(new View.OnClickListener(){
+        griaboleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString("cara",cara.getText().toString());
                 bundle.putString("producto",producto.getText().toString());
-                bundle.putString("importetotal",importetotal.getText().toString());
-                DetalleOperacionFragment fragment = new DetalleOperacionFragment();
-                fragment.setArguments(bundle);
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                bundle.putString("lado",cara.getText().toString());
+                bundle.putString("importe",importetotal.getText().toString());
+                PrintBoletaFragment printBoletaFragment = new PrintBoletaFragment();
+                printBoletaFragment.setArguments(bundle);
+                printBoletaFragment.show(getActivity().getSupportFragmentManager(), "Libre");
+                printBoletaFragment.setCancelable(false);
             }
         });
+
 
         //Selección de Cara
         CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
