@@ -61,7 +61,7 @@
                 android:layout_marginRight="20sp" />
 
             <Button
-                android:id="@+id/btnagregarserafin"
+                android:id="@+id/btnimprimirserafin"
                 android:layout_width="wrap_content"
                 android:layout_height="60sp"
                 android:layout_gravity="center"

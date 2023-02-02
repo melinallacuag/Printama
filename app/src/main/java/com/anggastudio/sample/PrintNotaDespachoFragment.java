@@ -20,29 +20,37 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class SerafinFragment extends DialogFragment {
 
-    Button cerraraserafin, imprimirserafin;
+public class PrintNotaDespachoFragment extends DialogFragment {
+
+   Button cerrar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_serafin, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_print_nota_despacho, container, false);
 
-        cerraraserafin   = view.findViewById(R.id.btncancelarserafin);
-        cerraraserafin.setOnClickListener(new View.OnClickListener() {
+        TextView producto     = view.findViewById(R.id.textproducto);
+        TextView lado         = view.findViewById(R.id.textlado);
+        TextView importe      = view.findViewById(R.id.textimporte);
+
+        //Detalle de la Operación
+        Bundle bundle         = this.getArguments();
+        String datoproducto   = bundle.getString("producto");
+        String datolado       = bundle.getString("lado");
+        String datoimporte    = bundle.getString("importe");
+
+        producto.setText(datoproducto);
+        lado.setText(datolado);
+        importe.setText(datoimporte);
+        cerrar   = view.findViewById(R.id.btncerrar);
+        cerrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-      /*  imprimirserafin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "SE GENERO SERAFIN", Toast.LENGTH_SHORT).show();
-                dismiss();
-            }
-        });*/
-        view.findViewById(R.id.btnimprimirserafin).setOnClickListener(v -> serafin(turno,cajero,kilometraje,umed));
+        view.findViewById(R.id.btnimpirmirnotadespacho).setOnClickListener(v -> notadespacho(turno,cajero,kilometraje,placa,dni,clientes,tarjeta,umed));
         return view;
     }
     int turno           = 1;
@@ -55,15 +63,15 @@ public class SerafinFragment extends DialogFragment {
     long tarjeta        = Long.parseLong("7020130000000309");
     String direccion    = "AV FERROCARRIL N 590 HUANCAYO";
     String umed         = "GLL";
-    private  void serafin(int turno ,String cajero,long kilometraje, String umed) {
+    private  void notadespacho(int turno ,String cajero,long kilometraje,String placa,long dni,String clientes,long tarjeta,String umed) {
         Bundle bundle         = this.getArguments();
-        //LODO DE LA EMPRESA
+        //LOGO
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logorobles);
 
         //FECHAHORA
-        Calendar cal         = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String FechaHora     = sdf.format(cal.getTime());
+        Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+        SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String FechaHora      = sdf.format(cal.getTime());
 
         //LADO
         String lado       = bundle.getString("lado");
@@ -103,13 +111,15 @@ public class SerafinFragment extends DialogFragment {
 
         //IMPORTE
         String importe    = bundle.getString("importe");
-        double totalimporte = Double.parseDouble(importe);
+        double totalimporte   = Double.parseDouble(importe);
 
         //OPERACION DE VALOR DE CANTIDAD POR GALONES
         double resultados      = totalimporte/totalprecio ;
         double decimal = Math.round(resultados*1000.0)/1000.0;
         String cantidadgalones = String.valueOf(decimal);
         String galon           = cantidadgalones.replace(",",".");
+
+        String exoneradas = " 0.00";
 
         Printama.with(getContext()).connect(printama -> {
             printama.setNormalText();
@@ -121,15 +131,20 @@ public class SerafinFragment extends DialogFragment {
             printama.printTextlnBold("LIMA-LIMA-SAN BORJA", Printama.CENTER);
             printama.printTextlnBold("SUCURSAL: CAR. CENTRAL MARGEN NRO.S/N", Printama.CENTER);
             printama.printTextlnBold("JUNIN - HUANCAYO - PILCOMAYO", Printama.CENTER);
-            printama.printTextlnBold("TICKET SERAFIN", Printama.CENTER);
-            printama.printTextlnBold("001-0000003", Printama.CENTER);
+            printama.printTextlnBold("NOTA DE DESPACHO", Printama.CENTER);
+            printama.printTextlnBold("015-0017680",Printama.CENTER);
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
             printama.setSmallText();
-            printama.printTextln("Fecha - Hora : " + FechaHora + "   Turno : "+turno, Printama.LEFT);
+            printama.printTextln("Fecha - Hora : "+ FechaHora + "   Turno: "+turno,Printama.LEFT);
             printama.printTextln("Cajero : "+cajero, Printama.LEFT);
-            printama.printTextln("Lado   : " + lado + "   Kilometraje : " +kilometraje, Printama.LEFT);
+            printama.printTextln("Lado   : "+lado + "         Kilometraje: "+kilometraje, Printama.LEFT);
+            printama.printTextln("Placa  : "+placa, Printama.LEFT);
+            printama.printTextln("RUC / DNI : "+dni, Printama.LEFT);
+            printama.printTextln("Cliente   : "+clientes, Printama.LEFT);
+            printama.printTextln("#Tarjeta  : "+tarjeta + "  Chofer : ",Printama.LEFT);
+            printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
             printama.setSmallText();
@@ -137,14 +152,20 @@ public class SerafinFragment extends DialogFragment {
             printama.setSmallText();
             printama.printTextln(productos,Printama.LEFT);
             printama.printTextln(umed+"    " + finalPrecio+"     " + galon +"    "+ importe,Printama.RIGHT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.addNewLine(1);
+            printama.printTextlnBold("TOTAL VENTA: S/ "+ importe, Printama.RIGHT);
+            printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
             printama.setSmallText();
-            printama.printTextBold("TOTAL VENTA: S/    " + importe, Printama.RIGHT);
-            printama.addNewLine();
+            printama.printTextln("NOMBRE:", Printama.LEFT);
+            printama.printTextln("DNI:", Printama.LEFT);
+            printama.printTextln("FIRMA:", Printama.LEFT);
             printama.feedPaper();
             printama.close();
-            Toast.makeText(getContext(), "SE GENERO SERAFIN", Toast.LENGTH_SHORT).show();
         }, this::showToast);
     }
     private void showToast(String message) {

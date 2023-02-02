@@ -65,7 +65,7 @@ public class VentaFragment extends Fragment{
         CardView griaboleta        = view.findViewById(R.id.cardboleta);
         CardView griafactura       = view.findViewById(R.id.cardfactura);
         CardView grianotadespacho  = view.findViewById(R.id.cardnotadespacho);
-        CardView griaserafin       = view.findViewById(R.id.cardserafin);
+      //  CardView griaserafin       = view.findViewById(R.id.cardserafin);
 
         TextView producto = view.findViewById(R.id.textmanguera);
         TextView cara = view.findViewById(R.id.textcara);
@@ -81,8 +81,34 @@ public class VentaFragment extends Fragment{
                 bundle.putString("importe",importetotal.getText().toString());
                 PrintBoletaFragment printBoletaFragment = new PrintBoletaFragment();
                 printBoletaFragment.setArguments(bundle);
-                printBoletaFragment.show(getActivity().getSupportFragmentManager(), "Libre");
+                printBoletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
                 printBoletaFragment.setCancelable(false);
+            }
+        });
+        griafactura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("producto",producto.getText().toString());
+                bundle.putString("lado",cara.getText().toString());
+                bundle.putString("importe",importetotal.getText().toString());
+                PrintFacturaFragment printFacturaFragment = new PrintFacturaFragment();
+                printFacturaFragment.setArguments(bundle);
+                printFacturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
+                printFacturaFragment.setCancelable(false);
+            }
+        });
+        grianotadespacho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("producto",producto.getText().toString());
+                bundle.putString("lado",cara.getText().toString());
+                bundle.putString("importe",importetotal.getText().toString());
+                PrintNotaDespachoFragment printNotaDespachoFragment = new PrintNotaDespachoFragment();
+                printNotaDespachoFragment.setArguments(bundle);
+                printNotaDespachoFragment.show(getActivity().getSupportFragmentManager(), "Nota de Despacho");
+                printNotaDespachoFragment.setCancelable(false);
             }
         });
 
@@ -214,7 +240,12 @@ public class VentaFragment extends Fragment{
        btnserafin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("producto",producto.getText().toString());
+                bundle.putString("lado",cara.getText().toString());
+                bundle.putString("importe",importetotal.getText().toString());
                 SerafinFragment serafinFragment = new SerafinFragment();
+                serafinFragment.setArguments(bundle);
                 serafinFragment.show(getActivity().getSupportFragmentManager(), "Serafin");
                 serafinFragment.setCancelable(false);
             }
