@@ -250,6 +250,7 @@ public class VentaFragment extends Fragment{
         SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String FechaHora      = sdf.format(cal.getTime());
 
+
         //Texto de Cara
         TextView textcaras    = (TextView) getView().findViewById(R.id.textcara);
         String cara           = textcaras.getText().toString();
@@ -327,21 +328,21 @@ public class VentaFragment extends Fragment{
         cliente     = getView().findViewById(R.id.idcliente);
 
         //Generar Codigo QR
-        String rucempresa ="20603939949";
-        String boleta ="B001-0000004";
+        String rucempresa ="20602130259";
+        String tipodocumento = "03";
+        String boleta ="B006-0142546";
         String igv5 ="3.05";
-        String fecha ="2022/12/21";
-        String ruccliente ="20554542728";
+        String total ="12.00";
+        String fecha  = FechaHora.substring(6,10) + "-" + FechaHora.substring(3,5) + "-" + FechaHora.substring(0,2);
+       // String fecha ="2022/12/21";
+        String tipodni ="01";
+        String dni ="11111111";
         //Fecha y Hora del Comprobante
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(rucempresa.toString());
-        sb.append(boleta.toString());
-        sb.append(igv5.toString());
-        sb.append(importe.toString());
-        sb.append(fecha.toString());
+        /* DNI: 01
+           RUC: 06
+        */
 
-        String digitogenerado = sb.toString();
 
 
         View view = getView().findViewById(R.id.cara18);
@@ -355,9 +356,9 @@ public class VentaFragment extends Fragment{
             printama.printTextln("LIMA-LIMA-SAN BORJA", Printama.CENTER);
             printama.printTextln("SUCURSAL: CAR. CENTRAL MARGEN NRO.S/N", Printama.CENTER);
             printama.printTextln("JUNIN - HUANCAYO - PILCOMAYO", Printama.CENTER);
-            printama.printTextln("RUC: 20602130259", Printama.CENTER);
+            printama.printTextln("RUC: " + rucempresa, Printama.CENTER);
             printama.printTextln("BOLETA DE VENTA ELECTRONICA", Printama.CENTER);
-            printama.printTextln("B006-0142546",Printama.CENTER);
+            printama.printTextln(boleta,Printama.CENTER);
             printama.setNormalText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
@@ -386,6 +387,18 @@ public class VentaFragment extends Fragment{
             printama.printTextln("SON: " + letraimporte, Printama.LEFT);
             QRCodeWriter writer = new QRCodeWriter();
             BitMatrix bitMatrix;
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(rucempresa + "|".toString());
+            sb.append(tipodocumento+ "|".toString());
+            sb.append(boleta+ "|".toString());
+            sb.append(igv+ "|".toString());
+            sb.append(importe+ "|".toString());
+            sb.append(fecha+ "|".toString());
+            sb.append(tipodni+ "|".toString());
+            sb.append(dni+ "|".toString());
+
+            String digitogenerado = sb.toString();
             try {
                 bitMatrix = writer.encode(digitogenerado, BarcodeFormat.QR_CODE, 200, 200);
                 int width = bitMatrix.getWidth();
