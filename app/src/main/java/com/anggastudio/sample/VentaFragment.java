@@ -56,30 +56,62 @@ public class VentaFragment extends Fragment{
     ImageView imageQR;
     TextView totalmonto, cliente, operacion,cari,total,textsols;
     CardView gria;
-
-    String[] color = {"card","card2"};
-    int i=0;
-    TextView textView;
     @SuppressLint("WrongThread")
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
-        textView = view.findViewById(R.id.tv_color);
-        textView.setText(color[i]);
         totalmonto  =  view.findViewById(R.id.txtimporte);
-        CardView griaboleta        = view.findViewById(R.id.cardboleta);
-        CardView griafactura       = view.findViewById(R.id.cardfactura);
-        CardView grianotadespacho  = view.findViewById(R.id.cardnotadespacho);
+        CardView grias        = view.findViewById(R.id.card);
+     //   CardView griafactura       = view.findViewById(R.id.cardfactura);
+      //  CardView grianotadespacho  = view.findViewById(R.id.cardnotadespacho);
       //  CardView griaserafin       = view.findViewById(R.id.cardserafin);
 
         TextView producto = view.findViewById(R.id.textmanguera);
         TextView cara = view.findViewById(R.id.textcara);
         TextView importetotal = view.findViewById(R.id.txtimporte);
         TextView operacion = view.findViewById(R.id.txtoperacion);
+        String operaciones = operacion.getText().toString();
 
-        griaboleta.setOnClickListener(new View.OnClickListener() {
+        grias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ("03".equals(operaciones)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("producto", producto.getText().toString());
+                    bundle.putString("lado", cara.getText().toString());
+                    bundle.putString("importe", importetotal.getText().toString());
+                    PrintBoletaFragment printBoletaFragment = new PrintBoletaFragment();
+                    printBoletaFragment.setArguments(bundle);
+                    printBoletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
+                    printBoletaFragment.setCancelable(false);
+                }else if ("01".equals(operaciones)) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("producto",producto.getText().toString());
+                        bundle.putString("lado",cara.getText().toString());
+                        bundle.putString("importe",importetotal.getText().toString());
+                        PrintFacturaFragment printFacturaFragment = new PrintFacturaFragment();
+                        printFacturaFragment.setArguments(bundle);
+                        printFacturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
+                        printFacturaFragment.setCancelable(false);
+                }else if ("99".equals(operaciones)) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("producto",producto.getText().toString());
+                        bundle.putString("lado",cara.getText().toString());
+                        bundle.putString("importe",importetotal.getText().toString());
+                        PrintNotaDespachoFragment printNotaDespachoFragment = new PrintNotaDespachoFragment();
+                        printNotaDespachoFragment.setArguments(bundle);
+                        printNotaDespachoFragment.show(getActivity().getSupportFragmentManager(), "Nota de Despacho");
+                        printNotaDespachoFragment.setCancelable(false);
+                }else{
+                        Log.d("Error", "NULL");
+                }
+            }
+        });
+
+
+      /*  griaboleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
@@ -117,13 +149,15 @@ public class VentaFragment extends Fragment{
                 printNotaDespachoFragment.show(getActivity().getSupportFragmentManager(), "Nota de Despacho");
                 printNotaDespachoFragment.setCancelable(false);
             }
-        });
+        });*/
 
-
+        // aqui
         //Selección de Cara
         CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
         CardView Cara18         = (CardView) view.findViewById(R.id.cara18);
         final TextView textcara = (TextView) view.findViewById(R.id.textcara);
+        final TextView textcara2 = (TextView) view.findViewById(R.id.textcara2);
+
 
         Cara17.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,12 +165,14 @@ public class VentaFragment extends Fragment{
                 textcara.setText("17");
             }
         });
+
         Cara18.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                textcara.setText("18");
+                textcara2.setText("18");
             }
         });
+
 
         //Selección de Manguera
         CardView diesel = (CardView) view.findViewById(R.id.diesel);
@@ -145,37 +181,51 @@ public class VentaFragment extends Fragment{
         CardView gas97  = (CardView) view.findViewById(R.id.gas97);
         CardView glp    = (CardView) view.findViewById(R.id.glp);
         final TextView textmanguera = (TextView) view.findViewById(R.id.textmanguera);
+        final TextView textmanguera2 = (TextView) view.findViewById(R.id.textmanguera2);
+
+
 
         diesel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textmanguera.setText("DIESEL");
+
+                    textmanguera.setText("DIESEL");
+
             }
         });
         gas90.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textmanguera.setText("GAS 90");
+
+                    textmanguera.setText("GAS 90");
+
             }
         });
         gas95.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textmanguera.setText("GAS 95");
+
+                    textmanguera.setText("GAS 95");
+
             }
         });
         gas97.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textmanguera.setText("GAS 97");
+
+                    textmanguera.setText("GAS 97");
+
             }
         });
         glp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textmanguera.setText("GLP");
+
+                    textmanguera.setText("GLP");
+
             }
         });
+
 
         Button btnlibre        = view.findViewById(R.id.btnlibre);
         Button btnsoles        = view.findViewById(R.id.btnsoles);
@@ -269,14 +319,6 @@ public class VentaFragment extends Fragment{
         return view;
     }
 
-    public void cambiarColor(View view){
-        if (i<=3){
-            textView.setText(color[i]);
-            i++;
-        }else {
-            Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-        }
-    }
     int turno           = 1;
     String cajero       = "RUBEN ESCOBAR";
     long kilometraje    = Long.parseLong("00000000000");
