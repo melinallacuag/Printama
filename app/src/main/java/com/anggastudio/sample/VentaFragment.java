@@ -2,6 +2,7 @@ package com.anggastudio.sample;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -53,9 +54,35 @@ import java.util.TimeZone;
 public class VentaFragment extends Fragment{
 
     private static final int REQUEST_CODE_PERMISSION = 1;
-    ImageView imageQR;
-    TextView totalmonto, cliente, operacion,cari,total,textsols;
-    CardView gria;
+
+    TextView totalmonto, cliente;
+
+    public void setclick(CardView gria, TextView lado, String texto) {
+        gria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lado.setText(texto);
+            }
+        });
+    }
+
+
+    public void setclick2(CardView elemento, TextView elemento_texto, String textos,CardView gria) {
+        elemento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ("17".equals(gria)){
+                    elemento_texto.setText(textos);
+                }else{
+                    elemento_texto.setText(textos);
+                }
+
+            }
+        });
+    }
+    public  void set(){
+
+    }
     @SuppressLint("WrongThread")
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -63,16 +90,15 @@ public class VentaFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
         totalmonto  =  view.findViewById(R.id.txtimporte);
-        CardView grias        = view.findViewById(R.id.card);
-     //   CardView griafactura       = view.findViewById(R.id.cardfactura);
-      //  CardView grianotadespacho  = view.findViewById(R.id.cardnotadespacho);
-      //  CardView griaserafin       = view.findViewById(R.id.cardserafin);
 
-        TextView producto = view.findViewById(R.id.textmanguera);
-        TextView cara = view.findViewById(R.id.textcara);
+
+        CardView grias        = view.findViewById(R.id.card);
+        TextView producto     = view.findViewById(R.id.textmanguera);
+        TextView cara         = view.findViewById(R.id.textcara);
         TextView importetotal = view.findViewById(R.id.txtimporte);
-        TextView operacion = view.findViewById(R.id.txtoperacion);
-        String operaciones = operacion.getText().toString();
+        TextView operacion    = view.findViewById(R.id.txtoperacion);
+        String operaciones    = operacion.getText().toString();
+
 
         grias.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,46 +137,6 @@ public class VentaFragment extends Fragment{
         });
 
 
-      /*  griaboleta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("producto",producto.getText().toString());
-                bundle.putString("lado",cara.getText().toString());
-                bundle.putString("importe",importetotal.getText().toString());
-                PrintBoletaFragment printBoletaFragment = new PrintBoletaFragment();
-                printBoletaFragment.setArguments(bundle);
-                printBoletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
-                printBoletaFragment.setCancelable(false);
-            }
-        });
-        griafactura.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("producto",producto.getText().toString());
-                bundle.putString("lado",cara.getText().toString());
-                bundle.putString("importe",importetotal.getText().toString());
-                PrintFacturaFragment printFacturaFragment = new PrintFacturaFragment();
-                printFacturaFragment.setArguments(bundle);
-                printFacturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
-                printFacturaFragment.setCancelable(false);
-            }
-        });
-        grianotadespacho.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("producto",producto.getText().toString());
-                bundle.putString("lado",cara.getText().toString());
-                bundle.putString("importe",importetotal.getText().toString());
-                PrintNotaDespachoFragment printNotaDespachoFragment = new PrintNotaDespachoFragment();
-                printNotaDespachoFragment.setArguments(bundle);
-                printNotaDespachoFragment.show(getActivity().getSupportFragmentManager(), "Nota de Despacho");
-                printNotaDespachoFragment.setCancelable(false);
-            }
-        });*/
-
         // aqui
         //Selección de Cara
         CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
@@ -159,7 +145,7 @@ public class VentaFragment extends Fragment{
         final TextView textcara2 = (TextView) view.findViewById(R.id.textcara2);
 
 
-        Cara17.setOnClickListener(new View.OnClickListener() {
+      /*  Cara17.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 textcara.setText("17");
@@ -171,8 +157,9 @@ public class VentaFragment extends Fragment{
             public void onClick(View view) {
                 textcara2.setText("18");
             }
-        });
-
+        });*/
+        setclick(Cara17, textcara, "17");
+        setclick(Cara18, textcara2, "18");
 
         //Selección de Manguera
         CardView diesel = (CardView) view.findViewById(R.id.diesel);
@@ -183,48 +170,42 @@ public class VentaFragment extends Fragment{
         final TextView textmanguera = (TextView) view.findViewById(R.id.textmanguera);
         final TextView textmanguera2 = (TextView) view.findViewById(R.id.textmanguera2);
 
+        setclick2(diesel, textmanguera, "DIESEL",Cara17);
+        setclick2(gas90, textmanguera, "GAS 90",Cara17);
+        setclick2(gas95, textmanguera, "GAS 95",Cara17);
+        setclick2(gas97, textmanguera, "GAS 97",Cara17);
+        setclick2(glp, textmanguera, "GLP",Cara17);
 
-
-        diesel.setOnClickListener(new View.OnClickListener() {
+       /* diesel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                     textmanguera.setText("DIESEL");
-
             }
         });
         gas90.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                     textmanguera.setText("GAS 90");
-
             }
         });
         gas95.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                     textmanguera.setText("GAS 95");
-
             }
         });
         gas97.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                     textmanguera.setText("GAS 97");
-
             }
         });
         glp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                     textmanguera.setText("GLP");
-
             }
-        });
+        });*/
 
 
         Button btnlibre        = view.findViewById(R.id.btnlibre);
@@ -235,8 +216,7 @@ public class VentaFragment extends Fragment{
         Button btnnotadespacho = view.findViewById(R.id.btnnotadespacho);
         Button btnserafin      = view.findViewById(R.id.btnserafin);
         Button btnpuntos       = view.findViewById(R.id.btnpuntos);
-
-        ImageButton regreso       = view.findViewById(R.id.volverdasboard);
+        ImageButton regreso    = view.findViewById(R.id.volverdasboard);
 
         regreso.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,7 +225,6 @@ public class VentaFragment extends Fragment{
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
             }
         });
-
         btnlibre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -294,7 +273,7 @@ public class VentaFragment extends Fragment{
                 notaDespachoFragment.setCancelable(false);
             }
         });
-       btnserafin.setOnClickListener(new View.OnClickListener() {
+        btnserafin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();

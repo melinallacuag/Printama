@@ -54,7 +54,7 @@
             </com.google.android.material.textfield.TextInputLayout>
             <Button
                 android:id="@+id/btntarjeta"
-                android:layout_width="180sp"
+                android:layout_width="200sp"
                 android:layout_height="60sp"
                 android:layout_marginStart="10sp"
                 android:text="buscar"
@@ -123,7 +123,7 @@
 
             <Button
                 android:id="@+id/btnbuscarcliente"
-                android:layout_width="180sp"
+                android:layout_width="200sp"
                 android:layout_height="60sp"
                 android:layout_marginStart="10sp"
                 android:text="CLIENTE"
