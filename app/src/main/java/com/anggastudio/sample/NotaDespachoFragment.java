@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -74,6 +75,9 @@ public class NotaDespachoFragment extends DialogFragment {
         agregardespacho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView txtoperacion = (TextView) getActivity().findViewById(R.id.txtoperacion);
+                String bd = "99";
+                txtoperacion.setText(bd.toString());
                 String textnplaca      = placa.getText().toString().trim();
                 String textkilometraje = kilometraje.getText().toString().trim();
                 String textidcliente   = idcliente.getText().toString().trim();

@@ -28,7 +28,7 @@ import com.google.android.material.textfield.TextInputLayout;
 public class BoletaFragment extends DialogFragment {
 
     Button cerrarboleta,tipoPago,agregarboleta,generar,buscarplaca,buscardni;
-    TextInputEditText placa,dni,nombre,direccion;
+    TextInputEditText placa,dni,nombre,direccion,boleta;
     TextInputLayout alertplaca,alertdni, alertnombre, alertdireccion;
 
     @Override
@@ -42,7 +42,6 @@ public class BoletaFragment extends DialogFragment {
         generar       = view.findViewById(R.id.btngenerarcliente);
         buscarplaca   = view.findViewById(R.id.btntarjeta);
         buscardni     = view.findViewById(R.id.btnrenic);
-
 
 
         placa     = view.findViewById(R.id.inputnplaca);
@@ -104,6 +103,10 @@ public class BoletaFragment extends DialogFragment {
         agregarboleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView txtoperacion = (TextView) getActivity().findViewById(R.id.txtoperacion);
+                String bd = "03";
+                txtoperacion.setText(bd.toString());
+
                 String textnplaca    = placa.getText().toString().trim();
                 String textdni       = dni.getText().toString().trim();
                 String textnombre    = nombre.getText().toString().trim();

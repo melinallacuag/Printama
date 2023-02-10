@@ -57,8 +57,6 @@ public class SolesFragment extends DialogFragment {
                 bd = bd.setScale(2, RoundingMode.HALF_UP);
                 textsol.setText(bd.toString());
 
-           //     textsol.setText( montosoles.getText().toString());
-
                String textsol = montosoles.getText().toString().trim();
                 int numsol   = Integer.parseInt(textsol);
                 if (numsol < 5){
@@ -71,31 +69,10 @@ public class SolesFragment extends DialogFragment {
                     dismiss();
                 }
 
-
-
-
             }
         });
 
         return view;
-    }
-
-
-
-
-    public interface Custom_DialogInterface {
-        void applyTexts(String textsol);
-    }
-    private  Custom_DialogInterface dialogInterface ;
-
-    @Override
-    public void onAttach(Context context){
-        super.onAttach(context);
-        try {
-            dialogInterface = (Custom_DialogInterface) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() );
-        }
     }
 
 }

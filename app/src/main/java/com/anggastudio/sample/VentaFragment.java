@@ -78,14 +78,13 @@ public class VentaFragment extends Fragment{
         TextView producto     = view.findViewById(R.id.textmanguera);
         TextView cara         = view.findViewById(R.id.textcara);
         TextView importetotal = view.findViewById(R.id.txtimporte);
-        TextView operacion    = view.findViewById(R.id.txtoperacion);
-        String operaciones    = operacion.getText().toString();
-
 
         grias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ("03".equals(operaciones)) {
+                TextView operacion   = view.findViewById(R.id.txtoperacion);
+                String op            = operacion.getText().toString().trim();
+                if (op.equals("03")) {
                     Bundle bundle = new Bundle();
                     bundle.putString("producto", producto.getText().toString());
                     bundle.putString("lado", cara.getText().toString());
@@ -94,7 +93,7 @@ public class VentaFragment extends Fragment{
                     printBoletaFragment.setArguments(bundle);
                     printBoletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
                     printBoletaFragment.setCancelable(false);
-                }else if ("01".equals(operaciones)) {
+                }else if (op.equals("01")) {
                         Bundle bundle = new Bundle();
                         bundle.putString("producto",producto.getText().toString());
                         bundle.putString("lado",cara.getText().toString());
@@ -103,7 +102,7 @@ public class VentaFragment extends Fragment{
                         printFacturaFragment.setArguments(bundle);
                         printFacturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
                         printFacturaFragment.setCancelable(false);
-                }else if ("99".equals(operaciones)) {
+                }else if (op.equals("99")) {
                         Bundle bundle = new Bundle();
                         bundle.putString("producto",producto.getText().toString());
                         bundle.putString("lado",cara.getText().toString());
@@ -112,8 +111,6 @@ public class VentaFragment extends Fragment{
                         printNotaDespachoFragment.setArguments(bundle);
                         printNotaDespachoFragment.show(getActivity().getSupportFragmentManager(), "Nota de Despacho");
                         printNotaDespachoFragment.setCancelable(false);
-                }else{
-                        Log.d("Error", "NULL");
                 }
             }
         });
@@ -122,7 +119,6 @@ public class VentaFragment extends Fragment{
         CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
         CardView Cara18         = (CardView) view.findViewById(R.id.cara18);
         final TextView textcara = (TextView) view.findViewById(R.id.textcara);
-      //  final TextView textcara2 = (TextView) view.findViewById(R.id.textcara2);
 
         setclick(Cara17, textcara, "17");
         setclick(Cara18, textcara, "18");
@@ -171,7 +167,6 @@ public class VentaFragment extends Fragment{
                     textmanguera.setText("GLP");
             }
         });*/
-
 
         Button btnlibre        = view.findViewById(R.id.btnlibre);
         Button btnsoles        = view.findViewById(R.id.btnsoles);
