@@ -22,7 +22,7 @@
         android:id="@+id/bienvenida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="160dp"
         android:fontFamily="@font/nunito_black"
         android:text="Bienvenido"
         android:textColor="#fff"

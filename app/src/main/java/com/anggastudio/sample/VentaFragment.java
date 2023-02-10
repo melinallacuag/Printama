@@ -54,7 +54,6 @@ import java.util.TimeZone;
 public class VentaFragment extends Fragment{
 
     private static final int REQUEST_CODE_PERMISSION = 1;
-    public String cara_texto_p = "wichoooo";
     TextView totalmonto, cliente;
 
     public void setclick(CardView gria, TextView lado, String texto) {
@@ -66,24 +65,6 @@ public class VentaFragment extends Fragment{
         });
     }
 
-
-    public void setclick2(CardView elemento, TextView elemento_texto, String textos,CardView gria) {
-        elemento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ("17".equals(gria)){
-                    elemento_texto.setText(textos);
-                }else{
-                    elemento_texto.setText(textos);
-                }
-
-            }
-        });
-    }
-
-    public void set_cara_texto(String texto) {
-        cara_texto_p = texto;
-    }
     @SuppressLint("WrongThread")
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -137,34 +118,14 @@ public class VentaFragment extends Fragment{
             }
         });
 
-
-        // aqui
         //Selección de Cara
         CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
         CardView Cara18         = (CardView) view.findViewById(R.id.cara18);
         final TextView textcara = (TextView) view.findViewById(R.id.textcara);
         final TextView textcara2 = (TextView) view.findViewById(R.id.textcara2);
-        TextView gyardarcara = (TextView) view.findViewById(R.id.guardarcara);
 
-        Cara17.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textcara.setText("17");
-                gyardarcara.setText("17");
-                //set_cara_texto("17");
-            }
-        });
-
-        Cara18.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textcara2.setText("18");
-                gyardarcara.setText("18");
-//                set_cara_texto("18");
-            }
-        });
-        //setclick(Cara17, textcara, "17");
-        //setclick(Cara18, textcara2, "18");
+        setclick(Cara17, textcara, "17");
+        setclick(Cara18, textcara2, "18");
 
         //Selección de Manguera
         CardView diesel = (CardView) view.findViewById(R.id.diesel);
@@ -173,26 +134,12 @@ public class VentaFragment extends Fragment{
         CardView gas97  = (CardView) view.findViewById(R.id.gas97);
         CardView glp    = (CardView) view.findViewById(R.id.glp);
         final TextView textmanguera = (TextView) view.findViewById(R.id.textmanguera);
-        final TextView textmanguera2 = (TextView) view.findViewById(R.id.textmanguera2);
 
-        String valortext = gyardarcara.getText().toString();
-        cara_texto_p = valortext;
-        setclick(diesel, textmanguera, valortext);
+        setclick(diesel,textmanguera, "DIESEL");
         setclick(gas90, textmanguera, "GAS 90");
         setclick(gas95, textmanguera, "GAS 95");
         setclick(gas97, textmanguera, "GAS 97");
-        setclick(glp, textmanguera, "GLP");
-
-       /* if (valortext == "17") {
-
-       } else if (valortext == "18") {
-            setclick(diesel, textmanguera2, "DIESEL");
-            setclick(gas90, textmanguera2, "GAS 90");
-            setclick(gas95, textmanguera2, "GAS 95");
-            setclick(gas97, textmanguera2, "GAS 97");
-            setclick(glp, textmanguera2, "GLP");
-        }*/
-
+        setclick(glp,   textmanguera, "GLP");
 
        /* diesel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,7 +259,7 @@ public class VentaFragment extends Fragment{
 
             }
         });
-        view.findViewById(R.id.btnimprimir).setOnClickListener(v -> boletasin(turno,cajero,umed));
+        view.findViewById(R.id.btnimprimir).setOnClickListener(v -> facturacion(turno,cajero,kilometraje,placa,ruc,clientes,direccion,umed));
         return view;
     }
 
