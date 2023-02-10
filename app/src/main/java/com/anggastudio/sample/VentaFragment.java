@@ -122,10 +122,10 @@ public class VentaFragment extends Fragment{
         CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
         CardView Cara18         = (CardView) view.findViewById(R.id.cara18);
         final TextView textcara = (TextView) view.findViewById(R.id.textcara);
-        final TextView textcara2 = (TextView) view.findViewById(R.id.textcara2);
+      //  final TextView textcara2 = (TextView) view.findViewById(R.id.textcara2);
 
         setclick(Cara17, textcara, "17");
-        setclick(Cara18, textcara2, "18");
+        setclick(Cara18, textcara, "18");
 
         //Selección de Manguera
         CardView diesel = (CardView) view.findViewById(R.id.diesel);
