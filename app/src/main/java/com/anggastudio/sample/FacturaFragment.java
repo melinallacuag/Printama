@@ -48,37 +48,6 @@ public class FacturaFragment extends DialogFragment {
                 dismiss();
             }
         });
-        buscarruc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String textruc    = ruc.getText().toString().trim();
-                if (textruc.isEmpty()){
-                    alertruc.setError("Ingresar RUC");
-                }else{
-                    nombre.setText("JHON PINO");
-                    direccion.setText("JR. UNIÓN");
-                    alertruc.setErrorEnabled(false);
-                    Toast.makeText(getContext(), "SE AGREGO ", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        buscarplaca.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String textnplaca    = placa.getText().toString().trim();
-                if (textnplaca.isEmpty()){
-                    alertplaca.setError("Ingresar placa");
-                }else {
-                    ruc.setText("104578141578");
-                    nombre.setText("JHON PINO");
-                    direccion.setText("JR. UNIÓN");
-                    alertplaca.setErrorEnabled(false);
-                    Toast.makeText(getContext(), "SE AGREGO ", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
         tipoPago.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,46 +56,66 @@ public class FacturaFragment extends DialogFragment {
                 tipoPagoFragment.setCancelable(false);
             }
         });
+        buscarruc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String textruc    = ruc.getText().toString();
+                if(textruc.isEmpty()){
+                    alertruc.setError("El campo RUC es obligatorio");
+                }else if(!textruc.equals("11111111111")){
+                    alertruc.setError("El dato no es correcto");
+                }else{
+                    alertruc.setErrorEnabled(false);
+                    nombre.setText("JHON PINO");
+                    Toast.makeText(getContext(), "SE AGREGO DATO", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        buscarplaca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String textnplaca    = placa.getText().toString();
+                if(textnplaca.isEmpty()){
+                    alertplaca.setError("El campo placa es obligatorio");
+                }else if(!textnplaca.equals("000-0000")){
+                    alertplaca.setError("El dato no es correcto");
+                }else {
+                    alertplaca.setErrorEnabled(false);
+                    ruc.setText("11111111111");
+                    nombre.setText("JHON PINO");
+                    Toast.makeText(getContext(), "SE AGREGO DATO", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         agregarfactura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 TextView txtoperacion = (TextView) getActivity().findViewById(R.id.txtoperacion);
-
                 txtoperacion.setText("01");
 
-
-                String textnplaca      = placa.getText().toString().trim();
-                String textruc         = ruc.getText().toString().trim();
-                String textrazonsocial = nombre.getText().toString().trim();
-                String textdireccion   = direccion.getText().toString().trim();
+                String textnplaca      = placa.getText().toString();
+                String textruc         = ruc.getText().toString();
+                String textrazonsocial = nombre.getText().toString();
+                String textdireccion   = direccion.getText().toString();
 
                 if (textnplaca.isEmpty()){
-                    alertplaca.setError("Ingresar placa");
+                    alertplaca.setError("El campo placa es obligatorio");
+                }else if (textruc.isEmpty()){
+                    alertruc.setError("El campo RUC es obligatorio");
+                }else if (textrazonsocial.isEmpty()){
+                    alertnombre.setError("El campo nombre es obligatorio");
                 }else{
                     alertplaca.setErrorEnabled(false);
-                }
-                if (textruc.isEmpty()){
-                    alertruc.setError("Ingresar RUC");
-                }else{
                     alertruc.setErrorEnabled(false);
-                }
-                if (textrazonsocial.isEmpty()){
-                    alertnombre.setError("Ingresar Razón Social");
-                }else{
                     alertnombre.setErrorEnabled(false);
-                }
-                if (textdireccion.isEmpty()){
-                    alertdireccion.setError("Ingresar Dirección");
-                }else{
-                    alertdireccion.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
-
             }
         });
-
         return view;
     }
 }

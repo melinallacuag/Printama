@@ -92,9 +92,9 @@ public class BoletaFragment extends DialogFragment {
 
                 String textdni    = dni.getText().toString().trim();
                 if(textdni.isEmpty()){
-                    alertplaca.setError("El campo dni es obligatorio");
-                }else if(!textdni.equals("000-0000")){
-                    alertplaca.setError("El dato no es correcto");
+                    alertdni.setError("El campo dni es obligatorio");
+                }else if(!textdni.equals("11111111")){
+                    alertdni.setError("El dato no es correcto");
                 }else{
                     alertdni.setErrorEnabled(false);
                     nombre.setText("CLIENTE VARIOS");

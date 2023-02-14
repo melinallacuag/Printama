@@ -92,7 +92,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputdni"
                 android:fontFamily="@font/nunito_semibold"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:inputType="number"
                 android:maxLength="8"
                 android:layout_width="match_parent"
@@ -130,7 +130,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputnombre"
                 android:fontFamily="@font/nunito_semibold"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:inputType="textCapCharacters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -152,7 +152,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputdireccion"
                 android:fontFamily="@font/nunito_semibold"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:inputType="textCapCharacters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
