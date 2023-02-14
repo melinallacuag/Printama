@@ -55,7 +55,14 @@ public class BoletaFragment extends DialogFragment {
         alertnombre    = view.findViewById(R.id.textnombre);
         alertdireccion = view.findViewById(R.id.textdireccion);
 
-
+        tipoPago.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TipoPagoFragment tipoPagoFragment = new TipoPagoFragment();
+                tipoPagoFragment.show(getFragmentManager(), "Tipo de Pago");
+                tipoPagoFragment.setCancelable(false);
+            }
+        });
         cerrarboleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,14 +74,15 @@ public class BoletaFragment extends DialogFragment {
             public void onClick(View v) {
 
                 String textnplaca    = placa.getText().toString().trim();
-                if (textnplaca.isEmpty()){
-                    alertplaca.setError("Ingresar placa");
+                if(textnplaca.isEmpty()){
+                    alertplaca.setError("El campo placa es obligatorio");
+                }else if(!textnplaca.equals("000-0000")){
+                    alertplaca.setError("El dato no es correcto");
                 }else {
-                    dni.setText("75994784");
-                    nombre.setText("JHON PINO");
-                    direccion.setText("JR. UNIÓN");
                     alertplaca.setErrorEnabled(false);
-                    Toast.makeText(getContext(), "SE AGREGO ", Toast.LENGTH_SHORT).show();
+                    dni.setText("11111111");
+                    nombre.setText("CLIENTE VARIOS");
+                    Toast.makeText(getContext(), "SE AGREGO DATO ", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -83,57 +91,14 @@ public class BoletaFragment extends DialogFragment {
             public void onClick(View v) {
 
                 String textdni    = dni.getText().toString().trim();
-                if (textdni.isEmpty()){
-                    alertdni.setError("Ingresar DNI");
-                }else {
-                    nombre.setText("JHON PINO");
-                    direccion.setText("JR. UNIÓN");
+                if(textdni.isEmpty()){
+                    alertplaca.setError("El campo dni es obligatorio");
+                }else if(!textdni.equals("000-0000")){
+                    alertplaca.setError("El dato no es correcto");
+                }else{
                     alertdni.setErrorEnabled(false);
-                    Toast.makeText(getContext(), "SE AGREGO", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        tipoPago.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TipoPagoFragment tipoPagoFragment = new TipoPagoFragment();
-                tipoPagoFragment.show(getFragmentManager(), "Tipo de Pago");
-                tipoPagoFragment.setCancelable(false);
-            }
-        });
-        agregarboleta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView txtoperacion = (TextView) getActivity().findViewById(R.id.txtoperacion);
-                String bd = "03";
-                txtoperacion.setText(bd.toString());
-
-                String textnplaca    = placa.getText().toString().trim();
-                String textdni       = dni.getText().toString().trim();
-                String textnombre    = nombre.getText().toString().trim();
-                String textdireccion = direccion.getText().toString().trim();
-
-                if (textnplaca.isEmpty()){
-                    alertplaca.setError("Ingresar placa");
-                }else {
-                    alertplaca.setErrorEnabled(false);
-                }
-                if (textdni.isEmpty()){
-                    alertdni.setError("Ingresar DNI");
-                }else {
-                    alertdni.setErrorEnabled(false);
-                }
-                if (textnombre.isEmpty()){
-                    alertnombre.setError("Ingresar nombre");
-                }else {
-                    alertnombre.setErrorEnabled(false);
-                }
-                if (textdireccion.isEmpty()){
-                    alertdireccion.setError("Ingresar dirección");
-                }else {
-                    alertdireccion.setErrorEnabled(false);
-                    Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
-                    dismiss();
+                    nombre.setText("CLIENTE VARIOS");
+                    Toast.makeText(getContext(), "SE AGREGO DATO", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -145,6 +110,34 @@ public class BoletaFragment extends DialogFragment {
                 nombre.setText("CLIENTE VARIOS");
             }
         });
+        agregarboleta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView txtoperacion = (TextView) getActivity().findViewById(R.id.txtoperacion);
+                String bd = "03";
+                txtoperacion.setText(bd.toString());
+
+                String textnplaca    = placa.getText().toString();
+                String textdni       = dni.getText().toString();
+                String textnombre    = nombre.getText().toString();
+                String textdireccion = direccion.getText().toString();
+
+                if (textnplaca.isEmpty()){
+                    alertplaca.setError("El campo placa es obligatorio");
+                }else if (textdni.isEmpty()){
+                    alertdni.setError("El campo DNI es obligatorio");
+                }else if (textnombre.isEmpty()){
+                    alertnombre.setError("El campo nombre es obligatorio");
+                }else {
+                    alertplaca.setErrorEnabled(false);
+                    alertdni.setErrorEnabled(false);
+                    alertnombre.setErrorEnabled(false);
+                    Toast.makeText(getContext(), "SE GUARDO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }
+            }
+        });
+
         return view;
     }
 }
