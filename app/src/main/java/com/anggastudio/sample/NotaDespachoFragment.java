@@ -54,21 +54,42 @@ public class NotaDespachoFragment extends DialogFragment {
                 dismiss();
             }
         });
+        buscarcliente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String textidcliente    = idcliente.getText().toString().trim();
+                if(textidcliente.isEmpty()){
+                    alertidcliente.setError("El campo placa es obligatorio");
+                }else if(!textidcliente.equals("11111111")){
+                    alertidcliente.setError("El dato no es correcto");
+                }else {
+                    alertidcliente.setErrorEnabled(false);
+                    ruc.setText("111111111111");
+                    nombre.setText("CLIENTE VARIOS");
+                    direccion.setText("JR. UNIÓN");
+                    ClientesFragment dialog = new ClientesFragment();
+                    dialog.show(getFragmentManager(), "Buscar Cliente");
+                }
+            }
+        });
+
         buscarplaca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String textnplaca    = placa.getText().toString().trim();
-                if (textnplaca.isEmpty()){
-                    alertplaca.setError("Ingresar placa");
+                if(textnplaca.isEmpty()){
+                    alertplaca.setError("El campo placa es obligatorio");
+                }else if(!textnplaca.equals("000-0000")){
+                    alertplaca.setError("El dato no es correcto");
                 }else {
-                    kilometraje.setText("145");
-                    idcliente.setText("11467845");
-                    ruc.setText("11457845124");
-                    nombre.setText("JHON PINO");
-                    direccion.setText("JR. UNIÓN");
                     alertplaca.setErrorEnabled(false);
-                    Toast.makeText(getContext(), "SE AGREGO ", Toast.LENGTH_SHORT).show();
+                    kilometraje.setText("0000000000");
+                    idcliente.setText("11111111");
+                    ruc.setText("111111111111");
+                    nombre.setText("CLIENTE VARIOS");
+                    direccion.setText("JR. UNIÓN");
+                    Toast.makeText(getContext(), "SE AGREGO DATO", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -87,62 +108,32 @@ public class NotaDespachoFragment extends DialogFragment {
                 String textobservacion = observacion.getText().toString().trim();
 
                 if (textnplaca.isEmpty()){
-                    alertplaca.setError("Ingresar placa");
+                    alertplaca.setError("El campo placa es obligatorio");
+                }else if (textkilometraje.isEmpty()){
+                    alertkilometraje.setError("El campo kilometraje es obligatorio");
+                }else if (textidcliente.isEmpty()){
+                    alertidcliente.setError("El campo Id Cliente es obligatorio");
+                }else if (textruc.isEmpty()){
+                    alertruc.setError("El campo RUC es obligatorio");
+                }else if (textrazonsocial.isEmpty()){
+                    alertnombre.setError("El campo Razon Social es obligatorio");
+                }else if (textdireccion.isEmpty()){
+                    alertdireccion.setError("El campo dirección es obligatorio");
+                }else if (textobservacion.isEmpty()){
+                    alertobservacion.setError("El campo observación es obligatorio");
                 }else{
                     alertplaca.setErrorEnabled(false);
-                }
-                if (textkilometraje.isEmpty()){
-                    alertkilometraje.setError("Ingresar kilometraje");
-                }else{
                     alertkilometraje.setErrorEnabled(false);
-                }
-                if (textidcliente.isEmpty()){
-                    alertidcliente.setError("Ingresar cliente");
-                }else{
                     alertidcliente.setErrorEnabled(false);
-                }
-                if (textruc.isEmpty()){
-                    alertruc.setError("Ingresar ruc");
-                }else{
                     alertruc.setErrorEnabled(false);
-                }
-                if (textrazonsocial.isEmpty()){
-                    alertnombre.setError("Ingresar Razón Social");
-                }else{
                     alertnombre.setErrorEnabled(false);
-                }
-                if (textdireccion.isEmpty()){
-                    alertdireccion.setError("Ingresar Dirección");
-                }else{
                     alertdireccion.setErrorEnabled(false);
-                }
-                if (textobservacion.isEmpty()){
-                    alertobservacion.setError("Ingresar observación");
-                }else{
                     alertobservacion.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
-
             }
         });
-        buscarcliente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String textidcliente    = idcliente.getText().toString().trim();
-                if (textidcliente.isEmpty()){
-                    alertidcliente.setError("Ingresar Cliente");
-                }else {
-                    ruc.setText("11457845124");
-                    nombre.setText("JHON PINO");
-                    direccion.setText("JR. UNIÓN");
-                    alertidcliente.setErrorEnabled(false);
-                    ClientesFragment dialog = new ClientesFragment();
-                    dialog.show(getFragmentManager(), "Buscar Cliente");
-                }
-            }
-        });
-
         return view;
     }
 }
