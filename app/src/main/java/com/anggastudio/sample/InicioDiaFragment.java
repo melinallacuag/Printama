@@ -3,6 +3,7 @@ package com.anggastudio.sample;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -34,14 +35,13 @@ public class InicioDiaFragment extends DialogFragment {
         });
 
         btngenerar.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
                 try {
                     Toast.makeText(getContext(), "SE GENERO EL INICIO DE DÍA", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), Login.class);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                    finalize();
-
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }

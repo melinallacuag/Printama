@@ -166,6 +166,7 @@ public class PrintNotaDespachoFragment extends DialogFragment {
             printama.printTextln("FIRMA:", Printama.LEFT);
             printama.feedPaper();
             printama.close();
+            dismiss();
         }, this::showToast);
     }
     private void showToast(String message) {

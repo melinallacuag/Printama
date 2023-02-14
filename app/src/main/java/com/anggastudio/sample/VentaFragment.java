@@ -102,6 +102,7 @@ public class VentaFragment extends Fragment{
                         printFacturaFragment.setArguments(bundle);
                         printFacturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
                         printFacturaFragment.setCancelable(false);
+
                 }else if (op.equals("99")) {
                         Bundle bundle = new Bundle();
                         bundle.putString("producto",producto.getText().toString());
@@ -933,6 +934,5 @@ public class VentaFragment extends Fragment{
     private void showToast(String message) {
         Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
     }
-
 
 }

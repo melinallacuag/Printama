@@ -228,6 +228,7 @@ Button cerrar;
             printama.addNewLine();
             printama.feedPaper();
             printama.close();
+            dismiss();
         }, this::showToast);
     }
     private void showToast(String message) {

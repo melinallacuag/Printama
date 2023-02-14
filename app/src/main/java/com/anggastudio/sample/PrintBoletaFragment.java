@@ -235,6 +235,7 @@ public class PrintBoletaFragment extends DialogFragment {
             printama.addNewLine();
             printama.feedPaper();
             printama.close();
+            dismiss();
         }, this::showToast);
     }
     private void showToast(String message) {

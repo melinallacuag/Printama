@@ -145,6 +145,7 @@ public class SerafinFragment extends DialogFragment {
             printama.feedPaper();
             printama.close();
             Toast.makeText(getContext(), "SE GENERO SERAFIN", Toast.LENGTH_SHORT).show();
+            dismiss();
         }, this::showToast);
     }
     private void showToast(String message) {
