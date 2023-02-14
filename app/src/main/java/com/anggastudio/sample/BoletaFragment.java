@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.text.AllCapsTransformationMethod;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -88,7 +89,7 @@ public class BoletaFragment extends DialogFragment {
                     nombre.setText("JHON PINO");
                     direccion.setText("JR. UNIÓN");
                     alertdni.setErrorEnabled(false);
-                    Toast.makeText(getContext(), "SE AGREGO ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "SE AGREGO", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -139,14 +140,11 @@ public class BoletaFragment extends DialogFragment {
         generar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                placa.setText("7845D78D");
-                dni.setText("75994784");
-                nombre.setText("JHON PINO");
-                direccion.setText("JR. UNIÓN");
+                placa.setText("000-0000");
+                dni.setText("11111111");
+                nombre.setText("CLIENTE VARIOS");
             }
         });
-
         return view;
     }
-
 }

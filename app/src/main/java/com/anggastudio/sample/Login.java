@@ -2,6 +2,7 @@ package com.anggastudio.sample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -30,19 +31,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        imeii = findViewById(R.id.imei);
-
-
-        imeii.setText("IMEI:   " + ObtenerIMEI.getDeviceId(getApplicationContext()));
-
-        btniniciar     = findViewById(R.id.btnlogin);
-        usuario        = findViewById(R.id.usuario);
-        contraseña     = findViewById(R.id.contraseña);
-        alertuser      = findViewById(R.id.textusuario);
-        alertpassword  = findViewById(R.id.textcontraseña);
-
         ImageButton configuracion = findViewById(R.id.btnconfiguracion);
-
         configuracion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,22 +39,32 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        imeii = findViewById(R.id.imei);
+        imeii.setText("IMEI: " + ObtenerIMEI.getDeviceId(getApplicationContext()));
+
+        btniniciar     = findViewById(R.id.btnlogin);
+        usuario        = findViewById(R.id.usuario);
+        contraseña     = findViewById(R.id.contraseña);
+        alertuser      = findViewById(R.id.textusuario);
+        alertpassword  = findViewById(R.id.textcontraseña);
+
         btniniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String usuarioUser    = usuario.getText().toString().trim();
-                String contraseñaUser = contraseña.getText().toString().trim();
+                String usuarioUser    = usuario.getText().toString();
+                String contraseñaUser = contraseña.getText().toString();
 
-                if (usuarioUser.isEmpty()){
-                    alertuser.setError("Ingresar usuario");
+                if(usuarioUser.isEmpty()){
+                    alertuser.setError("El campo usuario es obligatorio");
+                }else if(contraseñaUser.isEmpty()){
+                    alertpassword.setError("El campo contraseña es obligatorio");
+                }else if(!usuarioUser.equals("2023")|| !contraseñaUser.equals("admin")){
+                    Toast.makeText(Login.this, "El usuario o la contraseña son incorrectos", Toast.LENGTH_SHORT).show();
                 }else{
                     alertuser.setErrorEnabled(false);
-                }
-                if (contraseñaUser.isEmpty()){
-                    alertpassword.setError("Ingresar contraseña");
-                }else{
                     alertpassword.setErrorEnabled(false);
                     startActivity(new Intent(Login.this,Menu.class));
+                    Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
                 }
             }
         });
