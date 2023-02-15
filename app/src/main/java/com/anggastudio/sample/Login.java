@@ -14,6 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
+import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
+import com.anggastudio.sample.WebApiSVEN.Models.Users;
+import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.anggastudio.sample.mock.Mock;
 import com.anggastudio.sample.model.PrintBody;
 import com.anggastudio.sample.model.PrintHeader;
@@ -21,11 +24,23 @@ import com.anggastudio.sample.model.PrintModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Login extends AppCompatActivity {
+
     Button btniniciar;
     TextInputEditText usuario, contraseña;
     TextInputLayout alertuser,alertpassword;
     TextView imeii;
+
+    String getPass10;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +55,7 @@ public class Login extends AppCompatActivity {
         });
 
         imeii = findViewById(R.id.imei);
-        imeii.setText("IMEI: " + ObtenerIMEI.getDeviceId(getApplicationContext()));
+        imeii.setText(ObtenerIMEI.getDeviceId(getApplicationContext()));
 
         btniniciar     = findViewById(R.id.btnlogin);
         usuario        = findViewById(R.id.usuario);
@@ -58,15 +73,124 @@ public class Login extends AppCompatActivity {
                     alertuser.setError("El campo usuario es obligatorio");
                 }else if(contraseñaUser.isEmpty()){
                     alertpassword.setError("El campo contraseña es obligatorio");
-                }else if(!usuarioUser.equals("2023")|| !contraseñaUser.equals("admin")){
-                    Toast.makeText(Login.this, "El usuario o la contraseña son incorrectos", Toast.LENGTH_SHORT).show();
                 }else{
                     alertuser.setErrorEnabled(false);
                     alertpassword.setErrorEnabled(false);
-                    startActivity(new Intent(Login.this,Menu.class));
-                    Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                    GlobalInfo.getImei10 = imeii.getText().toString();
+                    findUsers(usuario.getText().toString());
                 }
             }
         });
     }
+
+    private void findUsers(String id){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.5:8081/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
+        Call<List<Users>> call = appSvenAPI.findUsers(id);
+
+        call.enqueue(new Callback<List<Users>>() {
+            @Override
+            public void onResponse(Call<List<Users>> call, Response<List<Users>> response) {
+
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(Login.this, "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<Users> usersList = response.body();
+
+                    for(Users user: usersList){
+                        usuario.setText(user.getUserID());
+                        GlobalInfo.getName10 = user.getNames();
+                        getPass10 = user.getPassword();
+                    }
+
+                    String getPass = checkpassword(contraseña.getText().toString());
+
+                    if(getPass.equals(getPass10)){
+                        Toast.makeText(Login.this, "Bienvenido al Sistema SVEN", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Login.this,Menu.class));
+                    }
+                    else {
+                        Toast.makeText(Login.this, "El usuario o la contraseña son incorrectos", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }catch (Exception ex){
+                    Toast.makeText(Login.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Users>> call, Throwable t) {
+                Toast.makeText(Login.this, "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private String checkpassword(String clave){
+
+        String lResult = "";
+        String lasc1 = "";
+
+        int lValor = 0;
+        int lTam = 0;
+        int lCar = 0;
+        int lasc2 = 0;
+
+        lTam = clave.length();
+
+        for(int lcont = 1 ; lcont <= lTam; lcont += 1){
+
+            switch (lcont){
+                case 1:
+                    lCar = 1;
+                    lasc1 = clave.substring(0,1);
+                    lasc2 = lasc1.charAt(0);
+                    break;
+                case 2:
+                    lCar = 3;
+                    lasc1 = clave.substring(1,2);
+                    lasc2 = lasc1.charAt(0);
+                    break;
+                case 3:
+                    lCar = 5;
+                    lasc1 = clave.substring(2,3);
+                    lasc2 = lasc1.charAt(0);
+                    break;
+                case 4:
+                    lCar = 7;
+                    lasc1 = clave.substring(3,4);
+                    lasc2 = lasc1.charAt(0);
+                    break;
+                case 5:
+                    lCar = 9;
+                    lasc1 = clave.substring(4,5);
+                    lasc2 = lasc1.charAt(0);
+                    break;
+                case 6:
+                    lCar = 11;
+                    lasc1 = clave.substring(5,6);
+                    lasc2 = lasc1.charAt(0);
+                    break;
+            }
+
+            lValor = lValor + lasc2 * lCar;
+
+        }
+
+        lResult = String.valueOf(lValor);
+
+        return lResult;
+    }
+
 }
