@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,7 +65,7 @@ public class PrintNotaDespachoFragment extends DialogFragment {
     private  void notadespacho(int turno ,String cajero,long kilometraje,String placa,long dni,String clientes,long tarjeta,String umed) {
         Bundle bundle         = this.getArguments();
         //LOGO
-        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logorobles);
+        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
 
         //FECHAHORA
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));

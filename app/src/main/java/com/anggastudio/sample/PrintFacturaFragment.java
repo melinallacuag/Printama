@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,7 +68,7 @@ Button cerrar;
     private  void facturacion(int turno ,String cajero,long kilometraje,String placa,long ruc,String clientes ,String direccion,String umed) {
         Bundle bundle         = this.getArguments();
         //LOGO DE  LA EMPRESA
-        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logorobles);
+        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
 
         //Fecha y Hora
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));

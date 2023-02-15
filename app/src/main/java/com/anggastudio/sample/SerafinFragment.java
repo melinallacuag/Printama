@@ -4,14 +4,12 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
@@ -58,7 +56,7 @@ public class SerafinFragment extends DialogFragment {
     private  void serafin(int turno ,String cajero,long kilometraje, String umed) {
         Bundle bundle         = this.getArguments();
         //LODO DE LA EMPRESA
-        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logorobles);
+        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
 
         //FECHAHORA
         Calendar cal         = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
