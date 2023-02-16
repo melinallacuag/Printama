@@ -16,14 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.sample.Adapter.CaraAdapter;
-import com.anggastudio.sample.Adapter.Manguera;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
 import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,32 +33,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class VentaFragment extends Fragment{
 
     private static final int REQUEST_CODE_PERMISSION = 1;
-    TextView totalmonto, producto,cara,importetotal,textcara,textmanguera;
+    TextView  producto,cara,importetotal,textcara,textmanguera;
 
     RecyclerView recyclerCara, recyclerManguera;
     CaraAdapter caraAdapter;
     MangueraAdapter mangueraAdapter;
-    public void setclick(CardView gria, TextView lado, String texto) {
-        gria.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lado.setText(texto);
-            }
-        });
-    }
 
-    @SuppressLint("WrongThread")
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
-        totalmonto  =  view.findViewById(R.id.txtimporte);
-        CardView grias        = view.findViewById(R.id.card);
         producto     = view.findViewById(R.id.textmanguera);
         cara     = view.findViewById(R.id.textcara);
         importetotal = view.findViewById(R.id.txtimporte);
 
+        CardView grias        = view.findViewById(R.id.card);
         grias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -221,11 +209,14 @@ public class VentaFragment extends Fragment{
                     caraAdapter = new CaraAdapter(ladosList, getContext(), new CaraAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(Lados item) {
+
                             GlobalInfo.getCara10 = item.getNroLado();
                             findPico(GlobalInfo.getCara10);
+
                             textcara =  getActivity().findViewById(R.id.textcara);
                             String numlado = item.getNroLado();
                             textcara.setText(numlado);
+
                         }
                     });
 
@@ -266,9 +257,11 @@ public class VentaFragment extends Fragment{
                     mangueraAdapter = new MangueraAdapter(picosList, getContext(), new MangueraAdapter.OnItemClickListener(){
                         @Override
                         public void onItemClick(Picos item) {
+
                             textmanguera =  getActivity().findViewById(R.id.textmanguera);
                             String descripcionmanguera = item.getDescripcion();
                             textmanguera.setText(descripcionmanguera);
+
                         }
                     });
                     recyclerManguera.setAdapter(mangueraAdapter);

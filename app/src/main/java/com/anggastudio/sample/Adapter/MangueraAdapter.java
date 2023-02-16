@@ -42,6 +42,7 @@ public class MangueraAdapter extends RecyclerView.Adapter<MangueraAdapter.ViewHo
     public void onBindViewHolder(@NonNull MangueraAdapter.ViewHolder holder, int position) {
         Picos picos = mangueraList.get(position);
         holder.txtmanguera.setText(mangueraList.get(position).getDescripcion());
+        holder.txtmangueraID.setText(mangueraList.get(position).getMangueraID());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,11 +58,13 @@ public class MangueraAdapter extends RecyclerView.Adapter<MangueraAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public CardView cardView;
         private TextView txtmanguera;
+        private TextView txtmangueraID;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            cardView = itemView.findViewById(R.id.cardmanguera);
-            txtmanguera = itemView.findViewById(R.id.txtmanguera);
+            cardView      = itemView.findViewById(R.id.cardmanguera);
+            txtmanguera   = itemView.findViewById(R.id.txtmanguera);
+            txtmangueraID = itemView.findViewById(R.id.txtmangueraID);
         }
     }
 }

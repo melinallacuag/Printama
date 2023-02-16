@@ -50,15 +50,16 @@ public class SolesFragment extends DialogFragment {
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                textsol = (TextView) getActivity().findViewById(R.id.txtimporte);
-
+                textsol = getActivity().findViewById(R.id.txtimporte);
 
                 BigDecimal bd = new BigDecimal(montosoles.getText().toString());
                 bd = bd.setScale(2, RoundingMode.HALF_UP);
                 textsol.setText(bd.toString());
 
-               String textsol = montosoles.getText().toString().trim();
+               String textsol = montosoles.getText().toString();
+
                 int numsol   = Integer.parseInt(textsol);
+
                 if (numsol < 5){
                     alertsoles.setError("El valor debe ser minimo 5 ");
                 }else if(9999 < numsol){
