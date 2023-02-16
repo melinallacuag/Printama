@@ -84,19 +84,19 @@ Button cerrar;
         String producto       = null;
 
         switch (manguera) {
-            case "DIESEL":
+            case "DB5":
                 precio = "18.90";
                 producto = "DIESEL B5 S50";
                 break;
-            case "GAS 90":
+            case "G90":
                 precio = "16.69";
                 producto = "GASOHOL 90";
                 break;
-            case "GAS 95":
+            case "G95":
                 precio = "18.39";
                 producto = "GASOHOL 95";
                 break;
-            case "GAS 97":
+            case "G97":
                 precio = "19.79";
                 producto = "GASOHOL 97";
                 break;
