@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <androidx.cardview.widget.CardView
-        android:id="@+id/cara12"
+        android:id="@+id/cardcara"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5sp"
@@ -32,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_black"
                 android:gravity="center"
-                android:text="18"
                 android:textAlignment="center"
                 android:textColor="#2C291B"
                 android:textSize="20sp"

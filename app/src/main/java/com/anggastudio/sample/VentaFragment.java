@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,6 +35,10 @@ import android.widget.Toast;
 import com.anggastudio.printama.Printama;
 import com.anggastudio.sample.Adapter.Cara;
 import com.anggastudio.sample.Adapter.CaraAdapter;
+import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
+import com.anggastudio.sample.WebApiSVEN.Models.Lados;
+import com.anggastudio.sample.WebApiSVEN.Models.Users;
+import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -57,10 +62,16 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class VentaFragment extends Fragment{
 
     private static final int REQUEST_CODE_PERMISSION = 1;
-    TextView totalmonto;
+    TextView totalmonto, producto,cara,importetotal,textcara;
 
     RecyclerView recyclerCara;
     CaraAdapter caraAdapter;
@@ -84,9 +95,8 @@ public class VentaFragment extends Fragment{
 
 
         CardView grias        = view.findViewById(R.id.card);
-        TextView producto     = view.findViewById(R.id.textmanguera);
-        TextView cara         = view.findViewById(R.id.textcara);
-        TextView importetotal = view.findViewById(R.id.txtimporte);
+        producto     = view.findViewById(R.id.textmanguera);
+        importetotal = view.findViewById(R.id.txtimporte);
 
         grias.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,14 +134,6 @@ public class VentaFragment extends Fragment{
                 }
             }
         });
-
-        //Selección de Cara
-        CardView Cara17         = (CardView) view.findViewById(R.id.cara17);
-        CardView Cara18         = (CardView) view.findViewById(R.id.cara18);
-        final TextView textcara = (TextView) view.findViewById(R.id.textcara);
-
-        setclick(Cara17, textcara, "17");
-        setclick(Cara18, textcara, "18");
 
         //Selección de Manguera
         CardView diesel = (CardView) view.findViewById(R.id.diesel);
@@ -234,21 +236,57 @@ public class VentaFragment extends Fragment{
 
             }
         });
+
         //Seleccion de Caras
         recyclerCara = view.findViewById(R.id.recycler);
         recyclerCara.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        List<Cara> caraList = new ArrayList<>();
-
-        for (int i=0; i<1; i++){
-            caraList.add(new Cara(i,"18",+i));
-            caraList.add(new Cara(i,"19",+i));
-            caraList.add(new Cara(i,"20",+i));
-        }
-
-        caraAdapter = new CaraAdapter(caraList,getContext());
-        recyclerCara.setAdapter(caraAdapter);
+        findLados(GlobalInfo.getImei10);
 
         return view;
+    }
+    private void findLados(String id) {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.5:8081/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
+        Call<List<Lados>> call = appSvenAPI.findLados(id);
+
+        call.enqueue(new Callback<List<Lados>>() {
+            @Override
+            public void onResponse(Call<List<Lados>> call, Response<List<Lados>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<Lados> ladosList = response.body();
+
+                    caraAdapter = new CaraAdapter(ladosList, getContext(), new CaraAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Lados item) {
+                            textcara =  getActivity().findViewById(R.id.textcara);
+                            String numlado = item.getNroLado();
+                            textcara.setText(numlado);
+                        }
+                    });
+                    recyclerCara.setAdapter(caraAdapter);
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Lados>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

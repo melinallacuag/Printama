@@ -1,6 +1,7 @@
 package com.anggastudio.sample.WebApiSVEN.Controllers;
 
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
+import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Terminal;
 import com.anggastudio.sample.WebApiSVEN.Models.Users;
 
@@ -29,5 +30,11 @@ public interface AppSvenAPI {
 
     @GET("api/terminal/listado/{id}")
     Call<List<Terminal>> findTerminal(@Path("id") String id);
+
+    @GET("api/lados/listado")
+    Call<List<Lados>> getLados();
+
+    @GET("api/lados/listado/{id}")
+    Call<List<Lados>> findLados(@Path("id") String id);
 
 }

@@ -9,78 +9,76 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="70sp"
-        android:layout_height="70sp"
-        android:layout_marginStart="5sp"
-        android:layout_marginEnd="5sp"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_marginStart="80sp"
         android:scaleType="centerCrop"
-        android:layout_marginTop="10sp"
+        android:layout_marginTop="2.8sp"
         android:src="@drawable/logoroble"
-        app:shapeAppearanceOverlay="@style/roudperfil" />
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginTop="10sp">
-    <TextView
-        android:id="@+id/nombreuser"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        app:shapeAppearanceOverlay="@style/roudperfil"
+        android:layout_marginLeft="80sp" />
+   <!-- <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Miguel Ignacio Machuco"
-        android:textColor="#fff"
-        android:textSize="10sp"
-        android:fontFamily="@font/nunito_semibold"
-        android:textStyle="bold" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:orientation="vertical"
+        android:layout_marginTop="10sp">
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/nombre"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha:"
             android:textColor="#fff"
             android:textSize="10sp"
             android:fontFamily="@font/nunito_semibold"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/fecha"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:text="01/02/2022"
-            android:textColor="#fff"
-            android:textSize="8sp"
-            android:fontFamily="@font/nunito_semibold"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Turno:"
-            android:textColor="#fff"
-            android:textSize="10sp"
-            android:fontFamily="@font/nunito_semibold"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha:"
+                android:textColor="#fff"
+                android:textSize="10sp"
+                android:fontFamily="@font/nunito_semibold"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/turno"
+            <TextView
+                android:id="@+id/fecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:textColor="#fff"
+                android:textSize="8sp"
+                android:fontFamily="@font/nunito_semibold"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:text="01"
-            android:textColor="#fff"
-            android:textSize="8sp"
-            android:fontFamily="@font/nunito_semibold"
-            android:textStyle="bold" />
-    </LinearLayout>
-</LinearLayout>
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Turno:"
+                android:textColor="#fff"
+                android:textSize="10sp"
+                android:fontFamily="@font/nunito_semibold"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/turno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:textColor="#fff"
+                android:textSize="8sp"
+                android:fontFamily="@font/nunito_semibold"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+-->
 </LinearLayout>

@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DasboardFragment extends Fragment{
 
     TextView nombreusuario,fecha,turno,nombregrigo,sucursal,slogangrifo;
-    String getNombre10;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
