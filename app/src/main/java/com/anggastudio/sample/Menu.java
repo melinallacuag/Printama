@@ -59,6 +59,11 @@ public class Menu extends AppCompatActivity implements NavigationView.OnNavigati
                 inicioDiaFragment.show(getSupportFragmentManager(), "Inicio de Día");
                 inicioDiaFragment.setCancelable(false);
                 break;
+            case R.id.nav_salir:
+                 SalirFragment salirFragment = new SalirFragment();
+                salirFragment.show(getSupportFragmentManager(), "Inicio de Día");
+                salirFragment.setCancelable(false);
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

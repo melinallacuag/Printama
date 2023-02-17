@@ -105,9 +105,13 @@ public class BoletaFragment extends DialogFragment {
         generar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView txtoperacion = (TextView) getActivity().findViewById(R.id.txtoperacion);
+                String bd = "03";
+                txtoperacion.setText(bd.toString());
                 placa.setText("000-0000");
                 dni.setText("11111111");
                 nombre.setText("CLIENTE VARIOS");
+                dismiss();
             }
         });
         agregarboleta.setOnClickListener(new View.OnClickListener() {

@@ -27,14 +27,13 @@ public class CierreXFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 DasboardFragment dasboardFragment  = new DasboardFragment();
-                //  VentaFragment ventaFragment = new VentaFragment();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
             }
         });
         view.findViewById(R.id.imprimircierrex).setOnClickListener(v -> cierrex());
         return view;
     }
-   /* private  void cierrex() {
+    private  void cierrex() {
         String importe = "120.00";
         Printama.with(getContext()).connect(printama -> {
             printama.setSmallText();
@@ -64,14 +63,14 @@ public class CierreXFragment extends Fragment {
         }, this::showToast);
         DasboardFragment dasboardFragment  = new DasboardFragment();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
-    }*/
-    private void cierrex() {
+    }
+   /* private void cierrex() {
         View view = getView().findViewById(R.id.linearLayout2);
         Printama.with(getContext()).connect(printama -> {
             printama.printFromView(view);
             new Handler().postDelayed(printama::close, 2000);
         }, this::showToast);
-    }
+    }*/
     private void showToast(String message) {
         Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
     }
