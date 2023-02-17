@@ -1,5 +1,6 @@
 package com.anggastudio.sample.WebApiSVEN.Controllers;
 
+import com.anggastudio.sample.Adapter.Grias;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
@@ -9,7 +10,9 @@ import com.anggastudio.sample.WebApiSVEN.Models.Users;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface AppSvenAPI {
@@ -38,10 +41,16 @@ public interface AppSvenAPI {
     @GET("api/lados/listado/{id}")
     Call<List<Lados>> findLados(@Path("id") String id);
 
+    @GET("api/lados/listado/{id}")
+    Call<List<Grias>> findGrias(@Path("id") String id);
+
     @GET("api/picos/listado")
     Call<List<Picos>> getPico();
 
     @GET("api/picos/listado/{id}")
     Call<List<Picos>> findPico(@Path("id") String id);
+
+    @POST("api/picos/guardar")
+    Call<Picos> postPicos(@Body Picos picos);
 
 }

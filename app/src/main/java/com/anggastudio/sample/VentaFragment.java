@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.sample.Adapter.CaraAdapter;
+import com.anggastudio.sample.Adapter.Grias;
+import com.anggastudio.sample.Adapter.GriasAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
 import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
@@ -35,9 +37,10 @@ public class VentaFragment extends Fragment{
     private static final int REQUEST_CODE_PERMISSION = 1;
     TextView  producto,cara,importetotal,textcara,textmanguera;
 
-    RecyclerView recyclerCara, recyclerManguera;
+    RecyclerView recyclerCara, recyclerManguera, recyclerGrias;
     CaraAdapter caraAdapter;
     MangueraAdapter mangueraAdapter;
+    GriasAdapter griasAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -172,6 +175,10 @@ public class VentaFragment extends Fragment{
 
             }
         });
+        //Seleccion de Grias
+        recyclerGrias = view.findViewById(R.id.recyclergrias);
+        recyclerGrias.setLayoutManager(new LinearLayoutManager(getContext()));
+
         //Seleccion de Mangueras
         recyclerManguera = view.findViewById(R.id.recyclerlado);
         recyclerManguera.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -181,13 +188,52 @@ public class VentaFragment extends Fragment{
         recyclerCara.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         findLados(GlobalInfo.getImei10);
+        findGrias(GlobalInfo.getImei10);
 
         return view;
+    }
+    private void findGrias(String id) {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.9:8081/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
+        Call<List<Grias>> call = appSvenAPI.findGrias(id);
+
+        call.enqueue(new Callback<List<Grias>>() {
+            @Override
+            public void onResponse(Call<List<Grias>> call, Response<List<Grias>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<Grias> griasList = response.body();
+
+                    griasAdapter = new GriasAdapter(griasList, getContext());
+
+                    recyclerGrias.setAdapter(griasAdapter);
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Grias>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
     private void findLados(String id) {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.5:8081/")
+                .baseUrl("http://192.168.1.9:8081/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -237,7 +283,7 @@ public class VentaFragment extends Fragment{
 
     private void findPico(String id){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.5:8081/")
+                .baseUrl("http://192.168.1.9:8081/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -261,6 +307,7 @@ public class VentaFragment extends Fragment{
                             textmanguera =  getActivity().findViewById(R.id.textmanguera);
                             String descripcionmanguera = item.getDescripcion();
                             textmanguera.setText(descripcionmanguera);
+                            GlobalInfo.getPistola10 = item.getMangueraID();
 
                         }
                     });

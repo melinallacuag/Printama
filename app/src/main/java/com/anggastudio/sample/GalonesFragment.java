@@ -1,5 +1,7 @@
 package com.anggastudio.sample;
 
+import static android.text.TextUtils.isEmpty;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -12,8 +14,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
+import com.anggastudio.sample.WebApiSVEN.Models.Picos;
+import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class GalonesFragment extends DialogFragment {
@@ -43,13 +54,20 @@ public class GalonesFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String textgalones = galones.getText().toString().trim();
-                int numgalones   = Integer.parseInt(textgalones);
 
+                if(textgalones.isEmpty()){
+                    alertgalones.setError("El campo galones es obligatorio");
+                    return;
+                }
+                Double galonesmonto = Double.parseDouble(textgalones);
+
+                int numgalones   = Integer.parseInt(textgalones);
                 if (numgalones < 1){
                     alertgalones.setError("El valor debe ser minimo 1 ");
                 }else if(999 < numgalones){
                     alertgalones.setError("El valor debe ser maximo 999");
                 }else {
+                    guardar_galones(GlobalInfo.getPistola10.toString(),galonesmonto);
                     alertgalones.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();
@@ -58,5 +76,36 @@ public class GalonesFragment extends DialogFragment {
             }
         });
         return view;
+    }
+    private void guardar_galones(String manguera, Double valor){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.9:8081/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
+
+        final Picos picos = new Picos(manguera,"01","1","05","DB5","G",valor);
+
+        Call<Picos> call = appSvenAPI.postPicos(picos);
+
+        call.enqueue(new Callback<Picos>() {
+            @Override
+            public void onResponse(Call<Picos> call, Response<Picos> response) {
+
+                if(!response.isSuccessful()){
+                    Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Picos> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

@@ -9,6 +9,16 @@ public class Picos {
     private String protocolo;
     private Double valor;
 
+    public Picos(String mangueraID, String nroLado, String posicion, String articuloID, String descripcion, String protocolo, Double valor) {
+        this.mangueraID = mangueraID;
+        this.nroLado = nroLado;
+        this.posicion = posicion;
+        this.articuloID = articuloID;
+        this.descripcion = descripcion;
+        this.protocolo = protocolo;
+        this.valor = valor;
+    }
+
     public String getMangueraID() {
         return mangueraID;
     }
@@ -64,4 +74,5 @@ public class Picos {
     public void setValor(Double valor) {
         this.valor = valor;
     }
+
 }
