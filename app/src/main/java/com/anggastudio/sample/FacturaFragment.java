@@ -84,7 +84,7 @@ public class FacturaFragment extends DialogFragment {
                 }else {
                     alertplaca.setErrorEnabled(false);
                     ruc.setText("11111111111");
-                    nombre.setText("JHON PINO");
+                    nombre.setText("CLIENTE VARIOS");
                     Toast.makeText(getContext(), "SE AGREGO DATO", Toast.LENGTH_SHORT).show();
                 }
             }

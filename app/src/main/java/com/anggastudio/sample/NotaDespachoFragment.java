@@ -66,7 +66,7 @@ public class NotaDespachoFragment extends DialogFragment {
                     alertidcliente.setErrorEnabled(false);
                     ruc.setText("111111111111");
                     nombre.setText("CLIENTE VARIOS");
-                    direccion.setText("JR. UNIÓN");
+                  //  direccion.setText("JR. UNIÓN");
                     ClientesFragment dialog = new ClientesFragment();
                     dialog.show(getFragmentManager(), "Buscar Cliente");
                 }
@@ -88,7 +88,7 @@ public class NotaDespachoFragment extends DialogFragment {
                     idcliente.setText("11111111");
                     ruc.setText("111111111111");
                     nombre.setText("CLIENTE VARIOS");
-                    direccion.setText("JR. UNIÓN");
+                  //  direccion.setText("JR. UNIÓN");
                     Toast.makeText(getContext(), "SE AGREGO DATO", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -117,18 +117,12 @@ public class NotaDespachoFragment extends DialogFragment {
                     alertruc.setError("El campo RUC es obligatorio");
                 }else if (textrazonsocial.isEmpty()){
                     alertnombre.setError("El campo Razon Social es obligatorio");
-                }else if (textdireccion.isEmpty()){
-                    alertdireccion.setError("El campo dirección es obligatorio");
-                }else if (textobservacion.isEmpty()){
-                    alertobservacion.setError("El campo observación es obligatorio");
                 }else{
                     alertplaca.setErrorEnabled(false);
                     alertkilometraje.setErrorEnabled(false);
                     alertidcliente.setErrorEnabled(false);
                     alertruc.setErrorEnabled(false);
                     alertnombre.setErrorEnabled(false);
-                    alertdireccion.setErrorEnabled(false);
-                    alertobservacion.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }

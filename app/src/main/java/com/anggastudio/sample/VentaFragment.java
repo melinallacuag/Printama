@@ -1,6 +1,5 @@
 package com.anggastudio.sample;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.sample.Adapter.CaraAdapter;
-import com.anggastudio.sample.Adapter.Grias;
 import com.anggastudio.sample.Adapter.GriasAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
 import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
@@ -35,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class VentaFragment extends Fragment{
 
     private static final int REQUEST_CODE_PERMISSION = 1;
-    TextView  producto,cara,importetotal,textcara,textmanguera;
+    TextView  producto,cara,importetotal,textcara,textmanguera,txtproductogria;
 
     RecyclerView recyclerCara, recyclerManguera, recyclerGrias;
     CaraAdapter caraAdapter;
@@ -176,8 +174,8 @@ public class VentaFragment extends Fragment{
             }
         });
         //Seleccion de Grias
-        recyclerGrias = view.findViewById(R.id.recyclergrias);
-        recyclerGrias.setLayoutManager(new LinearLayoutManager(getContext()));
+    //    recyclerGrias = view.findViewById(R.id.recyclergrias);
+    //    recyclerGrias.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //Seleccion de Mangueras
         recyclerManguera = view.findViewById(R.id.recyclerlado);
@@ -188,11 +186,11 @@ public class VentaFragment extends Fragment{
         recyclerCara.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         findLados(GlobalInfo.getImei10);
-        findGrias(GlobalInfo.getImei10);
+       // findGrias(GlobalInfo.getImei10);
 
         return view;
     }
-    private void findGrias(String id) {
+  /*  private void findGrias(String id) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.1.9:8081/")
@@ -214,7 +212,14 @@ public class VentaFragment extends Fragment{
 
                     List<Grias> griasList = response.body();
 
-                    griasAdapter = new GriasAdapter(griasList, getContext());
+                    griasAdapter = new GriasAdapter(griasList, getContext(), new GriasAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Grias item) {
+                            txtproductogria =  getActivity().findViewById(R.id.txtproductogria);
+                            String descripcionmanguera = item.getDescripcion();
+                            txtproductogria.setText(descripcionmanguera);
+                        }
+                    });
 
                     recyclerGrias.setAdapter(griasAdapter);
 
@@ -229,7 +234,7 @@ public class VentaFragment extends Fragment{
             }
         });
 
-    }
+    }*/
     private void findLados(String id) {
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -254,7 +259,7 @@ public class VentaFragment extends Fragment{
 
                     caraAdapter = new CaraAdapter(ladosList, getContext(), new CaraAdapter.OnItemClickListener() {
                         @Override
-                        public void onItemClick(Lados item) {
+                        public int onItemClick(Lados item) {
 
                             GlobalInfo.getCara10 = item.getNroLado();
                             findPico(GlobalInfo.getCara10);
@@ -263,6 +268,7 @@ public class VentaFragment extends Fragment{
                             String numlado = item.getNroLado();
                             textcara.setText(numlado);
 
+                            return 0;
                         }
                     });
 
@@ -303,7 +309,6 @@ public class VentaFragment extends Fragment{
                     mangueraAdapter = new MangueraAdapter(picosList, getContext(), new MangueraAdapter.OnItemClickListener(){
                         @Override
                         public void onItemClick(Picos item) {
-
                             textmanguera =  getActivity().findViewById(R.id.textmanguera);
                             String descripcionmanguera = item.getDescripcion();
                             textmanguera.setText(descripcionmanguera);

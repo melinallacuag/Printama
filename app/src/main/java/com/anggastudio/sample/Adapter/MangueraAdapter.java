@@ -2,6 +2,7 @@ package com.anggastudio.sample.Adapter;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +22,16 @@ public class MangueraAdapter extends RecyclerView.Adapter<MangueraAdapter.ViewHo
     private List<Picos> mangueraList;
     private Context context;
     final MangueraAdapter.OnItemClickListener listener;
+    private int selectedItem;
 
     public interface  OnItemClickListener{
         void onItemClick(Picos item);
     }
     public MangueraAdapter(List<Picos> mangueraList, Context context,MangueraAdapter.OnItemClickListener listener){
         this.mangueraList = mangueraList;
-        this.context = context;
-        this.listener    = listener;
+        this.context    = context;
+        this.listener   = listener;
+        selectedItem    = -1;
     }
 
     @NonNull
@@ -43,9 +46,22 @@ public class MangueraAdapter extends RecyclerView.Adapter<MangueraAdapter.ViewHo
         Picos picos = mangueraList.get(position);
         holder.txtmanguera.setText(mangueraList.get(position).getDescripcion());
         holder.txtmangueraID.setText(mangueraList.get(position).getMangueraID());
+
+        holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.white));
+
+        if (selectedItem == position) {
+            holder.cardView.setCardBackgroundColor(Color.parseColor("#5EA7DE"));
+        }
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                int previousItem = selectedItem;
+                selectedItem = position;
+                notifyItemChanged(previousItem);
+                notifyItemChanged(position);
+
                 listener.onItemClick(picos);
             }
         });

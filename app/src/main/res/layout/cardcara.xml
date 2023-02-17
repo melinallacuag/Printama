@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5sp"
         android:clickable="true"
-        android:foreground="@drawable/selectcard"
+
         app:cardBackgroundColor="#fff"
         app:cardCornerRadius="10dp"
         app:cardElevation="5sp">

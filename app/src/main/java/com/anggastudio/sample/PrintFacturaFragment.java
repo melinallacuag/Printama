@@ -85,7 +85,7 @@ Button cerrar;
 
         switch (manguera) {
             case "DB5":
-                precio = "18.90";
+                precio = "18.89";
                 producto = "DIESEL B5 S50";
                 break;
             case "G90":
@@ -93,15 +93,15 @@ Button cerrar;
                 producto = "GASOHOL 90";
                 break;
             case "G95":
-                precio = "18.39";
+                precio = "18.99";
                 producto = "GASOHOL 95";
                 break;
             case "G97":
-                precio = "19.79";
+                precio = "19.99";
                 producto = "GASOHOL 97";
                 break;
             case "GLP":
-                precio = "8.00";
+                precio = "7.44";
                 producto = "GLP";
                 break;
             default:

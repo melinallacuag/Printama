@@ -18,10 +18,15 @@ import java.util.List;
 public class GriasAdapter extends  RecyclerView.Adapter<GriasAdapter.ViewHolder>{
     private List<Grias> griasList;
     private Context context;
+    final GriasAdapter.OnItemClickListener listener;
+    public interface  OnItemClickListener{
+        void onItemClick(Grias item);
+    }
 
-    public GriasAdapter(List<Grias> griasList,Context context){
+    public GriasAdapter(List<Grias> griasList,Context context,GriasAdapter.OnItemClickListener listener){
         this.griasList = griasList;
         this.context = context;
+        this.listener = listener;
     }
     @NonNull
     @Override
@@ -32,7 +37,16 @@ public class GriasAdapter extends  RecyclerView.Adapter<GriasAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull GriasAdapter.ViewHolder holder, int position) {
+        Grias grias = griasList.get(position);
         holder.txtcaragria.setText(griasList.get(position).getNroLado());
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(grias);
+             //   holder.txtproductogria.setText(griasList.get(listener).getDescripcion());
+
+            }
+        });
     }
 
     @Override
@@ -42,11 +56,13 @@ public class GriasAdapter extends  RecyclerView.Adapter<GriasAdapter.ViewHolder>
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public CardView cardView;
         private TextView txtcaragria;
+        private TextView txtproductogria;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            cardView    = itemView.findViewById(R.id.cardgria);
-            txtcaragria = itemView.findViewById(R.id.txtcaragria);
+            cardView        = itemView.findViewById(R.id.cardgria);
+            txtcaragria     = itemView.findViewById(R.id.txtcaragria);
+            txtproductogria = itemView.findViewById(R.id.txtproductogria);
         }
     }
 }

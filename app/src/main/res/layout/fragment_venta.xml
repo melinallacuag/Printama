@@ -375,7 +375,7 @@
                 android:textSize="10sp"
                 android:textStyle="bold" />
         </LinearLayout>
-        <LinearLayout
+   <!--     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -383,7 +383,7 @@
                 android:id="@+id/recyclergrias"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-        </LinearLayout>
+        </LinearLayout>-->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
