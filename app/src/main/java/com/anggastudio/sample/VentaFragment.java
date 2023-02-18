@@ -65,24 +65,24 @@ public class VentaFragment extends Fragment{
                     printBoletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
                     printBoletaFragment.setCancelable(false);
                 }else if (op.equals("01")) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("producto",producto.getText().toString());
-                        bundle.putString("lado",cara.getText().toString());
-                        bundle.putString("importe",importetotal.getText().toString());
-                        PrintFacturaFragment printFacturaFragment = new PrintFacturaFragment();
-                        printFacturaFragment.setArguments(bundle);
-                        printFacturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
-                        printFacturaFragment.setCancelable(false);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("producto",producto.getText().toString());
+                    bundle.putString("lado",cara.getText().toString());
+                    bundle.putString("importe",importetotal.getText().toString());
+                    PrintFacturaFragment printFacturaFragment = new PrintFacturaFragment();
+                    printFacturaFragment.setArguments(bundle);
+                    printFacturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
+                    printFacturaFragment.setCancelable(false);
 
                 }else if (op.equals("99")) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("producto",producto.getText().toString());
-                        bundle.putString("lado",cara.getText().toString());
-                        bundle.putString("importe",importetotal.getText().toString());
-                        PrintNotaDespachoFragment printNotaDespachoFragment = new PrintNotaDespachoFragment();
-                        printNotaDespachoFragment.setArguments(bundle);
-                        printNotaDespachoFragment.show(getActivity().getSupportFragmentManager(), "Nota de Despacho");
-                        printNotaDespachoFragment.setCancelable(false);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("producto",producto.getText().toString());
+                    bundle.putString("lado",cara.getText().toString());
+                    bundle.putString("importe",importetotal.getText().toString());
+                    PrintNotaDespachoFragment printNotaDespachoFragment = new PrintNotaDespachoFragment();
+                    printNotaDespachoFragment.setArguments(bundle);
+                    printNotaDespachoFragment.show(getActivity().getSupportFragmentManager(), "Nota de Despacho");
+                    printNotaDespachoFragment.setCancelable(false);
                 }
             }
         });
@@ -174,8 +174,8 @@ public class VentaFragment extends Fragment{
             }
         });
         //Seleccion de Grias
-    //    recyclerGrias = view.findViewById(R.id.recyclergrias);
-    //    recyclerGrias.setLayoutManager(new LinearLayoutManager(getContext()));
+        //    recyclerGrias = view.findViewById(R.id.recyclergrias);
+        //    recyclerGrias.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //Seleccion de Mangueras
         recyclerManguera = view.findViewById(R.id.recyclerlado);
@@ -186,55 +186,55 @@ public class VentaFragment extends Fragment{
         recyclerCara.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         findLados(GlobalInfo.getImei10);
-       // findGrias(GlobalInfo.getImei10);
+        // findGrias(GlobalInfo.getImei10);
 
         return view;
     }
-  /*  private void findGrias(String id) {
+    /*  private void findGrias(String id) {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.9:8081/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+          Retrofit retrofit = new Retrofit.Builder()
+                  .baseUrl("http://192.168.1.9:8081/")
+                  .addConverterFactory(GsonConverterFactory.create())
+                  .build();
 
-        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
-        Call<List<Grias>> call = appSvenAPI.findGrias(id);
+          AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
+          Call<List<Grias>> call = appSvenAPI.findGrias(id);
 
-        call.enqueue(new Callback<List<Grias>>() {
-            @Override
-            public void onResponse(Call<List<Grias>> call, Response<List<Grias>> response) {
-                try {
+          call.enqueue(new Callback<List<Grias>>() {
+              @Override
+              public void onResponse(Call<List<Grias>> call, Response<List<Grias>> response) {
+                  try {
 
-                    if(!response.isSuccessful()){
-                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                      if(!response.isSuccessful()){
+                          Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                          return;
+                      }
 
-                    List<Grias> griasList = response.body();
+                      List<Grias> griasList = response.body();
 
-                    griasAdapter = new GriasAdapter(griasList, getContext(), new GriasAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Grias item) {
-                            txtproductogria =  getActivity().findViewById(R.id.txtproductogria);
-                            String descripcionmanguera = item.getDescripcion();
-                            txtproductogria.setText(descripcionmanguera);
-                        }
-                    });
+                      griasAdapter = new GriasAdapter(griasList, getContext(), new GriasAdapter.OnItemClickListener() {
+                          @Override
+                          public void onItemClick(Grias item) {
+                              txtproductogria =  getActivity().findViewById(R.id.txtproductogria);
+                              String descripcionmanguera = item.getDescripcion();
+                              txtproductogria.setText(descripcionmanguera);
+                          }
+                      });
 
-                    recyclerGrias.setAdapter(griasAdapter);
+                      recyclerGrias.setAdapter(griasAdapter);
 
-                }catch (Exception ex){
-                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
+                  }catch (Exception ex){
+                      Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                  }
+              }
 
-            @Override
-            public void onFailure(Call<List<Grias>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
-            }
-        });
+              @Override
+              public void onFailure(Call<List<Grias>> call, Throwable t) {
+                  Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
+              }
+          });
 
-    }*/
+      }*/
     private void findLados(String id) {
 
         Retrofit retrofit = new Retrofit.Builder()
