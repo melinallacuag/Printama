@@ -2,25 +2,17 @@ package com.anggastudio.sample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.anggastudio.printama.Printama;
-import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
+import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.Users;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
-import com.anggastudio.sample.mock.Mock;
-import com.anggastudio.sample.model.PrintBody;
-import com.anggastudio.sample.model.PrintHeader;
-import com.anggastudio.sample.model.PrintModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -41,12 +33,15 @@ public class Login extends AppCompatActivity {
 
     String getPass10;
 
+    private APIService mAPIService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         ImageButton configuracion = findViewById(R.id.btnconfiguracion);
+
         configuracion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +57,8 @@ public class Login extends AppCompatActivity {
         contraseña     = findViewById(R.id.contraseña);
         alertuser      = findViewById(R.id.textusuario);
         alertpassword  = findViewById(R.id.textcontraseña);
+
+        mAPIService = GlobalInfo.getAPIService();
 
         btniniciar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,13 +82,7 @@ public class Login extends AppCompatActivity {
 
     private void findUsers(String id){
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.6:8081/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
-        Call<List<Users>> call = appSvenAPI.findUsers(id);
+        Call<List<Users>> call = mAPIService.findUsers(id);
 
         call.enqueue(new Callback<List<Users>>() {
             @Override

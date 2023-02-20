@@ -11,17 +11,18 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anggastudio.sample.R;
+import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 
 import java.util.List;
 
 public class TransaccionAdapter extends RecyclerView.Adapter<TransaccionAdapter.ViewHolder>{
 
-    private List<Transaccion> transaccionList;
+    private List<Optran> optranList;
     private Context context;
 
-    public TransaccionAdapter(List<Transaccion> transaccionList, Context context){
-        this.transaccionList = transaccionList;
+    public TransaccionAdapter(List<Optran> optranList, Context context){
+        this.optranList = optranList;
         this.context    = context;
     }
 
@@ -34,17 +35,17 @@ public class TransaccionAdapter extends RecyclerView.Adapter<TransaccionAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull TransaccionAdapter.ViewHolder holder, int position) {
-        holder.txtcara.setText(transaccionList.get(position).getCara());
-        holder.txtmanguera.setText(transaccionList.get(position).getManguera());
-        holder.txtproducto.setText(transaccionList.get(position).getProducto());
-        holder.txtprecio.setText(transaccionList.get(position).getPrecio());
-        holder.txtgalones.setText(transaccionList.get(position).getGalones());
-        holder.txtsoles.setText(transaccionList.get(position).getSoles());
+        holder.txtcara.setText(optranList.get(position).getCara());
+        holder.txtmanguera.setText(optranList.get(position).getManguera());
+        holder.txtproducto.setText(optranList.get(position).getProducto());
+        holder.txtprecio.setText(String.valueOf(optranList.get(position).getPrecio()));
+        holder.txtgalones.setText(String.valueOf(optranList.get(position).getGalones()));
+        holder.txtsoles.setText(String.valueOf(optranList.get(position).getSoles()));
     }
 
     @Override
     public int getItemCount() {
-        return transaccionList.size();
+        return optranList.size();
     }
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public CardView cardView;

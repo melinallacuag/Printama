@@ -3,6 +3,7 @@ package com.anggastudio.sample.WebApiSVEN.Controllers;
 import com.anggastudio.sample.Adapter.Grias;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
+import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Models.Terminal;
 import com.anggastudio.sample.WebApiSVEN.Models.Users;
@@ -15,7 +16,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface AppSvenAPI {
+public interface APIService {
 
     @GET("api/users/listado")
     Call<List<Users>> getUsers();
@@ -41,9 +42,6 @@ public interface AppSvenAPI {
     @GET("api/lados/listado/{id}")
     Call<List<Lados>> findLados(@Path("id") String id);
 
-    @GET("api/lados/listado/{id}")
-    Call<List<Grias>> findGrias(@Path("id") String id);
-
     @GET("api/picos/listado")
     Call<List<Picos>> getPico();
 
@@ -52,5 +50,8 @@ public interface AppSvenAPI {
 
     @POST("api/picos/guardar")
     Call<Picos> postPicos(@Body Picos picos);
+
+    @GET("api/optran/listado/{id}")
+    Call<List<Optran>> findOptran(@Path("id") String id);
 
 }

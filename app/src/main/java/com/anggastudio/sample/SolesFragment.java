@@ -1,12 +1,8 @@
 package com.anggastudio.sample;
 
 import static android.text.TextUtils.isEmpty;
-import static java.text.MessageFormat.format;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +11,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
+import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +35,8 @@ public class SolesFragment extends DialogFragment {
     TextInputLayout alertsoles;
     TextView textsol;
 
+    private APIService mAPIService;
+
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
 
@@ -51,6 +46,8 @@ public class SolesFragment extends DialogFragment {
         agregar       = view.findViewById(R.id.btnagregarsoles);
         montosoles    = view.findViewById(R.id.montosoles);
         alertsoles    = view.findViewById(R.id.textsoles);
+
+        mAPIService = GlobalInfo.getAPIService();
 
         btncancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,16 +96,9 @@ public class SolesFragment extends DialogFragment {
 
     private void guardar_monto(String manguera, Double valor){
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.6:8081/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
-
         final Picos picos = new Picos(manguera,"01","1","05","DB5","G",valor);
 
-        Call<Picos> call = appSvenAPI.postPicos(picos);
+        Call<Picos> call = mAPIService.postPicos(picos);
 
         call.enqueue(new Callback<Picos>() {
             @Override

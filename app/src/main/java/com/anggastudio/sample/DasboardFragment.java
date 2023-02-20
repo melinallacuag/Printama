@@ -8,17 +8,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
+import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
 import com.anggastudio.sample.WebApiSVEN.Models.Terminal;
-import com.anggastudio.sample.WebApiSVEN.Models.Users;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 
-import java.text.BreakIterator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,6 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DasboardFragment extends Fragment{
 
     TextView nombreusuario,fecha,turno,nombregrigo,sucursal,slogangrifo;
+
+    private APIService mAPIService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +49,8 @@ public class DasboardFragment extends Fragment{
         slogangrifo   = view.findViewById(R.id.slogangrifo);
 
         nombreusuario.setText(GlobalInfo.getName10);
+
+        mAPIService = GlobalInfo.getAPIService();
 
         findTerminal(GlobalInfo.getImei10);
 
@@ -95,13 +96,7 @@ public class DasboardFragment extends Fragment{
 
     private void findTerminal(String id){
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.6:8081/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
-        Call<List<Terminal>> call = appSvenAPI.findTerminal(id);
+        Call<List<Terminal>> call = mAPIService.findTerminal(id);
 
         call.enqueue(new Callback<List<Terminal>>() {
             @Override
@@ -138,13 +133,7 @@ public class DasboardFragment extends Fragment{
 
     private void findCompany(Integer id){
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.6:8081/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
-        Call<List<Company>> call = appSvenAPI.findCompany(id);
+        Call<List<Company>> call = mAPIService.findCompany(id);
 
         call.enqueue(new Callback<List<Company>>() {
             @Override

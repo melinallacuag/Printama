@@ -1,20 +1,16 @@
 package com.anggastudio.sample;
 
-import static android.text.TextUtils.isEmpty;
-
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
+import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.textfield.TextInputEditText;
@@ -32,6 +28,9 @@ public class GalonesFragment extends DialogFragment {
     Button btncancelar,agregargalones;
     TextInputEditText galones;
     TextInputLayout alertgalones;
+
+    private APIService mAPIService;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,6 +41,8 @@ public class GalonesFragment extends DialogFragment {
         agregargalones = view.findViewById(R.id.btnagregargalones);
         galones        = view.findViewById(R.id.inputmontogalones);
         alertgalones   = view.findViewById(R.id.textgalones);
+
+        mAPIService = GlobalInfo.getAPIService();
 
         btncancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,16 +80,9 @@ public class GalonesFragment extends DialogFragment {
     }
     private void guardar_galones(String manguera, Double valor){
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.9:8081/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
-
         final Picos picos = new Picos(manguera,"01","1","05","DB5","G",valor);
 
-        Call<Picos> call = appSvenAPI.postPicos(picos);
+        Call<Picos> call = mAPIService.postPicos(picos);
 
         call.enqueue(new Callback<Picos>() {
             @Override

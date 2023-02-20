@@ -1,5 +1,6 @@
 package com.anggastudio.sample;
 
+import android.graphics.Path;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -17,10 +18,10 @@ import android.widget.Toast;
 import com.anggastudio.sample.Adapter.CaraAdapter;
 import com.anggastudio.sample.Adapter.GriasAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
-import com.anggastudio.sample.Adapter.Transaccion;
 import com.anggastudio.sample.Adapter.TransaccionAdapter;
-import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
+import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
+import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 
@@ -30,31 +31,32 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class VentaFragment extends Fragment{
 
-    private static final int REQUEST_CODE_PERMISSION = 1;
-    TextView  producto,cara,importetotal,textcara,textmanguera,txtproductogria,cajero;
-
-    RecyclerView recyclerCara, recyclerManguera, recyclerGrias , recyclerTransaccion;
+    TextView  producto,cara,importetotal,textcara,textmanguera;
+    CardView  grias;
+    Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos;
+    ImageButton regreso;
+    RecyclerView recyclerCara, recyclerManguera, recyclerTransaccion;
     CaraAdapter caraAdapter;
     MangueraAdapter mangueraAdapter;
     TransaccionAdapter transaccionAdapter;
-    GriasAdapter griasAdapter;
+
+    private APIService mAPIService;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
-        producto     = view.findViewById(R.id.textmanguera);
-        cara     = view.findViewById(R.id.textcara);
-        importetotal = view.findViewById(R.id.txtimporte);
-        cajero = getActivity().findViewById(R.id.nombreuser);
+        mAPIService  = GlobalInfo.getAPIService();
 
-        CardView grias        = view.findViewById(R.id.card);
+        producto     = view.findViewById(R.id.textmanguera);
+        cara         = view.findViewById(R.id.textcara);
+        importetotal = view.findViewById(R.id.txtimporte);
+        grias        = view.findViewById(R.id.card);
+
         grias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +67,6 @@ public class VentaFragment extends Fragment{
                     bundle.putString("producto", producto.getText().toString());
                     bundle.putString("lado", cara.getText().toString());
                     bundle.putString("importe", importetotal.getText().toString());
-
                     PrintBoletaFragment printBoletaFragment = new PrintBoletaFragment();
                     printBoletaFragment.setArguments(bundle);
                     printBoletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
@@ -93,15 +94,16 @@ public class VentaFragment extends Fragment{
             }
         });
 
-        Button btnlibre        = view.findViewById(R.id.btnlibre);
-        Button btnsoles        = view.findViewById(R.id.btnsoles);
-        Button btngalones      = view.findViewById(R.id.btngalones);
-        Button btnboleta       = view.findViewById(R.id.btnboleta);
-        Button btnfactura      = view.findViewById(R.id.btnfactura);
-        Button btnnotadespacho = view.findViewById(R.id.btnnotadespacho);
-        Button btnserafin      = view.findViewById(R.id.btnserafin);
-        Button btnpuntos       = view.findViewById(R.id.btnpuntos);
-        ImageButton regreso    = view.findViewById(R.id.volverdasboard);
+        btnlibre        = view.findViewById(R.id.btnlibre);
+        btnsoles        = view.findViewById(R.id.btnsoles);
+        btngalones      = view.findViewById(R.id.btngalones);
+        btnboleta       = view.findViewById(R.id.btnboleta);
+        btnfactura      = view.findViewById(R.id.btnfactura);
+        btnnotadespacho = view.findViewById(R.id.btnnotadespacho);
+        btnserafin      = view.findViewById(R.id.btnserafin);
+        btnpuntos       = view.findViewById(R.id.btnpuntos);
+
+        regreso         = view.findViewById(R.id.volverdasboard);
 
         regreso.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +112,7 @@ public class VentaFragment extends Fragment{
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
             }
         });
+
         btnlibre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +121,7 @@ public class VentaFragment extends Fragment{
                 libreFragment.setCancelable(false);
             }
         });
+
         btnsoles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +130,7 @@ public class VentaFragment extends Fragment{
                 solesFragment.setCancelable(false);
             }
         });
+
         btngalones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,6 +139,7 @@ public class VentaFragment extends Fragment{
                 galonesFragment.setCancelable(false);
             }
         });
+
         btnboleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,6 +148,7 @@ public class VentaFragment extends Fragment{
                 boletaFragment.setCancelable(false);
             }
         });
+
         btnfactura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,6 +157,7 @@ public class VentaFragment extends Fragment{
                 facturaFragment.setCancelable(false);
             }
         });
+
         btnnotadespacho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,6 +166,7 @@ public class VentaFragment extends Fragment{
                 notaDespachoFragment.setCancelable(false);
             }
         });
+
         btnserafin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,6 +180,7 @@ public class VentaFragment extends Fragment{
                 serafinFragment.setCancelable(false);
             }
         });
+
         btnpuntos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,91 +190,58 @@ public class VentaFragment extends Fragment{
             }
         });
 
-
+        //Listado de Operación de Transaciones
         recyclerTransaccion = view.findViewById(R.id.recyclertransacciones);
         recyclerTransaccion.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<Transaccion> transaccionList = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++){
-            transaccionList.add(new Transaccion("03","3","05","19.35","3.824","73.99"));
-        }
-
-        TransaccionAdapter transaccionAdapter = new TransaccionAdapter(transaccionList, getContext());
-        recyclerTransaccion.setAdapter(transaccionAdapter);
-        recyclerTransaccion.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        //Seleccion de Grias
-        //    recyclerGrias = view.findViewById(R.id.recyclergrias);
-        //    recyclerGrias.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        //Seleccion de Mangueras
+        //Listado de Mangueras
         recyclerManguera = view.findViewById(R.id.recyclerlado);
         recyclerManguera.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        //Seleccion de Caras
+        //Listado de Caras
         recyclerCara = view.findViewById(R.id.recycler);
         recyclerCara.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         findLados(GlobalInfo.getImei10);
-        // findGrias(GlobalInfo.getImei10);
 
         return view;
     }
-    /*  private void findGrias(String id) {
 
-          Retrofit retrofit = new Retrofit.Builder()
-                  .baseUrl("http://192.168.1.6:8081/")
-                  .addConverterFactory(GsonConverterFactory.create())
-                  .build();
+    private  void findOptran(String id){
 
-          AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
-          Call<List<Grias>> call = appSvenAPI.findGrias(id);
+        Call<List<Optran>> call = mAPIService.findOptran(id);
 
-          call.enqueue(new Callback<List<Grias>>() {
-              @Override
-              public void onResponse(Call<List<Grias>> call, Response<List<Grias>> response) {
-                  try {
+        call.enqueue(new Callback<List<Optran>>() {
+            @Override
+            public void onResponse(Call<List<Optran>> call, Response<List<Optran>> response) {
+                try {
 
-                      if(!response.isSuccessful()){
-                          Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
-                          return;
-                      }
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                      List<Grias> griasList = response.body();
+                    List<Optran> optranList = response.body();
 
-                      griasAdapter = new GriasAdapter(griasList, getContext(), new GriasAdapter.OnItemClickListener() {
-                          @Override
-                          public void onItemClick(Grias item) {
-                              txtproductogria =  getActivity().findViewById(R.id.txtproductogria);
-                              String descripcionmanguera = item.getDescripcion();
-                              txtproductogria.setText(descripcionmanguera);
-                          }
-                      });
+                    transaccionAdapter = new TransaccionAdapter(optranList, getContext());
+                    recyclerTransaccion.setAdapter(transaccionAdapter);
 
-                      recyclerGrias.setAdapter(griasAdapter);
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
 
-                  }catch (Exception ex){
-                      Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                  }
-              }
+            @Override
+            public void onFailure(Call<List<Optran>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
 
-              @Override
-              public void onFailure(Call<List<Grias>> call, Throwable t) {
-                  Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
-              }
-          });
+            }
+        });
+    }
 
-      }*/
     private void findLados(String id) {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.6:8081/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
-        Call<List<Lados>> call = appSvenAPI.findLados(id);
+        Call<List<Lados>> call = mAPIService.findLados(id);
 
         call.enqueue(new Callback<List<Lados>>() {
             @Override
@@ -283,7 +260,9 @@ public class VentaFragment extends Fragment{
                         public int onItemClick(Lados item) {
 
                             GlobalInfo.getCara10 = item.getNroLado();
+
                             findPico(GlobalInfo.getCara10);
+                            findOptran(GlobalInfo.getCara10);
 
                             textcara =  getActivity().findViewById(R.id.textcara);
                             String numlado = item.getNroLado();
@@ -309,13 +288,9 @@ public class VentaFragment extends Fragment{
     }
 
     private void findPico(String id){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.6:8081/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        AppSvenAPI appSvenAPI = retrofit.create(AppSvenAPI.class);
-        Call<List<Picos>> call = appSvenAPI.findPico(id);
+        Call<List<Picos>> call = mAPIService.findPico(id);
+
         call.enqueue(new Callback<List<Picos>>() {
             @Override
             public void onResponse(Call<List<Picos>> call, Response<List<Picos>> response) {
@@ -330,10 +305,10 @@ public class VentaFragment extends Fragment{
                     mangueraAdapter = new MangueraAdapter(picosList, getContext(), new MangueraAdapter.OnItemClickListener(){
                         @Override
                         public void onItemClick(Picos item) {
+
                             textmanguera =  getActivity().findViewById(R.id.textmanguera);
                             String descripcionmanguera = item.getDescripcion();
                             textmanguera.setText(descripcionmanguera);
-                            GlobalInfo.getPistola10 = item.getMangueraID();
 
                         }
                     });
