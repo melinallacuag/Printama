@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
+import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -48,6 +49,7 @@ public class PrintBoletaFragment extends DialogFragment {
         producto.setText(datoproducto);
         lado.setText(datolado);
         importe.setText(datoimporte);
+
         cerrar   = view.findViewById(R.id.btncerrar);
         cerrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,10 +60,12 @@ public class PrintBoletaFragment extends DialogFragment {
         view.findViewById(R.id.btnimpirmirboleta).setOnClickListener(v -> boletas(turno,cajero,umed));
         return view;
     }
-    int turno       =  1;
-    String cajero   = "RUBEN ESCOBAR";
+
+    String turno    = GlobalInfo.fecha10;
+    String cajero   = GlobalInfo.getName10;
     String umed     = "GLL";
-    private  void boletas(int turno ,String cajero, String umed) {
+
+    private  void boletas(String turno ,String cajero, String umed) {
         Bundle bundle         = this.getArguments();
         //LOGO DE LA EMPRESA
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
@@ -75,7 +79,6 @@ public class PrintBoletaFragment extends DialogFragment {
         String lado       = bundle.getString("lado");
 
         //PRODUCTO
-
         String manguera        = bundle.getString("producto");
         String precio         = null;
         String producto       = null;

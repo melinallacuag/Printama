@@ -100,7 +100,7 @@ public class SolesFragment extends DialogFragment {
     private void guardar_monto(String manguera, Double valor){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.9:8081/")
+                .baseUrl("http://192.168.1.6:8081/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

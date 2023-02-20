@@ -86,7 +86,7 @@ public class Login extends AppCompatActivity {
     private void findUsers(String id){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.9:8081/")
+                .baseUrl("http://192.168.1.6:8081/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

@@ -17,11 +17,14 @@ import android.widget.Toast;
 import com.anggastudio.sample.Adapter.CaraAdapter;
 import com.anggastudio.sample.Adapter.GriasAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
+import com.anggastudio.sample.Adapter.Transaccion;
+import com.anggastudio.sample.Adapter.TransaccionAdapter;
 import com.anggastudio.sample.WebApiSVEN.Controllers.AppSvenAPI;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,11 +36,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class VentaFragment extends Fragment{
 
     private static final int REQUEST_CODE_PERMISSION = 1;
-    TextView  producto,cara,importetotal,textcara,textmanguera,txtproductogria;
+    TextView  producto,cara,importetotal,textcara,textmanguera,txtproductogria,cajero;
 
-    RecyclerView recyclerCara, recyclerManguera, recyclerGrias;
+    RecyclerView recyclerCara, recyclerManguera, recyclerGrias , recyclerTransaccion;
     CaraAdapter caraAdapter;
     MangueraAdapter mangueraAdapter;
+    TransaccionAdapter transaccionAdapter;
     GriasAdapter griasAdapter;
 
     @Override
@@ -48,6 +52,7 @@ public class VentaFragment extends Fragment{
         producto     = view.findViewById(R.id.textmanguera);
         cara     = view.findViewById(R.id.textcara);
         importetotal = view.findViewById(R.id.txtimporte);
+        cajero = getActivity().findViewById(R.id.nombreuser);
 
         CardView grias        = view.findViewById(R.id.card);
         grias.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +65,7 @@ public class VentaFragment extends Fragment{
                     bundle.putString("producto", producto.getText().toString());
                     bundle.putString("lado", cara.getText().toString());
                     bundle.putString("importe", importetotal.getText().toString());
+
                     PrintBoletaFragment printBoletaFragment = new PrintBoletaFragment();
                     printBoletaFragment.setArguments(bundle);
                     printBoletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
@@ -173,6 +179,21 @@ public class VentaFragment extends Fragment{
 
             }
         });
+
+
+        recyclerTransaccion = view.findViewById(R.id.recyclertransacciones);
+        recyclerTransaccion.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        List<Transaccion> transaccionList = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++){
+            transaccionList.add(new Transaccion("03","3","05","19.35","3.824","73.99"));
+        }
+
+        TransaccionAdapter transaccionAdapter = new TransaccionAdapter(transaccionList, getContext());
+        recyclerTransaccion.setAdapter(transaccionAdapter);
+        recyclerTransaccion.setLayoutManager(new LinearLayoutManager(getContext()));
+
         //Seleccion de Grias
         //    recyclerGrias = view.findViewById(R.id.recyclergrias);
         //    recyclerGrias.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -193,7 +214,7 @@ public class VentaFragment extends Fragment{
     /*  private void findGrias(String id) {
 
           Retrofit retrofit = new Retrofit.Builder()
-                  .baseUrl("http://192.168.1.9:8081/")
+                  .baseUrl("http://192.168.1.6:8081/")
                   .addConverterFactory(GsonConverterFactory.create())
                   .build();
 
@@ -238,7 +259,7 @@ public class VentaFragment extends Fragment{
     private void findLados(String id) {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.9:8081/")
+                .baseUrl("http://192.168.1.6:8081/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -289,7 +310,7 @@ public class VentaFragment extends Fragment{
 
     private void findPico(String id){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.9:8081/")
+                .baseUrl("http://192.168.1.6:8081/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

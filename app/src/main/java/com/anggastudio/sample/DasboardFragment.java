@@ -96,7 +96,7 @@ public class DasboardFragment extends Fragment{
     private void findTerminal(String id){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.9:8081/")
+                .baseUrl("http://192.168.1.6:8081/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -117,6 +117,7 @@ public class DasboardFragment extends Fragment{
                     List<Terminal> terminalList = response.body();
 
                     for(Terminal terminal: terminalList){
+                        GlobalInfo.fecha10 = String.valueOf(terminal.getTurno());
                         fecha.setText(terminal.getFecha_Proceso());
                         turno.setText(terminal.getTurno().toString());
                     }
@@ -138,7 +139,7 @@ public class DasboardFragment extends Fragment{
     private void findCompany(Integer id){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.9:8081/")
+                .baseUrl("http://192.168.1.6:8081/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

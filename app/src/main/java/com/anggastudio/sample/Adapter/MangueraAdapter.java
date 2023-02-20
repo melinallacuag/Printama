@@ -19,6 +19,7 @@ import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import java.util.List;
 
 public class MangueraAdapter extends RecyclerView.Adapter<MangueraAdapter.ViewHolder> {
+
     private List<Picos> mangueraList;
     private Context context;
     final MangueraAdapter.OnItemClickListener listener;
