@@ -6,6 +6,8 @@ public class Terminal {
     private String  imei;
     private String  fecha_Proceso;
     private Integer turno;
+    private Integer companyID;
+    private Integer almacenID;
     private Boolean consulta_Sunat;
     private Boolean venta_Automatica;
     private Boolean venta_Playa;
@@ -45,6 +47,22 @@ public class Terminal {
 
     public void setTurno(Integer turno) {
         this.turno = turno;
+    }
+
+    public Integer getCompanyID() {
+        return companyID;
+    }
+
+    public void setCompanyID(Integer companyID) {
+        this.companyID = companyID;
+    }
+
+    public Integer getAlmacenID() {
+        return almacenID;
+    }
+
+    public void setAlmacenID(Integer almacenID) {
+        this.almacenID = almacenID;
     }
 
     public Boolean getConsulta_Sunat() {

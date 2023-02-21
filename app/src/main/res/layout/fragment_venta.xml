@@ -302,88 +302,233 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gridLayout2" />
-
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/carddetalleventa"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="#001E89"
             android:background="@drawable/button">
+        <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40sp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="30sp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="2sp"
-                android:fontFamily="@font/nunito_extrabold"
-                android:gravity="center"
-                android:text="CARA"
-                android:textColor="#fff"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="40sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="CARA"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
 
-            <TextView
-                android:layout_width="70sp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="2sp"
-                android:fontFamily="@font/nunito_extrabold"
-                android:gravity="center"
-                android:text="MANGUERA"
-                android:textColor="#fff"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="40sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="T.PAGO"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
 
-            <TextView
-                android:layout_width="70sp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="2sp"
-                android:fontFamily="@font/nunito_extrabold"
-                android:gravity="center"
-                android:text="PRODUCTO"
-                android:textColor="#fff"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="45sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="IMPUESTO"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
 
-            <TextView
-                android:layout_width="50sp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="2sp"
-                android:fontFamily="@font/nunito_extrabold"
-                android:gravity="center"
-                android:text="PRECIO"
-                android:textColor="#fff"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="50sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="N°PLACA"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
 
-            <TextView
-                android:layout_width="50sp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="2sp"
-                android:fontFamily="@font/nunito_extrabold"
-                android:gravity="center"
-                android:text="GALONES"
-                android:textColor="#fff"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="50sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="T.PUNTOS"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
 
-            <TextView
-                android:layout_width="50sp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_extrabold"
-                android:gravity="center"
-                android:text="SOLES"
-                android:textColor="#fff"
-                android:textSize="10sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="CLIENTE ID"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+
+                    <TextView
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="R.U.C"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+                    <TextView
+                        android:layout_width="150sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2sp"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="RAZON SOCIAL"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+
+                    <TextView
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="DIRECCIÓN"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+                    <TextView
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="TARJETA N.D"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+                    <TextView
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="TARJ. CREDITO"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+                    <TextView
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="NRO. OPE."
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+                    <TextView
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="OBSERVACIÓN"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+                    <TextView
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="KILOMETRAJE"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+                    <TextView
+                        android:layout_width="60sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="MTO. SOLES"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+                    <TextView
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="SALDO CREDITO"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+                    <TextView
+                        android:layout_width="90sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
+                        android:text="PTOS.DISPONIBLES"
+                        android:textColor="#fff"
+                        android:textSize="8sp"
+                        android:textStyle="bold"
+                        android:inputType="textCapCharacters"/>
+                </LinearLayout>
+
+        </HorizontalScrollView>
+        </androidx.cardview.widget.CardView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_marginTop="5sp"
-            android:layout_height="100sp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclertransacciones"
+                android:id="@+id/recyclerdetalleventa"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5sp"
+                    android:layout_height="10sp"
+                    android:orientation="vertical">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclertransacciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

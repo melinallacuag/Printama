@@ -2,6 +2,7 @@ package com.anggastudio.sample.WebApiSVEN.Controllers;
 
 import com.anggastudio.sample.Adapter.Grias;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
+import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
@@ -53,5 +54,8 @@ public interface APIService {
 
     @GET("api/optran/listado/{id}")
     Call<List<Optran>> findOptran(@Path("id") String id);
+
+    @GET("api/detalleventa/listado/{id}")
+    Call<List<DetalleVenta>> findDetalleVenta(@Path("id") String id);
 
 }

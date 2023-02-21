@@ -16,10 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.sample.Adapter.CaraAdapter;
+import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
 import com.anggastudio.sample.Adapter.GriasAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
 import com.anggastudio.sample.Adapter.TransaccionAdapter;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
+import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
@@ -38,10 +40,11 @@ public class VentaFragment extends Fragment{
     CardView  grias;
     Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos;
     ImageButton regreso;
-    RecyclerView recyclerCara, recyclerManguera, recyclerTransaccion;
+
+    RecyclerView recyclerCara, recyclerManguera, recyclerDetalleVenta;
     CaraAdapter caraAdapter;
     MangueraAdapter mangueraAdapter;
-    TransaccionAdapter transaccionAdapter;
+    DetalleVentaAdapter detalleVentaAdapter;
 
     private APIService mAPIService;
 
@@ -190,9 +193,9 @@ public class VentaFragment extends Fragment{
             }
         });
 
-        //Listado de Operación de Transaciones
-        recyclerTransaccion = view.findViewById(R.id.recyclertransacciones);
-        recyclerTransaccion.setLayoutManager(new LinearLayoutManager(getContext()));
+        //Listado de Dettalles de Venta
+        recyclerDetalleVenta = view.findViewById(R.id.recyclerdetalleventa);
+        recyclerDetalleVenta.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //Listado de Mangueras
         recyclerManguera = view.findViewById(R.id.recyclerlado);
@@ -203,11 +206,12 @@ public class VentaFragment extends Fragment{
         recyclerCara.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         findLados(GlobalInfo.getImei10);
+        findDetalleVenta(GlobalInfo.getImei10);
 
         return view;
     }
 
-    private  void findOptran(String id){
+ /*   private  void findOptran(String id){
 
         Call<List<Optran>> call = mAPIService.findOptran(id);
 
@@ -238,7 +242,7 @@ public class VentaFragment extends Fragment{
             }
         });
     }
-
+*/
     private void findLados(String id) {
 
         Call<List<Lados>> call = mAPIService.findLados(id);
@@ -262,7 +266,7 @@ public class VentaFragment extends Fragment{
                             GlobalInfo.getCara10 = item.getNroLado();
 
                             findPico(GlobalInfo.getCara10);
-                            findOptran(GlobalInfo.getCara10);
+                          //  findOptran(GlobalInfo.getCara10);
 
                             textcara =  getActivity().findViewById(R.id.textcara);
                             String numlado = item.getNroLado();
@@ -281,7 +285,7 @@ public class VentaFragment extends Fragment{
 
             @Override
             public void onFailure(Call<List<Lados>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error de conexión APICORE Cara - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -321,9 +325,39 @@ public class VentaFragment extends Fragment{
 
             @Override
             public void onFailure(Call<List<Picos>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error de conexión APICORE Pico - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+
+    private void findDetalleVenta(String id){
+
+        Call<List<DetalleVenta>> call = mAPIService.findDetalleVenta(id);
+
+        call.enqueue(new Callback<List<DetalleVenta>>() {
+            @Override
+            public void onResponse(Call<List<DetalleVenta>> call, Response<List<DetalleVenta>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<DetalleVenta> detalleVentaList = response.body();
+                    detalleVentaAdapter = new DetalleVentaAdapter(detalleVentaList, getContext());
+                    recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DetalleVenta>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Detalle Venta - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

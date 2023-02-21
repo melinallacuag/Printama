@@ -49,12 +49,12 @@ public class DasboardFragment extends Fragment{
         slogangrifo   = view.findViewById(R.id.slogangrifo);
 
         nombreusuario.setText(GlobalInfo.getName10);
+        fecha.setText(GlobalInfo.getfecha10);
+        turno.setText(GlobalInfo.getturno10.toString());
 
         mAPIService = GlobalInfo.getAPIService();
 
-        findTerminal(GlobalInfo.getImei10);
-
-        findCompany(GlobalInfo.getCompanyID);
+        findCompany(GlobalInfo.getCompanyID10);
 
         btnventa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,43 +94,6 @@ public class DasboardFragment extends Fragment{
 
     }
 
-    private void findTerminal(String id){
-
-        Call<List<Terminal>> call = mAPIService.findTerminal(id);
-
-        call.enqueue(new Callback<List<Terminal>>() {
-            @Override
-            public void onResponse(Call<List<Terminal>> call, Response<List<Terminal>> response) {
-
-                try {
-
-                    if(!response.isSuccessful()){
-                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    List<Terminal> terminalList = response.body();
-
-                    for(Terminal terminal: terminalList){
-                        GlobalInfo.fecha10 = String.valueOf(terminal.getTurno());
-                        fecha.setText(terminal.getFecha_Proceso());
-                        turno.setText(terminal.getTurno().toString());
-                    }
-
-                }catch (Exception ex){
-                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Terminal>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
     private void findCompany(Integer id){
 
         Call<List<Company>> call = mAPIService.findCompany(id);
@@ -148,9 +111,11 @@ public class DasboardFragment extends Fragment{
                     List<Company> companyList = response.body();
 
                     for(Company company: companyList){
+
                         nombregrigo.setText(company.getNames());
                         sucursal.setText(company.getBranch());
                         slogangrifo.setText(company.getEslogan());
+
                     }
 
                 }catch (Exception ex){
