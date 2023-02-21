@@ -36,8 +36,8 @@ import retrofit2.Response;
 
 public class VentaFragment extends Fragment{
 
-    TextView  producto,cara,importetotal,textcara,textmanguera;
-    CardView  grias;
+    TextView  producto,cara,importetotal,textcara,textmanguera,textNplaca;
+    CardView  grias,cardtrans;
     Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos;
     ImageButton regreso;
 
@@ -46,7 +46,10 @@ public class VentaFragment extends Fragment{
     MangueraAdapter mangueraAdapter;
     DetalleVentaAdapter detalleVentaAdapter;
 
+    List<DetalleVenta> detalleVentaList;
+
     private APIService mAPIService;
+    private String mCara;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -146,9 +149,31 @@ public class VentaFragment extends Fragment{
         btnboleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BoletaFragment boletaFragment = new BoletaFragment();
-                boletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
-                boletaFragment.setCancelable(false);
+
+                for(DetalleVenta detalleVenta : detalleVentaList){
+
+                    String mnCara = detalleVenta.getCara().toString();
+
+                    if(mnCara.equals(mCara)) {
+                        BoletaFragment boletaFragment = new BoletaFragment();
+                        boletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
+                        boletaFragment.setCancelable(false);
+
+                        detalleVenta.setNroPlaca("BETOWEN");
+
+                        detalleVentaAdapter = new DetalleVentaAdapter(detalleVentaList, getContext(), new DetalleVentaAdapter.OnItemClickListener() {
+                            @Override
+                            public int onItemClick(DetalleVenta item) {
+                                return 0;
+                            }
+                        });
+                        recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+
+                        break;
+                    }
+
+                }
+
             }
         });
 
@@ -265,6 +290,8 @@ public class VentaFragment extends Fragment{
 
                             GlobalInfo.getCara10 = item.getNroLado();
 
+                            mCara = item.getNroLado();
+
                             findPico(GlobalInfo.getCara10);
                           //  findOptran(GlobalInfo.getCara10);
 
@@ -345,8 +372,16 @@ public class VentaFragment extends Fragment{
                         return;
                     }
 
-                    List<DetalleVenta> detalleVentaList = response.body();
-                    detalleVentaAdapter = new DetalleVentaAdapter(detalleVentaList, getContext());
+                    //List<DetalleVenta> detalleVentaList = response.body();
+
+                    detalleVentaList = response.body();
+
+                    detalleVentaAdapter = new DetalleVentaAdapter(detalleVentaList, getContext(), new DetalleVentaAdapter.OnItemClickListener() {
+                        @Override
+                        public int onItemClick(DetalleVenta item) {
+                            return 0;
+                        }
+                    });
                     recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
 
                 }catch (Exception ex){

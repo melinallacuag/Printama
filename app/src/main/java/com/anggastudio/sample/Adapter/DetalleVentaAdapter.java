@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
+import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 
 import java.util.List;
@@ -20,10 +21,16 @@ public class DetalleVentaAdapter extends RecyclerView.Adapter<DetalleVentaAdapte
 
     private List<DetalleVenta> detalleVentaList;
     private Context context;
+    final DetalleVentaAdapter.OnItemClickListener listener;
 
-    public DetalleVentaAdapter(List<DetalleVenta> detalleVentaList, Context context){
+    public interface  OnItemClickListener{
+        int onItemClick(DetalleVenta item);
+    }
+
+    public DetalleVentaAdapter(List<DetalleVenta> detalleVentaList, Context context,DetalleVentaAdapter.OnItemClickListener listener){
         this.detalleVentaList = detalleVentaList;
         this.context    = context;
+        this.listener  = listener;
     }
 
     @NonNull
@@ -35,6 +42,9 @@ public class DetalleVentaAdapter extends RecyclerView.Adapter<DetalleVentaAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        DetalleVenta detalleVenta = detalleVentaList.get(position);
+
         holder.textLado.setText(detalleVentaList.get(position).getCara());
         holder.textTpago.setText(detalleVentaList.get(position).getTipoPago());
         holder.textImpuesto.setText(String.valueOf(detalleVentaList.get(position).getImpuesto()));
@@ -52,6 +62,13 @@ public class DetalleVentaAdapter extends RecyclerView.Adapter<DetalleVentaAdapte
         holder.textMtoSoles.setText(String.valueOf(detalleVentaList.get(position).getMontoSoles()));
         holder.textSaldoCredito.setText(String.valueOf(detalleVentaList.get(position).getMtoSaldoCredito()));
         holder.textPtosDisponibles.setText(String.valueOf(detalleVentaList.get(position).getPtosDisponible()));
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(detalleVenta);
+            }
+        });
     }
 
     @Override
@@ -80,6 +97,7 @@ public class DetalleVentaAdapter extends RecyclerView.Adapter<DetalleVentaAdapte
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
+            cardView             = itemView.findViewById(R.id.carddetalleventa);
             textLado             = itemView.findViewById(R.id.textLado);
             textNplaca           = itemView.findViewById(R.id.textNplaca);
             textImpuesto         = itemView.findViewById(R.id.textImpuesto);

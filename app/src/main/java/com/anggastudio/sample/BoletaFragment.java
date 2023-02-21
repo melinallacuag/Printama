@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -111,7 +112,7 @@ public class BoletaFragment extends DialogFragment {
                 placa.setText("000-0000");
                 dni.setText("11111111");
                 nombre.setText("CLIENTE VARIOS");
-                dismiss();
+              //  dismiss();
             }
         });
         agregarboleta.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +137,7 @@ public class BoletaFragment extends DialogFragment {
                     alertplaca.setErrorEnabled(false);
                     alertdni.setErrorEnabled(false);
                     alertnombre.setErrorEnabled(false);
+
                     Toast.makeText(getContext(), "SE GUARDO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
