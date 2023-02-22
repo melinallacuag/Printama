@@ -1,7 +1,11 @@
 package com.anggastudio.sample;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Path;
 import android.os.Bundle;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +31,9 @@ import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,22 +163,63 @@ public class VentaFragment extends Fragment{
                     String mnCara = detalleVenta.getCara().toString();
 
                     if(mnCara.equals(mCara)) {
-                        BoletaFragment boletaFragment = new BoletaFragment();
-                        boletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
-                        boletaFragment.setCancelable(false);
 
-                        detalleVenta.setNroPlaca("BETOWEN");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        LayoutInflater inflater = getActivity().getLayoutInflater();
+                       // builder.setTitle("Agregar Cliente");
+                        View dialogView = inflater.inflate(R.layout.fragment_boleta, null);
+                        builder.setView(dialogView);
 
-                        detalleVentaAdapter = new DetalleVentaAdapter(detalleVentaList, getContext(), new DetalleVentaAdapter.OnItemClickListener() {
+                        final TextInputEditText txtplaca   = (TextInputEditText) dialogView.findViewById(R.id.inputnplaca);
+                        final TextInputEditText textdni    = (TextInputEditText) dialogView.findViewById(R.id.inputdni);
+                        final TextInputEditText textnombre = (TextInputEditText) dialogView.findViewById(R.id.inputnombre);
+
+                        final Button btn = (Button) dialogView.findViewById(R.id.btnagregarboleta);
+                        final TextInputLayout alertplaca,alertdni, alertnombre, alertdireccion;
+
+                        alertplaca     = dialogView.findViewById(R.id.textnplaca);
+                        alertdni       = dialogView.findViewById(R.id.textdni);
+                        alertnombre    = dialogView.findViewById(R.id.textnombre);
+                        alertdireccion = view.findViewById(R.id.textdireccion);
+
+                        btn.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public int onItemClick(DetalleVenta item) {
-                                return 0;
-                            }
-                        });
-                        recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+                            public void onClick(View view) {
 
-                        break;
+
+                                        String textnplaca = txtplaca.getText().toString();
+                                        String textndni = textdni.getText().toString();
+                                        String textnnombre = textnombre.getText().toString();
+
+                                        if (textnplaca.isEmpty()) {
+                                            alertplaca.setError("El campo placa es obligatorio");
+                                        } else if (textndni.isEmpty()) {
+                                            alertdni.setError("El campo DNI es obligatorio");
+                                        } else if (textnnombre.isEmpty()) {
+                                            alertnombre.setError("El campo nombre es obligatorio");
+                                        } else {
+                                            alertplaca.setErrorEnabled(false);
+                                            alertdni.setErrorEnabled(false);
+                                            alertnombre.setErrorEnabled(false);
+
+                                            detalleVenta.setNroPlaca(txtplaca.getText().toString());
+                                            detalleVenta.setClienteRUC(textdni.getText().toString());
+                                            detalleVenta.setClienteRS(textnombre.getText().toString());
+                                            recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+                                            Toast.makeText(getContext(), "SE GUARDO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                                        }
+
+                            }
+
+                        });
+                        builder.show();
+                        builder.setCancelable(false);
+
+                       // detalleVenta.setNroPlaca(mCara);
+                       // recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+                       // break;
                     }
+                 //
 
                 }
 

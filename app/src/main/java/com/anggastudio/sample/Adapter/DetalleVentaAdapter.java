@@ -1,6 +1,7 @@
 package com.anggastudio.sample.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,20 +9,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anggastudio.sample.BoletaFragment;
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
-import com.anggastudio.sample.WebApiSVEN.Models.Lados;
-import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 
 import java.util.List;
 
 public class DetalleVentaAdapter extends RecyclerView.Adapter<DetalleVentaAdapter.ViewHolder>{
 
-    private List<DetalleVenta> detalleVentaList;
+    public List<DetalleVenta> detalleVentaList;
     private Context context;
-    final DetalleVentaAdapter.OnItemClickListener listener;
+   // final DetalleVentaAdapter.OnItemClickListener listener;
+
 
     public interface  OnItemClickListener{
         int onItemClick(DetalleVenta item);
@@ -30,7 +32,7 @@ public class DetalleVentaAdapter extends RecyclerView.Adapter<DetalleVentaAdapte
     public DetalleVentaAdapter(List<DetalleVenta> detalleVentaList, Context context,DetalleVentaAdapter.OnItemClickListener listener){
         this.detalleVentaList = detalleVentaList;
         this.context    = context;
-        this.listener  = listener;
+        //this.listener  = listener;
     }
 
     @NonNull
@@ -63,12 +65,12 @@ public class DetalleVentaAdapter extends RecyclerView.Adapter<DetalleVentaAdapte
         holder.textSaldoCredito.setText(String.valueOf(detalleVentaList.get(position).getMtoSaldoCredito()));
         holder.textPtosDisponibles.setText(String.valueOf(detalleVentaList.get(position).getPtosDisponible()));
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+       /* holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onItemClick(detalleVenta);
             }
-        });
+        });*/
     }
 
     @Override

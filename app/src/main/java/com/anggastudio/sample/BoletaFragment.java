@@ -14,6 +14,8 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,21 +24,33 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.List;
+
 
 public class BoletaFragment extends DialogFragment {
 
+    TextView textTarjetaPuntos;
     Button cerrarboleta,tipoPago,agregarboleta,generar,buscarplaca,buscardni;
     TextInputEditText placa,dni,nombre,direccion,boleta;
     TextInputLayout alertplaca,alertdni, alertnombre, alertdireccion;
+    private DetalleVentaAdapter.ViewHolder viewHolder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_boleta, container, false);
+
+        viewHolder = new DetalleVentaAdapter.ViewHolder(view);
+        Bundle bundle         = this.getArguments();
+       // String name = viewHolder.getItemId();
+        String lado       = bundle.getString("id");
+       // textTarjetaPuntos.setText(lado);
+
 
         cerrarboleta  = view.findViewById(R.id.btncancelarboleta);
         tipoPago      = view.findViewById(R.id.btntipopago);
@@ -138,6 +152,7 @@ public class BoletaFragment extends DialogFragment {
                     alertdni.setErrorEnabled(false);
                     alertnombre.setErrorEnabled(false);
 
+
                     Toast.makeText(getContext(), "SE GUARDO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
@@ -146,4 +161,16 @@ public class BoletaFragment extends DialogFragment {
 
         return view;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+
+
+            Toast.makeText(getContext(), "ejecutando", Toast.LENGTH_SHORT).show();
+
+    }
+
 }
