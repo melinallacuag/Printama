@@ -2,6 +2,7 @@ package com.anggastudio.sample;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
@@ -16,9 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,12 +32,14 @@ import com.anggastudio.sample.Adapter.CaraAdapter;
 import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
 import com.anggastudio.sample.Adapter.GriasAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
+import com.anggastudio.sample.Adapter.TipoTarjetaAdapter;
 import com.anggastudio.sample.Adapter.TransaccionAdapter;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
+import com.anggastudio.sample.WebApiSVEN.Models.Tipotarjeta;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -60,6 +68,14 @@ public class VentaFragment extends Fragment{
 
     private APIService mAPIService;
     private String mCara;
+
+    //Boleta
+    Spinner dropStatus;
+    TextView modopagoefectivo;
+    RadioButton cbefectivo,cbtarjeta,cbcredito;
+    TextInputEditText  txtplaca,textdni,textnombre,textdireccion,textkilometraje,textobservacion;
+    TextInputLayout alertplaca,alertdni, alertnombre,textinputpagoefectivo,textnrooperacion,textdropStatus;
+    Button btnagregar,btncancelar,btngenerar,buscardni,buscarplaca;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -177,16 +193,18 @@ public class VentaFragment extends Fragment{
                         alertDialog.show();
                         alertDialog.setCancelable(false);
 
-                        TextInputEditText  txtplaca,textdni,textnombre,textdireccion,textkilometraje,textobservacion;
-                        TextInputLayout alertplaca,alertdni, alertnombre;
-                        Button btnagregar,btncancelar,btngenerar,buscardni,buscarplaca;
-
                         txtplaca        = dialogView.findViewById(R.id.inputnplaca);
                         textdni         = dialogView.findViewById(R.id.inputdni);
                         textnombre      = dialogView.findViewById(R.id.inputnombre);
                         textdireccion   = dialogView.findViewById(R.id.inputdireccion);
                         textkilometraje = dialogView.findViewById(R.id.inputkilometraje);
                         textobservacion = dialogView.findViewById(R.id.inputobservacion);
+
+                        textinputpagoefectivo = dialogView.findViewById(R.id.textpagoefectivo);
+                        textnrooperacion      = dialogView.findViewById(R.id.textnrooperacion);
+                        modopagoefectivo      = dialogView.findViewById(R.id.modopagoefectivo);
+                        dropStatus            = dialogView.findViewById(R.id.dropStatus);
+                        textdropStatus = dialogView.findViewById(R.id.textdropStatus);
 
                         btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
                         btncancelar    = dialogView.findViewById(R.id.btncancelarboleta);
@@ -198,15 +216,68 @@ public class VentaFragment extends Fragment{
                         alertdni       = dialogView.findViewById(R.id.textdni);
                         alertnombre    = dialogView.findViewById(R.id.textnombre);
 
+                        cbefectivo     = dialogView.findViewById(R.id.radioEfectivo);
+                        cbtarjeta      = dialogView.findViewById(R.id.radioTarjeta);
+                        cbcredito      = dialogView.findViewById(R.id.radioCredito);
+
+                        //Array de los select
+                        ArrayList<Tipotarjeta> tipotarjetaArrayList = new ArrayList<>();
+
+                        for(int i=0; i <= 1 ;i++) {
+                            tipotarjetaArrayList.add(new Tipotarjeta("VISA"));
+                            tipotarjetaArrayList.add(new Tipotarjeta("MASTERCARD"));
+                            tipotarjetaArrayList.add(new Tipotarjeta("DINNERS"));
+                        }
+                        Resources res = getResources();
+                        TipoTarjetaAdapter adapt = new TipoTarjetaAdapter(getContext(), R.layout.item, tipotarjetaArrayList, res);
+                        dropStatus.setAdapter(adapt);
+
+                        cbefectivo.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
+                               if (a){
+                                   modopagoefectivo.setVisibility(View.VISIBLE);
+                               }else {
+                                   modopagoefectivo.setVisibility(View.GONE);
+                               }
+                            }
+                        });
+
+                        cbtarjeta.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
+                                if (a){
+                                    textdropStatus.setVisibility(View.VISIBLE);
+                                   // textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                    textnrooperacion.setVisibility(View.VISIBLE);
+                                }else {
+                                    textdropStatus.setVisibility(View.GONE);
+                                  //  textinputpagoefectivo.setVisibility(View.GONE);
+                                    textnrooperacion.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+
+                        cbcredito.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
+                                if (a){
+                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                }else {
+                                    textinputpagoefectivo.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+
                         buscarplaca.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 String textnplaca    = txtplaca.getText().toString().trim();
 
                                 if(textnplaca.isEmpty()){
-                                    alertplaca.setError("El campo placa es obligatorio");
+                                    alertplaca.setError("* El campo Placa es obligatorio");
                                 }else if(!textnplaca.equals("000-0000")){
-                                    alertplaca.setError("El dato no es correcto");
+                                    alertplaca.setError("No se encontro Placa");
                                 }else {
                                     alertplaca.setErrorEnabled(false);
                                     textdni.setText("11111111");
@@ -220,9 +291,9 @@ public class VentaFragment extends Fragment{
                             public void onClick(View view) {
                                 String textndni    = textdni.getText().toString().trim();
                                 if(textndni.isEmpty()){
-                                    alertdni.setError("El campo dni es obligatorio");
+                                    alertdni.setError("* El campo DNI es obligatorio");
                                 }else if(!textndni.equals("11111111")){
-                                    alertdni.setError("El dato no es correcto");
+                                    alertdni.setError("* No se encontro DNI");
                                 }else{
                                     alertdni.setErrorEnabled(false);
                                     textnombre.setText("CLIENTE VARIOS");
@@ -254,11 +325,11 @@ public class VentaFragment extends Fragment{
                                 String textnnombre    = textnombre.getText().toString();
 
                                 if (textnplaca.isEmpty()) {
-                                    alertplaca.setError("El campo placa es obligatorio");
+                                    alertplaca.setError("* El campo Placa es obligatorio");
                                 } else if (textndni.isEmpty()) {
-                                    alertdni.setError("El campo DNI es obligatorio");
+                                    alertdni.setError("* El campo DNI es obligatorio");
                                 } else if (textnnombre.isEmpty()) {
-                                    alertnombre.setError("El campo nombre es obligatorio");
+                                    alertnombre.setError("* El campo Nombre es obligatorio");
                                 } else {
                                     alertplaca.setErrorEnabled(false);
                                     alertdni.setErrorEnabled(false);

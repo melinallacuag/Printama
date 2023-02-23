@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="modo_juego">
+        <item>INTENTOS</item>
+        <item>TIEMPO</item>
+    </string-array>
+
+</resources>
