@@ -2,7 +2,9 @@ package com.anggastudio.sample;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.Path;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
@@ -166,61 +168,116 @@ public class VentaFragment extends Fragment{
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflater = getActivity().getLayoutInflater();
-                       // builder.setTitle("Agregar Cliente");
+
                         View dialogView = inflater.inflate(R.layout.fragment_boleta, null);
                         builder.setView(dialogView);
 
-                        final TextInputEditText txtplaca   = (TextInputEditText) dialogView.findViewById(R.id.inputnplaca);
-                        final TextInputEditText textdni    = (TextInputEditText) dialogView.findViewById(R.id.inputdni);
-                        final TextInputEditText textnombre = (TextInputEditText) dialogView.findViewById(R.id.inputnombre);
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        alertDialog.show();
+                        alertDialog.setCancelable(false);
 
-                        final Button btn = (Button) dialogView.findViewById(R.id.btnagregarboleta);
-                        final TextInputLayout alertplaca,alertdni, alertnombre, alertdireccion;
+                        TextInputEditText  txtplaca,textdni,textnombre,textdireccion,textkilometraje,textobservacion;
+                        TextInputLayout alertplaca,alertdni, alertnombre;
+                        Button btnagregar,btncancelar,btngenerar,buscardni,buscarplaca;
+
+                        txtplaca        = dialogView.findViewById(R.id.inputnplaca);
+                        textdni         = dialogView.findViewById(R.id.inputdni);
+                        textnombre      = dialogView.findViewById(R.id.inputnombre);
+                        textdireccion   = dialogView.findViewById(R.id.inputdireccion);
+                        textkilometraje = dialogView.findViewById(R.id.inputkilometraje);
+                        textobservacion = dialogView.findViewById(R.id.inputobservacion);
+
+                        btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
+                        btncancelar    = dialogView.findViewById(R.id.btncancelarboleta);
+                        btngenerar     = dialogView.findViewById(R.id.btngenerarcliente);
+                        buscardni      = dialogView.findViewById(R.id.btnrenic);
+                        buscarplaca    = dialogView.findViewById(R.id.btntarjeta);
 
                         alertplaca     = dialogView.findViewById(R.id.textnplaca);
                         alertdni       = dialogView.findViewById(R.id.textdni);
                         alertnombre    = dialogView.findViewById(R.id.textnombre);
-                        alertdireccion = view.findViewById(R.id.textdireccion);
 
-                        btn.setOnClickListener(new View.OnClickListener() {
+                        buscarplaca.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                String textnplaca    = txtplaca.getText().toString().trim();
 
-
-                                        String textnplaca = txtplaca.getText().toString();
-                                        String textndni = textdni.getText().toString();
-                                        String textnnombre = textnombre.getText().toString();
-
-                                        if (textnplaca.isEmpty()) {
-                                            alertplaca.setError("El campo placa es obligatorio");
-                                        } else if (textndni.isEmpty()) {
-                                            alertdni.setError("El campo DNI es obligatorio");
-                                        } else if (textnnombre.isEmpty()) {
-                                            alertnombre.setError("El campo nombre es obligatorio");
-                                        } else {
-                                            alertplaca.setErrorEnabled(false);
-                                            alertdni.setErrorEnabled(false);
-                                            alertnombre.setErrorEnabled(false);
-
-                                            detalleVenta.setNroPlaca(txtplaca.getText().toString());
-                                            detalleVenta.setClienteRUC(textdni.getText().toString());
-                                            detalleVenta.setClienteRS(textnombre.getText().toString());
-                                            recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
-                                            Toast.makeText(getContext(), "SE GUARDO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
-                                        }
-
+                                if(textnplaca.isEmpty()){
+                                    alertplaca.setError("El campo placa es obligatorio");
+                                }else if(!textnplaca.equals("000-0000")){
+                                    alertplaca.setError("El dato no es correcto");
+                                }else {
+                                    alertplaca.setErrorEnabled(false);
+                                    textdni.setText("11111111");
+                                    textnombre.setText("CLIENTE VARIOS");
+                                }
                             }
-
                         });
-                        builder.show();
-                        builder.setCancelable(false);
 
-                       // detalleVenta.setNroPlaca(mCara);
-                       // recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
-                       // break;
+                        buscardni.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String textndni    = textdni.getText().toString().trim();
+                                if(textndni.isEmpty()){
+                                    alertdni.setError("El campo dni es obligatorio");
+                                }else if(!textndni.equals("11111111")){
+                                    alertdni.setError("El dato no es correcto");
+                                }else{
+                                    alertdni.setErrorEnabled(false);
+                                    textnombre.setText("CLIENTE VARIOS");
+                                }
+                            }
+                        });
+
+                        btncancelar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alertDialog.dismiss();
+                            }
+                        });
+
+                        btngenerar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                txtplaca.setText("000-0000");
+                                textdni.setText("11111111");
+                                textnombre.setText("CLIENTE VARIOS");
+                            }
+                        });
+
+                        btnagregar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String textnplaca     = txtplaca.getText().toString();
+                                String textndni       = textdni.getText().toString();
+                                String textnnombre    = textnombre.getText().toString();
+
+                                if (textnplaca.isEmpty()) {
+                                    alertplaca.setError("El campo placa es obligatorio");
+                                } else if (textndni.isEmpty()) {
+                                    alertdni.setError("El campo DNI es obligatorio");
+                                } else if (textnnombre.isEmpty()) {
+                                    alertnombre.setError("El campo nombre es obligatorio");
+                                } else {
+                                    alertplaca.setErrorEnabled(false);
+                                    alertdni.setErrorEnabled(false);
+                                    alertnombre.setErrorEnabled(false);
+
+                                    detalleVenta.setNroPlaca(txtplaca.getText().toString());
+                                    detalleVenta.setClienteRUC(textdni.getText().toString());
+                                    detalleVenta.setClienteRS(textnombre.getText().toString());
+                                    detalleVenta.setClienteDR(textdireccion.getText().toString());
+                                    detalleVenta.setKilometraje(textkilometraje.getText().toString());
+                                    detalleVenta.setObservacion(textobservacion.getText().toString());
+
+                                    recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+                                    Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
+                                    alertDialog.dismiss();
+                                }
+                            }
+                        });
                     }
-                 //
-
                 }
 
             }
@@ -229,6 +286,20 @@ public class VentaFragment extends Fragment{
         btnfactura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                for(DetalleVenta detalleVenta : detalleVentaList){
+
+                    String mnCara = detalleVenta.getCara().toString();
+
+                    if(mnCara.equals(mCara)) {
+
+                        detalleVenta.setClienteRS("mushi");
+                        detalleVenta.setClienteDR("direccion");
+
+                        recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+                    }
+                }
+
                 FacturaFragment facturaFragment = new FacturaFragment();
                 facturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
                 facturaFragment.setCancelable(false);

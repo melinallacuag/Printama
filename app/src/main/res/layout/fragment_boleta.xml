@@ -8,13 +8,16 @@
     tools:context=".BoletaFragment">
 
     <LinearLayout
-        android:layout_width="380sp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="20sp"
         android:paddingEnd="20sp"
         android:paddingTop="10sp"
         android:paddingBottom="10sp"
+        app:layout_constraintCircleRadius="@dimen/cardview_default_radius"
+        android:backgroundTint="#FFFFFF"
+        android:background="@drawable/cardmodal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,7 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:fontFamily="@font/nunito_extrabold"
             android:text="BOLETA"
             android:textColor="#071C65"
@@ -39,14 +41,13 @@
                 android:id="@+id/textnplaca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="N° Placa"
+                android:hint="Ingresar N° de Placa"
                 app:boxBackgroundMode="outline"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusTopEnd="15dp"
                 app:endIconMode="clear_text"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputnplaca"
                     android:fontFamily="@font/nunito_semibold"
@@ -67,16 +68,13 @@
                 app:cornerRadius="10sp"
                 android:layout_marginTop="2sp"
                 android:layout_marginLeft="10sp" />
-
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            >
+            android:gravity="center">
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textdni"
                 android:layout_width="match_parent"
@@ -88,7 +86,6 @@
                 app:boxCornerRadiusTopEnd="15dp"
                 app:endIconMode="clear_text"
                 android:layout_weight="1">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputdni"
                 android:fontFamily="@font/nunito_semibold"
@@ -97,9 +94,7 @@
                 android:maxLength="8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
             </com.google.android.material.textfield.TextInputLayout>
-
             <Button
                 android:id="@+id/btnrenic"
                 android:layout_width="200sp"
@@ -112,7 +107,6 @@
                 android:fontFamily="@font/nunito_extrabold"
                 android:layout_marginTop="2sp"
                 android:layout_marginLeft="10sp" />
-
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -125,8 +119,7 @@
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:endIconMode="clear_text"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputnombre"
                 android:fontFamily="@font/nunito_semibold"
@@ -134,21 +127,19 @@
                 android:inputType="textCapCharacters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textdireccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Dirección"
+            android:hint="Ingresar Dirección"
             app:boxBackgroundMode="outline"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:endIconMode="clear_text"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputdireccion"
                 android:fontFamily="@font/nunito_semibold"
@@ -156,8 +147,48 @@
                 android:inputType="textCapCharacters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textkilometraje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingresar Kilometraje"
+            app:boxBackgroundMode="outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:endIconMode="clear_text"
+            android:layout_weight="1">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputkilometraje"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="12sp"
+                android:inputType="textCapCharacters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textobservacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingresar Observación"
+            app:boxBackgroundMode="outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:endIconMode="clear_text"
+            android:layout_weight="1">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputobservacion"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="12sp"
+                android:inputType="textCapCharacters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/btntipopago"
             android:layout_width="match_parent"
