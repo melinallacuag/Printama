@@ -26,7 +26,7 @@ public class FacturaFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_factura, container, false);
 
-        cerrarfactura  = view.findViewById(R.id.btncancelarfacturacion);
+     /*   cerrarfactura  = view.findViewById(R.id.btncancelarfacturacion);
         tipoPago       = view.findViewById(R.id.btntipopago);
         agregarfactura = view.findViewById(R.id.btnagregarfacturacion);
         buscarplaca    = view.findViewById(R.id.btntarjeta);
@@ -115,7 +115,7 @@ public class FacturaFragment extends DialogFragment {
                     dismiss();
                 }
             }
-        });
+        });*/
         return view;
     }
 }

@@ -72,7 +72,6 @@ public class VentaFragment extends Fragment{
     private String mCara;
 
     //Boleta
-
     Tipotarjeta tipotarjeta = null;
     RadioGroup radioGroup;
     Spinner dropStatus;
@@ -81,8 +80,6 @@ public class VentaFragment extends Fragment{
     TextInputEditText  txtplaca,textdni,textnombre,textdireccion,textkilometraje,textobservacion,textpagoefectivo,textNroOperacio;
     TextInputLayout alertplaca,alertdni, alertnombre,textinputpagoefectivo,textnrooperacion,textdropStatus;
     Button btnagregar,btncancelar,btngenerar,buscardni,buscarplaca;
-
-    String selectedText;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -250,8 +247,7 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
-
-                      dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 tipotarjeta = (Tipotarjeta) dropStatus.getSelectedItem();
@@ -261,7 +257,8 @@ public class VentaFragment extends Fragment{
                             public void onNothingSelected(AdapterView<?> parent) {
                             }
                         });
-                       btncancelar.setOnClickListener(new View.OnClickListener() {
+
+                        btncancelar.setOnClickListener(new View.OnClickListener() {
                            @Override
                            public void onClick(View view) {
                                alertDialog.dismiss();
@@ -290,9 +287,7 @@ public class VentaFragment extends Fragment{
                                     textinputpagoefectivo.setVisibility(View.VISIBLE);
                                     textnrooperacion.setVisibility(View.VISIBLE);
                                 }else {
-                                  //  textdropStatus.setVisibility(View.GONE);
-                                  //  textinputpagoefectivo.setVisibility(View.GONE);
-                                   // textnrooperacion.setVisibility(View.GONE);
+                                    // No se seleccionó ningún elemento
                                 }
                             }
                         });
@@ -305,7 +300,7 @@ public class VentaFragment extends Fragment{
                                     textdropStatus.setVisibility(View.GONE);
                                     textnrooperacion.setVisibility(View.GONE);
                                 }else {
-                                    //textinputpagoefectivo.setVisibility(View.GONE);
+                                    // No se seleccionó ningún elemento
                                 }
                             }
                         });
@@ -410,16 +405,220 @@ public class VentaFragment extends Fragment{
 
                     if(mnCara.equals(mCara)) {
 
-                        detalleVenta.setClienteRS("mushi");
-                        detalleVenta.setClienteDR("direccion");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        LayoutInflater inflater = getActivity().getLayoutInflater();
 
-                        recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+                        View dialogView = inflater.inflate(R.layout.fragment_factura, null);
+                        builder.setView(dialogView);
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        alertDialog.show();
+                        alertDialog.setCancelable(false);
+
+                        txtplaca        = dialogView.findViewById(R.id.inputnplaca);
+                        textdni         = dialogView.findViewById(R.id.inputdni);
+                        textnombre      = dialogView.findViewById(R.id.inputnombre);
+                        textdireccion   = dialogView.findViewById(R.id.inputdireccion);
+                        textkilometraje = dialogView.findViewById(R.id.inputkilometraje);
+                        textobservacion = dialogView.findViewById(R.id.inputobservacion);
+                        textpagoefectivo= dialogView.findViewById(R.id.inputpagoefectivo);
+                        textNroOperacio = dialogView.findViewById(R.id.inputnrooperacion);
+
+                        textinputpagoefectivo = dialogView.findViewById(R.id.textpagoefectivo);
+                        textnrooperacion      = dialogView.findViewById(R.id.textnrooperacion);
+                        modopagoefectivo      = dialogView.findViewById(R.id.modopagoefectivo);
+                        dropStatus            = dialogView.findViewById(R.id.dropStatus);
+                        textdropStatus        = dialogView.findViewById(R.id.textdropStatus);
+
+                        btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
+                        btncancelar    = dialogView.findViewById(R.id.btncancelarboleta);
+                      //  btngenerar     = dialogView.findViewById(R.id.btngenerarcliente);
+                        buscardni      = dialogView.findViewById(R.id.btnrenic);
+                        buscarplaca    = dialogView.findViewById(R.id.btntarjeta);
+
+                        alertplaca     = dialogView.findViewById(R.id.textnplaca);
+                        alertdni       = dialogView.findViewById(R.id.textdni);
+                        alertnombre    = dialogView.findViewById(R.id.textnombre);
+
+                        radioGroup     = dialogView.findViewById(R.id.radioformapago);
+                        cbefectivo     = dialogView.findViewById(R.id.radioEfectivo);
+                        cbtarjeta      = dialogView.findViewById(R.id.radioTarjeta);
+                        cbcredito      = dialogView.findViewById(R.id.radioCredito);
+
+                        //Array de los select
+                        ArrayList<Tipotarjeta> tipotarjetaArrayList = new ArrayList<>();
+
+                        for(int i=0; i < 1 ;i++) {
+                            tipotarjetaArrayList.add(new Tipotarjeta("1","VISA"));
+                            tipotarjetaArrayList.add(new Tipotarjeta("2","MASTERCARD"));
+                            tipotarjetaArrayList.add(new Tipotarjeta("3","DINNERS"));
+                        }
+                        Resources res = getResources();
+                        TipoTarjetaAdapter adapt = new TipoTarjetaAdapter(getContext(), R.layout.item, tipotarjetaArrayList, res);
+                        dropStatus.setAdapter(adapt);
+
+
+                        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                                radioButton = dialogView.findViewById(checkedId);
+                            }
+                        });
+
+                        dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                tipotarjeta = (Tipotarjeta) dropStatus.getSelectedItem();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+                            }
+                        });
+
+                        btncancelar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alertDialog.dismiss();
+                            }
+                        });
+
+                        cbefectivo.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
+                                if (a){
+                                    modopagoefectivo.setVisibility(View.VISIBLE);
+                                    textdropStatus.setVisibility(View.GONE);
+                                    textnrooperacion.setVisibility(View.GONE);
+                                    textinputpagoefectivo.setVisibility(View.GONE);
+                                }else {
+                                    modopagoefectivo.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+
+                        cbtarjeta.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
+                                if (a){
+                                    textdropStatus.setVisibility(View.VISIBLE);
+                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                    textnrooperacion.setVisibility(View.VISIBLE);
+                                }else {
+                                    // No se seleccionó ningún elemento
+                                }
+                            }
+                        });
+
+                        cbcredito.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
+                                if (a){
+                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                    textdropStatus.setVisibility(View.GONE);
+                                    textnrooperacion.setVisibility(View.GONE);
+                                }else {
+                                    // No se seleccionó ningún elemento
+                                }
+                            }
+                        });
+
+                        buscarplaca.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String textnplaca    = txtplaca.getText().toString().trim();
+
+                                if(textnplaca.isEmpty()){
+                                    alertplaca.setError("* El campo Placa es obligatorio");
+                                }else if(!textnplaca.equals("000-0000")){
+                                    alertplaca.setError("No se encontro Placa");
+                                }else {
+                                    alertplaca.setErrorEnabled(false);
+                                    textdni.setText("11111111");
+                                    textnombre.setText("CLIENTE VARIOS");
+                                }
+                            }
+                        });
+
+                        buscardni.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String textndni    = textdni.getText().toString().trim();
+                                if(textndni.isEmpty()){
+                                    alertdni.setError("* El campo DNI es obligatorio");
+                                }else if(!textndni.equals("11111111")){
+                                    alertdni.setError("* No se encontro DNI");
+                                }else{
+                                    alertdni.setErrorEnabled(false);
+                                    textnombre.setText("CLIENTE VARIOS");
+                                }
+                            }
+                        });
+
+                     /*   btngenerar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                txtplaca.setText("000-0000");
+                                textdni.setText("11111111");
+                                textnombre.setText("CLIENTE VARIOS");
+                            }
+                        });*/
+
+                        btnagregar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String textnplaca     = txtplaca.getText().toString();
+                                String textndni       = textdni.getText().toString();
+                                String textnnombre    = textnombre.getText().toString();
+
+                                if (textnplaca.isEmpty()) {
+                                    alertplaca.setError("* El campo Placa es obligatorio");
+                                } else if (textndni.isEmpty()) {
+                                    alertdni.setError("* El campo DNI es obligatorio");
+                                } else if (textnnombre.isEmpty()) {
+                                    alertnombre.setError("* El campo Nombre es obligatorio");
+                                } else {
+                                    alertplaca.setErrorEnabled(false);
+                                    alertdni.setErrorEnabled(false);
+                                    alertnombre.setErrorEnabled(false);
+
+                                    detalleVenta.setNroPlaca(txtplaca.getText().toString());
+                                    detalleVenta.setClienteID(textdni.getText().toString());
+                                    detalleVenta.setClienteRS(textnombre.getText().toString());
+                                    detalleVenta.setClienteDR(textdireccion.getText().toString());
+                                    detalleVenta.setKilometraje(textkilometraje.getText().toString());
+                                    detalleVenta.setObservacion(textobservacion.getText().toString());
+                                    detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
+                                    detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
+                                    detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
+                                    String datotipotarjeta =radioButton.getText().toString();
+                                    if (datotipotarjeta.equals("Tarjeta")){
+                                        detalleVenta.setTarjetaCredito(tipotarjeta.getIdTarjeta());
+                                    }else if (datotipotarjeta.equals("Credito")){
+                                        detalleVenta.setTarjetaCredito("");
+                                    }else if (datotipotarjeta.equals("Efectivo")){
+                                        detalleVenta.setTarjetaCredito("");
+                                    }else {
+                                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                                    }
+                                    recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+                                    Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
+                                    alertDialog.dismiss();
+                                }
+                            }
+                        });
+
+                       // detalleVenta.setClienteRS("mushi");
+                       // detalleVenta.setClienteDR("direccion");
+
+                       // recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
                     }
                 }
 
-                FacturaFragment facturaFragment = new FacturaFragment();
+            /*    FacturaFragment facturaFragment = new FacturaFragment();
                 facturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
-                facturaFragment.setCancelable(false);
+                facturaFragment.setCancelable(false);*/
             }
         });
 
