@@ -14,9 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -70,12 +72,17 @@ public class VentaFragment extends Fragment{
     private String mCara;
 
     //Boleta
+
+    Tipotarjeta tipotarjeta = null;
+    RadioGroup radioGroup;
     Spinner dropStatus;
     TextView modopagoefectivo;
-    RadioButton cbefectivo,cbtarjeta,cbcredito;
-    TextInputEditText  txtplaca,textdni,textnombre,textdireccion,textkilometraje,textobservacion;
+    RadioButton cbefectivo,cbtarjeta,cbcredito,radioButton;
+    TextInputEditText  txtplaca,textdni,textnombre,textdireccion,textkilometraje,textobservacion,textpagoefectivo,textNroOperacio;
     TextInputLayout alertplaca,alertdni, alertnombre,textinputpagoefectivo,textnrooperacion,textdropStatus;
     Button btnagregar,btncancelar,btngenerar,buscardni,buscarplaca;
+
+    String selectedText;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -199,12 +206,14 @@ public class VentaFragment extends Fragment{
                         textdireccion   = dialogView.findViewById(R.id.inputdireccion);
                         textkilometraje = dialogView.findViewById(R.id.inputkilometraje);
                         textobservacion = dialogView.findViewById(R.id.inputobservacion);
+                        textpagoefectivo= dialogView.findViewById(R.id.inputpagoefectivo);
+                        textNroOperacio = dialogView.findViewById(R.id.inputnrooperacion);
 
                         textinputpagoefectivo = dialogView.findViewById(R.id.textpagoefectivo);
                         textnrooperacion      = dialogView.findViewById(R.id.textnrooperacion);
                         modopagoefectivo      = dialogView.findViewById(R.id.modopagoefectivo);
                         dropStatus            = dialogView.findViewById(R.id.dropStatus);
-                        textdropStatus = dialogView.findViewById(R.id.textdropStatus);
+                        textdropStatus        = dialogView.findViewById(R.id.textdropStatus);
 
                         btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
                         btncancelar    = dialogView.findViewById(R.id.btncancelarboleta);
@@ -216,6 +225,7 @@ public class VentaFragment extends Fragment{
                         alertdni       = dialogView.findViewById(R.id.textdni);
                         alertnombre    = dialogView.findViewById(R.id.textnombre);
 
+                        radioGroup     = dialogView.findViewById(R.id.radioformapago);
                         cbefectivo     = dialogView.findViewById(R.id.radioEfectivo);
                         cbtarjeta      = dialogView.findViewById(R.id.radioTarjeta);
                         cbcredito      = dialogView.findViewById(R.id.radioCredito);
@@ -223,20 +233,49 @@ public class VentaFragment extends Fragment{
                         //Array de los select
                         ArrayList<Tipotarjeta> tipotarjetaArrayList = new ArrayList<>();
 
-                        for(int i=0; i <= 1 ;i++) {
-                            tipotarjetaArrayList.add(new Tipotarjeta("VISA"));
-                            tipotarjetaArrayList.add(new Tipotarjeta("MASTERCARD"));
-                            tipotarjetaArrayList.add(new Tipotarjeta("DINNERS"));
+                        for(int i=0; i < 1 ;i++) {
+                            tipotarjetaArrayList.add(new Tipotarjeta("1","VISA"));
+                            tipotarjetaArrayList.add(new Tipotarjeta("2","MASTERCARD"));
+                            tipotarjetaArrayList.add(new Tipotarjeta("3","DINNERS"));
                         }
                         Resources res = getResources();
                         TipoTarjetaAdapter adapt = new TipoTarjetaAdapter(getContext(), R.layout.item, tipotarjetaArrayList, res);
                         dropStatus.setAdapter(adapt);
+
+
+                        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                                radioButton = dialogView.findViewById(checkedId);
+                            }
+                        });
+
+
+                      dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                tipotarjeta = (Tipotarjeta) dropStatus.getSelectedItem();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+                            }
+                        });
+                       btncancelar.setOnClickListener(new View.OnClickListener() {
+                           @Override
+                           public void onClick(View view) {
+                               alertDialog.dismiss();
+                           }
+                       });
 
                         cbefectivo.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
                                if (a){
                                    modopagoefectivo.setVisibility(View.VISIBLE);
+                                   textdropStatus.setVisibility(View.GONE);
+                                   textnrooperacion.setVisibility(View.GONE);
+                                   textinputpagoefectivo.setVisibility(View.GONE);
                                }else {
                                    modopagoefectivo.setVisibility(View.GONE);
                                }
@@ -248,12 +287,12 @@ public class VentaFragment extends Fragment{
                             public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
                                 if (a){
                                     textdropStatus.setVisibility(View.VISIBLE);
-                                   // textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
                                     textnrooperacion.setVisibility(View.VISIBLE);
                                 }else {
-                                    textdropStatus.setVisibility(View.GONE);
+                                  //  textdropStatus.setVisibility(View.GONE);
                                   //  textinputpagoefectivo.setVisibility(View.GONE);
-                                    textnrooperacion.setVisibility(View.GONE);
+                                   // textnrooperacion.setVisibility(View.GONE);
                                 }
                             }
                         });
@@ -263,8 +302,10 @@ public class VentaFragment extends Fragment{
                             public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
                                 if (a){
                                     textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                    textdropStatus.setVisibility(View.GONE);
+                                    textnrooperacion.setVisibility(View.GONE);
                                 }else {
-                                    textinputpagoefectivo.setVisibility(View.GONE);
+                                    //textinputpagoefectivo.setVisibility(View.GONE);
                                 }
                             }
                         });
@@ -301,13 +342,6 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
-                        btncancelar.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                alertDialog.dismiss();
-                            }
-                        });
-
                         btngenerar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -336,12 +370,24 @@ public class VentaFragment extends Fragment{
                                     alertnombre.setErrorEnabled(false);
 
                                     detalleVenta.setNroPlaca(txtplaca.getText().toString());
-                                    detalleVenta.setClienteRUC(textdni.getText().toString());
+                                    detalleVenta.setClienteID(textdni.getText().toString());
                                     detalleVenta.setClienteRS(textnombre.getText().toString());
                                     detalleVenta.setClienteDR(textdireccion.getText().toString());
                                     detalleVenta.setKilometraje(textkilometraje.getText().toString());
                                     detalleVenta.setObservacion(textobservacion.getText().toString());
-
+                                    detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
+                                    detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
+                                    detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
+                                    String datotipotarjeta =radioButton.getText().toString();
+                                    if (datotipotarjeta.equals("Tarjeta")){
+                                        detalleVenta.setTarjetaCredito(tipotarjeta.getIdTarjeta());
+                                    }else if (datotipotarjeta.equals("Credito")){
+                                        detalleVenta.setTarjetaCredito("");
+                                    }else if (datotipotarjeta.equals("Efectivo")){
+                                        detalleVenta.setTarjetaCredito("");
+                                    }else {
+                                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                                    }
                                     recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
                                     Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
                                     alertDialog.dismiss();

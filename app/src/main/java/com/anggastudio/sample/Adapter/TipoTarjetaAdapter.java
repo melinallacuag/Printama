@@ -9,13 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Models.Tipotarjeta;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TipoTarjetaAdapter  extends ArrayAdapter<Tipotarjeta> {
     private Context context;
@@ -41,6 +39,10 @@ public class TipoTarjetaAdapter  extends ArrayAdapter<Tipotarjeta> {
     public View getView(int position, View convertView, ViewGroup parent) {
         return getCustomView(position, convertView, parent);
     }
+    @Override
+    public int getCount() {
+        return tipotarjeta.size();
+    }
 
     public View getCustomView(int position, View convertView, ViewGroup parent) {
 
@@ -48,12 +50,10 @@ public class TipoTarjetaAdapter  extends ArrayAdapter<Tipotarjeta> {
         currRowVal = null;
         currRowVal = (Tipotarjeta) tipotarjeta.get(position);
         TextView label = (TextView) row.findViewById(R.id.spinnerItem);
-        if (position == 0) {
-            label.setText("Seleccionar Tipo de Tarjeta");
-        } else {
-            label.setText(currRowVal.getNombreTarjeta());
-        }
+
+        label.setText(currRowVal.getNombreTarjeta());
 
         return row;
     }
+
 }

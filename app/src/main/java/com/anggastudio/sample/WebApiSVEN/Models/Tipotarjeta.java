@@ -5,7 +5,8 @@ public class Tipotarjeta {
     private String idTarjeta;
     private String nombreTarjeta;
 
-    public Tipotarjeta(String nombreTarjeta) {
+    public Tipotarjeta(String idTarjeta,String nombreTarjeta) {
+        this.idTarjeta = idTarjeta;
         this.nombreTarjeta = nombreTarjeta;
     }
 

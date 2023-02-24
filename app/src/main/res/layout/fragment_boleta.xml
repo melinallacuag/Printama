@@ -200,7 +200,7 @@
             android:textStyle="bold" />
 
         <RadioGroup
-            android:id="@+id/ratiodd"
+            android:id="@+id/radioformapago"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -295,7 +295,7 @@
                 android:id="@+id/inputnrooperacion"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
-                android:inputType="textCapCharacters"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -316,7 +316,8 @@
                 android:id="@+id/inputpagoefectivo"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
-                android:inputType="textCapCharacters"
+                android:inputType="number"
+                android:text="0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
