@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     android:id="@+id/contain"
     tools:context=".FacturaFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -356,5 +362,5 @@
                 android:layout_marginLeft="2sp" />
         </LinearLayout>
     </LinearLayout>
-
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

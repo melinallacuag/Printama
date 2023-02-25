@@ -82,7 +82,7 @@ public class SolesFragment extends DialogFragment {
                 }else if(9999 < numsol){
                     alertsoles.setError("El valor debe ser maximo 9999");
                 }else {
-                    guardar_monto(GlobalInfo.getPistola10.toString(),solesmonto);
+                    guardar_monto(GlobalInfo.getPistola10,solesmonto);
                     alertsoles.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();

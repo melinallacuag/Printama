@@ -1,28 +1,22 @@
 package com.anggastudio.sample;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,18 +26,14 @@ import android.widget.Toast;
 
 import com.anggastudio.sample.Adapter.CaraAdapter;
 import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
-import com.anggastudio.sample.Adapter.GriasAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
 import com.anggastudio.sample.Adapter.TipoTarjetaAdapter;
-import com.anggastudio.sample.Adapter.TransaccionAdapter;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
-import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Models.Tipotarjeta;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -67,7 +57,6 @@ public class VentaFragment extends Fragment{
     DetalleVentaAdapter detalleVentaAdapter;
 
     List<DetalleVenta> detalleVentaList;
-
     private APIService mAPIService;
     private String mCara;
 
@@ -179,7 +168,6 @@ public class VentaFragment extends Fragment{
         btnboleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 for(DetalleVenta detalleVenta : detalleVentaList){
 
                     String mnCara = detalleVenta.getCara().toString();
@@ -391,7 +379,6 @@ public class VentaFragment extends Fragment{
                         });
                     }
                 }
-
             }
         });
 
@@ -403,7 +390,7 @@ public class VentaFragment extends Fragment{
 
                     String mnCara = detalleVenta.getCara().toString();
 
-                    if(mnCara.equals(mCara)) {
+                    if(mnCara.equals(mCara) ) {
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -433,7 +420,6 @@ public class VentaFragment extends Fragment{
 
                         btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
                         btncancelar    = dialogView.findViewById(R.id.btncancelarboleta);
-                      //  btngenerar     = dialogView.findViewById(R.id.btngenerarcliente);
                         buscardni      = dialogView.findViewById(R.id.btnrenic);
                         buscarplaca    = dialogView.findViewById(R.id.btntarjeta);
 
@@ -556,14 +542,129 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
-                     /*   btngenerar.setOnClickListener(new View.OnClickListener() {
+                        btnagregar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                txtplaca.setText("000-0000");
-                                textdni.setText("11111111");
-                                textnombre.setText("CLIENTE VARIOS");
+                                String textnplaca     = txtplaca.getText().toString();
+                                String textndni       = textdni.getText().toString();
+                                String textnnombre    = textnombre.getText().toString();
+
+                                if (textnplaca.isEmpty()) {
+                                    alertplaca.setError("* El campo Placa es obligatorio");
+                                } else if (textndni.isEmpty()) {
+                                    alertdni.setError("* El campo DNI es obligatorio");
+                                } else if (textnnombre.isEmpty()) {
+                                    alertnombre.setError("* El campo Nombre es obligatorio");
+                                } else {
+                                    alertplaca.setErrorEnabled(false);
+                                    alertdni.setErrorEnabled(false);
+                                    alertnombre.setErrorEnabled(false);
+
+                                    detalleVenta.setNroPlaca(txtplaca.getText().toString());
+                                    detalleVenta.setClienteID(textdni.getText().toString());
+                                    detalleVenta.setClienteRS(textnombre.getText().toString());
+                                    detalleVenta.setClienteDR(textdireccion.getText().toString());
+                                    detalleVenta.setKilometraje(textkilometraje.getText().toString());
+                                    detalleVenta.setObservacion(textobservacion.getText().toString());
+                                    detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
+                                    detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
+                                    detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
+                                    String datotipotarjeta =radioButton.getText().toString();
+                                    if (datotipotarjeta.equals("Tarjeta")){
+                                        detalleVenta.setTarjetaCredito(tipotarjeta.getIdTarjeta());
+                                    }else if (datotipotarjeta.equals("Credito")){
+                                        detalleVenta.setTarjetaCredito("");
+                                    }else if (datotipotarjeta.equals("Efectivo")){
+                                        detalleVenta.setTarjetaCredito("");
+                                    }else {
+                                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                                    }
+                                    recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+                                    Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
+                                    alertDialog.dismiss();
+                                }
                             }
-                        });*/
+                        });
+                    }else {
+                        Toast.makeText(getContext(), "Seleccionar Cara", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        btnnotadespacho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                for (DetalleVenta detalleVenta : detalleVentaList){
+                    String mnCara = detalleVenta.getCara().toString();
+                    if(mnCara.equals(mCara) ) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+                        View dialogView = inflater.inflate(R.layout.fragment_nota_despacho, null);
+                        builder.setView(dialogView);
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        alertDialog.show();
+                        alertDialog.setCancelable(false);
+
+                        txtplaca        = dialogView.findViewById(R.id.inputnplaca);
+                        textdni         = dialogView.findViewById(R.id.inputdni);
+                        textnombre      = dialogView.findViewById(R.id.inputnombre);
+                        textdireccion   = dialogView.findViewById(R.id.inputdireccion);
+                        textkilometraje = dialogView.findViewById(R.id.inputkilometraje);
+                        textobservacion = dialogView.findViewById(R.id.inputobservacion);
+
+                        btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
+                        btncancelar    = dialogView.findViewById(R.id.btncancelarboleta);
+                        buscardni      = dialogView.findViewById(R.id.btnrenic);
+                        buscarplaca    = dialogView.findViewById(R.id.btntarjeta);
+
+                        alertplaca     = dialogView.findViewById(R.id.textnplaca);
+                        alertdni       = dialogView.findViewById(R.id.textdni);
+                        alertnombre    = dialogView.findViewById(R.id.textnombre);
+
+                        btncancelar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alertDialog.dismiss();
+                            }
+                        });
+
+                        buscarplaca.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String textnplaca    = txtplaca.getText().toString().trim();
+
+                                if(textnplaca.isEmpty()){
+                                    alertplaca.setError("* El campo Placa es obligatorio");
+                                }else if(!textnplaca.equals("000-0000")){
+                                    alertplaca.setError("No se encontro Placa");
+                                }else {
+                                    alertplaca.setErrorEnabled(false);
+                                    textdni.setText("11111111");
+                                    textnombre.setText("CLIENTE VARIOS");
+                                }
+                            }
+                        });
+
+                        buscardni.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String textndni    = textdni.getText().toString().trim();
+                                if(textndni.isEmpty()){
+                                    alertdni.setError("* El campo DNI es obligatorio");
+                                }else if(!textndni.equals("11111111")){
+                                    alertdni.setError("* No se encontro DNI");
+                                }else{
+                                    alertdni.setErrorEnabled(false);
+                                    textnombre.setText("CLIENTE VARIOS");
+                                }
+                            }
+                        });
 
                         btnagregar.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -608,26 +709,10 @@ public class VentaFragment extends Fragment{
                                 }
                             }
                         });
-
-                       // detalleVenta.setClienteRS("mushi");
-                       // detalleVenta.setClienteDR("direccion");
-
-                       // recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+                    }else {
+                        Toast.makeText(getContext(), "Seleccionar Cara", Toast.LENGTH_SHORT).show();
                     }
                 }
-
-            /*    FacturaFragment facturaFragment = new FacturaFragment();
-                facturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
-                facturaFragment.setCancelable(false);*/
-            }
-        });
-
-        btnnotadespacho.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NotaDespachoFragment notaDespachoFragment = new NotaDespachoFragment();
-                notaDespachoFragment.show(getActivity().getSupportFragmentManager(), "Nota de Despacho");
-                notaDespachoFragment.setCancelable(false);
             }
         });
 
@@ -672,6 +757,9 @@ public class VentaFragment extends Fragment{
         return view;
     }
 
+    private void datos(){
+
+    }
  /*   private  void findOptran(String id){
 
         Call<List<Optran>> call = mAPIService.findOptran(id);

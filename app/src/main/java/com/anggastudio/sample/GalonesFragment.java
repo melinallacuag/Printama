@@ -68,7 +68,7 @@ public class GalonesFragment extends DialogFragment {
                 }else if(999 < numgalones){
                     alertgalones.setError("El valor debe ser maximo 999");
                 }else {
-                    guardar_galones(GlobalInfo.getPistola10.toString(),galonesmonto);
+                    guardar_galones(GlobalInfo.getPistola10,galonesmonto);
                     alertgalones.setErrorEnabled(false);
                     Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();

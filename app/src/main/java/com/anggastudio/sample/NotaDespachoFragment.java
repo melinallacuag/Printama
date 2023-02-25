@@ -27,7 +27,7 @@ public class NotaDespachoFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nota_despacho, container, false);
 
-        cerrardespacho  = view.findViewById(R.id.btncancelarndespacho);
+     /*   cerrardespacho  = view.findViewById(R.id.btncancelarndespacho);
         agregardespacho = view.findViewById(R.id.btnagregarndespacho);
         buscarcliente   = view.findViewById(R.id.btnbuscarcliente);
         buscarplaca   = view.findViewById(R.id.btntarjeta);
@@ -127,7 +127,7 @@ public class NotaDespachoFragment extends DialogFragment {
                     dismiss();
                 }
             }
-        });
+        });*/
         return view;
     }
 }

@@ -4,30 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/contain"
     tools:context=".NotaDespachoFragment">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
     <LinearLayout
-        android:layout_width="380sp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="20sp"
         android:paddingEnd="20sp"
         android:paddingTop="10sp"
         android:paddingBottom="10sp"
+        app:layout_constraintCircleRadius="@dimen/cardview_default_radius"
+        android:backgroundTint="#FFFFFF"
+        android:background="@drawable/cardmodal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="NOTA DESPACHO"
-                android:fontFamily="@font/nunito_extrabold"
-                android:textColor="#071C65"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/nunito_extrabold"
+            android:text="NOTA DE DESPACHO"
+            android:textColor="#071C65"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,20 +46,18 @@
                 android:id="@+id/textnplaca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="N° Placa"
+                android:hint="Ingresar N° de Placa"
                 app:boxBackgroundMode="outline"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxCornerRadiusBottomEnd="15dp"
                 app:boxCornerRadiusTopEnd="15dp"
                 app:endIconMode="clear_text"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputnplaca"
                     android:fontFamily="@font/nunito_semibold"
                     android:textSize="12sp"
                     android:inputType="textCapCharacters"
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -66,8 +73,108 @@
                 app:cornerRadius="10sp"
                 android:layout_marginTop="2sp"
                 android:layout_marginLeft="10sp" />
-
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textdni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingresar ID Cliente"
+                app:boxBackgroundMode="outline"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusBottomEnd="15dp"
+                app:boxCornerRadiusTopEnd="15dp"
+                app:endIconMode="clear_text"
+                android:layout_weight="1">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputdni"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:textSize="12sp"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnrenic"
+                android:layout_width="200sp"
+                android:layout_height="60sp"
+                android:layout_marginStart="10sp"
+                android:text="SUNAT"
+                android:textSize="10sp"
+                android:layout_weight="1"
+                app:cornerRadius="10sp"
+                android:fontFamily="@font/nunito_extrabold"
+                android:layout_marginTop="2sp"
+                android:layout_marginLeft="10sp" />
+        </LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textruc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingresar RUC"
+            app:boxBackgroundMode="outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:endIconMode="clear_text"
+            android:layout_weight="1">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputruc"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="12sp"
+                android:inputType="number"
+                android:maxLength="11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textnombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingresar Razon Social"
+            app:boxBackgroundMode="outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:endIconMode="clear_text"
+            android:layout_weight="1">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputnombre"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="12sp"
+                android:inputType="textCapCharacters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textdireccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingresar Dirección"
+            app:boxBackgroundMode="outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:endIconMode="clear_text"
+            android:layout_weight="1">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputdireccion"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="12sp"
+                android:inputType="textCapCharacters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textkilometraje"
@@ -79,195 +186,70 @@
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:endIconMode="clear_text"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputkilometraje"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
-                android:inputType="number"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textidcliente"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="ID Cliente"
-                app:boxBackgroundMode="outline"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxCornerRadiusBottomEnd="15dp"
-                app:boxCornerRadiusTopEnd="15dp"
-                app:endIconMode="clear_text"
-                android:layout_weight="1"
-                >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputidcliente"
-                    android:fontFamily="@font/nunito_semibold"
-                    android:textSize="12sp"
-                    android:inputType="number"
-                    android:layout_weight="1"
-                    android:maxLength="8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/btnbuscarcliente"
-                android:layout_width="200sp"
-                android:layout_height="60sp"
-                android:layout_marginStart="10sp"
-                android:text="CLIENTE"
-                android:textSize="10sp"
-                android:layout_weight="1"
-                app:cornerRadius="10sp"
-                android:fontFamily="@font/nunito_extrabold"
-                android:layout_marginTop="2sp"
-                android:layout_marginLeft="10sp" />
-
-
-        </LinearLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textruc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ingresar RUC"
-            app:boxBackgroundMode="outline"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxCornerRadiusBottomEnd="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:endIconMode="clear_text"
-            android:layout_weight="1"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputruc"
-                android:fontFamily="@font/nunito_semibold"
-                android:textSize="12sp"
-                android:inputType="number"
-                android:layout_weight="1"
-                android:maxLength="11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textrazonsocial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Razón Social"
-            app:boxBackgroundMode="outline"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxCornerRadiusBottomEnd="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:endIconMode="clear_text"
-            android:layout_weight="1"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputrazonsocial"
-                android:fontFamily="@font/nunito_semibold"
-                android:textSize="12sp"
                 android:inputType="textCapCharacters"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textdireccion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Dirección"
-            app:boxBackgroundMode="outline"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:boxCornerRadiusBottomEnd="15dp"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:endIconMode="clear_text"
-            android:layout_weight="1"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputdireccion"
-                android:fontFamily="@font/nunito_semibold"
-                android:textSize="12sp"
-                android:inputType="textCapCharacters"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textobservacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Observación"
+            android:hint="Ingresar Observación"
             app:boxBackgroundMode="outline"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:endIconMode="clear_text"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputobservacion"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
                 android:inputType="textCapCharacters"
-                android:layout_weight="1"
-                android:textAllCaps="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
             <Button
-                android:id="@+id/btncancelarndespacho"
+                android:id="@+id/btncancelarboleta"
                 android:layout_width="wrap_content"
                 android:layout_height="55sp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="20sp"
-                android:layout_weight="1"
-                android:backgroundTint="#D51A30"
                 android:text="Cancelar"
+                android:fontFamily="@font/nunito_extrabold"
+                android:layout_gravity="center"
                 android:textAllCaps="true"
+                android:backgroundTint="#D51A30"
                 android:textColor="#fff"
                 android:textSize="10sp"
                 app:cornerRadius="10sp"
-                android:fontFamily="@font/nunito_extrabold"
-                android:layout_marginRight="20sp" />
+                android:layout_weight="1" />
 
             <Button
-                android:id="@+id/btnagregarndespacho"
+                android:id="@+id/btnagregarboleta"
                 android:layout_width="wrap_content"
                 android:layout_height="55sp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
                 android:text="Agregar"
+                android:layout_marginStart="2sp"
+                android:layout_gravity="center"
                 android:textAllCaps="true"
                 android:textColor="#fff"
                 android:textSize="10sp"
                 android:fontFamily="@font/nunito_extrabold"
-                app:cornerRadius="10sp" />
+                app:cornerRadius="10sp"
+                android:layout_weight="1"
+                android:layout_marginLeft="2sp" />
         </LinearLayout>
     </LinearLayout>
-
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
