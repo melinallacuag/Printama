@@ -28,12 +28,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Login extends AppCompatActivity {
 
+    ImageButton configuracion;
     Button btniniciar;
     TextInputEditText usuario, contraseña;
     TextInputLayout alertuser,alertpassword;
     TextView imeii;
-
-    String getPass10;
+    String getPass10,usuarioUser,contraseñaUser;
 
     private APIService mAPIService;
 
@@ -42,8 +42,11 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ImageButton configuracion = findViewById(R.id.btnconfiguracion);
+        //APIREST
+        mAPIService = GlobalInfo.getAPIService();
 
+        //Boton par configurar la impresión bluetooth.
+        configuracion = findViewById(R.id.btnconfiguracion);
         configuracion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,6 +54,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        //Detectar el IMEI
         imeii = findViewById(R.id.imei);
         imeii.setText(ObtenerIMEI.getDeviceId(getApplicationContext()));
 
@@ -60,19 +64,16 @@ public class Login extends AppCompatActivity {
         alertuser      = findViewById(R.id.textusuario);
         alertpassword  = findViewById(R.id.textcontraseña);
 
-        mAPIService = GlobalInfo.getAPIService();
 
         GlobalInfo.getImei10 = imeii.getText().toString();
-
         findTerminal(GlobalInfo.getImei10);
-
         //findCompany(GlobalInfo.getCompanyID10);
 
         btniniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String usuarioUser    = usuario.getText().toString();
-                String contraseñaUser = contraseña.getText().toString();
+                usuarioUser    = usuario.getText().toString();
+                contraseñaUser = contraseña.getText().toString();
 
                 if(usuarioUser.isEmpty()){
                     alertuser.setError("El campo usuario es obligatorio");
@@ -81,7 +82,6 @@ public class Login extends AppCompatActivity {
                 }else{
                     alertuser.setErrorEnabled(false);
                     alertpassword.setErrorEnabled(false);
-
                     findUsers(usuario.getText().toString());
                 }
             }

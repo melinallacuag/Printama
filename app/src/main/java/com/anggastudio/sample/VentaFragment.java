@@ -5,12 +5,10 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.anggastudio.sample.Adapter.CaraAdapter;
 import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
@@ -36,10 +33,8 @@ import com.anggastudio.sample.WebApiSVEN.Models.Tipotarjeta;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +42,7 @@ import retrofit2.Response;
 public class VentaFragment extends Fragment{
 
     TextView  producto,cara,importetotal,textcara,textmanguera,textNplaca;
-    CardView  grias,cardtrans;
+    CardView  grias;
     Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos;
     ImageButton regreso;
 
@@ -60,7 +55,7 @@ public class VentaFragment extends Fragment{
     private APIService mAPIService;
     private String mCara;
 
-    //Boleta
+    //Boleta-Factura-NotadeDespacho
     Tipotarjeta tipotarjeta = null;
     RadioGroup radioGroup;
     Spinner dropStatus;
@@ -757,41 +752,7 @@ public class VentaFragment extends Fragment{
         return view;
     }
 
-    private void datos(){
 
-    }
- /*   private  void findOptran(String id){
-
-        Call<List<Optran>> call = mAPIService.findOptran(id);
-
-        call.enqueue(new Callback<List<Optran>>() {
-            @Override
-            public void onResponse(Call<List<Optran>> call, Response<List<Optran>> response) {
-                try {
-
-                    if(!response.isSuccessful()){
-                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    List<Optran> optranList = response.body();
-
-                    transaccionAdapter = new TransaccionAdapter(optranList, getContext());
-                    recyclerTransaccion.setAdapter(transaccionAdapter);
-
-                }catch (Exception ex){
-                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Optran>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
-*/
     private void findLados(String id) {
 
         Call<List<Lados>> call = mAPIService.findLados(id);
@@ -919,4 +880,36 @@ public class VentaFragment extends Fragment{
             }
         });
     }
+    /*   private  void findOptran(String id){
+
+        Call<List<Optran>> call = mAPIService.findOptran(id);
+
+        call.enqueue(new Callback<List<Optran>>() {
+            @Override
+            public void onResponse(Call<List<Optran>> call, Response<List<Optran>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<Optran> optranList = response.body();
+
+                    transaccionAdapter = new TransaccionAdapter(optranList, getContext());
+                    recyclerTransaccion.setAdapter(transaccionAdapter);
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Optran>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+*/
 }

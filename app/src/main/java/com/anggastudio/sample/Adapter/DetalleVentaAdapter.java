@@ -1,7 +1,6 @@
 package com.anggastudio.sample.Adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.anggastudio.sample.BoletaFragment;
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 
