@@ -1,4 +1,4 @@
-package com.anggastudio.sample;
+package com.anggastudio.sample.Fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
+import com.anggastudio.sample.Numero_Letras;
+import com.anggastudio.sample.R;
+import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -25,13 +28,15 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 
-public class PrintFacturaFragment extends DialogFragment {
+public class PrintBoletaFragment extends DialogFragment {
 
-Button cerrar;
+    Button cerrar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_print_factura, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_print_boleta, container, false);
 
         TextView producto     = view.findViewById(R.id.textproducto);
         TextView lado         = view.findViewById(R.id.textlado);
@@ -46,6 +51,7 @@ Button cerrar;
         producto.setText(datoproducto);
         lado.setText(datolado);
         importe.setText(datoimporte);
+
         cerrar   = view.findViewById(R.id.btncerrar);
         cerrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,24 +59,20 @@ Button cerrar;
                 dismiss();
             }
         });
-        view.findViewById(R.id.btnimpirmirfactura).setOnClickListener(v -> facturacion(turno,cajero,kilometraje,placa,ruc,clientes,direccion,umed));
+        view.findViewById(R.id.btnimpirmirboleta).setOnClickListener(v -> boletas(turno,cajero,umed));
         return view;
     }
-    int turno           = 1;
-    String cajero       = "RUBEN ESCOBAR";
-    long kilometraje    = Long.parseLong("00000000000");
-    String placa        = "BKC-926";
-    long ruc            = Long.parseLong("20600064062");
-    String clientes     = "CONNEXA DISTRIBUICIONES SAC";
-    long tarjeta        = Long.parseLong("7020130000000309");
-    String direccion    = "AV FERROCARRIL N 590 HUANCAYO";
-    String umed         = "GLL";
-    private  void facturacion(int turno ,String cajero,long kilometraje,String placa,long ruc,String clientes ,String direccion,String umed) {
+
+    String turno    = String.valueOf(GlobalInfo.getturno10);
+    String cajero   = GlobalInfo.getName10;
+    String umed     = "GLL";
+
+    private  void boletas(String turno ,String cajero, String umed) {
         Bundle bundle         = this.getArguments();
-        //LOGO DE  LA EMPRESA
+        //LOGO DE LA EMPRESA
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
 
-        //Fecha y Hora
+        //FECHA-HORA
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
         SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String FechaHora      = sdf.format(cal.getTime());
@@ -108,40 +110,63 @@ Button cerrar;
                 Log.d("Error", "NULL");
         }
         String finalPrecio = precio;
-        String productos = producto;
+        String productos   = producto;
         double totalprecio = Double.parseDouble(finalPrecio);
 
         //IMPORTE
         String importe    = bundle.getString("importe");
         double totalimporte   = Double.parseDouble(importe);
 
-        double subtotal = (totalimporte/1.18);
-        double roundOff = Math.round(subtotal*100.0)/100.0;
-        String valorventa  = String.valueOf(roundOff);
+        //OP. GRAVADAS
+        double subtotal     = (totalimporte/1.18);
+        double roundOff     = Math.round(subtotal*100.0)/100.0;
+        String valorventa   = String.valueOf(roundOff);
 
-        double impuesto = (totalimporte-roundOff);
-        double impuestoOff = Math.round(impuesto*100.0)/100.0;
-        String igv = String.valueOf(impuestoOff);
+        //IGV
+        double impuesto     = (totalimporte-roundOff);
+        double impuestoOff  = Math.round(impuesto*100.0)/100.0;
+        String igv          = String.valueOf(impuestoOff);
 
-        //OPERACION DE VALOR DE CANTIDAD POR GALONES
-        double resultados      = totalimporte/totalprecio ;
-        double decimal = Math.round(resultados*1000.0)/1000.0;
-        String cantidadgalones = String.valueOf(decimal);
-        String galon           = cantidadgalones.replace(",",".");
+        //Convertir decimal y Operacion de Cantidad por GALONES
+        double resultados       = totalimporte/totalprecio ;
+        double decimal          = Math.round(resultados*1000.0)/1000.0;
+        String cantidadgalones  = String.valueOf(decimal);
+        String galon            = cantidadgalones.replace(",",".");
 
-        //CONVERTIR IMPORTE A TEXTO
+        //Convertir numero a letras
         Numero_Letras numToWord = new Numero_Letras();
         String letraimporte     = numToWord.Convertir(importe,true);
 
         String exoneradas = " 0.00";
 
-        //GENERAR QR
-        String rucempresa     ="20602130259";
-        String tipodocumento  = "01";
-        String factura        ="F001-0000004";
-        String fecha          = FechaHora.substring(6,10) + "-" + FechaHora.substring(3,5) + "-" + FechaHora.substring(0,2);
-        String tiporuc        ="01";
-        String ruccliente     ="11111111111";
+        //Generar Codigo QR
+        String rucempresa       ="20602130259";
+        String tipodocumento    ="03";
+        String boleta           ="B006-0142546";
+        String fecha            = FechaHora.substring(6,10) + "-" + FechaHora.substring(3,5) + "-" + FechaHora.substring(0,2);
+        String tipodni          ="01";
+        String dni              ="11111111";
+
+        /* DNI: 01
+           RUC: 06
+        */
+      /*  01 factura
+          03 boleta
+          99 nota de desoacho
+          98 serafin
+      */
+        //GENERAR CODIGO QR BOLETA
+        StringBuilder QRBoleta = new StringBuilder();
+        QRBoleta.append(rucempresa + "|".toString());
+        QRBoleta.append(tipodocumento+ "|".toString());
+        QRBoleta.append(boleta+ "|".toString());
+        QRBoleta.append(igv+ "|".toString());
+        QRBoleta.append(importe+ "|".toString());
+        QRBoleta.append(fecha+ "|".toString());
+        QRBoleta.append(tipodni+ "|".toString());
+        QRBoleta.append(dni+ "|".toString());
+
+        String Qrboleta = QRBoleta.toString();
 
         Printama.with(getContext()).connect(printama -> {
             printama.setNormalText();
@@ -153,59 +178,46 @@ Button cerrar;
             printama.printTextlnBold("LIMA-LIMA-SAN BORJA", Printama.CENTER);
             printama.printTextlnBold("SUCURSAL: CAR. CENTRAL MARGEN NRO.S/N", Printama.CENTER);
             printama.printTextlnBold("JUNIN - HUANCAYO - PILCOMAYO", Printama.CENTER);
-            printama.printTextlnBold("RUC: " +rucempresa, Printama.CENTER);
-            printama.printTextlnBold("FACTURA DE VENTA ELECTRONICA", Printama.CENTER);
-            printama.printTextlnBold(factura,Printama.CENTER);
+            printama.printTextlnBold("RUC: " + rucempresa, Printama.CENTER);
+            printama.printTextlnBold("BOLETA DE VENTA ELECTRONICA", Printama.CENTER);
+            printama.printTextlnBold(boleta,Printama.CENTER);
             printama.setSmallText();
             printama.printDoubleDashedLine();
-            printama.setSmallText();
             printama.addNewLine(1);
-            printama.printTextln("Fecha - Hora : "+FechaHora + "   Turno : "+turno,Printama.LEFT);
+            printama.setSmallText();
+            printama.printTextln("Fecha - Hora : "+ FechaHora + "   Turno:"+turno,Printama.LEFT);
             printama.printTextln("Cajero : "+cajero, Printama.LEFT);
-            printama.printTextln("Lado   : "+lado + "         Kilometraje : "+kilometraje, Printama.LEFT);
-            printama.printTextln("Placa  : "+placa, Printama.LEFT);
-            printama.printTextln("R.U.C.    : "+ruccliente, Printama.LEFT);
-            printama.printTextln("Cliente   : "+clientes, Printama.LEFT);
-            printama.printTextln("Dirección : "+direccion, Printama.LEFT);
+            printama.printTextln("Lado   : "+lado, Printama.LEFT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
-            printama.setSmallText();
             printama.addNewLine(1);
+            printama.setSmallText();
             printama.printTextlnBold("PRODUCTO      "+"U/MED   "+"PRECIO   "+"CANTIDAD  "+"IMPORTE",Printama.RIGHT);
             printama.setSmallText();
             printama.printTextln(productos,Printama.LEFT);
             printama.printTextln(umed+"    " + finalPrecio+"     " + galon +"    "+ importe,Printama.RIGHT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
-            printama.setSmallText();
             printama.addNewLine(1);
+            printama.setSmallText();
             printama.printTextln("OP. GRAVADAS: S/ "+ valorventa, Printama.RIGHT);
             printama.printTextln("OP. EXONERADAS: S/   "+ exoneradas , Printama.RIGHT);
             printama.printTextln("I.G.V. 18%: S/  "+ igv, Printama.RIGHT);
             printama.printTextlnBold("TOTAL VENTA: S/ "+ importe, Printama.RIGHT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
-            printama.setSmallText();
             printama.addNewLine(1);
+            printama.setSmallText();
             printama.printTextlnBold("CONDICION DE PAGO:", Printama.LEFT);
             printama.printTextlnBold("CONTADO: S/ " + importe, Printama.RIGHT);
             printama.setSmallText();
             printama.printTextln("SON: " + letraimporte, Printama.LEFT);
+            printama.setSmallText();
+            printama.printTextln("                 ", Printama.CENTER);
             QRCodeWriter writer = new QRCodeWriter();
             BitMatrix bitMatrix;
-            StringBuilder QRFactura = new StringBuilder();
-            QRFactura.append(rucempresa + "|".toString());
-            QRFactura.append(tipodocumento+ "|".toString());
-            QRFactura.append(factura+ "|".toString());
-            QRFactura.append(igv+ "|".toString());
-            QRFactura.append(importe+ "|".toString());
-            QRFactura.append(fecha+ "|".toString());
-            QRFactura.append(tiporuc+ "|".toString());
-            QRFactura.append(ruccliente+ "|".toString());
-            String Qrfactura = QRFactura.toString();
-            printama.printTextln("         ", Printama.CENTER);
             try {
-                bitMatrix = writer.encode(Qrfactura, BarcodeFormat.QR_CODE, 200, 200);
+                bitMatrix = writer.encode(Qrboleta, BarcodeFormat.QR_CODE, 200, 200);
                 int width = bitMatrix.getWidth();
                 int height = bitMatrix.getHeight();
                 Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
@@ -223,7 +235,7 @@ Button cerrar;
                 e.printStackTrace();
             }
             printama.setSmallText();
-            printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la factura de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
+            printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la boleta de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
             printama.addNewLine();
             printama.feedPaper();
             printama.close();

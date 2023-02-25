@@ -1,4 +1,4 @@
-package com.anggastudio.sample;
+package com.anggastudio.sample.Fragment;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
+import com.anggastudio.sample.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

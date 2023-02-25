@@ -7,7 +7,7 @@
     android:id="@+id/container"
     android:background="@drawable/fondo_contenedor"
     android:padding="20sp"
-    tools:context=".DasboardFragment">
+    tools:context=".Fragment.DasboardFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"

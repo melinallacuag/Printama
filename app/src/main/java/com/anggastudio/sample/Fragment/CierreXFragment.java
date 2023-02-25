@@ -1,10 +1,9 @@
-package com.anggastudio.sample;
+package com.anggastudio.sample.Fragment;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
+import com.anggastudio.sample.R;
 
 
 public class CierreXFragment extends Fragment {

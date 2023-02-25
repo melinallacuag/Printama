@@ -1,4 +1,4 @@
-package com.anggastudio.sample;
+package com.anggastudio.sample.Fragment;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
+import com.anggastudio.sample.Numero_Letras;
+import com.anggastudio.sample.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;

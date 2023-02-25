@@ -1,4 +1,4 @@
-package com.anggastudio.sample;
+package com.anggastudio.sample.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,16 +12,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.anggastudio.sample.Login;
+import com.anggastudio.sample.R;
 
-public class SalirFragment extends DialogFragment {
+public class CambioTurnoFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_salir, container, false);
-        Button btncancelar = view.findViewById(R.id.btncancelarsalida);
-        Button btnsalir  = view.findViewById(R.id.btnsalir);
+        View view = inflater.inflate(R.layout.fragment_cambio_turno, container, false);
+
+        Button btncancelar = view.findViewById(R.id.btncancelarcambioturno);
+        Button btncambio   = view.findViewById(R.id.btnagregarcambioturno);
 
         btncancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,19 +33,20 @@ public class SalirFragment extends DialogFragment {
             }
         });
 
-        btnsalir.setOnClickListener(new View.OnClickListener() {
+        btncambio.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 try {
-                    Toast.makeText(getContext(), "CERRAR SESIÓN", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "SE GENERO EL CAMBIO DE TURNO", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), Login.class);
-                    intent.addCategory(Intent.CATEGORY_HOME);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+                    finalize();
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
             }
         });
+
         return view;
     }
 }

@@ -1,12 +1,16 @@
 package com.anggastudio.sample.WebApiSVEN.Controllers;
 
 import com.anggastudio.sample.Adapter.Grias;
+import com.anggastudio.sample.WebApiSVEN.Models.Card;
+import com.anggastudio.sample.WebApiSVEN.Models.Cliente;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
+import com.anggastudio.sample.WebApiSVEN.Models.Placa;
 import com.anggastudio.sample.WebApiSVEN.Models.Terminal;
+import com.anggastudio.sample.WebApiSVEN.Models.Tipotarjeta;
 import com.anggastudio.sample.WebApiSVEN.Models.Users;
 
 import java.util.List;
@@ -57,5 +61,23 @@ public interface APIService {
 
     @GET("api/detalleventa/listado/{id}")
     Call<List<DetalleVenta>> findDetalleVenta(@Path("id") String id);
+
+    @GET("api/card/listado")
+    Call<List<Card>> getCard();
+
+    @GET("api/card/listado/{id}")
+    Call<List<Card>> findCard(@Path("id") String id);
+
+    @GET("api/cliente/listado")
+    Call<List<Cliente>> getCliente();
+
+    @GET("api/cliente/listado/{id}")
+    Call<List<Cliente>> findCliente(@Path("id") String id);
+
+    @GET("api/placa/listado")
+    Call<List<Placa>> getPlaca();
+
+    @GET("api/placa/listado/{id}")
+    Call<List<Placa>> findPlaca(@Path("id") String id);
 
 }

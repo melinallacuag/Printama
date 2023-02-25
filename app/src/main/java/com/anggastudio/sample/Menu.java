@@ -7,13 +7,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.anggastudio.sample.Fragment.CambioTurnoFragment;
+import com.anggastudio.sample.Fragment.CierreXFragment;
+import com.anggastudio.sample.Fragment.DasboardFragment;
+import com.anggastudio.sample.Fragment.InicioDiaFragment;
+import com.anggastudio.sample.Fragment.SalirFragment;
+import com.anggastudio.sample.Fragment.VentaFragment;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.transition.Hold;
 
 public class Menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;

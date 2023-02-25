@@ -1,4 +1,4 @@
-package com.anggastudio.sample;
+package com.anggastudio.sample.Fragment;
 
 import android.os.Bundle;
 
@@ -10,15 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.anggastudio.sample.R;
 
-public class PuntosFragment extends DialogFragment {
+
+public class ClientesFragment extends DialogFragment {
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_puntos, container, false);
+        View view = inflater.inflate(R.layout.fragment_clientes, container, false);
 
-        Button btncancelar = view.findViewById(R.id.btncancelarpuntos);
-        Button agregar = view.findViewById(R.id.btncanjeconsulta);
+        Button btncancelar = view.findViewById(R.id.btncancelarseleccioncliente);
+        Button agregar = view.findViewById(R.id.btnagregarcliente);
         btncancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

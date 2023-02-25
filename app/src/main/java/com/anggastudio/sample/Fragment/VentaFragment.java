@@ -1,6 +1,7 @@
-package com.anggastudio.sample;
+package com.anggastudio.sample.Fragment;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,10 +26,16 @@ import com.anggastudio.sample.Adapter.CaraAdapter;
 import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
 import com.anggastudio.sample.Adapter.TipoTarjetaAdapter;
+import com.anggastudio.sample.Login;
+import com.anggastudio.sample.Menu;
+import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
+import com.anggastudio.sample.WebApiSVEN.Models.Cliente;
+import com.anggastudio.sample.WebApiSVEN.Models.Company;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
+import com.anggastudio.sample.WebApiSVEN.Models.Placa;
 import com.anggastudio.sample.WebApiSVEN.Models.Tipotarjeta;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.textfield.TextInputEditText;
@@ -64,6 +71,8 @@ public class VentaFragment extends Fragment{
     TextInputEditText  txtplaca,textdni,textnombre,textdireccion,textkilometraje,textobservacion,textpagoefectivo,textNroOperacio;
     TextInputLayout alertplaca,alertdni, alertnombre,textinputpagoefectivo,textnrooperacion,textdropStatus;
     Button btnagregar,btncancelar,btngenerar,buscardni,buscarplaca;
+
+    String getNroPlacas10, getClienteId10;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -212,7 +221,6 @@ public class VentaFragment extends Fragment{
 
                         //Array de los select
                         ArrayList<Tipotarjeta> tipotarjetaArrayList = new ArrayList<>();
-
                         for(int i=0; i < 1 ;i++) {
                             tipotarjetaArrayList.add(new Tipotarjeta("1","VISA"));
                             tipotarjetaArrayList.add(new Tipotarjeta("2","MASTERCARD"));
@@ -295,12 +303,9 @@ public class VentaFragment extends Fragment{
 
                                 if(textnplaca.isEmpty()){
                                     alertplaca.setError("* El campo Placa es obligatorio");
-                                }else if(!textnplaca.equals("000-0000")){
-                                    alertplaca.setError("No se encontro Placa");
                                 }else {
                                     alertplaca.setErrorEnabled(false);
-                                    textdni.setText("11111111");
-                                    textnombre.setText("CLIENTE VARIOS");
+                                    findPlaca(txtplaca.getText().toString());
                                 }
                             }
                         });
@@ -311,11 +316,9 @@ public class VentaFragment extends Fragment{
                                 String textndni    = textdni.getText().toString().trim();
                                 if(textndni.isEmpty()){
                                     alertdni.setError("* El campo DNI es obligatorio");
-                                }else if(!textndni.equals("11111111")){
-                                    alertdni.setError("* No se encontro DNI");
                                 }else{
                                     alertdni.setErrorEnabled(false);
-                                    textnombre.setText("CLIENTE VARIOS");
+                                    findCliente(textdni.getText().toString());
                                 }
                             }
                         });
@@ -750,6 +753,98 @@ public class VentaFragment extends Fragment{
         findDetalleVenta(GlobalInfo.getImei10);
 
         return view;
+    }
+
+    private  void findCliente(String id){
+
+        Call<List<Cliente>> call = mAPIService.findCliente(id);
+
+        call.enqueue(new Callback<List<Cliente>>() {
+            @Override
+            public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<Cliente> clienteList = response.body();
+
+                    for(Cliente cliente: clienteList){
+
+                        GlobalInfo.getclienteId10  = cliente.getClienteID();
+                        GlobalInfo.getclienteRUC10 = String.valueOf(cliente.getClienteRUC());
+                        GlobalInfo.getclienteRZ10  = String.valueOf(cliente.getClienteRZ());
+                        GlobalInfo.getclienteDR10  = String.valueOf(cliente.getClienteDR());
+                        getClienteId10 = cliente.getClienteID();
+                    }
+
+                    String getCliente = textdni.getText().toString();
+
+                    if(!getCliente.equals(getClienteId10)){
+                        alertdni.setError("* No se encontro DNI");
+                    }else if(getCliente.equals(getClienteId10)){
+                        textnombre.setText(GlobalInfo.getclienteRZ10);
+                        textdireccion.setText(GlobalInfo.getclienteDR10);
+                    }
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Cliente>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Cara - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void findPlaca(String id){
+
+        Call<List<Placa>> call = mAPIService.findPlaca(id);
+
+        call.enqueue(new Callback<List<Placa>>() {
+            @Override
+            public void onResponse(Call<List<Placa>> call, Response<List<Placa>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<Placa> placaList = response.body();
+
+                    for(Placa placa: placaList){
+
+                        GlobalInfo.getNroPlaca10 = placa.getNroPlaca();
+                        GlobalInfo.getClienteIDPlaca10 = String.valueOf(placa.getClienteID());
+                        GlobalInfo.getClienteRZPlaca10 = String.valueOf(placa.getClienteRZ());
+                        GlobalInfo.getClienteDRPlaca10 = String.valueOf(placa.getClienteDR());
+                        getNroPlacas10 = placa.getNroPlaca();
+                    }
+
+                    String getPlaca = txtplaca.getText().toString();
+
+                    if(!getPlaca.equals(getNroPlacas10)){
+                        alertplaca.setError("* No se encontro Placa");
+                    }else if(getPlaca.equals(getNroPlacas10)){
+                        textdni.setText( GlobalInfo.getClienteIDPlaca10);
+                        textnombre.setText(GlobalInfo.getClienteRZPlaca10);
+                        textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
+                    }
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Placa>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Cara - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 

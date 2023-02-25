@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginStart="10sp"
     android:layout_marginEnd="10sp"
-    tools:context=".DetalleOperacionFragment">
+    tools:context=".Fragment.DetalleOperacionFragment">
 
     <ScrollView
         android:id="@+id/scrollView2"

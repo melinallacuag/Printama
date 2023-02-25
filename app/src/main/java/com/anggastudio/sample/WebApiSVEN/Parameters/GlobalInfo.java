@@ -28,6 +28,16 @@ public class GlobalInfo {
     public static Boolean getventaGratuita10;
     public static Boolean getventaSerafin10;
 
+    public static String getNroPlaca10;
+    public static String getClienteIDPlaca10;
+    public static String getClienteRZPlaca10;
+    public static String getClienteDRPlaca10;
+
+    public static String getclienteId10;
+    public static String getclienteRUC10;
+    public static String getclienteRZ10;
+    public static String getclienteDR10;
+
 
 
     public static final String BASE_URL = "http://192.168.1.6:8081/";
