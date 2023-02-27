@@ -38,7 +38,6 @@ public class GlobalInfo {
     public static String getclienteRZ10;
     public static String getclienteDR10;
 
-    public static Integer getCardId10;
 
 
 

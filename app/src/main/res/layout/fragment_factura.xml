@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
             <Button
-                android:id="@+id/btntarjeta"
+                android:id="@+id/btnplaca"
                 android:layout_width="200sp"
                 android:layout_height="60sp"
                 android:layout_marginStart="10sp"
@@ -81,7 +81,7 @@
             android:orientation="horizontal"
             android:gravity="center">
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textdni"
+                android:id="@+id/textruc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ingresar RUC"
@@ -92,7 +92,7 @@
                 app:endIconMode="clear_text"
                 android:layout_weight="1">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputdni"
+                    android:id="@+id/inputruc"
                     android:fontFamily="@font/nunito_semibold"
                     android:textSize="12sp"
                     android:inputType="number"
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
             <Button
-                android:id="@+id/btnrenic"
+                android:id="@+id/btnsunat"
                 android:layout_width="200sp"
                 android:layout_height="60sp"
                 android:layout_marginStart="10sp"
@@ -115,7 +115,7 @@
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textnombre"
+            android:id="@+id/textrazsocial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingresar Razon Social"
@@ -126,7 +126,7 @@
             app:endIconMode="clear_text"
             android:layout_weight="1">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputnombre"
+                android:id="@+id/inputrazsocial"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
                 android:inputType="textCapCharacters"
@@ -332,7 +332,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/btncancelarboleta"
+                android:id="@+id/btncancelar"
                 android:layout_width="wrap_content"
                 android:layout_height="55sp"
                 android:text="Cancelar"

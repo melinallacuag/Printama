@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/contain">
+    android:layout_height="wrap_content">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,12 +30,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/nunito_extrabold"
+                android:fontFamily="@font/nunito_black"
                 android:text="BOLETA"
                 android:textColor="#071C65"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -67,7 +64,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/btntarjeta"
+                    android:id="@+id/btnplaca"
                     android:layout_width="200sp"
                     android:layout_height="60sp"
                     android:layout_marginStart="10sp"
@@ -209,8 +206,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                android:fontFamily="@font/nunito_extrabold"
+                android:layout_marginTop="8sp"
+                android:fontFamily="@font/nunito_black"
                 android:text="Forma de Pago:"
                 android:textColor="#071C65"
                 android:textSize="16sp"
@@ -280,11 +277,11 @@
 
             <TextView
                 android:id="@+id/modopagoefectivo"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15sp"
-                android:layout_marginBottom="15sp"
+                android:layout_marginTop="3.5sp"
+                android:layout_marginBottom="5sp"
                 android:background="@drawable/cardlogin"
                 android:backgroundTint="#41C9F3"
                 android:fontFamily="@font/nunito_extralight"
@@ -292,9 +289,9 @@
                 android:text="Se realizara el modo de Pago en Efectivo"
                 android:textAlignment="center"
                 android:textColor="#fff"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textnrooperacion"
@@ -302,7 +299,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Ingresar Nro.Operacion"
+                android:hint="Ingresar N° Operación"
                 android:visibility="gone"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="15dp"
@@ -351,7 +348,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="55sp"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="2sp"
+                    android:layout_marginEnd="4sp"
                     android:layout_marginRight="2sp"
                     android:layout_weight="1"
                     android:backgroundTint="#21AFA3"
@@ -363,7 +360,7 @@
                     app:cornerRadius="10sp" />
 
                 <Button
-                    android:id="@+id/btncancelarboleta"
+                    android:id="@+id/btncancelar"
                     android:layout_width="wrap_content"
                     android:layout_height="55sp"
                     android:layout_gravity="center"
@@ -381,7 +378,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="55sp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="2sp"
+                    android:layout_marginStart="4sp"
                     android:layout_marginLeft="2sp"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
@@ -392,7 +389,7 @@
                     app:cornerRadius="10sp" />
             </LinearLayout>
 
-
         </LinearLayout>
+
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

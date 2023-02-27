@@ -63,19 +63,19 @@ public class VentaFragment extends Fragment{
     List<DetalleVenta> detalleVentaList;
     private APIService mAPIService;
     private String mCara;
-
-    //Boleta-Factura-NotadeDespacho
     Tipotarjeta tipotarjeta = null;
+
+    /* Boleta-Factura-NotadeDespacho */
     Card cards = null;
     RadioGroup radioGroup;
     Spinner dropStatus;
     TextView modopagoefectivo;
     RadioButton cbefectivo,cbtarjeta,cbcredito,radioButton;
-    TextInputEditText  txtplaca,textdni,textnombre,textdireccion,textkilometraje,textobservacion,textpagoefectivo,textNroOperacio;
-    TextInputLayout alertplaca,alertdni, alertnombre,textinputpagoefectivo,textnrooperacion,textdropStatus;
-    Button btnagregar,btncancelar,btngenerar,buscardni,buscarplaca;
+    TextInputEditText  textid,txtplaca,textrazsocial,textdni,textruc,textnombre,textdireccion,textkilometraje,textobservacion,textpagoefectivo,textNroOperacio;
+    TextInputLayout alertid,alertplaca,alertdni,alertruc, alertnombre,textinputpagoefectivo,textnrooperacion,textdropStatus;
+    Button btnagregar,btncancelar,btngenerar,buscardni,buscarsunat,buscarplaca,buscarruc,buscarid;
 
-    String getNroPlacas10, getClienteId10;
+    String getNroPlacas10,getClienteDNI10, getClienteId10,getClienteRUC10;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -192,14 +192,14 @@ public class VentaFragment extends Fragment{
                         alertDialog.show();
                         alertDialog.setCancelable(false);
 
-                        txtplaca        = dialogView.findViewById(R.id.inputnplaca);
-                        textdni         = dialogView.findViewById(R.id.inputdni);
-                        textnombre      = dialogView.findViewById(R.id.inputnombre);
-                        textdireccion   = dialogView.findViewById(R.id.inputdireccion);
-                        textkilometraje = dialogView.findViewById(R.id.inputkilometraje);
-                        textobservacion = dialogView.findViewById(R.id.inputobservacion);
-                        textpagoefectivo= dialogView.findViewById(R.id.inputpagoefectivo);
-                        textNroOperacio = dialogView.findViewById(R.id.inputnrooperacion);
+                        txtplaca         = dialogView.findViewById(R.id.inputnplaca);
+                        textdni          = dialogView.findViewById(R.id.inputdni);
+                        textnombre       = dialogView.findViewById(R.id.inputnombre);
+                        textdireccion    = dialogView.findViewById(R.id.inputdireccion);
+                        textkilometraje  = dialogView.findViewById(R.id.inputkilometraje);
+                        textobservacion  = dialogView.findViewById(R.id.inputobservacion);
+                        textpagoefectivo = dialogView.findViewById(R.id.inputpagoefectivo);
+                        textNroOperacio  = dialogView.findViewById(R.id.inputnrooperacion);
 
                         textinputpagoefectivo = dialogView.findViewById(R.id.textpagoefectivo);
                         textnrooperacion      = dialogView.findViewById(R.id.textnrooperacion);
@@ -208,10 +208,10 @@ public class VentaFragment extends Fragment{
                         textdropStatus        = dialogView.findViewById(R.id.textdropStatus);
 
                         btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
-                        btncancelar    = dialogView.findViewById(R.id.btncancelarboleta);
+                        btncancelar    = dialogView.findViewById(R.id.btncancelar);
                         btngenerar     = dialogView.findViewById(R.id.btngenerarcliente);
                         buscardni      = dialogView.findViewById(R.id.btnrenic);
-                        buscarplaca    = dialogView.findViewById(R.id.btntarjeta);
+                        buscarplaca    = dialogView.findViewById(R.id.btnplaca);
 
                         alertplaca     = dialogView.findViewById(R.id.textnplaca);
                         alertdni       = dialogView.findViewById(R.id.textdni);
@@ -222,21 +222,7 @@ public class VentaFragment extends Fragment{
                         cbtarjeta      = dialogView.findViewById(R.id.radioTarjeta);
                         cbcredito      = dialogView.findViewById(R.id.radioCredito);
 
-
-
                         //Array de los select
-                  /*      ArrayList<Card> cardlist = new ArrayList<>();
-                        for(int i=0; i < 1 ;i++) {
-                            cardlist.add(new Card(1,"VISA"));
-                            cardlist.add(new Card(2,"MASTERCARD"));
-                            cardlist.add(new Card(3,"DINNERS"));
-                        }
-                        Resources res = getResources();
-                        CardAdapter card = new CardAdapter(getContext(), R.layout.item, cardlist, res);
-                        dropStatus.setAdapter(card);
-                       */
-
-
                         getCard();
 
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -307,27 +293,36 @@ public class VentaFragment extends Fragment{
                         buscarplaca.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String textnplaca    = txtplaca.getText().toString().trim();
+                                String getPlaca = txtplaca.getText().toString();
 
-                                if(textnplaca.isEmpty()){
+                                if (getPlaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
-                                }else {
-                                    alertplaca.setErrorEnabled(false);
-                                    findPlaca(txtplaca.getText().toString());
+                                } else {
+                                    findPlaca(getPlaca);
+                                   // alertplaca.setErrorEnabled(false);
+                                    textdni.setText( GlobalInfo.getClienteIDPlaca10);
+                                    textnombre.setText(GlobalInfo.getClienteRZPlaca10);
+                                    textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
                                 }
+
                             }
                         });
 
                         buscardni.setOnClickListener(new View.OnClickListener() {
+
                             @Override
                             public void onClick(View view) {
-                                String textndni    = textdni.getText().toString().trim();
-                                if(textndni.isEmpty()){
+
+                                String getClienteDni = textdni.getText().toString();
+
+                                if (getClienteDni.isEmpty()) {
                                     alertdni.setError("* El campo DNI es obligatorio");
-                                }else{
-                                    alertdni.setErrorEnabled(false);
-                                    findCliente(textdni.getText().toString());
+                                } else {
+                                    findCliente(getClienteDni);
+                                    textnombre.setText(GlobalInfo.getclienteRZ10);
+                                    textdireccion.setText(GlobalInfo.getclienteDR10);
                                 }
+
                             }
                         });
 
@@ -377,6 +372,7 @@ public class VentaFragment extends Fragment{
                                     }else {
                                         Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                                     }
+
                                     recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
                                     Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
                                     alertDialog.dismiss();
@@ -411,14 +407,14 @@ public class VentaFragment extends Fragment{
                         alertDialog.show();
                         alertDialog.setCancelable(false);
 
-                        txtplaca        = dialogView.findViewById(R.id.inputnplaca);
-                        textdni         = dialogView.findViewById(R.id.inputdni);
-                        textnombre      = dialogView.findViewById(R.id.inputnombre);
-                        textdireccion   = dialogView.findViewById(R.id.inputdireccion);
-                        textkilometraje = dialogView.findViewById(R.id.inputkilometraje);
-                        textobservacion = dialogView.findViewById(R.id.inputobservacion);
-                        textpagoefectivo= dialogView.findViewById(R.id.inputpagoefectivo);
-                        textNroOperacio = dialogView.findViewById(R.id.inputnrooperacion);
+                        txtplaca          = dialogView.findViewById(R.id.inputnplaca);
+                        textruc           = dialogView.findViewById(R.id.inputruc);
+                        textrazsocial     = dialogView.findViewById(R.id.inputrazsocial);
+                        textdireccion     = dialogView.findViewById(R.id.inputdireccion);
+                        textkilometraje   = dialogView.findViewById(R.id.inputkilometraje);
+                        textobservacion   = dialogView.findViewById(R.id.inputobservacion);
+                        textpagoefectivo  = dialogView.findViewById(R.id.inputpagoefectivo);
+                        textNroOperacio   = dialogView.findViewById(R.id.inputnrooperacion);
 
                         textinputpagoefectivo = dialogView.findViewById(R.id.textpagoefectivo);
                         textnrooperacion      = dialogView.findViewById(R.id.textnrooperacion);
@@ -427,13 +423,13 @@ public class VentaFragment extends Fragment{
                         textdropStatus        = dialogView.findViewById(R.id.textdropStatus);
 
                         btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
-                        btncancelar    = dialogView.findViewById(R.id.btncancelarboleta);
-                        buscardni      = dialogView.findViewById(R.id.btnrenic);
-                        buscarplaca    = dialogView.findViewById(R.id.btntarjeta);
+                        btncancelar    = dialogView.findViewById(R.id.btncancelar);
+                        buscarruc      = dialogView.findViewById(R.id.btnsunat);
+                        buscarplaca    = dialogView.findViewById(R.id.btnplaca);
 
                         alertplaca     = dialogView.findViewById(R.id.textnplaca);
-                        alertdni       = dialogView.findViewById(R.id.textdni);
-                        alertnombre    = dialogView.findViewById(R.id.textnombre);
+                        alertruc       = dialogView.findViewById(R.id.textruc);
+                        alertnombre    = dialogView.findViewById(R.id.textrazsocial);
 
                         radioGroup     = dialogView.findViewById(R.id.radioformapago);
                         cbefectivo     = dialogView.findViewById(R.id.radioEfectivo);
@@ -441,17 +437,7 @@ public class VentaFragment extends Fragment{
                         cbcredito      = dialogView.findViewById(R.id.radioCredito);
 
                         //Array de los select
-                        ArrayList<Tipotarjeta> tipotarjetaArrayList = new ArrayList<>();
-
-                        for(int i=0; i < 1 ;i++) {
-                            tipotarjetaArrayList.add(new Tipotarjeta("1","VISA"));
-                            tipotarjetaArrayList.add(new Tipotarjeta("2","MASTERCARD"));
-                            tipotarjetaArrayList.add(new Tipotarjeta("3","DINNERS"));
-                        }
-                        Resources res = getResources();
-                        TipoTarjetaAdapter adapt = new TipoTarjetaAdapter(getContext(), R.layout.item, tipotarjetaArrayList, res);
-                        dropStatus.setAdapter(adapt);
-
+                        getCard();
 
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
@@ -463,7 +449,7 @@ public class VentaFragment extends Fragment{
                         dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                tipotarjeta = (Tipotarjeta) dropStatus.getSelectedItem();
+                                cards = (Card) dropStatus.getSelectedItem();
                             }
 
                             @Override
@@ -521,31 +507,34 @@ public class VentaFragment extends Fragment{
                         buscarplaca.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String textnplaca    = txtplaca.getText().toString().trim();
 
-                                if(textnplaca.isEmpty()){
+                                String getPlaca = txtplaca.getText().toString();
+
+                                if (getPlaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
-                                }else if(!textnplaca.equals("000-0000")){
-                                    alertplaca.setError("No se encontro Placa");
-                                }else {
+                                } else {
+                                    findPlaca(getPlaca);
                                     alertplaca.setErrorEnabled(false);
-                                    textdni.setText("11111111");
-                                    textnombre.setText("CLIENTE VARIOS");
+                                    textruc.setText( GlobalInfo.getClienteIDPlaca10);
+                                    textrazsocial.setText(GlobalInfo.getClienteRZPlaca10);
+                                    textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
                                 }
+
                             }
                         });
 
-                        buscardni.setOnClickListener(new View.OnClickListener() {
+                        buscarruc.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String textndni    = textdni.getText().toString().trim();
-                                if(textndni.isEmpty()){
-                                    alertdni.setError("* El campo DNI es obligatorio");
-                                }else if(!textndni.equals("11111111")){
-                                    alertdni.setError("* No se encontro DNI");
+
+                                String getClienteRuc    = textruc.getText().toString().trim();
+                                if(getClienteRuc.isEmpty()){
+                                    alertruc.setError("* El campo RUC es obligatorio");
                                 }else{
-                                    alertdni.setErrorEnabled(false);
-                                    textnombre.setText("CLIENTE VARIOS");
+                                    alertruc.setErrorEnabled(false);
+                                    findCliente(getClienteRuc);
+                                    textrazsocial.setText(GlobalInfo.getclienteRZ10);
+                                    textdireccion.setText(GlobalInfo.getclienteDR10);
                                 }
                             }
                         });
@@ -554,13 +543,13 @@ public class VentaFragment extends Fragment{
                             @Override
                             public void onClick(View view) {
                                 String textnplaca     = txtplaca.getText().toString();
-                                String textndni       = textdni.getText().toString();
+                                String textnruc       = textruc.getText().toString();
                                 String textnnombre    = textnombre.getText().toString();
 
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
-                                } else if (textndni.isEmpty()) {
-                                    alertdni.setError("* El campo DNI es obligatorio");
+                                } else if (textnruc.isEmpty()) {
+                                    alertruc.setError("* El campo DNI es obligatorio");
                                 } else if (textnnombre.isEmpty()) {
                                     alertnombre.setError("* El campo Nombre es obligatorio");
                                 } else {
@@ -569,7 +558,7 @@ public class VentaFragment extends Fragment{
                                     alertnombre.setErrorEnabled(false);
 
                                     detalleVenta.setNroPlaca(txtplaca.getText().toString());
-                                    detalleVenta.setClienteID(textdni.getText().toString());
+                                    detalleVenta.setClienteRUC(textruc.getText().toString());
                                     detalleVenta.setClienteRS(textnombre.getText().toString());
                                     detalleVenta.setClienteDR(textdireccion.getText().toString());
                                     detalleVenta.setKilometraje(textkilometraje.getText().toString());
@@ -579,7 +568,7 @@ public class VentaFragment extends Fragment{
                                     detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
                                     String datotipotarjeta =radioButton.getText().toString();
                                     if (datotipotarjeta.equals("Tarjeta")){
-                                        detalleVenta.setTarjetaCredito(tipotarjeta.getIdTarjeta());
+                                        detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
                                     }else if (datotipotarjeta.equals("Credito")){
                                         detalleVenta.setTarjetaCredito("");
                                     }else if (datotipotarjeta.equals("Efectivo")){
@@ -620,7 +609,8 @@ public class VentaFragment extends Fragment{
                         alertDialog.setCancelable(false);
 
                         txtplaca        = dialogView.findViewById(R.id.inputnplaca);
-                        textdni         = dialogView.findViewById(R.id.inputdni);
+                        textid         = dialogView.findViewById(R.id.inputid);
+                        textruc         = dialogView.findViewById(R.id.inputruc);
                         textnombre      = dialogView.findViewById(R.id.inputnombre);
                         textdireccion   = dialogView.findViewById(R.id.inputdireccion);
                         textkilometraje = dialogView.findViewById(R.id.inputkilometraje);
@@ -628,11 +618,11 @@ public class VentaFragment extends Fragment{
 
                         btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
                         btncancelar    = dialogView.findViewById(R.id.btncancelarboleta);
-                        buscardni      = dialogView.findViewById(R.id.btnrenic);
-                        buscarplaca    = dialogView.findViewById(R.id.btntarjeta);
+                        buscarid      = dialogView.findViewById(R.id.btnsunat);
+                        buscarplaca    = dialogView.findViewById(R.id.btnplaca);
 
                         alertplaca     = dialogView.findViewById(R.id.textnplaca);
-                        alertdni       = dialogView.findViewById(R.id.textdni);
+                        alertid       = dialogView.findViewById(R.id.textid);
                         alertnombre    = dialogView.findViewById(R.id.textnombre);
 
                         btncancelar.setOnClickListener(new View.OnClickListener() {
@@ -645,31 +635,33 @@ public class VentaFragment extends Fragment{
                         buscarplaca.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String textnplaca    = txtplaca.getText().toString().trim();
+                                String getPlaca = txtplaca.getText().toString();
 
-                                if(textnplaca.isEmpty()){
+                                if (getPlaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
-                                }else if(!textnplaca.equals("000-0000")){
-                                    alertplaca.setError("No se encontro Placa");
-                                }else {
+                                } else {
+                                    findPlaca(getPlaca);
                                     alertplaca.setErrorEnabled(false);
-                                    textdni.setText("11111111");
-                                    textnombre.setText("CLIENTE VARIOS");
+                                    textid.setText( GlobalInfo.getClienteIDPlaca10);
+                                    textnombre.setText(GlobalInfo.getClienteRZPlaca10);
+                                    textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
                                 }
                             }
                         });
 
-                        buscardni.setOnClickListener(new View.OnClickListener() {
+                        buscarid.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String textndni    = textdni.getText().toString().trim();
-                                if(textndni.isEmpty()){
-                                    alertdni.setError("* El campo DNI es obligatorio");
-                                }else if(!textndni.equals("11111111")){
-                                    alertdni.setError("* No se encontro DNI");
+
+                                String getClienteId    = textid.getText().toString().trim();
+                                if(getClienteId.isEmpty()){
+                                    alertid.setError("* El campo RUC es obligatorio");
                                 }else{
-                                    alertdni.setErrorEnabled(false);
-                                    textnombre.setText("CLIENTE VARIOS");
+                                    alertid.setErrorEnabled(false);
+                                    findCliente(getClienteId);
+                                    textruc.setText(GlobalInfo.getclienteRUC10);
+                                    textnombre.setText(GlobalInfo.getclienteRZ10);
+                                    textdireccion.setText(GlobalInfo.getclienteDR10);
                                 }
                             }
                         });
@@ -678,22 +670,23 @@ public class VentaFragment extends Fragment{
                             @Override
                             public void onClick(View view) {
                                 String textnplaca     = txtplaca.getText().toString();
-                                String textndni       = textdni.getText().toString();
+                                String textndni       = textid.getText().toString();
                                 String textnnombre    = textnombre.getText().toString();
 
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
                                 } else if (textndni.isEmpty()) {
-                                    alertdni.setError("* El campo DNI es obligatorio");
+                                    alertid.setError("* El campo DNI es obligatorio");
                                 } else if (textnnombre.isEmpty()) {
                                     alertnombre.setError("* El campo Nombre es obligatorio");
                                 } else {
                                     alertplaca.setErrorEnabled(false);
-                                    alertdni.setErrorEnabled(false);
+                                    alertid.setErrorEnabled(false);
                                     alertnombre.setErrorEnabled(false);
 
                                     detalleVenta.setNroPlaca(txtplaca.getText().toString());
-                                    detalleVenta.setClienteID(textdni.getText().toString());
+                                    detalleVenta.setClienteID(textid.getText().toString());
+                                    detalleVenta.setClienteRUC(textruc.getText().toString());
                                     detalleVenta.setClienteRS(textnombre.getText().toString());
                                     detalleVenta.setClienteDR(textdireccion.getText().toString());
                                     detalleVenta.setKilometraje(textkilometraje.getText().toString());
@@ -781,28 +774,25 @@ public class VentaFragment extends Fragment{
                     }
                     List<Cliente> clienteList = response.body();
 
-                    for(Cliente cliente: clienteList){
+                    if (clienteList == null || clienteList.isEmpty()) {
+                        Toast.makeText(getContext(), "No se encontró ningún cliente con el ID proporcionado", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                        GlobalInfo.getclienteId10  = cliente.getClienteID();
+                    Cliente cliente = clienteList.get(0);
+
+                        GlobalInfo.getclienteId10  = String.valueOf(cliente.getClienteID());
                         GlobalInfo.getclienteRUC10 = String.valueOf(cliente.getClienteRUC());
                         GlobalInfo.getclienteRZ10  = String.valueOf(cliente.getClienteRZ());
                         GlobalInfo.getclienteDR10  = String.valueOf(cliente.getClienteDR());
-                        getClienteId10 = cliente.getClienteID();
-                    }
+                        getClienteDNI10  = cliente.getClienteID();
 
-                    String getCliente = textdni.getText().toString();
-
-                    if(!getCliente.equals(getClienteId10)){
-                        alertdni.setError("* No se encontro DNI");
-                    }else if(getCliente.equals(getClienteId10)){
-                        textnombre.setText(GlobalInfo.getclienteRZ10);
-                        textdireccion.setText(GlobalInfo.getclienteDR10);
-                    }
 
                 }catch (Exception ex){
-                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "ex.getMessage()", Toast.LENGTH_SHORT).show();
                 }
             }
+
 
             @Override
             public void onFailure(Call<List<Cliente>> call, Throwable t) {
@@ -856,24 +846,18 @@ public class VentaFragment extends Fragment{
                     }
                     List<Placa> placaList = response.body();
 
-                    for(Placa placa: placaList){
+                    if (placaList == null || placaList.isEmpty()) {
+                        Toast.makeText(getContext(), "No se encontró ningún placa con el ID proporcionado", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Placa placa = placaList.get(0);
 
-                        GlobalInfo.getNroPlaca10 = placa.getNroPlaca();
+                        GlobalInfo.getNroPlaca10 = String.valueOf(placa.getNroPlaca());
                         GlobalInfo.getClienteIDPlaca10 = String.valueOf(placa.getClienteID());
                         GlobalInfo.getClienteRZPlaca10 = String.valueOf(placa.getClienteRZ());
                         GlobalInfo.getClienteDRPlaca10 = String.valueOf(placa.getClienteDR());
                         getNroPlacas10 = placa.getNroPlaca();
-                    }
 
-                    String getPlaca = txtplaca.getText().toString();
-
-                    if(!getPlaca.equals(getNroPlacas10)){
-                        alertplaca.setError("* No se encontro Placa");
-                    }else if(getPlaca.equals(getNroPlacas10)){
-                        textdni.setText( GlobalInfo.getClienteIDPlaca10);
-                        textnombre.setText(GlobalInfo.getClienteRZPlaca10);
-                        textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
-                    }
 
                 }catch (Exception ex){
                     Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();

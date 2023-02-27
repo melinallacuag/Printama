@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
             <Button
-                android:id="@+id/btntarjeta"
+                android:id="@+id/btnplaca"
                 android:layout_width="200sp"
                 android:layout_height="60sp"
                 android:layout_marginStart="10sp"
@@ -80,7 +80,7 @@
             android:orientation="horizontal"
             android:gravity="center">
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textdni"
+                android:id="@+id/textid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ingresar ID Cliente"
@@ -91,7 +91,7 @@
                 app:endIconMode="clear_text"
                 android:layout_weight="1">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputdni"
+                    android:id="@+id/inputid"
                     android:fontFamily="@font/nunito_semibold"
                     android:textSize="12sp"
                     android:inputType="number"
@@ -101,7 +101,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnrenic"
+                android:id="@+id/btnsunat"
                 android:layout_width="200sp"
                 android:layout_height="60sp"
                 android:layout_marginStart="10sp"
