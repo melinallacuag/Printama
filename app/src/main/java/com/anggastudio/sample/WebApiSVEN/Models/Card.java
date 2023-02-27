@@ -5,6 +5,11 @@ public class Card {
     private Integer cardID;
     private String names;
 
+    public Card(Integer cardID,String names) {
+        this.cardID = cardID;
+        this.names  = names;
+    }
+
     public Integer getCardID() {
         return cardID;
     }

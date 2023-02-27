@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.anggastudio.sample.Adapter.CaraAdapter;
+import com.anggastudio.sample.Adapter.CardAdapter;
 import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
 import com.anggastudio.sample.Adapter.TipoTarjetaAdapter;
@@ -30,6 +31,7 @@ import com.anggastudio.sample.Login;
 import com.anggastudio.sample.Menu;
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
+import com.anggastudio.sample.WebApiSVEN.Models.Card;
 import com.anggastudio.sample.WebApiSVEN.Models.Cliente;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
@@ -64,6 +66,7 @@ public class VentaFragment extends Fragment{
 
     //Boleta-Factura-NotadeDespacho
     Tipotarjeta tipotarjeta = null;
+    Card cards = null;
     RadioGroup radioGroup;
     Spinner dropStatus;
     TextView modopagoefectivo;
@@ -219,17 +222,22 @@ public class VentaFragment extends Fragment{
                         cbtarjeta      = dialogView.findViewById(R.id.radioTarjeta);
                         cbcredito      = dialogView.findViewById(R.id.radioCredito);
 
+
+
                         //Array de los select
-                        ArrayList<Tipotarjeta> tipotarjetaArrayList = new ArrayList<>();
+                  /*      ArrayList<Card> cardlist = new ArrayList<>();
                         for(int i=0; i < 1 ;i++) {
-                            tipotarjetaArrayList.add(new Tipotarjeta("1","VISA"));
-                            tipotarjetaArrayList.add(new Tipotarjeta("2","MASTERCARD"));
-                            tipotarjetaArrayList.add(new Tipotarjeta("3","DINNERS"));
+                            cardlist.add(new Card(1,"VISA"));
+                            cardlist.add(new Card(2,"MASTERCARD"));
+                            cardlist.add(new Card(3,"DINNERS"));
                         }
                         Resources res = getResources();
-                        TipoTarjetaAdapter adapt = new TipoTarjetaAdapter(getContext(), R.layout.item, tipotarjetaArrayList, res);
-                        dropStatus.setAdapter(adapt);
+                        CardAdapter card = new CardAdapter(getContext(), R.layout.item, cardlist, res);
+                        dropStatus.setAdapter(card);
+                       */
 
+
+                        getCard();
 
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
@@ -241,7 +249,7 @@ public class VentaFragment extends Fragment{
                         dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                tipotarjeta = (Tipotarjeta) dropStatus.getSelectedItem();
+                                cards = (Card) dropStatus.getSelectedItem();
                             }
 
                             @Override
@@ -361,7 +369,7 @@ public class VentaFragment extends Fragment{
                                     detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
                                     String datotipotarjeta =radioButton.getText().toString();
                                     if (datotipotarjeta.equals("Tarjeta")){
-                                        detalleVenta.setTarjetaCredito(tipotarjeta.getIdTarjeta());
+                                        detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
                                     }else if (datotipotarjeta.equals("Credito")){
                                         detalleVenta.setTarjetaCredito("");
                                     }else if (datotipotarjeta.equals("Efectivo")){
@@ -377,6 +385,8 @@ public class VentaFragment extends Fragment{
                         });
                     }
                 }
+
+
             }
         });
 
@@ -752,6 +762,7 @@ public class VentaFragment extends Fragment{
         findLados(GlobalInfo.getImei10);
         findDetalleVenta(GlobalInfo.getImei10);
 
+
         return view;
     }
 
@@ -796,6 +807,36 @@ public class VentaFragment extends Fragment{
             @Override
             public void onFailure(Call<List<Cliente>> call, Throwable t) {
                 Toast.makeText(getContext(), "Error de conexión APICORE Cara - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getCard(){
+        Call<List<Card>> call = mAPIService.getCard();
+
+        call.enqueue(new Callback<List<Card>>() {
+            @Override
+            public void onResponse(Call<List<Card>> call, Response<List<Card>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<Card> cardlist = response.body();
+
+                    Resources res = getResources();
+                    CardAdapter card = new CardAdapter(getContext(), R.layout.item, (ArrayList<Card>) cardlist, res);
+                    dropStatus.setAdapter(card);
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Card>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Card - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -846,7 +887,6 @@ public class VentaFragment extends Fragment{
         });
 
     }
-
 
     private void findLados(String id) {
 

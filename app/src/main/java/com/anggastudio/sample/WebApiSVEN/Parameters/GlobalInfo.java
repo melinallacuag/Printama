@@ -38,6 +38,8 @@ public class GlobalInfo {
     public static String getclienteRZ10;
     public static String getclienteDR10;
 
+    public static Integer getCardId10;
+
 
 
     public static final String BASE_URL = "http://192.168.1.6:8081/";

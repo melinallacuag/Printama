@@ -66,7 +66,7 @@ public interface APIService {
     Call<List<Card>> getCard();
 
     @GET("api/card/listado/{id}")
-    Call<List<Card>> findCard(@Path("id") String id);
+    Call<List<Card>> findCard(@Path("id") Integer id);
 
     @GET("api/cliente/listado")
     Call<List<Cliente>> getCliente();
