@@ -13,7 +13,7 @@ public class GlobalInfo {
     public static String getCara10;
     public static String getPistola10;
 
-    public static String getterminalID10 = "";
+    public static String getterminalID10;
     public static String getImei10;
     public static String getfecha10;
     public static Integer getturno10;
@@ -37,9 +37,6 @@ public class GlobalInfo {
     public static String getclienteRUC10;
     public static String getclienteRZ10;
     public static String getclienteDR10;
-
-
-
 
     public static final String BASE_URL = "http://192.168.1.6:8081/";
 

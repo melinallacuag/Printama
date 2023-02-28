@@ -45,6 +45,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,7 +73,7 @@ public class VentaFragment extends Fragment{
     TextView modopagoefectivo;
     RadioButton cbefectivo,cbtarjeta,cbcredito,radioButton;
     TextInputEditText  textid,txtplaca,textrazsocial,textdni,textruc,textnombre,textdireccion,textkilometraje,textobservacion,textpagoefectivo,textNroOperacio;
-    TextInputLayout alertid,alertplaca,alertdni,alertruc, alertnombre,alertrazsocial,textinputpagoefectivo,textnrooperacion,textdropStatus;
+    TextInputLayout alertpagoefectivo,alertNroOperacio,alertid,alertplaca,alertdni,alertruc, alertnombre,alertrazsocial,textinputpagoefectivo,textnrooperacion,textdropStatus;
     Button btnagregar,btncancelar,btngenerar,buscarplaca,buscardni,buscarruc,buscarid;
 
     @Override
@@ -210,9 +212,11 @@ public class VentaFragment extends Fragment{
                         buscardni      = dialogView.findViewById(R.id.btnrenic);
                         buscarplaca    = dialogView.findViewById(R.id.btnplaca);
 
-                        alertplaca     = dialogView.findViewById(R.id.textnplaca);
-                        alertdni       = dialogView.findViewById(R.id.textdni);
-                        alertnombre    = dialogView.findViewById(R.id.textnombre);
+                        alertplaca        = dialogView.findViewById(R.id.textnplaca);
+                        alertdni          = dialogView.findViewById(R.id.textdni);
+                        alertnombre       = dialogView.findViewById(R.id.textnombre);
+                        alertNroOperacio  = dialogView.findViewById(R.id.textnrooperacion);
+                        alertpagoefectivo = dialogView.findViewById(R.id.textpagoefectivo);
 
                         radioGroup     = dialogView.findViewById(R.id.radioformapago);
                         cbefectivo     = dialogView.findViewById(R.id.radioEfectivo);
@@ -225,7 +229,7 @@ public class VentaFragment extends Fragment{
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                                radioButton = dialogView.findViewById(checkedId);
+                                    radioButton = dialogView.findViewById(checkedId);
                             }
                         });
 
@@ -336,9 +340,11 @@ public class VentaFragment extends Fragment{
                         btnagregar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String textnplaca     = txtplaca.getText().toString();
-                                String textndni       = textdni.getText().toString();
-                                String textnnombre    = textnombre.getText().toString();
+                                String textnplaca          = txtplaca.getText().toString();
+                                String textndni            = textdni.getText().toString();
+                                String textnnombre         = textnombre.getText().toString();
+                                String textnNroOperacio    = textNroOperacio.getText().toString();
+                                String textnpagoefectivo   = textpagoefectivo.getText().toString();
 
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
@@ -346,7 +352,15 @@ public class VentaFragment extends Fragment{
                                     alertdni.setError("* El campo DNI es obligatorio");
                                 } else if (textnnombre.isEmpty()) {
                                     alertnombre.setError("* El campo Nombre es obligatorio");
-                                } else {
+                                } else if (radioGroup.getCheckedRadioButtonId() == -1){
+                                    Toast.makeText(getContext(), "Por favor, seleccione Tipo de Pago", Toast.LENGTH_SHORT).show();
+                                } else if (textnNroOperacio.isEmpty()){
+                                    alertNroOperacio.setError("* El campo Nro Operación es obligatorio");
+                                } else if (textnNroOperacio.length() < 4){
+                                    alertNroOperacio.setError("* El  Nro Operación debe tener 4 dígitos");
+                                }else if (textnpagoefectivo.isEmpty()){
+                                    alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                }else {
                                     alertplaca.setErrorEnabled(false);
                                     alertdni.setErrorEnabled(false);
                                     alertnombre.setErrorEnabled(false);
@@ -357,16 +371,20 @@ public class VentaFragment extends Fragment{
                                     detalleVenta.setClienteDR(textdireccion.getText().toString());
                                     detalleVenta.setKilometraje(textkilometraje.getText().toString());
                                     detalleVenta.setObservacion(textobservacion.getText().toString());
-                                    detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
-                                    detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                     detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
                                     String datotipotarjeta =radioButton.getText().toString();
                                     if (datotipotarjeta.equals("Tarjeta")){
                                         detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
+                                        detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
+                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                     }else if (datotipotarjeta.equals("Credito")){
                                         detalleVenta.setTarjetaCredito("");
+                                        detalleVenta.setOperacionREF("");
+                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                     }else if (datotipotarjeta.equals("Efectivo")){
                                         detalleVenta.setTarjetaCredito("");
+                                        detalleVenta.setOperacionREF("");
+                                        detalleVenta.setMontoSoles(Double.parseDouble(""));
                                     }else {
                                         Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                                     }
@@ -551,6 +569,8 @@ public class VentaFragment extends Fragment{
                                     alertruc.setError("* El campo DNI es obligatorio");
                                 } else if (textnnombre.isEmpty()) {
                                     alertrazsocial.setError("* El campo Nombre es obligatorio");
+                                }else if (radioGroup.getCheckedRadioButtonId() == -1){
+                                    Toast.makeText(getContext(), "Por favor, seleccione Tipo de Pago", Toast.LENGTH_SHORT).show();
                                 } else {
                                     alertplaca.setErrorEnabled(false);
                                     alertruc.setErrorEnabled(false);
@@ -768,9 +788,17 @@ public class VentaFragment extends Fragment{
                     if (clienteList == null || clienteList.isEmpty()) {
 
                         if (tipodoc == "01"){
-                            alertruc.setError("* No se encontró ningún RUC");
+                            if (textruc.length() < 11){
+                                alertruc.setError("* El RUC debe tener 11 dígitos");
+                            }else{
+                                alertruc.setError("* No se encontró ningún RUC");
+                            }
                         }else if (tipodoc == "03"){
-                            alertdni.setError("* No se encontró ningún DNI");
+                            if (textdni.length() < 8){
+                                alertdni.setError("* El DNI debe tener 8 dígitos");
+                            }else{
+                                alertdni.setError("* No se encontró ningún DNI");
+                            }
                         }else if (tipodoc == "99") {
                             alertid.setError("* No se encontró ningún ID");
                         }
@@ -968,6 +996,7 @@ public class VentaFragment extends Fragment{
                             textmanguera =  getActivity().findViewById(R.id.textmanguera);
                             String descripcionmanguera = item.getDescripcion();
                             textmanguera.setText(descripcionmanguera);
+                            GlobalInfo.getPistola10 = item.getMangueraID();
 
                         }
                     });

@@ -101,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_semibold"
                         android:inputType="number"
-                        android:maxLength="11"
+                        android:maxLength="8"
                         android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -236,7 +236,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:checked="false"
                     android:fontFamily="@font/nunito_extrabold"
                     android:text="Tarjeta"
                     android:textColor="#123456"
@@ -248,7 +247,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:checked="false"
                     android:fontFamily="@font/nunito_extrabold"
                     android:text="Credito"
                     android:textColor="#123456"
@@ -312,6 +310,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_semibold"
                     android:inputType="number"
+                    android:maxLength="4"
                     android:textSize="12sp" />
             </com.google.android.material.textfield.TextInputLayout>
 

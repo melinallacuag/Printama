@@ -97,7 +97,7 @@ public class SolesFragment extends DialogFragment {
 
     private void guardar_monto(String manguera, Double valor){
 
-        final Picos picos = new Picos(manguera,"01","1","05","DB5","G",valor);
+        final Picos picos = new Picos(manguera,"01","1","05","DB5","S",valor);
 
         Call<Picos> call = mAPIService.postPicos(picos);
 

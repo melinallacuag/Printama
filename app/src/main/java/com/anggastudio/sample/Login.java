@@ -174,7 +174,7 @@ public class Login extends AppCompatActivity {
 
                     }
 
-                    if (GlobalInfo.getterminalID10.isEmpty()) {
+                    if (GlobalInfo.getterminalID10.isEmpty() || GlobalInfo.getterminalID10 == null) {
                         imeii.setTextColor(getResources().getColor(R.color.colorError));
                         Toast.makeText(Login.this, "Terminal no configurado, comuniquese con el administrador.", Toast.LENGTH_SHORT).show();
                         return;
