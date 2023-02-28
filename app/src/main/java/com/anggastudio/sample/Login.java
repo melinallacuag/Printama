@@ -3,6 +3,7 @@ package com.anggastudio.sample;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -64,9 +65,9 @@ public class Login extends AppCompatActivity {
         alertuser      = findViewById(R.id.textusuario);
         alertpassword  = findViewById(R.id.textcontraseña);
 
-
         GlobalInfo.getImei10 = imeii.getText().toString();
-        findTerminal(GlobalInfo.getImei10);
+        findTerminal(GlobalInfo.getImei10.toUpperCase());
+
         //findCompany(GlobalInfo.getCompanyID10);
 
         btniniciar.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +85,8 @@ public class Login extends AppCompatActivity {
                     alertpassword.setErrorEnabled(false);
                     findUsers(usuario.getText().toString());
                 }
+
+
             }
         });
     }
@@ -169,6 +172,12 @@ public class Login extends AppCompatActivity {
                         GlobalInfo.getventaGratuita10 = Boolean.valueOf(terminal.getVenta_Gratuita());
                         GlobalInfo.getventaSerafin10 = Boolean.valueOf(terminal.getVenta_Serafin());
 
+                    }
+
+                    if (GlobalInfo.getterminalID10.isEmpty()) {
+                        imeii.setTextColor(getResources().getColor(R.color.colorError));
+                        Toast.makeText(Login.this, "Terminal no configurado, comuniquese con el administrador.", Toast.LENGTH_SHORT).show();
+                        return;
                     }
 
                 }catch (Exception ex){

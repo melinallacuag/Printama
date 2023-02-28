@@ -117,7 +117,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20sp"
             android:textAllCaps="true"
-            android:fontFamily="@font/nunito_semibold"
+            android:textSize="15sp"
+            android:textColor="#1E242B"
+            android:fontFamily="@font/nunito_black"
             android:layout_gravity="center" />
     </LinearLayout>
 

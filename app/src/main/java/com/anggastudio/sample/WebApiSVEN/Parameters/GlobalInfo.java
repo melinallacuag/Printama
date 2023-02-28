@@ -13,7 +13,7 @@ public class GlobalInfo {
     public static String getCara10;
     public static String getPistola10;
 
-    public static String getterminalID10;
+    public static String getterminalID10 = "";
     public static String getImei10;
     public static String getfecha10;
     public static Integer getturno10;

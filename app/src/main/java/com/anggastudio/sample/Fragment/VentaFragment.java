@@ -1,6 +1,7 @@
 package com.anggastudio.sample.Fragment;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -63,8 +64,6 @@ public class VentaFragment extends Fragment{
     List<DetalleVenta> detalleVentaList;
     private APIService mAPIService;
     private String mCara;
-    Tipotarjeta tipotarjeta = null;
-
     /* Boleta-Factura-NotadeDespacho */
     Card cards = null;
     RadioGroup radioGroup;
@@ -72,10 +71,8 @@ public class VentaFragment extends Fragment{
     TextView modopagoefectivo;
     RadioButton cbefectivo,cbtarjeta,cbcredito,radioButton;
     TextInputEditText  textid,txtplaca,textrazsocial,textdni,textruc,textnombre,textdireccion,textkilometraje,textobservacion,textpagoefectivo,textNroOperacio;
-    TextInputLayout alertid,alertplaca,alertdni,alertruc, alertnombre,textinputpagoefectivo,textnrooperacion,textdropStatus;
-    Button btnagregar,btncancelar,btngenerar,buscardni,buscarsunat,buscarplaca,buscarruc,buscarid;
-
-    String getNroPlacas10,getClienteDNI10, getClienteId10,getClienteRUC10;
+    TextInputLayout alertid,alertplaca,alertdni,alertruc, alertnombre,alertrazsocial,textinputpagoefectivo,textnrooperacion,textdropStatus;
+    Button btnagregar,btncancelar,btngenerar,buscarplaca,buscardni,buscarruc,buscarid;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -293,18 +290,18 @@ public class VentaFragment extends Fragment{
                         buscarplaca.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String getPlaca = txtplaca.getText().toString();
 
-                                if (getPlaca.isEmpty()) {
+                                String getPlacaBoleta = txtplaca.getText().toString();
+
+                                if (getPlacaBoleta.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
-                                } else {
-                                    findPlaca(getPlaca);
-                                   // alertplaca.setErrorEnabled(false);
-                                    textdni.setText( GlobalInfo.getClienteIDPlaca10);
-                                    textnombre.setText(GlobalInfo.getClienteRZPlaca10);
-                                    textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
+                                }else{
+                                    alertplaca.setErrorEnabled(false);
+                                    findPlaca(getPlacaBoleta,"03");
+                                    textdni.setText("");
+                                    textnombre.setText("");
+                                    textdireccion.setText("");
                                 }
-
                             }
                         });
 
@@ -318,9 +315,10 @@ public class VentaFragment extends Fragment{
                                 if (getClienteDni.isEmpty()) {
                                     alertdni.setError("* El campo DNI es obligatorio");
                                 } else {
-                                    findCliente(getClienteDni);
-                                    textnombre.setText(GlobalInfo.getclienteRZ10);
-                                    textdireccion.setText(GlobalInfo.getclienteDR10);
+                                    alertdni.setErrorEnabled(false);
+                                    findCliente(getClienteDni, "03");
+                                    textnombre.setText("");
+                                    textdireccion.setText("");
                                 }
 
                             }
@@ -429,7 +427,7 @@ public class VentaFragment extends Fragment{
 
                         alertplaca     = dialogView.findViewById(R.id.textnplaca);
                         alertruc       = dialogView.findViewById(R.id.textruc);
-                        alertnombre    = dialogView.findViewById(R.id.textrazsocial);
+                        alertrazsocial = dialogView.findViewById(R.id.textrazsocial);
 
                         radioGroup     = dialogView.findViewById(R.id.radioformapago);
                         cbefectivo     = dialogView.findViewById(R.id.radioEfectivo);
@@ -508,16 +506,16 @@ public class VentaFragment extends Fragment{
                             @Override
                             public void onClick(View view) {
 
-                                String getPlaca = txtplaca.getText().toString();
+                                String getPlacaFactura = txtplaca.getText().toString();
 
-                                if (getPlaca.isEmpty()) {
+                                if (getPlacaFactura.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
                                 } else {
-                                    findPlaca(getPlaca);
                                     alertplaca.setErrorEnabled(false);
-                                    textruc.setText( GlobalInfo.getClienteIDPlaca10);
-                                    textrazsocial.setText(GlobalInfo.getClienteRZPlaca10);
-                                    textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
+                                    findPlaca(getPlacaFactura,"01");
+                                    textruc.setText("");
+                                    textrazsocial.setText("");
+                                    textdireccion.setText("");
                                 }
 
                             }
@@ -528,13 +526,14 @@ public class VentaFragment extends Fragment{
                             public void onClick(View view) {
 
                                 String getClienteRuc    = textruc.getText().toString().trim();
+
                                 if(getClienteRuc.isEmpty()){
                                     alertruc.setError("* El campo RUC es obligatorio");
                                 }else{
                                     alertruc.setErrorEnabled(false);
-                                    findCliente(getClienteRuc);
-                                    textrazsocial.setText(GlobalInfo.getclienteRZ10);
-                                    textdireccion.setText(GlobalInfo.getclienteDR10);
+                                    findCliente(getClienteRuc,"01");
+                                    textrazsocial.setText("");
+                                    textdireccion.setText("");
                                 }
                             }
                         });
@@ -544,29 +543,31 @@ public class VentaFragment extends Fragment{
                             public void onClick(View view) {
                                 String textnplaca     = txtplaca.getText().toString();
                                 String textnruc       = textruc.getText().toString();
-                                String textnnombre    = textnombre.getText().toString();
+                                String textnnombre    = textrazsocial.getText().toString();
 
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
                                 } else if (textnruc.isEmpty()) {
                                     alertruc.setError("* El campo DNI es obligatorio");
                                 } else if (textnnombre.isEmpty()) {
-                                    alertnombre.setError("* El campo Nombre es obligatorio");
+                                    alertrazsocial.setError("* El campo Nombre es obligatorio");
                                 } else {
                                     alertplaca.setErrorEnabled(false);
-                                    alertdni.setErrorEnabled(false);
-                                    alertnombre.setErrorEnabled(false);
+                                    alertruc.setErrorEnabled(false);
+                                    alertrazsocial.setErrorEnabled(false);
 
                                     detalleVenta.setNroPlaca(txtplaca.getText().toString());
                                     detalleVenta.setClienteRUC(textruc.getText().toString());
-                                    detalleVenta.setClienteRS(textnombre.getText().toString());
+                                    detalleVenta.setClienteRS(textrazsocial.getText().toString());
                                     detalleVenta.setClienteDR(textdireccion.getText().toString());
                                     detalleVenta.setKilometraje(textkilometraje.getText().toString());
                                     detalleVenta.setObservacion(textobservacion.getText().toString());
                                     detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
                                     detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                     detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
+
                                     String datotipotarjeta =radioButton.getText().toString();
+
                                     if (datotipotarjeta.equals("Tarjeta")){
                                         detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
                                     }else if (datotipotarjeta.equals("Credito")){
@@ -576,14 +577,13 @@ public class VentaFragment extends Fragment{
                                     }else {
                                         Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                                     }
+
                                     recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
                                     Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
                                     alertDialog.dismiss();
                                 }
                             }
                         });
-                    }else {
-                        Toast.makeText(getContext(), "Seleccionar Cara", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -623,6 +623,7 @@ public class VentaFragment extends Fragment{
 
                         alertplaca     = dialogView.findViewById(R.id.textnplaca);
                         alertid       = dialogView.findViewById(R.id.textid);
+                        alertruc       = dialogView.findViewById(R.id.textruc);
                         alertnombre    = dialogView.findViewById(R.id.textnombre);
 
                         btncancelar.setOnClickListener(new View.OnClickListener() {
@@ -640,11 +641,11 @@ public class VentaFragment extends Fragment{
                                 if (getPlaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
                                 } else {
-                                    findPlaca(getPlaca);
                                     alertplaca.setErrorEnabled(false);
-                                    textid.setText( GlobalInfo.getClienteIDPlaca10);
-                                    textnombre.setText(GlobalInfo.getClienteRZPlaca10);
-                                    textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
+                                    findPlaca(getPlaca,"99");
+                                    textid.setText("");
+                                    textnombre.setText("");
+                                    textdireccion.setText("");
                                 }
                             }
                         });
@@ -658,10 +659,10 @@ public class VentaFragment extends Fragment{
                                     alertid.setError("* El campo RUC es obligatorio");
                                 }else{
                                     alertid.setErrorEnabled(false);
-                                    findCliente(getClienteId);
-                                    textruc.setText(GlobalInfo.getclienteRUC10);
-                                    textnombre.setText(GlobalInfo.getclienteRZ10);
-                                    textdireccion.setText(GlobalInfo.getclienteDR10);
+                                    findCliente(getClienteId,"99");
+                                    textruc.setText("");
+                                    textnombre.setText("");
+                                    textdireccion.setText("");
                                 }
                             }
                         });
@@ -671,17 +672,21 @@ public class VentaFragment extends Fragment{
                             public void onClick(View view) {
                                 String textnplaca     = txtplaca.getText().toString();
                                 String textndni       = textid.getText().toString();
+                                String textnruc       = textruc.getText().toString();
                                 String textnnombre    = textnombre.getText().toString();
 
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
                                 } else if (textndni.isEmpty()) {
                                     alertid.setError("* El campo DNI es obligatorio");
+                                }else if (textnruc.isEmpty()) {
+                                    alertruc.setError("* El campo RUC es obligatorio");
                                 } else if (textnnombre.isEmpty()) {
                                     alertnombre.setError("* El campo Nombre es obligatorio");
                                 } else {
                                     alertplaca.setErrorEnabled(false);
                                     alertid.setErrorEnabled(false);
+                                    alertruc.setErrorEnabled(false);
                                     alertnombre.setErrorEnabled(false);
 
                                     detalleVenta.setNroPlaca(txtplaca.getText().toString());
@@ -691,27 +696,14 @@ public class VentaFragment extends Fragment{
                                     detalleVenta.setClienteDR(textdireccion.getText().toString());
                                     detalleVenta.setKilometraje(textkilometraje.getText().toString());
                                     detalleVenta.setObservacion(textobservacion.getText().toString());
-                                    detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
-                                    detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
-                                    detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
-                                    String datotipotarjeta =radioButton.getText().toString();
-                                    if (datotipotarjeta.equals("Tarjeta")){
-                                        detalleVenta.setTarjetaCredito(tipotarjeta.getIdTarjeta());
-                                    }else if (datotipotarjeta.equals("Credito")){
-                                        detalleVenta.setTarjetaCredito("");
-                                    }else if (datotipotarjeta.equals("Efectivo")){
-                                        detalleVenta.setTarjetaCredito("");
-                                    }else {
-                                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-                                    }
+                                    detalleVenta.setTipoPago("C");
+
                                     recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
                                     Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
                                     alertDialog.dismiss();
                                 }
                             }
                         });
-                    }else {
-                        Toast.makeText(getContext(), "Seleccionar Cara", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -755,11 +747,10 @@ public class VentaFragment extends Fragment{
         findLados(GlobalInfo.getImei10);
         findDetalleVenta(GlobalInfo.getImei10);
 
-
         return view;
     }
 
-    private  void findCliente(String id){
+    private  void findCliente(String id,String tipodoc){
 
         Call<List<Cliente>> call = mAPIService.findCliente(id);
 
@@ -775,7 +766,15 @@ public class VentaFragment extends Fragment{
                     List<Cliente> clienteList = response.body();
 
                     if (clienteList == null || clienteList.isEmpty()) {
-                        Toast.makeText(getContext(), "No se encontró ningún cliente con el ID proporcionado", Toast.LENGTH_SHORT).show();
+
+                        if (tipodoc == "01"){
+                            alertruc.setError("* No se encontró ningún RUC");
+                        }else if (tipodoc == "03"){
+                            alertdni.setError("* No se encontró ningún DNI");
+                        }else if (tipodoc == "99") {
+                            alertid.setError("* No se encontró ningún ID");
+                        }
+
                         return;
                     }
 
@@ -785,20 +784,86 @@ public class VentaFragment extends Fragment{
                         GlobalInfo.getclienteRUC10 = String.valueOf(cliente.getClienteRUC());
                         GlobalInfo.getclienteRZ10  = String.valueOf(cliente.getClienteRZ());
                         GlobalInfo.getclienteDR10  = String.valueOf(cliente.getClienteDR());
-                        getClienteDNI10  = cliente.getClienteID();
 
+                    if (tipodoc == "01"){
+                        textrazsocial.setText(GlobalInfo.getclienteRZ10);
+                        textdireccion.setText(GlobalInfo.getclienteDR10);
+                    }else if (tipodoc == "03"){
+                        textnombre.setText(GlobalInfo.getclienteRZ10);
+                        textdireccion.setText(GlobalInfo.getclienteDR10);
+                    }else if (tipodoc == "99"){
+                        textruc.setText( GlobalInfo.getclienteRUC10);
+                        textnombre.setText(GlobalInfo.getclienteRZ10);
+                        textdireccion.setText(GlobalInfo.getclienteDR10);
+                    }
 
                 }catch (Exception ex){
-                    Toast.makeText(getContext(), "ex.getMessage()", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
 
             @Override
             public void onFailure(Call<List<Cliente>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE Cara - RED - WIFI", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error de conexión APICORE Cliente - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void findPlaca(String id, String tipodoc){
+
+        Call<List<Placa>> call = mAPIService.findPlaca(id);
+
+        call.enqueue(new Callback<List<Placa>>() {
+            @Override
+            public void onResponse(Call<List<Placa>> call, Response<List<Placa>> response) {
+
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<Placa> placaList = response.body();
+
+                    if (placaList == null || placaList.isEmpty()) {
+                        alertplaca.setError("* No se encontró ningúna Placa");
+                        return;
+                    }
+
+                    Placa placa = placaList.get(0);
+
+                    GlobalInfo.getNroPlaca10 = String.valueOf(placa.getNroPlaca());
+                    GlobalInfo.getClienteIDPlaca10 = String.valueOf(placa.getClienteID());
+                    GlobalInfo.getClienteRZPlaca10 = String.valueOf(placa.getClienteRZ());
+                    GlobalInfo.getClienteDRPlaca10 = String.valueOf(placa.getClienteDR());
+
+                    if (tipodoc == "01"){
+                        textruc.setText( GlobalInfo.getClienteIDPlaca10);
+                        textrazsocial.setText(GlobalInfo.getClienteRZPlaca10);
+                        textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
+                    }else if (tipodoc == "03"){
+                        textdni.setText(GlobalInfo.getClienteIDPlaca10);
+                        textnombre.setText(GlobalInfo.getClienteRZPlaca10);
+                        textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
+                    }else if (tipodoc == "99"){
+                        textid.setText( GlobalInfo.getClienteIDPlaca10);
+                        textnombre.setText(GlobalInfo.getClienteRZPlaca10);
+                        textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
+                    }
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Placa>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Placa - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void getCard(){
@@ -829,47 +894,6 @@ public class VentaFragment extends Fragment{
                 Toast.makeText(getContext(), "Error de conexión APICORE Card - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void findPlaca(String id){
-
-        Call<List<Placa>> call = mAPIService.findPlaca(id);
-
-        call.enqueue(new Callback<List<Placa>>() {
-            @Override
-            public void onResponse(Call<List<Placa>> call, Response<List<Placa>> response) {
-                try {
-
-                    if(!response.isSuccessful()){
-                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    List<Placa> placaList = response.body();
-
-                    if (placaList == null || placaList.isEmpty()) {
-                        Toast.makeText(getContext(), "No se encontró ningún placa con el ID proporcionado", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    Placa placa = placaList.get(0);
-
-                        GlobalInfo.getNroPlaca10 = String.valueOf(placa.getNroPlaca());
-                        GlobalInfo.getClienteIDPlaca10 = String.valueOf(placa.getClienteID());
-                        GlobalInfo.getClienteRZPlaca10 = String.valueOf(placa.getClienteRZ());
-                        GlobalInfo.getClienteDRPlaca10 = String.valueOf(placa.getClienteDR());
-                        getNroPlacas10 = placa.getNroPlaca();
-
-
-                }catch (Exception ex){
-                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Placa>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE Cara - RED - WIFI", Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
     private void findLados(String id) {
@@ -999,36 +1023,5 @@ public class VentaFragment extends Fragment{
             }
         });
     }
-    /*   private  void findOptran(String id){
 
-        Call<List<Optran>> call = mAPIService.findOptran(id);
-
-        call.enqueue(new Callback<List<Optran>>() {
-            @Override
-            public void onResponse(Call<List<Optran>> call, Response<List<Optran>> response) {
-                try {
-
-                    if(!response.isSuccessful()){
-                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    List<Optran> optranList = response.body();
-
-                    transaccionAdapter = new TransaccionAdapter(optranList, getContext());
-                    recyclerTransaccion.setAdapter(transaccionAdapter);
-
-                }catch (Exception ex){
-                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Optran>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE - RED - WIFI", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
-*/
 }
