@@ -372,7 +372,9 @@ public class VentaFragment extends Fragment{
                                     detalleVenta.setKilometraje(textkilometraje.getText().toString());
                                     detalleVenta.setObservacion(textobservacion.getText().toString());
                                     detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
+
                                     String datotipotarjeta =radioButton.getText().toString();
+
                                     if (datotipotarjeta.equals("Tarjeta")){
                                         detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
                                         detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
@@ -446,6 +448,8 @@ public class VentaFragment extends Fragment{
                         alertplaca     = dialogView.findViewById(R.id.textnplaca);
                         alertruc       = dialogView.findViewById(R.id.textruc);
                         alertrazsocial = dialogView.findViewById(R.id.textrazsocial);
+                        alertNroOperacio  = dialogView.findViewById(R.id.textnrooperacion);
+                        alertpagoefectivo = dialogView.findViewById(R.id.textpagoefectivo);
 
                         radioGroup     = dialogView.findViewById(R.id.radioformapago);
                         cbefectivo     = dialogView.findViewById(R.id.radioEfectivo);
@@ -559,9 +563,11 @@ public class VentaFragment extends Fragment{
                         btnagregar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String textnplaca     = txtplaca.getText().toString();
-                                String textnruc       = textruc.getText().toString();
-                                String textnnombre    = textrazsocial.getText().toString();
+                                String textnplaca         = txtplaca.getText().toString();
+                                String textnruc           = textruc.getText().toString();
+                                String textnnombre        = textrazsocial.getText().toString();
+                                String textnNroOperacio   = textNroOperacio.getText().toString();
+                                String textnpagoefectivo  = textpagoefectivo.getText().toString();
 
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
@@ -571,6 +577,12 @@ public class VentaFragment extends Fragment{
                                     alertrazsocial.setError("* El campo Nombre es obligatorio");
                                 }else if (radioGroup.getCheckedRadioButtonId() == -1){
                                     Toast.makeText(getContext(), "Por favor, seleccione Tipo de Pago", Toast.LENGTH_SHORT).show();
+                                } else if (textnNroOperacio.isEmpty()){
+                                    alertNroOperacio.setError("* El campo Nro Operación es obligatorio");
+                                } else if (textnNroOperacio.length() < 4){
+                                    alertNroOperacio.setError("* El  Nro Operación debe tener 4 dígitos");
+                                }else if (textnpagoefectivo.isEmpty()){
+                                    alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
                                 } else {
                                     alertplaca.setErrorEnabled(false);
                                     alertruc.setErrorEnabled(false);
@@ -582,18 +594,22 @@ public class VentaFragment extends Fragment{
                                     detalleVenta.setClienteDR(textdireccion.getText().toString());
                                     detalleVenta.setKilometraje(textkilometraje.getText().toString());
                                     detalleVenta.setObservacion(textobservacion.getText().toString());
-                                    detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
-                                    detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                     detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
 
                                     String datotipotarjeta =radioButton.getText().toString();
 
                                     if (datotipotarjeta.equals("Tarjeta")){
                                         detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
+                                        detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
+                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                     }else if (datotipotarjeta.equals("Credito")){
                                         detalleVenta.setTarjetaCredito("");
+                                        detalleVenta.setOperacionREF("");
+                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                     }else if (datotipotarjeta.equals("Efectivo")){
                                         detalleVenta.setTarjetaCredito("");
+                                        detalleVenta.setOperacionREF("");
+                                        detalleVenta.setMontoSoles(Double.parseDouble(""));
                                     }else {
                                         Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                                     }
