@@ -229,7 +229,24 @@ public class VentaFragment extends Fragment{
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                                    radioButton = dialogView.findViewById(checkedId);
+                                radioButton = dialogView.findViewById(checkedId);
+
+                                if (checkedId == cbefectivo.getId()){
+                                    modopagoefectivo.setVisibility(View.VISIBLE);
+                                    textdropStatus.setVisibility(View.GONE);
+                                    textnrooperacion.setVisibility(View.GONE);
+                                    textinputpagoefectivo.setVisibility(View.GONE);
+                                } else if (checkedId == cbtarjeta.getId()){
+                                    textdropStatus.setVisibility(View.VISIBLE);
+                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                    textnrooperacion.setVisibility(View.VISIBLE);
+                                    modopagoefectivo.setVisibility(View.GONE);
+                                } else if (checkedId == cbcredito.getId()){
+                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                    textdropStatus.setVisibility(View.GONE);
+                                    textnrooperacion.setVisibility(View.GONE);
+                                    modopagoefectivo.setVisibility(View.GONE);
+                                }
                             }
                         });
 
@@ -245,49 +262,9 @@ public class VentaFragment extends Fragment{
                         });
 
                         btncancelar.setOnClickListener(new View.OnClickListener() {
-                           @Override
-                           public void onClick(View view) {
-                               alertDialog.dismiss();
-                           }
-                       });
-
-                        cbefectivo.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
                             @Override
-                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
-                               if (a){
-                                   modopagoefectivo.setVisibility(View.VISIBLE);
-                                   textdropStatus.setVisibility(View.GONE);
-                                   textnrooperacion.setVisibility(View.GONE);
-                                   textinputpagoefectivo.setVisibility(View.GONE);
-                               }else {
-                                   modopagoefectivo.setVisibility(View.GONE);
-                               }
-                            }
-                        });
-
-                        cbtarjeta.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
-                                if (a){
-                                    textdropStatus.setVisibility(View.VISIBLE);
-                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
-                                    textnrooperacion.setVisibility(View.VISIBLE);
-                                }else {
-                                    // No se seleccionó ningún elemento
-                                }
-                            }
-                        });
-
-                        cbcredito.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
-                                if (a){
-                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
-                                    textdropStatus.setVisibility(View.GONE);
-                                    textnrooperacion.setVisibility(View.GONE);
-                                }else {
-                                    // No se seleccionó ningún elemento
-                                }
+                            public void onClick(View view) {
+                                alertDialog.dismiss();
                             }
                         });
 
@@ -340,67 +317,87 @@ public class VentaFragment extends Fragment{
                         btnagregar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
                                 String textnplaca          = txtplaca.getText().toString();
                                 String textndni            = textdni.getText().toString();
                                 String textnnombre         = textnombre.getText().toString();
                                 String textnNroOperacio    = textNroOperacio.getText().toString();
                                 String textnpagoefectivo   = textpagoefectivo.getText().toString();
 
+                                int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
+                                    return;
                                 } else if (textndni.isEmpty()) {
                                     alertdni.setError("* El campo DNI es obligatorio");
+                                    return;
                                 } else if (textnnombre.isEmpty()) {
                                     alertnombre.setError("* El campo Nombre es obligatorio");
+                                    return;
                                 } else if (radioGroup.getCheckedRadioButtonId() == -1){
                                     Toast.makeText(getContext(), "Por favor, seleccione Tipo de Pago", Toast.LENGTH_SHORT).show();
-                                } else if (textnNroOperacio.isEmpty()){
-                                    alertNroOperacio.setError("* El campo Nro Operación es obligatorio");
-                                } else if (textnNroOperacio.length() < 4){
-                                    alertNroOperacio.setError("* El  Nro Operación debe tener 4 dígitos");
-                                }else if (textnpagoefectivo.isEmpty()){
-                                    alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
-                                }else {
-                                    alertplaca.setErrorEnabled(false);
-                                    alertdni.setErrorEnabled(false);
-                                    alertnombre.setErrorEnabled(false);
+                                    return;
+                                } else if (checkedRadioButtonId == cbtarjeta.getId()) {
 
-                                    detalleVenta.setNroPlaca(txtplaca.getText().toString());
-                                    detalleVenta.setClienteID(textdni.getText().toString());
-                                    detalleVenta.setClienteRS(textnombre.getText().toString());
-                                    detalleVenta.setClienteDR(textdireccion.getText().toString());
-                                    detalleVenta.setKilometraje(textkilometraje.getText().toString());
-                                    detalleVenta.setObservacion(textobservacion.getText().toString());
-                                    detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
-
-                                    String datotipotarjeta =radioButton.getText().toString();
-
-                                    if (datotipotarjeta.equals("Tarjeta")){
-                                        detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
-                                        detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
-                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
-                                    }else if (datotipotarjeta.equals("Credito")){
-                                        detalleVenta.setTarjetaCredito("");
-                                        detalleVenta.setOperacionREF("");
-                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
-                                    }else if (datotipotarjeta.equals("Efectivo")){
-                                        detalleVenta.setTarjetaCredito("");
-                                        detalleVenta.setOperacionREF("");
-                                        detalleVenta.setMontoSoles(Double.parseDouble(""));
-                                    }else {
-                                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                                    if (textnNroOperacio.isEmpty()) {
+                                        alertNroOperacio.setError("* El campo Nro Operación es obligatorio");
+                                        return;
+                                    } else if(textnNroOperacio.length() < 4){
+                                        alertNroOperacio.setError("* El  Nro Operación debe tener 4 dígitos");
+                                        return;
+                                    } else if(textnpagoefectivo.isEmpty()) {
+                                        alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                        return;
                                     }
 
-                                    recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
-                                    Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
-                                    alertDialog.dismiss();
+                                }else if (checkedRadioButtonId == cbcredito.getId()) {
+
+                                     if(textnpagoefectivo.isEmpty()) {
+                                        alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                         return;
+                                    }
+
                                 }
+
+                                alertplaca.setErrorEnabled(false);
+                                alertdni.setErrorEnabled(false);
+                                alertnombre.setErrorEnabled(false);
+                                alertNroOperacio.setErrorEnabled(false);
+                                alertpagoefectivo.setErrorEnabled(false);
+
+                                detalleVenta.setNroPlaca(txtplaca.getText().toString());
+                                detalleVenta.setClienteID(textdni.getText().toString());
+                                detalleVenta.setClienteRUC("");
+                                detalleVenta.setClienteRS(textnombre.getText().toString());
+                                detalleVenta.setClienteDR(textdireccion.getText().toString());
+                                detalleVenta.setKilometraje(textkilometraje.getText().toString());
+                                detalleVenta.setObservacion(textobservacion.getText().toString());
+                                detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
+
+                                String datotipotarjeta =radioButton.getText().toString();
+
+                                detalleVenta.setTarjetaCredito("");
+                                detalleVenta.setOperacionREF("");
+                                detalleVenta.setMontoSoles(Double.valueOf(0));
+
+                                if (datotipotarjeta.equals("Tarjeta")){
+                                    detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
+                                    detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
+                                    detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+
+                                }else if (datotipotarjeta.equals("Credito")) {
+                                    detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+                                }
+
+                                recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+                                Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
+                                alertDialog.dismiss();
+
                             }
                         });
                     }
                 }
-
-
             }
         });
 
@@ -463,6 +460,23 @@ public class VentaFragment extends Fragment{
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
                                 radioButton = dialogView.findViewById(checkedId);
+
+                                if (checkedId == cbefectivo.getId()){
+                                    modopagoefectivo.setVisibility(View.VISIBLE);
+                                    textdropStatus.setVisibility(View.GONE);
+                                    textnrooperacion.setVisibility(View.GONE);
+                                    textinputpagoefectivo.setVisibility(View.GONE);
+                                } else if (checkedId == cbtarjeta.getId()){
+                                    textdropStatus.setVisibility(View.VISIBLE);
+                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                    textnrooperacion.setVisibility(View.VISIBLE);
+                                    modopagoefectivo.setVisibility(View.GONE);
+                                } else if (checkedId == cbcredito.getId()){
+                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                    textdropStatus.setVisibility(View.GONE);
+                                    textnrooperacion.setVisibility(View.GONE);
+                                    modopagoefectivo.setVisibility(View.GONE);
+                                }
                             }
                         });
 
@@ -481,46 +495,6 @@ public class VentaFragment extends Fragment{
                             @Override
                             public void onClick(View view) {
                                 alertDialog.dismiss();
-                            }
-                        });
-
-                        cbefectivo.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
-                                if (a){
-                                    modopagoefectivo.setVisibility(View.VISIBLE);
-                                    textdropStatus.setVisibility(View.GONE);
-                                    textnrooperacion.setVisibility(View.GONE);
-                                    textinputpagoefectivo.setVisibility(View.GONE);
-                                }else {
-                                    modopagoefectivo.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-
-                        cbtarjeta.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
-                                if (a){
-                                    textdropStatus.setVisibility(View.VISIBLE);
-                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
-                                    textnrooperacion.setVisibility(View.VISIBLE);
-                                }else {
-                                    // No se seleccionó ningún elemento
-                                }
-                            }
-                        });
-
-                        cbcredito.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton compoundButton, boolean a) {
-                                if (a){
-                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
-                                    textdropStatus.setVisibility(View.GONE);
-                                    textnrooperacion.setVisibility(View.GONE);
-                                }else {
-                                    // No se seleccionó ningún elemento
-                                }
                             }
                         });
 
@@ -563,11 +537,14 @@ public class VentaFragment extends Fragment{
                         btnagregar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
                                 String textnplaca         = txtplaca.getText().toString();
                                 String textnruc           = textruc.getText().toString();
                                 String textnnombre        = textrazsocial.getText().toString();
                                 String textnNroOperacio   = textNroOperacio.getText().toString();
                                 String textnpagoefectivo  = textpagoefectivo.getText().toString();
+
+                                int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
 
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
@@ -577,18 +554,35 @@ public class VentaFragment extends Fragment{
                                     alertrazsocial.setError("* El campo Nombre es obligatorio");
                                 }else if (radioGroup.getCheckedRadioButtonId() == -1){
                                     Toast.makeText(getContext(), "Por favor, seleccione Tipo de Pago", Toast.LENGTH_SHORT).show();
-                                } else if (textnNroOperacio.isEmpty()){
-                                    alertNroOperacio.setError("* El campo Nro Operación es obligatorio");
-                                } else if (textnNroOperacio.length() < 4){
-                                    alertNroOperacio.setError("* El  Nro Operación debe tener 4 dígitos");
-                                }else if (textnpagoefectivo.isEmpty()){
+                                } else if (textnpagoefectivo.isEmpty()){
                                     alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
-                                } else {
+                                } else if (checkedRadioButtonId == cbtarjeta.getId()) {
+
+                                    if (textnNroOperacio.isEmpty()) {
+                                        alertNroOperacio.setError("* El campo Nro Operación es obligatorio");
+                                        return;
+                                    } else if(textnNroOperacio.length() < 4){
+                                        alertNroOperacio.setError("* El  Nro Operación debe tener 4 dígitos");
+                                        return;
+                                    } else if(textnpagoefectivo.isEmpty()) {
+                                        alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                        return;
+                                    }
+
+                                }else if (checkedRadioButtonId == cbcredito.getId()) {
+
+                                    if(textnpagoefectivo.isEmpty()) {
+                                        alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                        return;
+                                    }
+
+                                }
                                     alertplaca.setErrorEnabled(false);
                                     alertruc.setErrorEnabled(false);
                                     alertrazsocial.setErrorEnabled(false);
 
                                     detalleVenta.setNroPlaca(txtplaca.getText().toString());
+                                    detalleVenta.setClienteID("");
                                     detalleVenta.setClienteRUC(textruc.getText().toString());
                                     detalleVenta.setClienteRS(textrazsocial.getText().toString());
                                     detalleVenta.setClienteDR(textdireccion.getText().toString());
@@ -598,26 +592,22 @@ public class VentaFragment extends Fragment{
 
                                     String datotipotarjeta =radioButton.getText().toString();
 
+                                    detalleVenta.setTarjetaCredito("");
+                                    detalleVenta.setOperacionREF("");
+                                    detalleVenta.setMontoSoles(Double.valueOf(0));
+
                                     if (datotipotarjeta.equals("Tarjeta")){
                                         detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
                                         detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
-                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
-                                    }else if (datotipotarjeta.equals("Credito")){
-                                        detalleVenta.setTarjetaCredito("");
-                                        detalleVenta.setOperacionREF("");
-                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
-                                    }else if (datotipotarjeta.equals("Efectivo")){
-                                        detalleVenta.setTarjetaCredito("");
-                                        detalleVenta.setOperacionREF("");
-                                        detalleVenta.setMontoSoles(Double.parseDouble(""));
-                                    }else {
-                                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                                        detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+
+                                    }else if (datotipotarjeta.equals("Credito")) {
+                                        detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
                                     }
 
                                     recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
                                     Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
                                     alertDialog.dismiss();
-                                }
                             }
                         });
                     }
@@ -824,10 +814,10 @@ public class VentaFragment extends Fragment{
 
                     Cliente cliente = clienteList.get(0);
 
-                        GlobalInfo.getclienteId10  = String.valueOf(cliente.getClienteID());
-                        GlobalInfo.getclienteRUC10 = String.valueOf(cliente.getClienteRUC());
-                        GlobalInfo.getclienteRZ10  = String.valueOf(cliente.getClienteRZ());
-                        GlobalInfo.getclienteDR10  = String.valueOf(cliente.getClienteDR());
+                    GlobalInfo.getclienteId10  = String.valueOf(cliente.getClienteID());
+                    GlobalInfo.getclienteRUC10 = String.valueOf(cliente.getClienteRUC());
+                    GlobalInfo.getclienteRZ10  = String.valueOf(cliente.getClienteRZ());
+                    GlobalInfo.getclienteDR10  = String.valueOf(cliente.getClienteDR());
 
                     if (tipodoc == "01"){
                         textrazsocial.setText(GlobalInfo.getclienteRZ10);
@@ -965,7 +955,7 @@ public class VentaFragment extends Fragment{
                             mCara = item.getNroLado();
 
                             findPico(GlobalInfo.getCara10);
-                          //  findOptran(GlobalInfo.getCara10);
+                            //  findOptran(GlobalInfo.getCara10);
 
                             textcara =  getActivity().findViewById(R.id.textcara);
                             String numlado = item.getNroLado();
