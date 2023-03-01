@@ -43,6 +43,8 @@ import com.anggastudio.sample.WebApiSVEN.Models.Tipotarjeta;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -226,6 +228,7 @@ public class VentaFragment extends Fragment{
                         //Array de los select
                         getCard();
 
+
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -314,6 +317,8 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
+                        radioGroup.check(cbefectivo.getId());
+
                         btnagregar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -325,6 +330,9 @@ public class VentaFragment extends Fragment{
                                 String textnpagoefectivo   = textpagoefectivo.getText().toString();
 
                                 int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+
+                                double value = Double.parseDouble(textnpagoefectivo.toString());
+                                DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
@@ -384,10 +392,22 @@ public class VentaFragment extends Fragment{
                                 if (datotipotarjeta.equals("Tarjeta")){
                                     detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
                                     detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
-                                    detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+
+                                    if(value != Double.parseDouble(decimalFormat.format(value))){
+                                        alertpagoefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
+                                        return;
+                                    }else{
+                                        detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+                                    }
 
                                 }else if (datotipotarjeta.equals("Credito")) {
-                                    detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+
+                                    if(value != Double.parseDouble(decimalFormat.format(value))){
+                                        alertpagoefectivo.setError("* Por favor ingrese un valor con 2 decimales");
+                                        return;
+                                    }else{
+                                        detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+                                    }
                                 }
 
                                 recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
@@ -534,6 +554,8 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
+                        radioGroup.check(cbefectivo.getId());
+
                         btnagregar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -546,16 +568,24 @@ public class VentaFragment extends Fragment{
 
                                 int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
 
+                                double value = Double.parseDouble(textnpagoefectivo.toString());
+                                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
+                                    return;
                                 } else if (textnruc.isEmpty()) {
                                     alertruc.setError("* El campo DNI es obligatorio");
+                                    return;
                                 } else if (textnnombre.isEmpty()) {
                                     alertrazsocial.setError("* El campo Nombre es obligatorio");
+                                    return;
                                 }else if (radioGroup.getCheckedRadioButtonId() == -1){
                                     Toast.makeText(getContext(), "Por favor, seleccione Tipo de Pago", Toast.LENGTH_SHORT).show();
+                                    return;
                                 } else if (textnpagoefectivo.isEmpty()){
                                     alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                    return;
                                 } else if (checkedRadioButtonId == cbtarjeta.getId()) {
 
                                     if (textnNroOperacio.isEmpty()) {
@@ -580,6 +610,8 @@ public class VentaFragment extends Fragment{
                                     alertplaca.setErrorEnabled(false);
                                     alertruc.setErrorEnabled(false);
                                     alertrazsocial.setErrorEnabled(false);
+                                    alertNroOperacio.setErrorEnabled(false);
+                                    alertpagoefectivo.setErrorEnabled(false);
 
                                     detalleVenta.setNroPlaca(txtplaca.getText().toString());
                                     detalleVenta.setClienteID("");
@@ -597,12 +629,26 @@ public class VentaFragment extends Fragment{
                                     detalleVenta.setMontoSoles(Double.valueOf(0));
 
                                     if (datotipotarjeta.equals("Tarjeta")){
+
                                         detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
                                         detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
-                                        detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+
+                                        if(value != Double.parseDouble(decimalFormat.format(value))){
+                                            alertpagoefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
+                                            return;
+                                        }else{
+                                            detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+                                        }
 
                                     }else if (datotipotarjeta.equals("Credito")) {
-                                        detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+
+                                        if(value != Double.parseDouble(decimalFormat.format(value))){
+                                            alertpagoefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
+                                            return;
+                                        }else{
+                                            detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+                                        }
+
                                     }
 
                                     recyclerDetalleVenta.setAdapter(detalleVentaAdapter);

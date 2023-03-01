@@ -321,7 +321,7 @@
                 android:id="@+id/inputpagoefectivo"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:text="0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
