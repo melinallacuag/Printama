@@ -43,7 +43,7 @@
             android:orientation="horizontal"
             android:gravity="center">
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textnplaca"
+                android:id="@+id/alertPlaca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ingresar N° de Placa"
@@ -54,7 +54,7 @@
                 app:endIconMode="clear_text"
                 android:layout_weight="1">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputnplaca"
+                    android:id="@+id/inputPlaca"
                     android:fontFamily="@font/nunito_semibold"
                     android:textSize="12sp"
                     android:inputType="textCapCharacters"
@@ -81,7 +81,7 @@
             android:orientation="horizontal"
             android:gravity="center">
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textruc"
+                android:id="@+id/alertRUC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ingresar RUC"
@@ -92,7 +92,7 @@
                 app:endIconMode="clear_text"
                 android:layout_weight="1">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputruc"
+                    android:id="@+id/inputRUC"
                     android:fontFamily="@font/nunito_semibold"
                     android:textSize="12sp"
                     android:inputType="number"
@@ -115,7 +115,7 @@
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textrazsocial"
+            android:id="@+id/alertRazSocial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingresar Razon Social"
@@ -126,7 +126,7 @@
             app:endIconMode="clear_text"
             android:layout_weight="1">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputrazsocial"
+                android:id="@+id/inputRazSocial"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
                 android:inputType="textCapCharacters"
@@ -135,7 +135,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textdireccion"
+            android:id="@+id/alertDireccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingresar Dirección"
@@ -146,7 +146,7 @@
             app:endIconMode="clear_text"
             android:layout_weight="1">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputdireccion"
+                android:id="@+id/inputDireccion"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
                 android:inputType="textCapCharacters"
@@ -155,7 +155,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textkilometraje"
+            android:id="@+id/alertKilometraje"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingresar Kilometraje"
@@ -166,7 +166,7 @@
             app:endIconMode="clear_text"
             android:layout_weight="1">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputkilometraje"
+                android:id="@+id/inputKilometraje"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
                 android:inputType="textCapCharacters"
@@ -175,7 +175,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textobservacion"
+            android:id="@+id/alertObservacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingresar Observación"
@@ -187,7 +187,7 @@
             android:layout_weight="1">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputobservacion"
+                android:id="@+id/inputObservacion"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
                 android:inputType="textCapCharacters"
@@ -285,7 +285,7 @@
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textnrooperacion"
+            android:id="@+id/alertOperacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingresar Nro.Operacion"
@@ -297,7 +297,7 @@
             app:endIconMode="clear_text"
             android:layout_weight="1">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputnrooperacion"
+                android:id="@+id/inputOperacion"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
                 android:inputType="number"
@@ -306,7 +306,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textpagoefectivo"
+            android:id="@+id/alertPEfectivo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingresar Pago Efectivo"
@@ -318,7 +318,7 @@
             app:endIconMode="clear_text"
             android:layout_weight="1">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputpagoefectivo"
+                android:id="@+id/inputPEfectivo"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="12sp"
                 android:inputType="numberDecimal"

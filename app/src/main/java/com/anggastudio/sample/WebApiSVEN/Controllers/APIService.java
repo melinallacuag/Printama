@@ -74,6 +74,12 @@ public interface APIService {
     @GET("api/cliente/listado/{id}")
     Call<List<Cliente>> findCliente(@Path("id") String id);
 
+    @GET("api/cliente/listado/RUC/{id}")
+    Call<List<Cliente>> findClienteRUC(@Path("id") String id);
+
+    @GET("api/cliente/listado/DNI/{id}")
+    Call<List<Cliente>> findClienteDNI(@Path("id") String id);
+
     @GET("api/placa/listado")
     Call<List<Placa>> getPlaca();
 

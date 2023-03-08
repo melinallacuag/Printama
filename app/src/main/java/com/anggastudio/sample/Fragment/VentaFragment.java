@@ -68,20 +68,19 @@ public class VentaFragment extends Fragment{
     List<DetalleVenta> detalleVentaList;
     private APIService mAPIService;
     private String mCara;
-    /* Boleta-Factura-NotadeDespacho */
+
+    /* Boleta-Factura*/
     Card cards = null;
     RadioGroup radioGroup;
     Spinner dropStatus;
     TextView modopagoefectivo;
     RadioButton cbefectivo,cbtarjeta,cbcredito,radioButton;
     TextInputEditText  textid,txtplaca,textrazsocial,textdni,textruc,textnombre,textdireccion,textkilometraje,textobservacion,textpagoefectivo,textNroOperacio;
-    TextInputLayout alertpagoefectivo,alertNroOperacio,alertid,alertplaca,alertdni,alertruc, alertnombre,alertrazsocial,textinputpagoefectivo,textnrooperacion,textdropStatus;
+    TextInputLayout alertpefectivo,alertoperacion,alertid,alertplaca,alertdni,alertruc, alertnombre,alertrazsocial,textdropStatus;
     Button btnagregar,btncancelar,btngenerar,buscarplaca,buscardni,buscarruc,buscarid;
-
-
     AlertDialog.Builder builder;
     AlertDialog alertDialog;
-    LayoutInflater inflater;
+
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
@@ -185,69 +184,71 @@ public class VentaFragment extends Fragment{
                     String mnCara = detalleVenta.getCara().toString();
 
                     if(mnCara.equals(mCara)) {
+
                         //Abrir Modal de cada Operación
                         builder = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflater = getActivity().getLayoutInflater();
-
                         View dialogView = inflater.inflate(R.layout.fragment_boleta, null);
                         builder.setView(dialogView);
                         abrirmodal();
 
-                        txtplaca         = dialogView.findViewById(R.id.inputnplaca);
-                        textdni          = dialogView.findViewById(R.id.inputdni);
-                        textnombre       = dialogView.findViewById(R.id.inputnombre);
-                        textdireccion    = dialogView.findViewById(R.id.inputdireccion);
-                        textkilometraje  = dialogView.findViewById(R.id.inputkilometraje);
-                        textobservacion  = dialogView.findViewById(R.id.inputobservacion);
-                        textpagoefectivo = dialogView.findViewById(R.id.inputpagoefectivo);
-                        textNroOperacio  = dialogView.findViewById(R.id.inputnrooperacion);
+                        //Alertas
+                        alertplaca       = dialogView.findViewById(R.id.alertPlaca);
+                        alertdni         = dialogView.findViewById(R.id.alertDNI);
+                        alertnombre      = dialogView.findViewById(R.id.alertNombre);
+                        alertpefectivo   = dialogView.findViewById(R.id.alertPEfectivo);
+                        alertoperacion   = dialogView.findViewById(R.id.alertOperacion);
 
-                        textinputpagoefectivo = dialogView.findViewById(R.id.textpagoefectivo);
-                        textnrooperacion      = dialogView.findViewById(R.id.textnrooperacion);
-                        modopagoefectivo      = dialogView.findViewById(R.id.modopagoefectivo);
-                        dropStatus            = dialogView.findViewById(R.id.dropStatus);
-                        textdropStatus        = dialogView.findViewById(R.id.textdropStatus);
+                        //Campos
+                        txtplaca         = dialogView.findViewById(R.id.inputPlaca);
+                        textdni          = dialogView.findViewById(R.id.inputDNI);
+                        textnombre       = dialogView.findViewById(R.id.inputNombre);
+                        textdireccion    = dialogView.findViewById(R.id.inputDireccion);
+                        textkilometraje  = dialogView.findViewById(R.id.inputKilometraje);
+                        textobservacion  = dialogView.findViewById(R.id.inputObservacion);
+                        textNroOperacio  = dialogView.findViewById(R.id.inputOperacion);
+                        textpagoefectivo = dialogView.findViewById(R.id.inputPEfectivo);
+                        modopagoefectivo = dialogView.findViewById(R.id.modopagoefectivo);
 
-                        btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
-                        btncancelar    = dialogView.findViewById(R.id.btncancelar);
-                        btngenerar     = dialogView.findViewById(R.id.btngenerarcliente);
-                        buscardni      = dialogView.findViewById(R.id.btnrenic);
-                        buscarplaca    = dialogView.findViewById(R.id.btnplaca);
+                        //Radio Button
+                        radioGroup       = dialogView.findViewById(R.id.radioformapago);
+                        cbefectivo       = dialogView.findViewById(R.id.radioEfectivo);
+                        cbtarjeta        = dialogView.findViewById(R.id.radioTarjeta);
+                        cbcredito        = dialogView.findViewById(R.id.radioCredito);
 
-                        alertplaca        = dialogView.findViewById(R.id.textnplaca);
-                        alertdni          = dialogView.findViewById(R.id.textdni);
-                        alertnombre       = dialogView.findViewById(R.id.textnombre);
-                        alertNroOperacio  = dialogView.findViewById(R.id.textnrooperacion);
-                        alertpagoefectivo = dialogView.findViewById(R.id.textpagoefectivo);
+                        //Button Spinner
+                        dropStatus       = dialogView.findViewById(R.id.dropStatus);
+                        textdropStatus   = dialogView.findViewById(R.id.textdropStatus);
 
-                        radioGroup     = dialogView.findViewById(R.id.radioformapago);
-                        cbefectivo     = dialogView.findViewById(R.id.radioEfectivo);
-                        cbtarjeta      = dialogView.findViewById(R.id.radioTarjeta);
-                        cbcredito      = dialogView.findViewById(R.id.radioCredito);
+                        //Button
+                        btnagregar       = dialogView.findViewById(R.id.btnagregarboleta);
+                        btncancelar      = dialogView.findViewById(R.id.btncancelar);
+                        btngenerar       = dialogView.findViewById(R.id.btngenerarcliente);
+                        buscardni        = dialogView.findViewById(R.id.btnrenic);
+                        buscarplaca      = dialogView.findViewById(R.id.btnplaca);
 
                         //Array de los select
                         getCard();
 
-
+                        //Radio Button de Visiluación de campos
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
                                 radioButton = dialogView.findViewById(checkedId);
-
                                 if (checkedId == cbefectivo.getId()){
                                     modopagoefectivo.setVisibility(View.VISIBLE);
                                     textdropStatus.setVisibility(View.GONE);
-                                    textnrooperacion.setVisibility(View.GONE);
-                                    textinputpagoefectivo.setVisibility(View.GONE);
+                                    alertoperacion.setVisibility(View.GONE);
+                                    alertpefectivo.setVisibility(View.GONE);
                                 } else if (checkedId == cbtarjeta.getId()){
                                     textdropStatus.setVisibility(View.VISIBLE);
-                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
-                                    textnrooperacion.setVisibility(View.VISIBLE);
+                                    alertpefectivo.setVisibility(View.VISIBLE);
+                                    alertoperacion.setVisibility(View.VISIBLE);
                                     modopagoefectivo.setVisibility(View.GONE);
                                 } else if (checkedId == cbcredito.getId()){
-                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                    alertpefectivo.setVisibility(View.VISIBLE);
                                     textdropStatus.setVisibility(View.GONE);
-                                    textnrooperacion.setVisibility(View.GONE);
+                                    alertoperacion.setVisibility(View.GONE);
                                     modopagoefectivo.setVisibility(View.GONE);
                                 }
                             }
@@ -300,7 +301,7 @@ public class VentaFragment extends Fragment{
                                     alertdni.setError("* El campo DNI es obligatorio");
                                 } else {
                                     alertdni.setErrorEnabled(false);
-                                    findCliente(getClienteDni, "03");
+                                    findClienteDNI(getClienteDni);
                                     textnombre.setText("");
                                     textdireccion.setText("");
                                 }
@@ -329,10 +330,7 @@ public class VentaFragment extends Fragment{
                                 String textnNroOperacio    = textNroOperacio.getText().toString();
                                 String textnpagoefectivo   = textpagoefectivo.getText().toString();
 
-                                int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
-
-                                double value = Double.parseDouble(textnpagoefectivo.toString());
-                                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                                int checkedRadioButtonId   = radioGroup.getCheckedRadioButtonId();
 
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
@@ -343,36 +341,36 @@ public class VentaFragment extends Fragment{
                                 } else if (textnnombre.isEmpty()) {
                                     alertnombre.setError("* El campo Nombre es obligatorio");
                                     return;
-                                } else if (radioGroup.getCheckedRadioButtonId() == -1){
+                                } else if (radioGroup.getCheckedRadioButtonId() == -1) {
                                     Toast.makeText(getContext(), "Por favor, seleccione Tipo de Pago", Toast.LENGTH_SHORT).show();
                                     return;
                                 } else if (checkedRadioButtonId == cbtarjeta.getId()) {
-
                                     if (textnNroOperacio.isEmpty()) {
-                                        alertNroOperacio.setError("* El campo Nro Operación es obligatorio");
+                                        alertoperacion.setError("* El campo Nro Operación es obligatorio");
                                         return;
-                                    } else if(textnNroOperacio.length() < 4){
-                                        alertNroOperacio.setError("* El  Nro Operación debe tener 4 dígitos");
+                                    } else if (textnNroOperacio.length() < 4) {
+                                        alertoperacion.setError("* El  Nro Operación debe tener 4 dígitos");
                                         return;
-                                    } else if(textnpagoefectivo.isEmpty()) {
-                                        alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                    } else if (textnpagoefectivo.isEmpty()) {
+                                        alertpefectivo.setError("* El campo Pago Efectivo es obligatorio");
                                         return;
                                     }
-
-                                }else if (checkedRadioButtonId == cbcredito.getId()) {
-
-                                     if(textnpagoefectivo.isEmpty()) {
-                                        alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
-                                         return;
-                                    }
+                                } else if (checkedRadioButtonId == cbcredito.getId()) {
+                                     if (textnpagoefectivo.isEmpty()) {
+                                         alertpefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                        return;
+                                     }
 
                                 }
+
+                                double value = Double.parseDouble(textnpagoefectivo);
+                                DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
                                 alertplaca.setErrorEnabled(false);
                                 alertdni.setErrorEnabled(false);
                                 alertnombre.setErrorEnabled(false);
-                                alertNroOperacio.setErrorEnabled(false);
-                                alertpagoefectivo.setErrorEnabled(false);
+                                alertoperacion.setErrorEnabled(false);
+                                alertpefectivo.setErrorEnabled(false);
 
                                 detalleVenta.setNroPlaca(txtplaca.getText().toString());
                                 detalleVenta.setClienteID(textdni.getText().toString());
@@ -387,26 +385,26 @@ public class VentaFragment extends Fragment{
 
                                 detalleVenta.setTarjetaCredito("");
                                 detalleVenta.setOperacionREF("");
-                                detalleVenta.setMontoSoles(Double.valueOf(0));
+                                detalleVenta.setMontoSoles(Double.parseDouble(String.valueOf(0)));
 
                                 if (datotipotarjeta.equals("Tarjeta")){
                                     detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
                                     detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
 
-                                    if(value != Double.parseDouble(decimalFormat.format(value))){
-                                        alertpagoefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
+                                    if( value != Double.parseDouble(decimalFormat.format(value))){
+                                        alertpefectivo.setError("* Por favor ingrese un valor con 2 decimales");
                                         return;
                                     }else{
-                                        detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                     }
 
                                 }else if (datotipotarjeta.equals("Credito")) {
 
                                     if(value != Double.parseDouble(decimalFormat.format(value))){
-                                        alertpagoefectivo.setError("* Por favor ingrese un valor con 2 decimales");
+                                        alertpefectivo.setError("* Por favor ingrese un valor con 2 decimales");
                                         return;
                                     }else{
-                                        detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                     }
                                 }
 
@@ -430,44 +428,47 @@ public class VentaFragment extends Fragment{
                     String mnCara = detalleVenta.getCara().toString();
 
                     if(mnCara.equals(mCara) ) {
+
                         //Abrir Modal de cada Operación
                         builder = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflater = getActivity().getLayoutInflater();
-
                         View dialogView = inflater.inflate(R.layout.fragment_factura, null);
                         builder.setView(dialogView);
                         abrirmodal();
 
-                        txtplaca          = dialogView.findViewById(R.id.inputnplaca);
-                        textruc           = dialogView.findViewById(R.id.inputruc);
-                        textrazsocial     = dialogView.findViewById(R.id.inputrazsocial);
-                        textdireccion     = dialogView.findViewById(R.id.inputdireccion);
-                        textkilometraje   = dialogView.findViewById(R.id.inputkilometraje);
-                        textobservacion   = dialogView.findViewById(R.id.inputobservacion);
-                        textpagoefectivo  = dialogView.findViewById(R.id.inputpagoefectivo);
-                        textNroOperacio   = dialogView.findViewById(R.id.inputnrooperacion);
+                        //Alertas
+                        alertplaca       = dialogView.findViewById(R.id.alertPlaca);
+                        alertruc         = dialogView.findViewById(R.id.alertRUC);
+                        alertrazsocial   = dialogView.findViewById(R.id.alertRazSocial);
+                        alertpefectivo   = dialogView.findViewById(R.id.alertPEfectivo);
+                        alertoperacion   = dialogView.findViewById(R.id.alertOperacion);
 
-                        textinputpagoefectivo = dialogView.findViewById(R.id.textpagoefectivo);
-                        textnrooperacion      = dialogView.findViewById(R.id.textnrooperacion);
-                        modopagoefectivo      = dialogView.findViewById(R.id.modopagoefectivo);
-                        dropStatus            = dialogView.findViewById(R.id.dropStatus);
-                        textdropStatus        = dialogView.findViewById(R.id.textdropStatus);
+                        //Campos
+                        txtplaca         = dialogView.findViewById(R.id.inputPlaca);
+                        textruc          = dialogView.findViewById(R.id.inputRUC);
+                        textrazsocial    = dialogView.findViewById(R.id.inputRazSocial);
+                        textdireccion    = dialogView.findViewById(R.id.inputDireccion);
+                        textkilometraje  = dialogView.findViewById(R.id.inputKilometraje);
+                        textobservacion  = dialogView.findViewById(R.id.inputObservacion);
+                        textNroOperacio  = dialogView.findViewById(R.id.inputOperacion);
+                        textpagoefectivo = dialogView.findViewById(R.id.inputPEfectivo);
+                        modopagoefectivo = dialogView.findViewById(R.id.modopagoefectivo);
 
-                        btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
-                        btncancelar    = dialogView.findViewById(R.id.btncancelar);
-                        buscarruc      = dialogView.findViewById(R.id.btnsunat);
-                        buscarplaca    = dialogView.findViewById(R.id.btnplaca);
-
-                        alertplaca     = dialogView.findViewById(R.id.textnplaca);
-                        alertruc       = dialogView.findViewById(R.id.textruc);
-                        alertrazsocial = dialogView.findViewById(R.id.textrazsocial);
-                        alertNroOperacio  = dialogView.findViewById(R.id.textnrooperacion);
-                        alertpagoefectivo = dialogView.findViewById(R.id.textpagoefectivo);
-
+                        //Radio Button
                         radioGroup     = dialogView.findViewById(R.id.radioformapago);
                         cbefectivo     = dialogView.findViewById(R.id.radioEfectivo);
                         cbtarjeta      = dialogView.findViewById(R.id.radioTarjeta);
                         cbcredito      = dialogView.findViewById(R.id.radioCredito);
+
+                        //Button Spinner
+                        dropStatus            = dialogView.findViewById(R.id.dropStatus);
+                        textdropStatus        = dialogView.findViewById(R.id.textdropStatus);
+
+                        //Button
+                        btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
+                        btncancelar    = dialogView.findViewById(R.id.btncancelar);
+                        buscarruc      = dialogView.findViewById(R.id.btnsunat);
+                        buscarplaca    = dialogView.findViewById(R.id.btnplaca);
 
                         //Array de los select
                         getCard();
@@ -480,17 +481,17 @@ public class VentaFragment extends Fragment{
                                 if (checkedId == cbefectivo.getId()){
                                     modopagoefectivo.setVisibility(View.VISIBLE);
                                     textdropStatus.setVisibility(View.GONE);
-                                    textnrooperacion.setVisibility(View.GONE);
-                                    textinputpagoefectivo.setVisibility(View.GONE);
+                                    alertoperacion.setVisibility(View.GONE);
+                                    alertpefectivo.setVisibility(View.GONE);
                                 } else if (checkedId == cbtarjeta.getId()){
                                     textdropStatus.setVisibility(View.VISIBLE);
-                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
-                                    textnrooperacion.setVisibility(View.VISIBLE);
+                                    alertpefectivo.setVisibility(View.VISIBLE);
+                                    alertoperacion.setVisibility(View.VISIBLE);
                                     modopagoefectivo.setVisibility(View.GONE);
                                 } else if (checkedId == cbcredito.getId()){
-                                    textinputpagoefectivo.setVisibility(View.VISIBLE);
+                                    alertpefectivo.setVisibility(View.VISIBLE);
                                     textdropStatus.setVisibility(View.GONE);
-                                    textnrooperacion.setVisibility(View.GONE);
+                                    alertoperacion.setVisibility(View.GONE);
                                     modopagoefectivo.setVisibility(View.GONE);
                                 }
                             }
@@ -543,7 +544,7 @@ public class VentaFragment extends Fragment{
                                     alertruc.setError("* El campo RUC es obligatorio");
                                 }else{
                                     alertruc.setErrorEnabled(false);
-                                    findCliente(getClienteRuc,"01");
+                                    findClienteRUC(getClienteRuc);
                                     textrazsocial.setText("");
                                     textdireccion.setText("");
                                 }
@@ -561,11 +562,7 @@ public class VentaFragment extends Fragment{
                                 String textnnombre        = textrazsocial.getText().toString();
                                 String textnNroOperacio   = textNroOperacio.getText().toString();
                                 String textnpagoefectivo  = textpagoefectivo.getText().toString();
-
-                                int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
-
-                                double value = Double.parseDouble(textnpagoefectivo.toString());
-                                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                                int checkedRadioButtonId  = radioGroup.getCheckedRadioButtonId();
 
                                 if (textnplaca.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
@@ -580,49 +577,49 @@ public class VentaFragment extends Fragment{
                                     Toast.makeText(getContext(), "Por favor, seleccione Tipo de Pago", Toast.LENGTH_SHORT).show();
                                     return;
                                 } else if (textnpagoefectivo.isEmpty()){
-                                    alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                    alertpefectivo.setError("* El campo Pago Efectivo es obligatorio");
                                     return;
                                 } else if (checkedRadioButtonId == cbtarjeta.getId()) {
-
                                     if (textnNroOperacio.isEmpty()) {
-                                        alertNroOperacio.setError("* El campo Nro Operación es obligatorio");
+                                        alertoperacion.setError("* El campo Nro Operación es obligatorio");
                                         return;
                                     } else if(textnNroOperacio.length() < 4){
-                                        alertNroOperacio.setError("* El  Nro Operación debe tener 4 dígitos");
+                                        alertoperacion.setError("* El  Nro Operación debe tener 4 dígitos");
                                         return;
                                     } else if(textnpagoefectivo.isEmpty()) {
-                                        alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                        alertpefectivo.setError("* El campo Pago Efectivo es obligatorio");
                                         return;
                                     }
-
                                 }else if (checkedRadioButtonId == cbcredito.getId()) {
-
                                     if(textnpagoefectivo.isEmpty()) {
-                                        alertpagoefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                        alertpefectivo.setError("* El campo Pago Efectivo es obligatorio");
                                         return;
                                     }
-
                                 }
-                                    alertplaca.setErrorEnabled(false);
-                                    alertruc.setErrorEnabled(false);
-                                    alertrazsocial.setErrorEnabled(false);
-                                    alertNroOperacio.setErrorEnabled(false);
-                                    alertpagoefectivo.setErrorEnabled(false);
 
-                                    detalleVenta.setNroPlaca(txtplaca.getText().toString());
-                                    detalleVenta.setClienteID("");
-                                    detalleVenta.setClienteRUC(textruc.getText().toString());
-                                    detalleVenta.setClienteRS(textrazsocial.getText().toString());
-                                    detalleVenta.setClienteDR(textdireccion.getText().toString());
-                                    detalleVenta.setKilometraje(textkilometraje.getText().toString());
-                                    detalleVenta.setObservacion(textobservacion.getText().toString());
-                                    detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
+                                double value = Double.parseDouble(textnpagoefectivo);
+                                DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
-                                    String datotipotarjeta =radioButton.getText().toString();
+                                alertplaca.setErrorEnabled(false);
+                                alertruc.setErrorEnabled(false);
+                                alertrazsocial.setErrorEnabled(false);
+                                alertoperacion.setErrorEnabled(false);
+                                alertpefectivo.setErrorEnabled(false);
 
-                                    detalleVenta.setTarjetaCredito("");
-                                    detalleVenta.setOperacionREF("");
-                                    detalleVenta.setMontoSoles(Double.valueOf(0));
+                                detalleVenta.setNroPlaca(txtplaca.getText().toString());
+                                detalleVenta.setClienteID("");
+                                detalleVenta.setClienteRUC(textruc.getText().toString());
+                                detalleVenta.setClienteRS(textrazsocial.getText().toString());
+                                detalleVenta.setClienteDR(textdireccion.getText().toString());
+                                detalleVenta.setKilometraje(textkilometraje.getText().toString());
+                                detalleVenta.setObservacion(textobservacion.getText().toString());
+                                detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
+
+                                String datotipotarjeta =radioButton.getText().toString();
+
+                                detalleVenta.setTarjetaCredito("");
+                                detalleVenta.setOperacionREF("");
+                                detalleVenta.setMontoSoles(Double.parseDouble(String.valueOf(0)));
 
                                     if (datotipotarjeta.equals("Tarjeta")){
 
@@ -630,7 +627,7 @@ public class VentaFragment extends Fragment{
                                         detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
 
                                         if(value != Double.parseDouble(decimalFormat.format(value))){
-                                            alertpagoefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
+                                            alertpefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
                                             return;
                                         }else{
                                             detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
@@ -639,7 +636,7 @@ public class VentaFragment extends Fragment{
                                     }else if (datotipotarjeta.equals("Credito")) {
 
                                         if(value != Double.parseDouble(decimalFormat.format(value))){
-                                            alertpagoefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
+                                            alertpefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
                                             return;
                                         }else{
                                             detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
@@ -827,6 +824,98 @@ public class VentaFragment extends Fragment{
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
         alertDialog.setCancelable(false);
+    }
+
+    private  void findClienteDNI(String id){
+
+        Call<List<Cliente>> call = mAPIService.findClienteDNI(id);
+
+        call.enqueue(new Callback<List<Cliente>>() {
+            @Override
+            public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<Cliente> clienteList = response.body();
+
+                    if (clienteList == null || clienteList.isEmpty()) {
+                        if (textdni.length() < 8){
+                            alertdni.setError("* El DNI debe tener 8 dígitos");
+                        }else{
+                            alertdni.setError("* No se encontró ningún DNI");
+                        }
+                        return;
+                    }
+
+                    Cliente cliente = clienteList.get(0);
+
+                    GlobalInfo.getclienteId10  = String.valueOf(cliente.getClienteID());
+                    GlobalInfo.getclienteRUC10 = String.valueOf(cliente.getClienteRUC());
+                    GlobalInfo.getclienteRZ10  = String.valueOf(cliente.getClienteRZ());
+                    GlobalInfo.getclienteDR10  = String.valueOf(cliente.getClienteDR());
+
+                    textnombre.setText(GlobalInfo.getclienteRZ10);
+                    textdireccion.setText(GlobalInfo.getclienteDR10);
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(),ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Cliente>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Cliente - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private  void findClienteRUC(String id){
+
+        Call<List<Cliente>> call = mAPIService.findClienteRUC(id);
+
+        call.enqueue(new Callback<List<Cliente>>() {
+            @Override
+            public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<Cliente> clienteList = response.body();
+
+                    if (clienteList == null || clienteList.isEmpty()) {
+                        if (textruc.length() < 11){
+                            alertruc.setError("* El RUC debe tener 11 dígitos");
+                        }else{
+                            alertruc.setError("* No se encontró ningún RUC");
+                        }
+                        return;
+                    }
+
+                    Cliente cliente = clienteList.get(0);
+
+                    GlobalInfo.getclienteId10  = String.valueOf(cliente.getClienteID());
+                    GlobalInfo.getclienteRUC10 = String.valueOf(cliente.getClienteRUC());
+                    GlobalInfo.getclienteRZ10  = String.valueOf(cliente.getClienteRZ());
+                    GlobalInfo.getclienteDR10  = String.valueOf(cliente.getClienteDR());
+
+                    textrazsocial.setText(GlobalInfo.getclienteRZ10);
+                    textdireccion.setText(GlobalInfo.getclienteDR10);
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(),ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Cliente>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Cliente - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private  void findCliente(String id,String tipodoc){
