@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.anggastudio.sample.WebApiSVEN.Models.Company;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;

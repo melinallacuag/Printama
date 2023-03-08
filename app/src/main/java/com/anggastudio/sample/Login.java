@@ -40,10 +40,10 @@ public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //APIREST
         mAPIService = GlobalInfo.getAPIService();
 
         //Boton par configurar la impresión bluetooth.
@@ -71,22 +71,26 @@ public class Login extends AppCompatActivity {
         //findCompany(GlobalInfo.getCompanyID10);
 
         btniniciar.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+
                 usuarioUser    = usuario.getText().toString();
                 contraseñaUser = contraseña.getText().toString();
 
                 if(usuarioUser.isEmpty()){
                     alertuser.setError("El campo usuario es obligatorio");
+
                 }else if(contraseñaUser.isEmpty()){
                     alertpassword.setError("El campo contraseña es obligatorio");
+
                 }else{
                     alertuser.setErrorEnabled(false);
                     alertpassword.setErrorEnabled(false);
+
                     findUsers(usuario.getText().toString());
+
                 }
-
-
             }
         });
     }
@@ -117,8 +121,10 @@ public class Login extends AppCompatActivity {
                     String getPass = checkpassword(contraseña.getText().toString());
 
                     if(getPass.equals(getPass10)){
+
                         Toast.makeText(Login.this, "Bienvenido al Sistema SVEN", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Login.this,Menu.class));
+
                     }
                     else {
                         Toast.makeText(Login.this, "El usuario o la contraseña son incorrectos", Toast.LENGTH_SHORT).show();
@@ -128,7 +134,6 @@ public class Login extends AppCompatActivity {
                 }catch (Exception ex){
                     Toast.makeText(Login.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -171,13 +176,14 @@ public class Login extends AppCompatActivity {
                         GlobalInfo.getventaTarjeta10 = Boolean.valueOf(terminal.getVenta_Tarjeta());
                         GlobalInfo.getventaGratuita10 = Boolean.valueOf(terminal.getVenta_Gratuita());
                         GlobalInfo.getventaSerafin10 = Boolean.valueOf(terminal.getVenta_Serafin());
-
                     }
 
                     if (GlobalInfo.getterminalID10.isEmpty() || GlobalInfo.getterminalID10 == null) {
+
                         imeii.setTextColor(getResources().getColor(R.color.colorError));
                         Toast.makeText(Login.this, "Terminal no configurado, comuniquese con el administrador.", Toast.LENGTH_SHORT).show();
                         return;
+
                     }
 
                 }catch (Exception ex){

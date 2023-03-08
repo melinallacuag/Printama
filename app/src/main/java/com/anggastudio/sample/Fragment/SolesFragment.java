@@ -48,15 +48,16 @@ public class SolesFragment extends DialogFragment {
         montosoles    = view.findViewById(R.id.montosoles);
         alertsoles    = view.findViewById(R.id.textsoles);
 
-        mAPIService = GlobalInfo.getAPIService();
+        mAPIService   = GlobalInfo.getAPIService();
 
         btncancelar.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) { dismiss();}
         });
 
-
         agregar.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 

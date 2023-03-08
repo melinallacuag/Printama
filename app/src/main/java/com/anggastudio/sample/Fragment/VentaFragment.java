@@ -78,6 +78,10 @@ public class VentaFragment extends Fragment{
     TextInputLayout alertpagoefectivo,alertNroOperacio,alertid,alertplaca,alertdni,alertruc, alertnombre,alertrazsocial,textinputpagoefectivo,textnrooperacion,textdropStatus;
     Button btnagregar,btncancelar,btngenerar,buscarplaca,buscardni,buscarruc,buscarid;
 
+
+    AlertDialog.Builder builder;
+    AlertDialog alertDialog;
+    LayoutInflater inflater;
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
@@ -181,17 +185,13 @@ public class VentaFragment extends Fragment{
                     String mnCara = detalleVenta.getCara().toString();
 
                     if(mnCara.equals(mCara)) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        //Abrir Modal de cada Operación
+                        builder = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflater = getActivity().getLayoutInflater();
 
                         View dialogView = inflater.inflate(R.layout.fragment_boleta, null);
                         builder.setView(dialogView);
-
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        alertDialog.show();
-                        alertDialog.setCancelable(false);
+                        abrirmodal();
 
                         txtplaca         = dialogView.findViewById(R.id.inputnplaca);
                         textdni          = dialogView.findViewById(R.id.inputdni);
@@ -430,17 +430,13 @@ public class VentaFragment extends Fragment{
                     String mnCara = detalleVenta.getCara().toString();
 
                     if(mnCara.equals(mCara) ) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        //Abrir Modal de cada Operación
+                        builder = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflater = getActivity().getLayoutInflater();
 
                         View dialogView = inflater.inflate(R.layout.fragment_factura, null);
                         builder.setView(dialogView);
-
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        alertDialog.show();
-                        alertDialog.setCancelable(false);
+                        abrirmodal();
 
                         txtplaca          = dialogView.findViewById(R.id.inputnplaca);
                         textruc           = dialogView.findViewById(R.id.inputruc);
@@ -669,34 +665,28 @@ public class VentaFragment extends Fragment{
                     String mnCara = detalleVenta.getCara().toString();
                     if(mnCara.equals(mCara) ) {
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        LayoutInflater inflater = getActivity().getLayoutInflater();
+                        abrirmodal();
 
                         View dialogView = inflater.inflate(R.layout.fragment_nota_despacho, null);
                         builder.setView(dialogView);
 
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        alertDialog.show();
-                        alertDialog.setCancelable(false);
-
                         txtplaca        = dialogView.findViewById(R.id.inputnplaca);
-                        textid         = dialogView.findViewById(R.id.inputid);
+                        textid          = dialogView.findViewById(R.id.inputid);
                         textruc         = dialogView.findViewById(R.id.inputruc);
                         textnombre      = dialogView.findViewById(R.id.inputnombre);
                         textdireccion   = dialogView.findViewById(R.id.inputdireccion);
                         textkilometraje = dialogView.findViewById(R.id.inputkilometraje);
                         textobservacion = dialogView.findViewById(R.id.inputobservacion);
 
-                        btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
-                        btncancelar    = dialogView.findViewById(R.id.btncancelarboleta);
-                        buscarid      = dialogView.findViewById(R.id.btnsunat);
-                        buscarplaca    = dialogView.findViewById(R.id.btnplaca);
+                        btnagregar      = dialogView.findViewById(R.id.btnagregarboleta);
+                        btncancelar     = dialogView.findViewById(R.id.btncancelarboleta);
+                        buscarid        = dialogView.findViewById(R.id.btnsunat);
+                        buscarplaca     = dialogView.findViewById(R.id.btnplaca);
 
-                        alertplaca     = dialogView.findViewById(R.id.textnplaca);
-                        alertid       = dialogView.findViewById(R.id.textid);
-                        alertruc       = dialogView.findViewById(R.id.textruc);
-                        alertnombre    = dialogView.findViewById(R.id.textnombre);
+                        alertplaca      = dialogView.findViewById(R.id.textnplaca);
+                        alertid         = dialogView.findViewById(R.id.textid);
+                        alertruc        = dialogView.findViewById(R.id.textruc);
+                        alertnombre     = dialogView.findViewById(R.id.textnombre);
 
                         btncancelar.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -708,17 +698,27 @@ public class VentaFragment extends Fragment{
                         buscarplaca.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String getPlaca = txtplaca.getText().toString();
 
-                                if (getPlaca.isEmpty()) {
-                                    alertplaca.setError("* El campo Placa es obligatorio");
-                                } else {
-                                    alertplaca.setErrorEnabled(false);
-                                    findPlaca(getPlaca,"99");
-                                    textid.setText("");
-                                    textnombre.setText("");
-                                    textdireccion.setText("");
-                                }
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                LayoutInflater inflater = getActivity().getLayoutInflater();
+
+                                View dialogView = inflater.inflate(R.layout.fragment_clientes, null);
+                                builder.setView(dialogView);
+
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                alertDialog.show();
+                                alertDialog.setCancelable(false);
+
+                                btncancelar    = dialogView.findViewById(R.id.btncancelar);
+
+                                btncancelar.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        alertDialog.dismiss();
+                                    }
+                                });
+
                             }
                         });
 
@@ -820,6 +820,13 @@ public class VentaFragment extends Fragment{
         findDetalleVenta(GlobalInfo.getImei10);
 
         return view;
+    }
+
+    private void abrirmodal(){
+        alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+        alertDialog.setCancelable(false);
     }
 
     private  void findCliente(String id,String tipodoc){

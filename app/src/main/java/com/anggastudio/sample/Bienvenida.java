@@ -26,9 +26,9 @@ public class Bienvenida extends AppCompatActivity {
         tituloAnim  = AnimationUtils.loadAnimation(this,R.anim.titulo_animation);
         parrafoAnim = AnimationUtils.loadAnimation(this,R.anim.parrafo_animation);
 
-        logo    = findViewById(R.id.logoapp);
-        titulo  = findViewById(R.id.bienvenida);
-        slogan  = findViewById(R.id.parrafo);
+        logo        = findViewById(R.id.logoapp);
+        titulo      = findViewById(R.id.bienvenida);
+        slogan      = findViewById(R.id.parrafo);
 
         logo.startAnimation(logoAnim);
         titulo.startAnimation(tituloAnim);

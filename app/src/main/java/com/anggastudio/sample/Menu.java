@@ -19,64 +19,87 @@ import com.anggastudio.sample.Fragment.VentaFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class Menu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     private DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
+    ActionBarDrawerToggle toggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
+
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        drawerLayout   = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav,
-                R.string.close_nav);
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
+
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
         if (savedInstanceState == null) {
+
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DasboardFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_dasboard);
+
         }
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
         switch (item.getItemId()) {
+
             case R.id.nav_dasboard:
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DasboardFragment()).commit();
                 break;
+
             case R.id.nav_venta:
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VentaFragment()).commit();
                 break;
+
             case R.id.nav_cierrex:
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CierreXFragment()).commit();
                 break;
 
             case R.id.nav_cambioturno:
+
                 CambioTurnoFragment cambioTurnoFragment = new CambioTurnoFragment();
                 cambioTurnoFragment.show(getSupportFragmentManager(), "Cambio de Turno");
                 cambioTurnoFragment.setCancelable(false);
                 break;
 
             case R.id.nav_iniciodia:
+
                 InicioDiaFragment inicioDiaFragment = new InicioDiaFragment();
                 inicioDiaFragment.show(getSupportFragmentManager(), "Inicio de Día");
                 inicioDiaFragment.setCancelable(false);
                 break;
+
             case R.id.nav_salir:
-                 SalirFragment salirFragment = new SalirFragment();
-                salirFragment.show(getSupportFragmentManager(), "Inicio de Día");
+
+                SalirFragment salirFragment = new SalirFragment();
+                salirFragment.show(getSupportFragmentManager(), "Salir");
                 salirFragment.setCancelable(false);
                 break;
         }
+
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
     @Override
     public void onBackPressed() {
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DasboardFragment()).commit();
+
     }
-
-
-
-
 }

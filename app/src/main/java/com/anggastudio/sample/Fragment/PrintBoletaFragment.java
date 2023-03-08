@@ -31,6 +31,7 @@ import java.util.TimeZone;
 public class PrintBoletaFragment extends DialogFragment {
 
     Button cerrar;
+    TextView producto,lado,importe;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,9 +39,9 @@ public class PrintBoletaFragment extends DialogFragment {
 
         View view = inflater.inflate(R.layout.fragment_print_boleta, container, false);
 
-        TextView producto     = view.findViewById(R.id.textproducto);
-        TextView lado         = view.findViewById(R.id.textlado);
-        TextView importe      = view.findViewById(R.id.textimporte);
+        producto     = view.findViewById(R.id.textproducto);
+        lado         = view.findViewById(R.id.textlado);
+        importe      = view.findViewById(R.id.textimporte);
 
         //Detalle de la Operación
         Bundle bundle         = this.getArguments();
@@ -53,12 +54,14 @@ public class PrintBoletaFragment extends DialogFragment {
         importe.setText(datoimporte);
 
         cerrar   = view.findViewById(R.id.btncerrar);
+
         cerrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
+
         view.findViewById(R.id.btnimpirmirboleta).setOnClickListener(v -> boletas(turno,cajero,umed));
         return view;
     }
@@ -68,13 +71,14 @@ public class PrintBoletaFragment extends DialogFragment {
     String umed     = "GLL";
 
     private  void boletas(String turno ,String cajero, String umed) {
+
         Bundle bundle         = this.getArguments();
         //LOGO DE LA EMPRESA
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
 
         //FECHA-HORA
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
-        SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy/mm/dd hh:mm:ss");
         String FechaHora      = sdf.format(cal.getTime());
 
         //LADO
