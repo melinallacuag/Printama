@@ -163,19 +163,19 @@ public class Login extends AppCompatActivity {
 
                     for(Terminal terminal: terminalList){
 
-                        GlobalInfo.getterminalID10 = String.valueOf(terminal.getTerminalID());
-                        GlobalInfo.getfecha10 = String.valueOf(terminal.getFecha_Proceso());
-                        GlobalInfo.getturno10 = Integer.valueOf(terminal.getTurno());
-                        GlobalInfo.getCompanyID10 = Integer.valueOf(terminal.getCompanyID());
-                        GlobalInfo.getalmacenID10 = Integer.valueOf(terminal.getAlmacenID());
-                        GlobalInfo.getconsultaSunat10 = Boolean.valueOf(terminal.getConsulta_Sunat());
+                        GlobalInfo.getterminalID10      = String.valueOf(terminal.getTerminalID());
+                        GlobalInfo.getfecha10           = String.valueOf(terminal.getFecha_Proceso());
+                        GlobalInfo.getturno10           = Integer.valueOf(terminal.getTurno());
+                        GlobalInfo.getCompanyID10       = Integer.valueOf(terminal.getCompanyID());
+                        GlobalInfo.getalmacenID10       = Integer.valueOf(terminal.getAlmacenID());
+                        GlobalInfo.getconsultaSunat10   = Boolean.valueOf(terminal.getConsulta_Sunat());
                         GlobalInfo.getventaAutomatica10 = Boolean.valueOf(terminal.getVenta_Automatica());
-                        GlobalInfo.getventaPlaya10 = Boolean.valueOf(terminal.getVenta_Playa());
-                        GlobalInfo.getventaTienda10 = Boolean.valueOf(terminal.getVenta_Tienda());
-                        GlobalInfo.getventaCredito10 = Boolean.valueOf(terminal.getVenta_Credito());
-                        GlobalInfo.getventaTarjeta10 = Boolean.valueOf(terminal.getVenta_Tarjeta());
-                        GlobalInfo.getventaGratuita10 = Boolean.valueOf(terminal.getVenta_Gratuita());
-                        GlobalInfo.getventaSerafin10 = Boolean.valueOf(terminal.getVenta_Serafin());
+                        GlobalInfo.getventaPlaya10      = Boolean.valueOf(terminal.getVenta_Playa());
+                        GlobalInfo.getventaTienda10     = Boolean.valueOf(terminal.getVenta_Tienda());
+                        GlobalInfo.getventaCredito10    = Boolean.valueOf(terminal.getVenta_Credito());
+                        GlobalInfo.getventaTarjeta10    = Boolean.valueOf(terminal.getVenta_Tarjeta());
+                        GlobalInfo.getventaGratuita10   = Boolean.valueOf(terminal.getVenta_Gratuita());
+                        GlobalInfo.getventaSerafin10    = Boolean.valueOf(terminal.getVenta_Serafin());
                     }
 
                     if (GlobalInfo.getterminalID10.isEmpty() || GlobalInfo.getterminalID10 == null) {

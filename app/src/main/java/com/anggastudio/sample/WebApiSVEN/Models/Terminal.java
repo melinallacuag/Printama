@@ -16,6 +16,18 @@ public class Terminal {
     private Boolean venta_Tarjeta;
     private Boolean venta_Gratuita;
     private Boolean venta_Serafin;
+    private String  factura_Serie;
+    private String  factura_Numero;
+    private String  boleta_Serie;
+    private String  boleta_Numero;
+    private String  nCredito_Serie;
+    private String  nCredito_Numero;
+    private String  nDebito_Serie;
+    private String  nDebito_Numero;
+    private String  serafin_Serie;
+    private String  serafin_Numero;
+    private String  nDespacho_Serie;
+    private String  nDespacho_Numero;
 
     public String getTerminalID() {
         return terminalID;
