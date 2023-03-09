@@ -3,52 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    tools:context=".Fragment.CierreXFragment">
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linearLayoutCompat2"
-        android:layout_width="match_parent"
-        android:layout_height="40sp"
-        android:layout_gravity="center"
-        android:background="#001E89"
-        android:paddingStart="10sp"
-        android:paddingLeft="20sp"
-        android:paddingEnd="20sp"
-        android:paddingRight="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/volverdasboard"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:layout_gravity="center"
-            android:background="#001E89"
-            android:src="@drawable/icon_flecha" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/nunito_black"
-            android:gravity="center"
-            android:text="CIERRE X"
-            android:textColor="#fff"
-            android:textSize="15sp" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/linearLayout2"

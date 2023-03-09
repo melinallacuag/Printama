@@ -19,17 +19,9 @@ public class CierreXFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_cierre_x, container, false);
-        ImageButton regreso       = view.findViewById(R.id.volverdasboard);
 
-        regreso.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DasboardFragment dasboardFragment  = new DasboardFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
-            }
-        });
+        View view = inflater.inflate(R.layout.fragment_cierre_x, container, false);
+
         view.findViewById(R.id.imprimircierrex).setOnClickListener(v -> cierrex());
         return view;
     }

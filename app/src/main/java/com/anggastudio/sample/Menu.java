@@ -7,14 +7,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
-import com.anggastudio.sample.Fragment.CambioTurnoFragment;
 import com.anggastudio.sample.Fragment.CierreXFragment;
 import com.anggastudio.sample.Fragment.DasboardFragment;
-import com.anggastudio.sample.Fragment.InicioDiaFragment;
-import com.anggastudio.sample.Fragment.SalirFragment;
 import com.anggastudio.sample.Fragment.VentaFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,6 +29,10 @@ public class Menu extends AppCompatActivity implements NavigationView.OnNavigati
     NavigationView navigationView;
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
+
+    AlertDialog.Builder builder;
+    AlertDialog alertDialog;
+    Button btncancelar,btnagregar,btnsalir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,23 +82,101 @@ public class Menu extends AppCompatActivity implements NavigationView.OnNavigati
 
             case R.id.nav_cambioturno:
 
-                CambioTurnoFragment cambioTurnoFragment = new CambioTurnoFragment();
-                cambioTurnoFragment.show(getSupportFragmentManager(), "Cambio de Turno");
-                cambioTurnoFragment.setCancelable(false);
+                builder = new AlertDialog.Builder(this);
+                LayoutInflater inflater = this.getLayoutInflater();
+                View dialogCambioturno = inflater.inflate(R.layout.fragment_cambio_turno, null);
+                builder.setView(dialogCambioturno);
+                abrirmodal();
+
+                btncancelar    = dialogCambioturno.findViewById(R.id.btncancelarcambioturno);
+                btnagregar     = dialogCambioturno.findViewById(R.id.btnagregarcambioturno);
+
+                btncancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+                btnagregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent intent = new Intent(getApplicationContext(), Login.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finalize();
+                            Toast.makeText(getApplicationContext(), "SE GENERO EL CAMBIO DE TURNO", Toast.LENGTH_SHORT).show();
+                        } catch (Throwable e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
                 break;
 
             case R.id.nav_iniciodia:
+                builder = new AlertDialog.Builder(this);
+                LayoutInflater inflate = this.getLayoutInflater();
+                View dialogIniciodia = inflate.inflate(R.layout.fragment_inicio_dia, null);
+                builder.setView(dialogIniciodia);
+                abrirmodal();
 
-                InicioDiaFragment inicioDiaFragment = new InicioDiaFragment();
-                inicioDiaFragment.show(getSupportFragmentManager(), "Inicio de Día");
-                inicioDiaFragment.setCancelable(false);
+                btncancelar    = dialogIniciodia.findViewById(R.id.btncancelariniciodia);
+                btnagregar     = dialogIniciodia.findViewById(R.id.btnagregariniciodia);
+
+                btncancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+                btnagregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent intent = new Intent(getApplicationContext(), Login.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finalize();
+                            Toast.makeText(getApplicationContext(), "SE GENERO EL INICIO DE DÍA", Toast.LENGTH_SHORT).show();
+                        } catch (Throwable e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 break;
 
             case R.id.nav_salir:
 
-                SalirFragment salirFragment = new SalirFragment();
-                salirFragment.show(getSupportFragmentManager(), "Salir");
-                salirFragment.setCancelable(false);
+                builder = new AlertDialog.Builder(this);
+                LayoutInflater inflaters = this.getLayoutInflater();
+                View dialogSalir = inflaters.inflate(R.layout.fragment_salir, null);
+                builder.setView(dialogSalir);
+                abrirmodal();
+
+                btncancelar    = dialogSalir.findViewById(R.id.btncancelarsalida);
+                btnsalir     = dialogSalir.findViewById(R.id.btnsalir);
+
+                btncancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+                btnsalir.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent intent = new Intent(getApplicationContext(), Login.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finalize();
+                            Toast.makeText(getApplicationContext(), "CERRAR SESIÓN", Toast.LENGTH_SHORT).show();
+                        } catch (Throwable e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 break;
         }
 
@@ -101,5 +188,12 @@ public class Menu extends AppCompatActivity implements NavigationView.OnNavigati
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DasboardFragment()).commit();
 
+    }
+
+    private void abrirmodal(){
+        alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+        alertDialog.setCancelable(false);
     }
 }

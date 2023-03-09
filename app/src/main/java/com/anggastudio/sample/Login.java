@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
     TextInputEditText usuario, contraseña;
     TextInputLayout alertuser,alertpassword;
     TextView imeii;
-    String getPass10,usuarioUser,contraseñaUser;
+    String usuarioUser,contraseñaUser;
 
     private APIService mAPIService;
 
@@ -46,7 +46,16 @@ public class Login extends AppCompatActivity {
 
         mAPIService = GlobalInfo.getAPIService();
 
-        //Boton par configurar la impresión bluetooth.
+        btniniciar     = findViewById(R.id.btnlogin);
+        usuario        = findViewById(R.id.usuario);
+        contraseña     = findViewById(R.id.contraseña);
+        alertuser      = findViewById(R.id.textusuario);
+        alertpassword  = findViewById(R.id.textcontraseña);
+
+        /**
+         * Boton par configurar la impresión bluetooth.
+         */
+
         configuracion = findViewById(R.id.btnconfiguracion);
         configuracion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,20 +64,16 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        //Detectar el IMEI
+        /**
+         * Detectar el IMEI
+         */
+
         imeii = findViewById(R.id.imei);
         imeii.setText(ObtenerIMEI.getDeviceId(getApplicationContext()));
 
-        btniniciar     = findViewById(R.id.btnlogin);
-        usuario        = findViewById(R.id.usuario);
-        contraseña     = findViewById(R.id.contraseña);
-        alertuser      = findViewById(R.id.textusuario);
-        alertpassword  = findViewById(R.id.textcontraseña);
+        GlobalInfo.getterminalImei10 = imeii.getText().toString();
+        findTerminal(GlobalInfo.getterminalImei10.toUpperCase());
 
-        GlobalInfo.getImei10 = imeii.getText().toString();
-        findTerminal(GlobalInfo.getImei10.toUpperCase());
-
-        //findCompany(GlobalInfo.getCompanyID10);
 
         btniniciar.setOnClickListener(new View.OnClickListener() {
 
@@ -114,13 +119,14 @@ public class Login extends AppCompatActivity {
 
                     for(Users user: usersList){
                         usuario.setText(user.getUserID());
-                        GlobalInfo.getName10 = user.getNames();
-                        getPass10 = user.getPassword();
-                    }
 
+                        GlobalInfo.getuserName10 = user.getNames();
+                        GlobalInfo.getuserPass10  = user.getPassword();
+                    }
+                    String getName = usuario.getText().toString();
                     String getPass = checkpassword(contraseña.getText().toString());
 
-                    if(getPass.equals(getPass10)){
+                    if(getPass.equals(GlobalInfo.getuserPass10) || getName.equals(GlobalInfo.getuserName10 )){
 
                         Toast.makeText(Login.this, "Bienvenido al Sistema SVEN", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Login.this,Menu.class));
@@ -162,20 +168,20 @@ public class Login extends AppCompatActivity {
                     List<Terminal> terminalList = response.body();
 
                     for(Terminal terminal: terminalList){
-
-                        GlobalInfo.getterminalID10      = String.valueOf(terminal.getTerminalID());
-                        GlobalInfo.getfecha10           = String.valueOf(terminal.getFecha_Proceso());
-                        GlobalInfo.getturno10           = Integer.valueOf(terminal.getTurno());
-                        GlobalInfo.getCompanyID10       = Integer.valueOf(terminal.getCompanyID());
-                        GlobalInfo.getalmacenID10       = Integer.valueOf(terminal.getAlmacenID());
-                        GlobalInfo.getconsultaSunat10   = Boolean.valueOf(terminal.getConsulta_Sunat());
-                        GlobalInfo.getventaAutomatica10 = Boolean.valueOf(terminal.getVenta_Automatica());
-                        GlobalInfo.getventaPlaya10      = Boolean.valueOf(terminal.getVenta_Playa());
-                        GlobalInfo.getventaTienda10     = Boolean.valueOf(terminal.getVenta_Tienda());
-                        GlobalInfo.getventaCredito10    = Boolean.valueOf(terminal.getVenta_Credito());
-                        GlobalInfo.getventaTarjeta10    = Boolean.valueOf(terminal.getVenta_Tarjeta());
-                        GlobalInfo.getventaGratuita10   = Boolean.valueOf(terminal.getVenta_Gratuita());
-                        GlobalInfo.getventaSerafin10    = Boolean.valueOf(terminal.getVenta_Serafin());
+                        GlobalInfo.getterminalID10              = String.valueOf(terminal.getTerminalID());
+                        GlobalInfo.getterminalImei10            = String.valueOf(terminal.getImei());
+                        GlobalInfo.getterminalFecha10           = String.valueOf(terminal.getFecha_Proceso());
+                        GlobalInfo.getterminalTurno10           = Integer.valueOf(terminal.getTurno());
+                        GlobalInfo.getterminalCompanyID10       = Integer.valueOf(terminal.getCompanyID());
+                        GlobalInfo.getterminalAlmacenID10       = Integer.valueOf(terminal.getAlmacenID());
+                        GlobalInfo.getterminalConsultaSunat10   = Boolean.valueOf(terminal.getConsulta_Sunat());
+                        GlobalInfo.getterminalVentaAutomatica10 = Boolean.valueOf(terminal.getVenta_Automatica());
+                        GlobalInfo.getterminalVentaPlaya10      = Boolean.valueOf(terminal.getVenta_Playa());
+                        GlobalInfo.getterminalVentaTienda10     = Boolean.valueOf(terminal.getVenta_Tienda());
+                        GlobalInfo.getterminalVentaCredito10    = Boolean.valueOf(terminal.getVenta_Credito());
+                        GlobalInfo.getterminalVentaTarjeta10    = Boolean.valueOf(terminal.getVenta_Tarjeta());
+                        GlobalInfo.getterminalVentaGratuita10   = Boolean.valueOf(terminal.getVenta_Gratuita());
+                        GlobalInfo.getterminalVentaSerafin10    = Boolean.valueOf(terminal.getVenta_Serafin());
                     }
 
                     if (GlobalInfo.getterminalID10.isEmpty() || GlobalInfo.getterminalID10 == null) {
@@ -198,42 +204,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void findCompany(Integer id){
-
-        Call<List<Company>> call = mAPIService.findCompany(id);
-
-        call.enqueue(new Callback<List<Company>>() {
-            @Override
-            public void onResponse(Call<List<Company>> call, Response<List<Company>> response) {
-                try {
-
-                    if(!response.isSuccessful()){
-                        Toast.makeText(Login.this, "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    List<Company> companyList = response.body();
-
-                    for(Company company: companyList){
-
-                        GlobalInfo.getNameCompany10 = String.valueOf(company.getNames());
-                        GlobalInfo.getBranchCompany10 = String.valueOf(company.getBranch());
-                        GlobalInfo.getSloganCompany10 = String.valueOf(company.getEslogan());
-
-                    }
-
-                }catch (Exception ex){
-                    Toast.makeText(Login.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Company>> call, Throwable t) {
-                Toast.makeText(Login.this, "Error de conexión APICORE Company - RED - WIFI", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private String checkpassword(String clave){

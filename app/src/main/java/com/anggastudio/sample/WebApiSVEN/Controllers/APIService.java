@@ -102,7 +102,7 @@ public interface APIService {
     Call<List<Setting>> getSetting();
 
     @GET("api/setting/listado/{id}")
-    Call<List<Setting>> findSetting(@Path("id") String id);
+    Call<List<Setting>> findSetting(@Path("id") Integer id);
 
     //Ajustes
     @GET("api/settingTask/listado")

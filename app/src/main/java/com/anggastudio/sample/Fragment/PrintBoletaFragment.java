@@ -66,8 +66,8 @@ public class PrintBoletaFragment extends DialogFragment {
         return view;
     }
 
-    String turno    = String.valueOf(GlobalInfo.getturno10);
-    String cajero   = GlobalInfo.getName10;
+    String turno    = String.valueOf(GlobalInfo.getterminalTurno10);
+    String cajero   = GlobalInfo.getuserName10;
     String umed     = "GLL";
 
     private  void boletas(String turno ,String cajero, String umed) {

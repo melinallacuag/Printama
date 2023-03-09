@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +27,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.anggastudio.printama.Printama;
 import com.anggastudio.sample.Adapter.CaraAdapter;
 import com.anggastudio.sample.Adapter.CardAdapter;
 import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
@@ -39,15 +45,27 @@ import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Models.Placa;
+import com.anggastudio.sample.WebApiSVEN.Models.Setting;
 import com.anggastudio.sample.WebApiSVEN.Models.Tipotarjeta;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
+import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,10 +73,9 @@ import retrofit2.Response;
 
 public class VentaFragment extends Fragment{
 
-    TextView  producto,cara,importetotal,textcara,textmanguera,textNplaca;
+    TextView  producto,cara,importetotal,textcara,textmanguera;
     CardView  grias;
-    Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos;
-    ImageButton regreso;
+    Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos,automatiStop;
 
     RecyclerView recyclerCara, recyclerManguera, recyclerDetalleVenta;
     CaraAdapter caraAdapter;
@@ -68,6 +85,11 @@ public class VentaFragment extends Fragment{
     List<DetalleVenta> detalleVentaList;
     private APIService mAPIService;
     private String mCara;
+
+    boolean mTimerRunning;
+    Timer timer;
+    TimerTask timerTask;
+    final Handler handler = new Handler();
 
     /* Boleta-Factura*/
     Card cards = null;
@@ -92,6 +114,20 @@ public class VentaFragment extends Fragment{
         cara         = view.findViewById(R.id.textcara);
         importetotal = view.findViewById(R.id.txtimporte);
         grias        = view.findViewById(R.id.card);
+
+        automatiStop = view.findViewById(R.id.automatiStop);
+
+        automatiStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mTimerRunning) {
+                    stoptimertask();
+                } else {
+                    startTimer();
+                }
+            }
+        });
 
         grias.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,16 +174,6 @@ public class VentaFragment extends Fragment{
         btnnotadespacho = view.findViewById(R.id.btnnotadespacho);
         btnserafin      = view.findViewById(R.id.btnserafin);
         btnpuntos       = view.findViewById(R.id.btnpuntos);
-
-        regreso         = view.findViewById(R.id.volverdasboard);
-
-        regreso.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DasboardFragment dasboardFragment  = new DasboardFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
-            }
-        });
 
         btnlibre.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,9 +338,9 @@ public class VentaFragment extends Fragment{
                         btngenerar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                txtplaca.setText("000-0000");
-                                textdni.setText("11111111");
-                                textnombre.setText("CLIENTE VARIOS");
+                                txtplaca.setText(GlobalInfo.getsettingNroPlaca10);
+                                textdni.setText(GlobalInfo.getsettingClienteID10);
+                                textnombre.setText(GlobalInfo.getsettingClienteRZ10);
                             }
                         });
 
@@ -662,10 +688,11 @@ public class VentaFragment extends Fragment{
                     String mnCara = detalleVenta.getCara().toString();
                     if(mnCara.equals(mCara) ) {
 
-                        abrirmodal();
-
+                        builder = new AlertDialog.Builder(getActivity());
+                        LayoutInflater inflater = getActivity().getLayoutInflater();
                         View dialogView = inflater.inflate(R.layout.fragment_nota_despacho, null);
                         builder.setView(dialogView);
+                        abrirmodal();
 
                         txtplaca        = dialogView.findViewById(R.id.inputnplaca);
                         textid          = dialogView.findViewById(R.id.inputid);
@@ -696,16 +723,11 @@ public class VentaFragment extends Fragment{
                             @Override
                             public void onClick(View view) {
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder = new AlertDialog.Builder(getActivity());
                                 LayoutInflater inflater = getActivity().getLayoutInflater();
-
                                 View dialogView = inflater.inflate(R.layout.fragment_clientes, null);
                                 builder.setView(dialogView);
-
-                                AlertDialog alertDialog = builder.create();
-                                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                alertDialog.show();
-                                alertDialog.setCancelable(false);
+                                abrirmodal();
 
                                 btncancelar    = dialogView.findViewById(R.id.btncancelar);
 
@@ -813,17 +835,204 @@ public class VentaFragment extends Fragment{
         recyclerCara = view.findViewById(R.id.recycler);
         recyclerCara.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        findLados(GlobalInfo.getImei10);
-        findDetalleVenta(GlobalInfo.getImei10);
+        findLados(GlobalInfo.getterminalImei10);
+        findDetalleVenta(GlobalInfo.getterminalImei10);
+
+        findSetting(GlobalInfo.getterminalCompanyID10);
 
         return view;
     }
 
-    private void abrirmodal(){
-        alertDialog = builder.create();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertDialog.show();
-        alertDialog.setCancelable(false);
+    private void startTimer() {
+
+        timer = new Timer();
+
+        actualizarVista();
+
+        timer.schedule(timerTask,  5000);
+    }
+
+    public void stoptimertask() {
+
+        timer.cancel();
+        mTimerRunning = false;
+        automatiStop.setText("Stop");
+    }
+
+    private void actualizarVista() {
+
+        Toast.makeText(getContext(), "hola", Toast.LENGTH_SHORT).show();
+
+        timerTask = new TimerTask() {
+            public void run() {
+
+                handler.post(new Runnable() {
+                    public void run() {
+
+                        boletas(NameCompany,RUCCompany,AddressCompany,BranchCompany,TurnoTerminal,CajeroTerminal);
+
+                        Calendar calendar = Calendar.getInstance();
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd:MMMM:yyyy HH:mm:ss a");
+                        final String strDate = simpleDateFormat.format(calendar.getTime());
+
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(getContext(), strDate, duration);
+                        toast.show();
+
+                    }
+                });
+            }
+        };
+
+        mTimerRunning = true;
+        automatiStop.setText("Automatico");
+    }
+
+    /**
+     * Datos de la Company
+     */
+    String NameCompany    = GlobalInfo.getNameCompany10;
+    String RUCCompany     = GlobalInfo.getRucCompany10;
+    String AddressCompany = GlobalInfo.getAddressCompany10;
+    String BranchCompany  = GlobalInfo.getBranchCompany10;
+
+    /**
+     * Datos de la terminal
+     */
+    String TurnoTerminal  = String.valueOf(GlobalInfo.getterminalTurno10);
+    String CajeroTerminal = GlobalInfo.getuserName10;
+
+    private  void boletas(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany, String TurnoTerminal,String CajeroTerminal) {
+
+        //Logo
+        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
+
+        /**
+         * Organizar la cadena de texto de Address y Branch
+         */
+        Matcher matcher;
+        Pattern patronsintaxi;
+
+        patronsintaxi = Pattern.compile("(?<!\\S)\\p{Lu}+\\.? \\w+ - \\w+ - \\w+(\\.? \\d+)?(?!\\S)");
+        matcher = patronsintaxi.matcher(AddressCompany);
+
+        String segundaAddress = null;
+        String primeraAddress = null;
+        if (matcher.find()) {
+            segundaAddress    = matcher.group();
+            String[] partes   = AddressCompany.split(segundaAddress);
+            primeraAddress    = partes[0].trim();
+            segundaAddress    = segundaAddress.trim();
+        }
+
+        String AddressU = segundaAddress;
+        String AddressD = primeraAddress;
+
+
+        matcher = patronsintaxi.matcher(BranchCompany);
+
+        String segundaBranch = null;
+        String primeraBranch = null;
+        if (matcher.find()) {
+            segundaBranch    = matcher.group();
+            String[] partes  = BranchCompany.split(segundaBranch);
+            primeraBranch    = partes[0].trim();
+            segundaBranch    = segundaBranch.trim();
+        }
+
+        String BranchU = segundaBranch;
+        String BranchD = primeraBranch;
+
+        /**
+         * Fin - Organizar la cadena de texto de Address y Branch
+         */
+
+
+        /**
+         * Fecha y Hora que se imite el comprobante
+         */
+        Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+        SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        String FechaHora      = sdf.format(cal.getTime());
+        /**
+         * Fin - Fecha y Hora que se imite el comprobante
+         */
+
+        Printama.with(getContext()).connect(printama -> {
+            printama.setNormalText();
+            printama.printTextlnBold(NameCompany, Printama.CENTER);
+            printama.printTextlnBold("PRINCIPAL: " + AddressD, Printama.CENTER);
+            printama.printTextlnBold(AddressU, Printama.CENTER);
+            printama.printTextlnBold("SUCURSAL: " + BranchD, Printama.CENTER);
+            printama.printTextlnBold(BranchU, Printama.CENTER);
+            printama.printTextlnBold("RUC: " + RUCCompany, Printama.CENTER);
+            printama.printTextlnBold("FACTURA DE VENTA ELECTRONICA", Printama.CENTER);
+            printama.printTextlnBold("0000000",Printama.CENTER);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextln("Fecha - Hora : "+ FechaHora + "   Turno: "+ TurnoTerminal,Printama.LEFT);
+            printama.printTextln("Cajero : "+ CajeroTerminal , Printama.LEFT);
+            printama.printTextln("Lado   :01 ", Printama.LEFT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.feedPaper();
+            printama.close();
+        }, this::showToast);
+
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
+    }
+
+    private void findSetting(Integer id){
+
+        Call<List<Setting>> call = mAPIService.findSetting(id);
+
+        call.enqueue(new Callback<List<Setting>>() {
+            @Override
+            public void onResponse(Call<List<Setting>> call, Response<List<Setting>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<Setting> settingList = response.body();
+                    for(Setting setting: settingList) {
+                        GlobalInfo.getsettingCompanyId10       = Integer.valueOf(setting.getCompanyID());
+                        GlobalInfo.getsettingTituloApp10       = String.valueOf(setting.getTituloApp());
+                        GlobalInfo.getsettingFuelName10        = String.valueOf(setting.getFuel_Name());
+                        GlobalInfo.getsettingFuelGrupoID10     = String.valueOf(setting.getFuel_GrupoID());
+                        GlobalInfo.getsettingFuelLados10       = Integer.valueOf(setting.getFuel_Lados());
+                        GlobalInfo.getsettingFuelMontoMinimo10 = Double.valueOf(setting.getFuel_Monto_Minimo());
+                        GlobalInfo.getsettingImpuestoID110     = Integer.valueOf(setting.getImpuestoID1());
+                        GlobalInfo.getsettingImpuestoValor110  = Integer.valueOf(setting.getImpuesto_Valor1());
+                        GlobalInfo.getsettingImpuestoID210     = Integer.valueOf(setting.getImpuestoID2());
+                        GlobalInfo.getsettingImpuestoValor210  = Integer.valueOf(setting.getImpuesto_Valor2());
+                        GlobalInfo.getsettingMonedaID10        = String.valueOf(setting.getMonedaID());
+                        GlobalInfo.getsettingMonedaValor10     = String.valueOf(setting.getMoneda_Valor());
+                        GlobalInfo.getsettingClienteID10       = String.valueOf(setting.getClienteID());
+                        GlobalInfo.getsettingClienteRZ10       = String.valueOf(setting.getClienteRZ());
+                        GlobalInfo.getsettingNroPlaca10        = String.valueOf(setting.getNroplaca());
+                        GlobalInfo.getsettingDNIMontoMinimo10  = Double.valueOf(setting.getDnI_Monto_Minimo());
+                        GlobalInfo.getsettingtimerAppVenta10   = String.valueOf(setting.getTimerAppVenta());
+                    }
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(),ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Setting>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Cliente - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private  void findClienteDNI(String id){
@@ -1011,22 +1220,22 @@ public class VentaFragment extends Fragment{
                     Placa placa = placaList.get(0);
 
                     GlobalInfo.getNroPlaca10 = String.valueOf(placa.getNroPlaca());
-                    GlobalInfo.getClienteIDPlaca10 = String.valueOf(placa.getClienteID());
-                    GlobalInfo.getClienteRZPlaca10 = String.valueOf(placa.getClienteRZ());
-                    GlobalInfo.getClienteDRPlaca10 = String.valueOf(placa.getClienteDR());
+                    GlobalInfo.getplacaClienteID10 = String.valueOf(placa.getClienteID());
+                    GlobalInfo.getplacaClienteRZ10 = String.valueOf(placa.getClienteRZ());
+                    GlobalInfo.getplacaClienteDR10 = String.valueOf(placa.getClienteDR());
 
                     if (tipodoc == "01"){
-                        textruc.setText( GlobalInfo.getClienteIDPlaca10);
-                        textrazsocial.setText(GlobalInfo.getClienteRZPlaca10);
-                        textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
+                        textruc.setText( GlobalInfo.getplacaClienteID10);
+                        textrazsocial.setText(GlobalInfo.getplacaClienteRZ10);
+                        textdireccion.setText(GlobalInfo.getplacaClienteDR10);
                     }else if (tipodoc == "03"){
-                        textdni.setText(GlobalInfo.getClienteIDPlaca10);
-                        textnombre.setText(GlobalInfo.getClienteRZPlaca10);
-                        textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
+                        textdni.setText(GlobalInfo.getplacaClienteID10);
+                        textnombre.setText(GlobalInfo.getplacaClienteRZ10);
+                        textdireccion.setText(GlobalInfo.getplacaClienteDR10);
                     }else if (tipodoc == "99"){
-                        textid.setText( GlobalInfo.getClienteIDPlaca10);
-                        textnombre.setText(GlobalInfo.getClienteRZPlaca10);
-                        textdireccion.setText(GlobalInfo.getClienteDRPlaca10);
+                        textid.setText( GlobalInfo.getplacaClienteID10);
+                        textnombre.setText(GlobalInfo.getplacaClienteRZ10);
+                        textdireccion.setText(GlobalInfo.getplacaClienteDR10);
                     }
 
                 }catch (Exception ex){
@@ -1097,7 +1306,6 @@ public class VentaFragment extends Fragment{
                             mCara = item.getNroLado();
 
                             findPico(GlobalInfo.getCara10);
-                            //  findOptran(GlobalInfo.getCara10);
 
                             textcara =  getActivity().findViewById(R.id.textcara);
                             String numlado = item.getNroLado();
@@ -1177,7 +1385,7 @@ public class VentaFragment extends Fragment{
                         return;
                     }
 
-                    //List<DetalleVenta> detalleVentaList = response.body();
+                 //   List<DetalleVenta> detalleVentaList = response.body();
 
                     detalleVentaList = response.body();
 
@@ -1201,4 +1409,10 @@ public class VentaFragment extends Fragment{
         });
     }
 
+    private void abrirmodal(){
+        alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+        alertDialog.setCancelable(false);
+    }
 }

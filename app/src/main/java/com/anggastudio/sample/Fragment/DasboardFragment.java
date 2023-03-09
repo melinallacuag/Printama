@@ -1,5 +1,12 @@
 package com.anggastudio.sample.Fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -9,9 +16,11 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anggastudio.sample.Login;
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
@@ -28,6 +37,12 @@ import retrofit2.Response;
 public class DasboardFragment extends Fragment{
 
     TextView nombreusuario,fecha,turno,nombregrigo,sucursal,slogangrifo;
+    CardView btnventa,btncierrex,btncambioturno,btniniciodia;
+
+    AlertDialog.Builder builder;
+    AlertDialog alertDialog;
+
+    Button btncancelar,btnagregar;
 
     private APIService mAPIService;
 
@@ -36,25 +51,28 @@ public class DasboardFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_dasboard, container, false);
-        CardView btnventa       = view.findViewById(R.id.btnventa);
-        CardView btncierrex     = view.findViewById(R.id.btnCierreX);
-        CardView btncambioturno = view.findViewById(R.id.btnCambioTurno);
-        CardView btniniciodia   = view.findViewById(R.id.btnInicioDia);
+
+        mAPIService = GlobalInfo.getAPIService();
+
+        btnventa       = view.findViewById(R.id.btnventa);
+        btncierrex     = view.findViewById(R.id.btnCierreX);
+        btncambioturno = view.findViewById(R.id.btnCambioTurno);
+        btniniciodia   = view.findViewById(R.id.btnInicioDia);
 
         nombreusuario = view.findViewById(R.id.nombreuser);
         fecha         = view.findViewById(R.id.fecha);
         turno         = view.findViewById(R.id.turno);
+
         nombregrigo   = view.findViewById(R.id.nombregrigo);
         sucursal      = view.findViewById(R.id.nombresucursal);
         slogangrifo   = view.findViewById(R.id.slogangrifo);
 
-        nombreusuario.setText(GlobalInfo.getName10);
-        fecha.setText(GlobalInfo.getfecha10);
-        turno.setText(GlobalInfo.getturno10.toString());
+        nombreusuario.setText(GlobalInfo.getuserName10);
+        fecha.setText(GlobalInfo.getterminalFecha10);
+        turno.setText(GlobalInfo.getterminalTurno10.toString());
 
-        mAPIService = GlobalInfo.getAPIService();
 
-        findCompany(GlobalInfo.getCompanyID10);
+        findCompany(GlobalInfo.getterminalCompanyID10);
 
         btnventa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,18 +93,72 @@ public class DasboardFragment extends Fragment{
         btncambioturno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CambioTurnoFragment cambioTurnoFragment = new CambioTurnoFragment();
-                cambioTurnoFragment.show(getActivity().getSupportFragmentManager(), "Cambio de Turno");
-                cambioTurnoFragment.setCancelable(false);
+
+                builder = new AlertDialog.Builder(getActivity());
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.fragment_cambio_turno, null);
+                builder.setView(dialogView);
+                abrirmodal();
+
+                btncancelar    = dialogView.findViewById(R.id.btncancelarcambioturno);
+                btnagregar     = dialogView.findViewById(R.id.btnagregarcambioturno);
+
+                btncancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+                btnagregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent intent = new Intent(getContext(), Login.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finalize();
+                            Toast.makeText(getContext(), "SE GENERO EL INICIO DE DÍA", Toast.LENGTH_SHORT).show();
+                        } catch (Throwable e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
             }
         });
 
         btniniciodia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InicioDiaFragment inicioDiaFragment = new InicioDiaFragment();
-                inicioDiaFragment.show(getActivity().getSupportFragmentManager(), "Inicio de Día");
-                inicioDiaFragment.setCancelable(false);
+                builder = new AlertDialog.Builder(getActivity());
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.fragment_inicio_dia, null);
+                builder.setView(dialogView);
+                abrirmodal();
+
+                btncancelar    = dialogView.findViewById(R.id.btncancelariniciodia);
+                btnagregar     = dialogView.findViewById(R.id.btnagregariniciodia);
+
+                btncancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+                btnagregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent intent = new Intent(getContext(), Login.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finalize();
+                            Toast.makeText(getContext(), "SE GENERO EL CAMBIO DE TURNO", Toast.LENGTH_SHORT).show();
+                        } catch (Throwable e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
               }
         });
 
@@ -112,9 +184,19 @@ public class DasboardFragment extends Fragment{
 
                     for(Company company: companyList){
 
+                        GlobalInfo.getNameCompany10    = String.valueOf(company.getNames());
+                        GlobalInfo.getRucCompany10     = String.valueOf(company.getRuc());
+                        GlobalInfo.getAddressCompany10 = String.valueOf(company.getAddress());
+                        GlobalInfo.getBranchCompany10  = String.valueOf(company.getBranch());
+                        GlobalInfo.getPhoneCompany10   = String.valueOf(company.getPhone());
+                        GlobalInfo.getMainCompany10    = String.valueOf(company.getMail());
+                        GlobalInfo.getManagerCompany10 = String.valueOf(company.getManager());
+                        GlobalInfo.getSloganCompany10  = String.valueOf(company.getEslogan());
+
                         nombregrigo.setText(company.getNames());
                         sucursal.setText(company.getBranch());
                         slogangrifo.setText(company.getEslogan());
+
 
                     }
 
@@ -129,6 +211,11 @@ public class DasboardFragment extends Fragment{
             }
         });
     }
-
+    private void abrirmodal(){
+        alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+        alertDialog.setCancelable(false);
+    }
 
 }
