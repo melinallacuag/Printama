@@ -110,10 +110,19 @@ public class VentaFragment extends Fragment{
 
         mAPIService  = GlobalInfo.getAPIService();
 
-        producto     = view.findViewById(R.id.textmanguera);
-        cara         = view.findViewById(R.id.textcara);
-        importetotal = view.findViewById(R.id.txtimporte);
-        grias        = view.findViewById(R.id.card);
+        producto        = view.findViewById(R.id.textmanguera);
+        cara            = view.findViewById(R.id.textcara);
+        importetotal    = view.findViewById(R.id.txtimporte);
+        grias           = view.findViewById(R.id.card);
+
+        btnlibre        = view.findViewById(R.id.btnlibre);
+        btnsoles        = view.findViewById(R.id.btnsoles);
+        btngalones      = view.findViewById(R.id.btngalones);
+        btnboleta       = view.findViewById(R.id.btnboleta);
+        btnfactura      = view.findViewById(R.id.btnfactura);
+        btnnotadespacho = view.findViewById(R.id.btnnotadespacho);
+        btnserafin      = view.findViewById(R.id.btnserafin);
+        btnpuntos       = view.findViewById(R.id.btnpuntos);
 
         automatiStop = view.findViewById(R.id.automatiStop);
 
@@ -129,51 +138,7 @@ public class VentaFragment extends Fragment{
             }
         });
 
-        grias.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextView operacion   = view.findViewById(R.id.txtoperacion);
-                String op            = operacion.getText().toString().trim();
-                if (op.equals("03")) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("producto", producto.getText().toString());
-                    bundle.putString("lado", cara.getText().toString());
-                    bundle.putString("importe", importetotal.getText().toString());
-                    PrintBoletaFragment printBoletaFragment = new PrintBoletaFragment();
-                    printBoletaFragment.setArguments(bundle);
-                    printBoletaFragment.show(getActivity().getSupportFragmentManager(), "Boleta");
-                    printBoletaFragment.setCancelable(false);
-                }else if (op.equals("01")) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("producto",producto.getText().toString());
-                    bundle.putString("lado",cara.getText().toString());
-                    bundle.putString("importe",importetotal.getText().toString());
-                    PrintFacturaFragment printFacturaFragment = new PrintFacturaFragment();
-                    printFacturaFragment.setArguments(bundle);
-                    printFacturaFragment.show(getActivity().getSupportFragmentManager(), "Factura");
-                    printFacturaFragment.setCancelable(false);
 
-                }else if (op.equals("99")) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("producto",producto.getText().toString());
-                    bundle.putString("lado",cara.getText().toString());
-                    bundle.putString("importe",importetotal.getText().toString());
-                    PrintNotaDespachoFragment printNotaDespachoFragment = new PrintNotaDespachoFragment();
-                    printNotaDespachoFragment.setArguments(bundle);
-                    printNotaDespachoFragment.show(getActivity().getSupportFragmentManager(), "Nota de Despacho");
-                    printNotaDespachoFragment.setCancelable(false);
-                }
-            }
-        });
-
-        btnlibre        = view.findViewById(R.id.btnlibre);
-        btnsoles        = view.findViewById(R.id.btnsoles);
-        btngalones      = view.findViewById(R.id.btngalones);
-        btnboleta       = view.findViewById(R.id.btnboleta);
-        btnfactura      = view.findViewById(R.id.btnfactura);
-        btnnotadespacho = view.findViewById(R.id.btnnotadespacho);
-        btnserafin      = view.findViewById(R.id.btnserafin);
-        btnpuntos       = view.findViewById(R.id.btnpuntos);
 
         btnlibre.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -904,7 +869,9 @@ public class VentaFragment extends Fragment{
 
     private  void boletas(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany, String TurnoTerminal,String CajeroTerminal) {
 
-        //Logo
+        /**
+         * Logo
+         */
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
 
         /**
@@ -982,10 +949,6 @@ public class VentaFragment extends Fragment{
             printama.close();
         }, this::showToast);
 
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
     }
 
     private void findSetting(Integer id){
@@ -1251,36 +1214,6 @@ public class VentaFragment extends Fragment{
 
     }
 
-    private void getCard(){
-        Call<List<Card>> call = mAPIService.getCard();
-
-        call.enqueue(new Callback<List<Card>>() {
-            @Override
-            public void onResponse(Call<List<Card>> call, Response<List<Card>> response) {
-                try {
-
-                    if(!response.isSuccessful()){
-                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    List<Card> cardlist = response.body();
-
-                    Resources res = getResources();
-                    CardAdapter card = new CardAdapter(getContext(), R.layout.item, (ArrayList<Card>) cardlist, res);
-                    dropStatus.setAdapter(card);
-
-                }catch (Exception ex){
-                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Card>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE Card - RED - WIFI", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     private void findLados(String id) {
 
         Call<List<Lados>> call = mAPIService.findLados(id);
@@ -1409,10 +1342,44 @@ public class VentaFragment extends Fragment{
         });
     }
 
+    private void getCard(){
+        Call<List<Card>> call = mAPIService.getCard();
+
+        call.enqueue(new Callback<List<Card>>() {
+            @Override
+            public void onResponse(Call<List<Card>> call, Response<List<Card>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<Card> cardlist = response.body();
+
+                    Resources res = getResources();
+                    CardAdapter card = new CardAdapter(getContext(), R.layout.item, (ArrayList<Card>) cardlist, res);
+                    dropStatus.setAdapter(card);
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Card>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Card - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void abrirmodal(){
         alertDialog = builder.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
         alertDialog.setCancelable(false);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
     }
 }

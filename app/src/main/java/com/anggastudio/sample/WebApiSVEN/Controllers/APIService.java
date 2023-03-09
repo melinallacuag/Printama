@@ -25,35 +25,50 @@ import retrofit2.http.Path;
 
 public interface APIService {
 
-    //User
+    /**
+     * User
+     */
+
     @GET("api/users/listado")
     Call<List<Users>> getUsers();
 
     @GET("api/users/listado/{id}")
     Call<List<Users>> findUsers(@Path("id") String id);
 
-    //Company
+    /**
+     * Company
+     */
+
     @GET("api/company/listado")
     Call<List<Company>> getCompany();
 
     @GET("api/company/listado/{id}")
     Call<List<Company>> findCompany(@Path("id") Integer id);
 
-    //Terminal
+    /**
+     * Terminal
+     */
+
     @GET("api/terminal/listado")
     Call<List<Terminal>> getTerminal();
 
     @GET("api/terminal/listado/{id}")
     Call<List<Terminal>> findTerminal(@Path("id") String id);
 
-    //Cara
+    /**
+     * Cara o Lado
+     */
+
     @GET("api/lados/listado")
     Call<List<Lados>> getLados();
 
     @GET("api/lados/listado/{id}")
     Call<List<Lados>> findLados(@Path("id") String id);
 
-    //Manguera
+    /**
+     * Manguera
+     */
+
     @GET("api/picos/listado")
     Call<List<Picos>> getPico();
 
@@ -63,21 +78,30 @@ public interface APIService {
     @POST("api/picos/guardar")
     Call<Picos> postPicos(@Body Picos picos);
 
-    //Optran
+    /**
+     * Optran
+     */
+
     @GET("api/optran/listado/{id}")
     Call<List<Optran>> findOptran(@Path("id") String id);
 
     @GET("api/detalleventa/listado/{id}")
     Call<List<DetalleVenta>> findDetalleVenta(@Path("id") String id);
 
-    // Detalle de Venta
+    /**
+     * Detalle de la Venta
+     */
+
     @GET("api/card/listado")
     Call<List<Card>> getCard();
 
     @GET("api/card/listado/{id}")
     Call<List<Card>> findCard(@Path("id") Integer id);
 
-    //Cliente ruc-dni
+    /**
+     * Cliente RUC - DNI
+     */
+
     @GET("api/cliente/listado")
     Call<List<Cliente>> getCliente();
 
@@ -90,21 +114,30 @@ public interface APIService {
     @GET("api/cliente/listado/DNI/{id}")
     Call<List<Cliente>> findClienteDNI(@Path("id") String id);
 
-    //Placa
+    /**
+     * Placa
+     */
+
     @GET("api/placa/listado")
     Call<List<Placa>> getPlaca();
 
     @GET("api/placa/listado/{id}")
     Call<List<Placa>> findPlaca(@Path("id") String id);
 
-    //Configuración
+    /**
+     * Configuración
+     */
+
     @GET("api/setting/listado")
     Call<List<Setting>> getSetting();
 
     @GET("api/setting/listado/{id}")
     Call<List<Setting>> findSetting(@Path("id") Integer id);
 
-    //Ajustes
+    /**
+     * Ajustes
+     */
+
     @GET("api/settingTask/listado")
     Call<List<SettingTask>> getSettingTask();
 

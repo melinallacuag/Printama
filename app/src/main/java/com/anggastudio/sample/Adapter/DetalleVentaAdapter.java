@@ -19,8 +19,6 @@ public class DetalleVentaAdapter extends RecyclerView.Adapter<DetalleVentaAdapte
 
     public List<DetalleVenta> detalleVentaList;
     private Context context;
-   // final DetalleVentaAdapter.OnItemClickListener listener;
-
 
     public interface  OnItemClickListener{
         int onItemClick(DetalleVenta item);
