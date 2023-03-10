@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,37 +21,29 @@
         <Button
             android:id="@+id/automatiStop"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:layout_margin="2sp"
-            android:background="@drawable/button"
+            android:layout_height="50sp"
+            android:layout_gravity="center"
+            android:backgroundTint="#21AFA3"
             android:fontFamily="@font/nunito_black"
-            android:text="stop"
+            android:gravity="center"
+            android:text="@string/btn_stop"
             android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="10sp"
-            app:cornerRadius="10sp"
-            android:gravity="center_horizontal" />
+            android:textSize="14sp"
+            app:cornerRadius="10sp" />
 
         <TextView
-            android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5sp"
-            android:fontFamily="@font/nunito_extrabold"
-            android:text="CARA"
+            android:fontFamily="@font/nunito_black"
             android:textColor="#3C4048"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.073"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/ope_cara" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="wrap_content"
@@ -59,25 +51,19 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
-            android:fontFamily="@font/nunito_extrabold"
-            android:text="MANGUERA"
+            android:fontFamily="@font/nunito_black"
+            android:text="@string/op_manguera"
             android:textColor="#3C4048"
             android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ScrollCara" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerlado"
                 android:layout_width="wrap_content"
@@ -85,19 +71,14 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
-            android:fontFamily="@font/nunito_extrabold"
-            android:text="MODALIDAD"
+            android:fontFamily="@font/nunito_black"
+            android:text="@string/op_modalida"
             android:textColor="#3C4048"
             android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ScrollManguera" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,7 +94,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/button"
                 android:fontFamily="@font/nunito_black"
-                android:text="LIBRE"
+                android:gravity="center"
+                android:text="@string/ope_libre"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
@@ -129,7 +111,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/button"
                 android:fontFamily="@font/nunito_black"
-                android:text="SOLES"
+                android:gravity="center"
+                android:text="@string/ope_soles"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
@@ -145,7 +128,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/button"
                 android:fontFamily="@font/nunito_black"
-                android:text="GALONES"
+                android:gravity="center"
+                android:text="@string/ope_galones"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
@@ -153,12 +137,11 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
-            android:fontFamily="@font/nunito_extrabold"
-            android:text="OPERACIÓN"
+            android:fontFamily="@font/nunito_black"
+            android:text="@string/op_operacion"
             android:textColor="#3C4048"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -181,8 +164,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/button"
                 android:fontFamily="@font/nunito_black"
+                android:gravity="center"
                 android:onClick="boleta"
-                android:text=" BOLETA"
+                android:text="@string/ope_boleta"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
@@ -198,8 +182,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/button"
                 android:fontFamily="@font/nunito_black"
+                android:gravity="center"
                 android:onClick="factura"
-                android:text="FACTURA"
+                android:text="@string/ope_factura"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
@@ -215,7 +200,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/button"
                 android:fontFamily="@font/nunito_black"
-                android:text="N/Dpcho."
+                android:gravity="center"
+                android:text="@string/ope_NDespacho"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
@@ -236,7 +222,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/button"
                 android:fontFamily="@font/nunito_black"
-                android:text="SERAFIN"
+                android:gravity="center"
+                android:text="@string/ope_serafin"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
@@ -252,7 +239,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/button"
                 android:fontFamily="@font/nunito_black"
-                android:text="PUNTOS"
+                android:gravity="center"
+                android:text="@string/ope_puntos"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
@@ -268,7 +256,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/button"
                 android:fontFamily="@font/nunito_black"
-                android:text="canje"
+                android:gravity="center"
+                android:text="@string/ope_canje"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp"
@@ -276,12 +265,11 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
-            android:fontFamily="@font/nunito_extrabold"
-            android:text="TRANSACCIONES"
+            android:fontFamily="@font/nunito_black"
+            android:text="@string/op_transacciones"
             android:textColor="#3C4048"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -290,12 +278,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gridLayout2" />
 
-        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <androidx.cardview.widget.CardView
             android:id="@+id/carddetalleventa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button"
             android:backgroundTint="#001E89"
             app:cardCornerRadius="10dp">
 
@@ -312,23 +298,18 @@
                     <TextView
                         android:layout_width="40sp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="CARA"
+                        android:text="@string/detalleV_Cara"
                         android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textSize="8sp" />
 
                     <TextView
                         android:layout_width="40sp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="T.PAGO"
+                        android:text="@string/detalleV_TPago"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -336,11 +317,9 @@
                     <TextView
                         android:layout_width="45sp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="IMPUESTO"
+                        android:text="@string/detalleV_Impuesto"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -348,11 +327,9 @@
                     <TextView
                         android:layout_width="50sp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="PLACA"
+                        android:text="@string/detalleV_Placa"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -360,11 +337,9 @@
                     <TextView
                         android:layout_width="50sp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="T.PUNTOS"
+                        android:text="@string/detalleV_TPuntos"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -374,8 +349,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="CLIENTE ID"
+                        android:text="@string/detalleV_ClienteID"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -385,8 +359,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="R.U.C"
+                        android:text="@string/detalleV_RUC"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -395,10 +368,10 @@
                         android:layout_width="150sp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="2sp"
+                        android:layout_marginRight="2sp"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="RAZON SOCIAL"
+                        android:text="@string/detalleV_RazSocial"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -408,8 +381,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="DIRECCIÓN"
+                        android:text="@string/detalleV_Direccion"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -419,8 +391,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="TARJETA N.D"
+                        android:text="@string/detalleV_TarjetaND"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -430,8 +401,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="TARJ. CREDITO"
+                        android:text="@string/detalleV_TarjCredito"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -441,8 +411,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="NRO. OPE."
+                        android:text="@string/detalleV_NrpOperacion"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -452,8 +421,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="OBSERVACIÓN"
+                        android:text="@string/detalleV_Observacion"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -463,8 +431,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="KILOMETRAJE"
+                        android:text="@string/detalleV_Kilometraje"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -474,8 +441,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="EFECTIVO"
+                        android:text="@string/detalleV_Efectivo"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -485,8 +451,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
-                        android:text="SALDO CREDITO"
+                        android:text="@string/detalleV_SaldoCredito"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
@@ -497,12 +462,11 @@
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:inputType="textCapCharacters"
-                        android:text="PTOS.DISPONIBLES"
+                        android:text="@string/detalleV_PtosDisponibles"
                         android:textColor="#fff"
                         android:textSize="8sp"
                         android:textStyle="bold" />
                 </LinearLayout>
-
             </HorizontalScrollView>
         </androidx.cardview.widget.CardView>
 
@@ -514,18 +478,6 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerdetalleventa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="10sp"
-            android:layout_marginTop="5sp"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclertransacciones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -560,6 +512,7 @@
                             android:layout_width="34dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="2sp"
+                            android:layout_marginRight="2sp"
                             android:fontFamily="@font/nunito_extrabold"
                             android:gravity="center"
                             android:textColor="#071C65"
@@ -571,6 +524,7 @@
                             android:layout_width="35sp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2sp"
+                            android:layout_marginRight="2sp"
                             android:fontFamily="@font/nunito_extrabold"
                             android:gravity="center"
                             android:textColor="#071C65"
@@ -582,6 +536,7 @@
                             android:layout_width="45sp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2sp"
+                            android:layout_marginRight="2sp"
                             android:fontFamily="@font/nunito_extrabold"
                             android:gravity="center"
                             android:textColor="#071C65"
@@ -593,6 +548,7 @@
                             android:layout_width="70sp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2sp"
+                            android:layout_marginRight="2sp"
                             android:fontFamily="@font/nunito_extrabold"
                             android:gravity="center"
                             android:text="11111111"
@@ -605,6 +561,7 @@
                             android:layout_width="100sp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2sp"
+                            android:layout_marginRight="2sp"
                             android:fontFamily="@font/nunito_extrabold"
                             android:gravity="center"
                             android:text="CLIENTE VARIOS"
@@ -617,6 +574,7 @@
                             android:layout_width="40sp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="2sp"
+                            android:layout_marginRight="2sp"
                             android:fontFamily="@font/nunito_extrabold"
                             android:gravity="center"
                             android:textColor="#071C65"
@@ -627,92 +585,7 @@
 
 
                 </androidx.cardview.widget.CardView>
-                <!--    <androidx.cardview.widget.CardView
-                    android:id="@+id/card2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="10dp"
-                    android:layout_margin="5dp"
-                    android:backgroundTint="#fff"
-                    android:background="@drawable/input_border">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:columnCount="6"
-                        android:elevation="2sp"
-                        android:gravity="center">
-                        <TextView
-                            android:id="@+id/textcara2"
-                            android:layout_width="32sp"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="2sp"
-                            android:fontFamily="@font/nunito_extrabold"
-                            android:gravity="center"
-                            android:textColor="#071C65"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/operacion"
-                            android:layout_width="35sp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="2sp"
-                            android:fontFamily="@font/nunito_extrabold"
-                            android:gravity="center"
-                            android:text="01"
-                            android:textColor="#071C65"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textmanguera2"
-                            android:layout_width="45sp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="2sp"
-                            android:fontFamily="@font/nunito_extrabold"
-                            android:gravity="center"
-                            android:textColor="#071C65"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/idcliente"
-                            android:layout_width="70sp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="2sp"
-                            android:fontFamily="@font/nunito_extrabold"
-                            android:gravity="center"
-                            android:text="11111111111"
-                            android:textColor="#071C65"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="100sp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="2sp"
-                            android:fontFamily="@font/nunito_extrabold"
-                            android:gravity="center"
-                            android:text="CLIENTE VARIOS"
-                            android:textColor="#071C65"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txtimporte"
-                            android:layout_width="40sp"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="2sp"
-                            android:fontFamily="@font/nunito_extrabold"
-                            android:gravity="center"
-                            android:textColor="#071C65"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-
-                </androidx.cardview.widget.CardView>-->
             </LinearLayout>
 
         </ScrollView>

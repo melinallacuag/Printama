@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#fff"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:fontFamily="@font/nunito_semibold"
                 android:textStyle="bold" />
 
@@ -41,9 +41,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fecha:"
+                    android:text="FECHA:"
                     android:textColor="#fff"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:fontFamily="@font/nunito_semibold"
                     android:textStyle="bold" />
 
@@ -67,9 +67,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Turno:"
+                    android:text="TURNO:"
                     android:textColor="#fff"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:fontFamily="@font/nunito_semibold"
                     android:textStyle="bold" />
 
@@ -89,7 +89,6 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="120sp"
             android:layout_height="120sp"
-            android:layout_marginTop="12sp"
             android:scaleType="centerCrop"
             android:src="@drawable/logoroble"
             app:shapeAppearanceOverlay="@style/roudperfil" />
@@ -122,9 +121,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:fontFamily="@font/nunito_extrabold"
+                android:fontFamily="@font/nunito_black"
                 android:textColor="#fff"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -151,8 +150,8 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textColor="#3C3F41"
-                android:textSize="16sp"
-                android:fontFamily="@font/nunito_extrabold"
+                android:textSize="18sp"
+                android:fontFamily="@font/nunito_black"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -204,12 +203,12 @@
                     android:id="@+id/ventas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_extrabold"
+                    android:fontFamily="@font/nunito_black"
                     android:letterSpacing="0.15"
                     android:text="@string/menu_ventas"
                     android:textAlignment="center"
                     android:textColor="#fff"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -246,12 +245,12 @@
                     android:id="@+id/ciere_x"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_extrabold"
+                    android:fontFamily="@font/nunito_black"
                     android:letterSpacing="0.15"
                     android:text="@string/menu_cierrex"
                     android:textAlignment="center"
                     android:textColor="#fff"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -289,12 +288,12 @@
                     android:id="@+id/cambio_turno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_extrabold"
+                    android:fontFamily="@font/nunito_black"
                     android:letterSpacing="0.15"
                     android:text="@string/menu_cambioturno"
                     android:textAlignment="center"
                     android:textColor="#fff"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -331,12 +330,12 @@
                     android:id="@+id/cierre_z"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_extrabold"
+                    android:fontFamily="@font/nunito_black"
                     android:letterSpacing="0.15"
                     android:text="@string/menu_iniciodia"
                     android:textAlignment="center"
                     android:textColor="#fff"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
             </LinearLayout>

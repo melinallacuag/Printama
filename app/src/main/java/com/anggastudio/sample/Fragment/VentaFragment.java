@@ -1,8 +1,6 @@
 package com.anggastudio.sample.Fragment;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -14,14 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -33,34 +28,24 @@ import com.anggastudio.sample.Adapter.CaraAdapter;
 import com.anggastudio.sample.Adapter.CardAdapter;
 import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
-import com.anggastudio.sample.Adapter.TipoTarjetaAdapter;
-import com.anggastudio.sample.Login;
-import com.anggastudio.sample.Menu;
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.Card;
 import com.anggastudio.sample.WebApiSVEN.Models.Cliente;
-import com.anggastudio.sample.WebApiSVEN.Models.Company;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Models.Placa;
 import com.anggastudio.sample.WebApiSVEN.Models.Setting;
-import com.anggastudio.sample.WebApiSVEN.Models.Tipotarjeta;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Scanner;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -91,7 +76,7 @@ public class VentaFragment extends Fragment{
     TimerTask timerTask;
     final Handler handler = new Handler();
 
-    /* Boleta-Factura*/
+    /** Datos de la Boleta - Factura */
     Card cards = null;
     RadioGroup radioGroup;
     Spinner dropStatus;
@@ -124,8 +109,9 @@ public class VentaFragment extends Fragment{
         btnserafin      = view.findViewById(R.id.btnserafin);
         btnpuntos       = view.findViewById(R.id.btnpuntos);
 
-        automatiStop = view.findViewById(R.id.automatiStop);
+        automatiStop    = view.findViewById(R.id.automatiStop);
 
+        /** Boton Time Task */
         automatiStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,8 +124,7 @@ public class VentaFragment extends Fragment{
             }
         });
 
-
-
+        /** Modalidad Libre */
         btnlibre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,6 +134,7 @@ public class VentaFragment extends Fragment{
             }
         });
 
+        /** Modalidad Soles */
         btnsoles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,6 +144,7 @@ public class VentaFragment extends Fragment{
             }
         });
 
+        /** Modalidad Galones */
         btngalones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,6 +154,7 @@ public class VentaFragment extends Fragment{
             }
         });
 
+        /** Operación de Boleta */
         btnboleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -410,6 +398,7 @@ public class VentaFragment extends Fragment{
             }
         });
 
+        /** Operación de Factura */
         btnfactura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -645,6 +634,7 @@ public class VentaFragment extends Fragment{
             }
         });
 
+        /** Operación de Nota de Despacho */
         btnnotadespacho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -659,23 +649,23 @@ public class VentaFragment extends Fragment{
                         builder.setView(dialogView);
                         abrirmodal();
 
-                        txtplaca        = dialogView.findViewById(R.id.inputnplaca);
-                        textid          = dialogView.findViewById(R.id.inputid);
-                        textruc         = dialogView.findViewById(R.id.inputruc);
-                        textnombre      = dialogView.findViewById(R.id.inputnombre);
-                        textdireccion   = dialogView.findViewById(R.id.inputdireccion);
-                        textkilometraje = dialogView.findViewById(R.id.inputkilometraje);
-                        textobservacion = dialogView.findViewById(R.id.inputobservacion);
+                        alertplaca      = dialogView.findViewById(R.id.alertPlacalaca);
+                        alertid         = dialogView.findViewById(R.id.alertIDCliente);
+                        alertruc        = dialogView.findViewById(R.id.alertRUC);
+                        alertrazsocial  = dialogView.findViewById(R.id.alertRazSocial);
+
+                        txtplaca        = dialogView.findViewById(R.id.inputPlaca);
+                        textid          = dialogView.findViewById(R.id.inputIDCliente);
+                        textruc         = dialogView.findViewById(R.id.inputRUC);
+                        textnombre      = dialogView.findViewById(R.id.inputRazSocial);
+                        textdireccion   = dialogView.findViewById(R.id.inputDireccion);
+                        textkilometraje = dialogView.findViewById(R.id.inputKilometraje);
+                        textobservacion = dialogView.findViewById(R.id.inputObservacion);
 
                         btnagregar      = dialogView.findViewById(R.id.btnagregarboleta);
                         btncancelar     = dialogView.findViewById(R.id.btncancelarboleta);
                         buscarid        = dialogView.findViewById(R.id.btnsunat);
                         buscarplaca     = dialogView.findViewById(R.id.btnplaca);
-
-                        alertplaca      = dialogView.findViewById(R.id.textnplaca);
-                        alertid         = dialogView.findViewById(R.id.textid);
-                        alertruc        = dialogView.findViewById(R.id.textruc);
-                        alertnombre     = dialogView.findViewById(R.id.textnombre);
 
                         btncancelar.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -738,12 +728,12 @@ public class VentaFragment extends Fragment{
                                 }else if (textnruc.isEmpty()) {
                                     alertruc.setError("* El campo RUC es obligatorio");
                                 } else if (textnnombre.isEmpty()) {
-                                    alertnombre.setError("* El campo Nombre es obligatorio");
+                                    alertrazsocial.setError("* El campo Nombre es obligatorio");
                                 } else {
                                     alertplaca.setErrorEnabled(false);
                                     alertid.setErrorEnabled(false);
                                     alertruc.setErrorEnabled(false);
-                                    alertnombre.setErrorEnabled(false);
+                                    alertrazsocial.setErrorEnabled(false);
 
                                     detalleVenta.setNroPlaca(txtplaca.getText().toString());
                                     detalleVenta.setClienteID(textid.getText().toString());
@@ -765,6 +755,7 @@ public class VentaFragment extends Fragment{
             }
         });
 
+        /** Operación de Serafin */
         btnserafin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -779,6 +770,7 @@ public class VentaFragment extends Fragment{
             }
         });
 
+        /** Operación de Puntos */
         btnpuntos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -788,21 +780,21 @@ public class VentaFragment extends Fragment{
             }
         });
 
-        //Listado de Dettalles de Venta
+        /** Listado de Dettalles de Venta  */
         recyclerDetalleVenta = view.findViewById(R.id.recyclerdetalleventa);
         recyclerDetalleVenta.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //Listado de Mangueras
+        /** Listado de Mangueras  */
         recyclerManguera = view.findViewById(R.id.recyclerlado);
         recyclerManguera.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        //Listado de Caras
+        /** Listado de Caras  */
         recyclerCara = view.findViewById(R.id.recycler);
         recyclerCara.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
+        /** API Retrofit - Consumiendo */
         findLados(GlobalInfo.getterminalImei10);
         findDetalleVenta(GlobalInfo.getterminalImei10);
-
         findSetting(GlobalInfo.getterminalCompanyID10);
 
         return view;
@@ -822,6 +814,7 @@ public class VentaFragment extends Fragment{
         timer.cancel();
         mTimerRunning = false;
         automatiStop.setText("Stop");
+        automatiStop.setBackgroundColor(Color.parseColor("#21AFA3"));
     }
 
     private void actualizarVista() {
@@ -850,23 +843,21 @@ public class VentaFragment extends Fragment{
         };
 
         mTimerRunning = true;
-        automatiStop.setText("Automatico");
+        automatiStop.setText("Automático");
+        automatiStop.setBackgroundColor(Color.parseColor("#001E89"));
     }
 
-    /**
-     * Datos de la Company
-     */
+    /** Datos de la Company */
     String NameCompany    = GlobalInfo.getNameCompany10;
     String RUCCompany     = GlobalInfo.getRucCompany10;
     String AddressCompany = GlobalInfo.getAddressCompany10;
     String BranchCompany  = GlobalInfo.getBranchCompany10;
 
-    /**
-     * Datos de la terminal
-     */
+    /** Datos de la terminal */
     String TurnoTerminal  = String.valueOf(GlobalInfo.getterminalTurno10);
     String CajeroTerminal = GlobalInfo.getuserName10;
 
+    /** Impresión de Boletas */
     private  void boletas(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany, String TurnoTerminal,String CajeroTerminal) {
 
         /**
@@ -951,6 +942,7 @@ public class VentaFragment extends Fragment{
 
     }
 
+    /** API SERVICE - Setting */
     private void findSetting(Integer id){
 
         Call<List<Setting>> call = mAPIService.findSetting(id);
@@ -998,6 +990,7 @@ public class VentaFragment extends Fragment{
 
     }
 
+    /** API SERVICE - Buscar Cliente DNI */
     private  void findClienteDNI(String id){
 
         Call<List<Cliente>> call = mAPIService.findClienteDNI(id);
@@ -1044,6 +1037,7 @@ public class VentaFragment extends Fragment{
         });
     }
 
+    /** API SERVICE - Buscar Cliente RUC */
     private  void findClienteRUC(String id){
 
         Call<List<Cliente>> call = mAPIService.findClienteRUC(id);
@@ -1090,6 +1084,7 @@ public class VentaFragment extends Fragment{
         });
     }
 
+    /** API SERVICE - Cliente */
     private  void findCliente(String id,String tipodoc){
 
         Call<List<Cliente>> call = mAPIService.findCliente(id);
@@ -1158,6 +1153,7 @@ public class VentaFragment extends Fragment{
         });
     }
 
+    /** API SERVICE - Buscar Placa */
     private void findPlaca(String id, String tipodoc){
 
         Call<List<Placa>> call = mAPIService.findPlaca(id);
@@ -1214,6 +1210,7 @@ public class VentaFragment extends Fragment{
 
     }
 
+    /** API SERVICE - Lados */
     private void findLados(String id) {
 
         Call<List<Lados>> call = mAPIService.findLados(id);
@@ -1263,6 +1260,7 @@ public class VentaFragment extends Fragment{
 
     }
 
+    /** API SERVICE - Pico */
     private void findPico(String id){
 
         Call<List<Picos>> call = mAPIService.findPico(id);
@@ -1304,6 +1302,7 @@ public class VentaFragment extends Fragment{
 
     }
 
+    /** API SERVICE - Card Detalle de Ventas */
     private void findDetalleVenta(String id){
 
         Call<List<DetalleVenta>> call = mAPIService.findDetalleVenta(id);
@@ -1342,6 +1341,7 @@ public class VentaFragment extends Fragment{
         });
     }
 
+    /** Spinner de Tipo de Tarjetas */
     private void getCard(){
         Call<List<Card>> call = mAPIService.getCard();
 
@@ -1372,6 +1372,7 @@ public class VentaFragment extends Fragment{
         });
     }
 
+    /** Modal - Dialog */
     private void abrirmodal(){
         alertDialog = builder.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -1379,6 +1380,7 @@ public class VentaFragment extends Fragment{
         alertDialog.setCancelable(false);
     }
 
+    /** Alerta de Conexión de Bluetooth */
     private void showToast(String message) {
         Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
     }
