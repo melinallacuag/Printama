@@ -55,6 +55,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_semibold"
                         android:inputType="textCapCharacters"
+                            android:text="000-0000"
                         android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 

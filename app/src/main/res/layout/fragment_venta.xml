@@ -430,7 +430,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <ScrollView
+  <!--      <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -536,7 +536,7 @@
 
             </LinearLayout>
 
-        </ScrollView>
+        </ScrollView>-->
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

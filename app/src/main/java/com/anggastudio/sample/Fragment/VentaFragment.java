@@ -58,19 +58,23 @@ import retrofit2.Response;
 
 public class VentaFragment extends Fragment{
 
+    private APIService mAPIService;
+
+    /**  Id Cara */
+    private String mCara;
+
     TextView  producto,cara,importetotal,textcara,textmanguera;
     CardView  grias;
     Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos,automatiStop;
 
+    /**  AdapterList - Recycler */
     RecyclerView recyclerCara, recyclerManguera, recyclerDetalleVenta;
     CaraAdapter caraAdapter;
     MangueraAdapter mangueraAdapter;
     DetalleVentaAdapter detalleVentaAdapter;
-
     List<DetalleVenta> detalleVentaList;
-    private APIService mAPIService;
-    private String mCara;
 
+    /** Time Task */
     boolean mTimerRunning;
     Timer timer;
     TimerTask timerTask;
@@ -95,10 +99,10 @@ public class VentaFragment extends Fragment{
 
         mAPIService  = GlobalInfo.getAPIService();
 
-        producto        = view.findViewById(R.id.textmanguera);
+       /* producto        = view.findViewById(R.id.textmanguera);
         cara            = view.findViewById(R.id.textcara);
         importetotal    = view.findViewById(R.id.txtimporte);
-        grias           = view.findViewById(R.id.card);
+        grias           = view.findViewById(R.id.card);*/
 
         btnlibre        = view.findViewById(R.id.btnlibre);
         btnsoles        = view.findViewById(R.id.btnsoles);
@@ -164,21 +168,19 @@ public class VentaFragment extends Fragment{
 
                     if(mnCara.equals(mCara)) {
 
-                        //Abrir Modal de cada Operación
+                        /** Abrir Modal */
                         builder = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflater = getActivity().getLayoutInflater();
                         View dialogView = inflater.inflate(R.layout.fragment_boleta, null);
                         builder.setView(dialogView);
                         abrirmodal();
 
-                        //Alertas
                         alertplaca       = dialogView.findViewById(R.id.alertPlaca);
                         alertdni         = dialogView.findViewById(R.id.alertDNI);
                         alertnombre      = dialogView.findViewById(R.id.alertNombre);
                         alertpefectivo   = dialogView.findViewById(R.id.alertPEfectivo);
                         alertoperacion   = dialogView.findViewById(R.id.alertOperacion);
 
-                        //Campos
                         txtplaca         = dialogView.findViewById(R.id.inputPlaca);
                         textdni          = dialogView.findViewById(R.id.inputDNI);
                         textnombre       = dialogView.findViewById(R.id.inputNombre);
@@ -189,27 +191,34 @@ public class VentaFragment extends Fragment{
                         textpagoefectivo = dialogView.findViewById(R.id.inputPEfectivo);
                         modopagoefectivo = dialogView.findViewById(R.id.modopagoefectivo);
 
-                        //Radio Button
                         radioGroup       = dialogView.findViewById(R.id.radioformapago);
                         cbefectivo       = dialogView.findViewById(R.id.radioEfectivo);
                         cbtarjeta        = dialogView.findViewById(R.id.radioTarjeta);
                         cbcredito        = dialogView.findViewById(R.id.radioCredito);
 
-                        //Button Spinner
                         dropStatus       = dialogView.findViewById(R.id.dropStatus);
                         textdropStatus   = dialogView.findViewById(R.id.textdropStatus);
 
-                        //Button
                         btnagregar       = dialogView.findViewById(R.id.btnagregarboleta);
                         btncancelar      = dialogView.findViewById(R.id.btncancelar);
                         btngenerar       = dialogView.findViewById(R.id.btngenerarcliente);
                         buscardni        = dialogView.findViewById(R.id.btnrenic);
                         buscarplaca      = dialogView.findViewById(R.id.btnplaca);
 
-                        //Array de los select
+                        /** Spinner de Tipo de Pago */
                         getCard();
+                        dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                cards = (Card) dropStatus.getSelectedItem();
+                            }
 
-                        //Radio Button de Visiluación de campos
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+                            }
+                        });
+
+                        /** Radio Button de Visiluación de campos */
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -233,17 +242,6 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
-                        dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                cards = (Card) dropStatus.getSelectedItem();
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                            }
-                        });
-
                         btncancelar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -251,6 +249,7 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
+                        /** Buscar Placa - Boleta */
                         buscarplaca.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -269,6 +268,7 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
+                        /** Buscar DNI - Boleta */
                         buscardni.setOnClickListener(new View.OnClickListener() {
 
                             @Override
@@ -288,6 +288,7 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
+                        /** Generar Datos Simples - Boleta */
                         btngenerar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -299,6 +300,7 @@ public class VentaFragment extends Fragment{
 
                         radioGroup.check(cbefectivo.getId());
 
+                        /** Agregar - Boleta */
                         btnagregar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -390,7 +392,6 @@ public class VentaFragment extends Fragment{
                                 recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
                                 Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
                                 alertDialog.dismiss();
-
                             }
                         });
                     }
@@ -409,21 +410,19 @@ public class VentaFragment extends Fragment{
 
                     if(mnCara.equals(mCara) ) {
 
-                        //Abrir Modal de cada Operación
+                        /** Abrir Modal */
                         builder = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflater = getActivity().getLayoutInflater();
                         View dialogView = inflater.inflate(R.layout.fragment_factura, null);
                         builder.setView(dialogView);
                         abrirmodal();
 
-                        //Alertas
                         alertplaca       = dialogView.findViewById(R.id.alertPlaca);
                         alertruc         = dialogView.findViewById(R.id.alertRUC);
                         alertrazsocial   = dialogView.findViewById(R.id.alertRazSocial);
                         alertpefectivo   = dialogView.findViewById(R.id.alertPEfectivo);
                         alertoperacion   = dialogView.findViewById(R.id.alertOperacion);
 
-                        //Campos
                         txtplaca         = dialogView.findViewById(R.id.inputPlaca);
                         textruc          = dialogView.findViewById(R.id.inputRUC);
                         textrazsocial    = dialogView.findViewById(R.id.inputRazSocial);
@@ -434,25 +433,33 @@ public class VentaFragment extends Fragment{
                         textpagoefectivo = dialogView.findViewById(R.id.inputPEfectivo);
                         modopagoefectivo = dialogView.findViewById(R.id.modopagoefectivo);
 
-                        //Radio Button
                         radioGroup     = dialogView.findViewById(R.id.radioformapago);
                         cbefectivo     = dialogView.findViewById(R.id.radioEfectivo);
                         cbtarjeta      = dialogView.findViewById(R.id.radioTarjeta);
                         cbcredito      = dialogView.findViewById(R.id.radioCredito);
 
-                        //Button Spinner
                         dropStatus            = dialogView.findViewById(R.id.dropStatus);
                         textdropStatus        = dialogView.findViewById(R.id.textdropStatus);
 
-                        //Button
                         btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
                         btncancelar    = dialogView.findViewById(R.id.btncancelar);
                         buscarruc      = dialogView.findViewById(R.id.btnsunat);
                         buscarplaca    = dialogView.findViewById(R.id.btnplaca);
 
-                        //Array de los select
+                        /** Spinner de Tipo de Pago */
                         getCard();
+                        dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                cards = (Card) dropStatus.getSelectedItem();
+                            }
 
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+                            }
+                        });
+
+                        /** Radio Button de Visiluación de campos */
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -477,17 +484,6 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
-                        dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                cards = (Card) dropStatus.getSelectedItem();
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                            }
-                        });
-
                         btncancelar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -495,6 +491,7 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
+                        /** Buscar Placa - Factura */
                         buscarplaca.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -514,6 +511,7 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
+                        /** Buscar RUC - Factura */
                         buscarruc.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -533,6 +531,7 @@ public class VentaFragment extends Fragment{
 
                         radioGroup.check(cbefectivo.getId());
 
+                        /** Agregar - Factura */
                         btnagregar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -804,7 +803,7 @@ public class VentaFragment extends Fragment{
 
         timer = new Timer();
 
-        actualizarVista();
+        realizarOperacion();
 
         timer.schedule(timerTask,  5000);
     }
@@ -817,7 +816,7 @@ public class VentaFragment extends Fragment{
         automatiStop.setBackgroundColor(Color.parseColor("#6c757d"));
     }
 
-    private void actualizarVista() {
+    private void realizarOperacion() {
 
         Toast.makeText(getContext(), "hola", Toast.LENGTH_SHORT).show();
 
@@ -827,7 +826,7 @@ public class VentaFragment extends Fragment{
                 handler.post(new Runnable() {
                     public void run() {
 
-                        boletas(NameCompany,RUCCompany,AddressCompany,BranchCompany,TurnoTerminal,CajeroTerminal);
+                        boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10,GlobalInfo.getAddressCompany10,GlobalInfo.getBranchCompany10, String.valueOf(GlobalInfo.getterminalTurno10), GlobalInfo.getuserName10);
 
                         Calendar calendar = Calendar.getInstance();
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd:MMMM:yyyy HH:mm:ss a");
@@ -847,27 +846,13 @@ public class VentaFragment extends Fragment{
         automatiStop.setBackgroundColor(Color.parseColor("#001E8A"));
     }
 
-    /** Datos de la Company */
-    String NameCompany    = GlobalInfo.getNameCompany10;
-    String RUCCompany     = GlobalInfo.getRucCompany10;
-    String AddressCompany = GlobalInfo.getAddressCompany10;
-    String BranchCompany  = GlobalInfo.getBranchCompany10;
-
-    /** Datos de la terminal */
-    String TurnoTerminal  = String.valueOf(GlobalInfo.getterminalTurno10);
-    String CajeroTerminal = GlobalInfo.getuserName10;
-
     /** Impresión de Boletas */
     private  void boletas(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany, String TurnoTerminal,String CajeroTerminal) {
 
-        /**
-         * Logo
-         */
+        /** Logo */
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
 
-        /**
-         * Organizar la cadena de texto de Address y Branch
-         */
+        /** Organizar la cadena de texto de Address y Branch */
         Matcher matcher;
         Pattern patronsintaxi;
 
@@ -886,7 +871,6 @@ public class VentaFragment extends Fragment{
         String AddressU = segundaAddress;
         String AddressD = primeraAddress;
 
-
         matcher = patronsintaxi.matcher(BranchCompany);
 
         String segundaBranch = null;
@@ -901,21 +885,12 @@ public class VentaFragment extends Fragment{
         String BranchU = segundaBranch;
         String BranchD = primeraBranch;
 
-        /**
-         * Fin - Organizar la cadena de texto de Address y Branch
-         */
-
-
-        /**
-         * Fecha y Hora que se imite el comprobante
-         */
+        /** Fecha y Hora que se imite el comprobante */
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
         SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         String FechaHora      = sdf.format(cal.getTime());
-        /**
-         * Fin - Fecha y Hora que se imite el comprobante
-         */
 
+        /** Imprimir Comprobante */
         Printama.with(getContext()).connect(printama -> {
             printama.setNormalText();
             printama.printTextlnBold(NameCompany, Printama.CENTER);
@@ -1237,9 +1212,9 @@ public class VentaFragment extends Fragment{
 
                             findPico(GlobalInfo.getCara10);
 
-                            textcara =  getActivity().findViewById(R.id.textcara);
+                        /*    textcara =  getActivity().findViewById(R.id.textcara);
                             String numlado = item.getNroLado();
-                            textcara.setText(numlado);
+                            textcara.setText(numlado);*/
 
                             return 0;
                         }
@@ -1280,9 +1255,9 @@ public class VentaFragment extends Fragment{
                         @Override
                         public void onItemClick(Picos item) {
 
-                            textmanguera =  getActivity().findViewById(R.id.textmanguera);
+                          /*  textmanguera =  getActivity().findViewById(R.id.textmanguera);
                             String descripcionmanguera = item.getDescripcion();
-                            textmanguera.setText(descripcionmanguera);
+                            textmanguera.setText(descripcionmanguera);*/
                             GlobalInfo.getPistola10 = item.getMangueraID();
 
                         }
