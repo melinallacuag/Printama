@@ -33,17 +33,16 @@ public class GalonesFragment extends DialogFragment {
     private APIService mAPIService;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_galones, container, false);
+
+        mAPIService = GlobalInfo.getAPIService();
 
         btncancelar    = view.findViewById(R.id.btncancelargalones);
         agregargalones = view.findViewById(R.id.btnagregargalones);
         galones        = view.findViewById(R.id.inputmontogalones);
-        alertgalones   = view.findViewById(R.id.textgalones);
-
-        mAPIService = GlobalInfo.getAPIService();
+        alertgalones   = view.findViewById(R.id.alertgalones);
 
         btncancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,22 +54,25 @@ public class GalonesFragment extends DialogFragment {
         agregargalones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String textgalones = galones.getText().toString().trim();
 
                 if(textgalones.isEmpty()){
                     alertgalones.setError("El campo galones es obligatorio");
                     return;
                 }
-                Double galonesmonto = Double.parseDouble(textgalones);
+                Double galonesmonto  = Double.parseDouble(textgalones);
 
-                int numgalones   = Integer.parseInt(textgalones);
+                Integer numgalones   = Integer.parseInt(textgalones);
+
                 if (numgalones < 1){
                     alertgalones.setError("El valor debe ser minimo 1 ");
                 }else if(999 < numgalones){
                     alertgalones.setError("El valor debe ser maximo 999");
                 }else {
-                    guardar_galones(GlobalInfo.getPistola10,galonesmonto);
                     alertgalones.setErrorEnabled(false);
+                    guardar_galones(GlobalInfo.getPistola10,galonesmonto);
+
                     Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
@@ -79,6 +81,8 @@ public class GalonesFragment extends DialogFragment {
         });
         return view;
     }
+
+    /** Guardar - GALONES */
     private void guardar_galones(String manguera, Double valor){
 
         final Picos picos = new Picos(manguera,"01","1","05","DB5","G",valor);
@@ -88,12 +92,10 @@ public class GalonesFragment extends DialogFragment {
         call.enqueue(new Callback<Picos>() {
             @Override
             public void onResponse(Call<Picos> call, Response<Picos> response) {
-
                 if(!response.isSuccessful()){
                     Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
-
             }
 
             @Override

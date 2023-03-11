@@ -24,7 +24,7 @@ android:layout_height="match_parent">
         android:fontFamily="@font/nunito_black"
         android:text="@string/salir"
         android:textAlignment="center"
-        android:textColor="#071C65"
+        android:textColor="@color/blue"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -36,7 +36,7 @@ android:layout_height="match_parent">
         android:gravity="center_horizontal"
         android:text="¿Esta seguro que desea Cerrar Sesión?"
         android:textAlignment="center"
-        android:textColor="#071C65"
+        android:textColor="@color/gris"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -55,11 +55,11 @@ android:layout_height="match_parent">
             android:layout_marginEnd="10sp"
             android:layout_marginRight="10sp"
             android:layout_weight="1"
-            android:backgroundTint="#D51A30"
+            android:backgroundTint="@color/colorDanger"
             android:fontFamily="@font/nunito_extrabold"
             android:text="cancelar"
             android:textAllCaps="true"
-            android:textColor="#fff"
+            android:textColor="@color/white"
             android:textSize="10sp"
             app:cornerRadius="10sp" />
 
@@ -73,7 +73,8 @@ android:layout_height="match_parent">
             android:fontFamily="@font/nunito_extrabold"
             android:text="aceptar"
             android:textAllCaps="true"
-            android:textColor="#fff"
+            android:backgroundTint="@color/colorSuccess"
+            android:textColor="@color/white"
             android:textSize="10sp"
             app:cornerRadius="10sp" />
 

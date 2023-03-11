@@ -25,25 +25,26 @@ public class LibreFragment extends DialogFragment {
 
     private APIService mAPIService;
 
+    Button btnactivarLibre,btndesactivar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_libre, container, false);
 
-        Button btnactivar   = view.findViewById(R.id.btnlibresi);
-        Button btnnoactivar = view.findViewById(R.id.btnlibreno);
+        btnactivarLibre  = view.findViewById(R.id.btnlibresi);
+        btndesactivar    = view.findViewById(R.id.btnlibreno);
 
         mAPIService = GlobalInfo.getAPIService();
 
-        btnnoactivar.setOnClickListener(new View.OnClickListener() {
+        btndesactivar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "NO SE ACTIVO EL MODO LIBRE", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });
 
-        btnactivar.setOnClickListener(new View.OnClickListener() {
+        btnactivarLibre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 guardar_modolibre(GlobalInfo.getPistola10);
@@ -54,6 +55,8 @@ public class LibreFragment extends DialogFragment {
 
         return view;
     }
+
+    /** Guardar - MODO LIBRE */
     private void guardar_modolibre(String manguera){
 
         final Picos picos = new Picos(manguera,"01","1","05","DB5","S",9999.00);
@@ -73,7 +76,7 @@ public class LibreFragment extends DialogFragment {
 
             @Override
             public void onFailure(Call<Picos> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error de conexión APICORE - Modo Libre", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -411,6 +411,7 @@
                 android:fontFamily="@font/nunito_black"
                 android:text="Imprimir"
                 android:textSize="10sp"
+                android:backgroundTint="@color/colorSuccess"
                 app:cornerRadius="10sp" />
         </LinearLayout>
 

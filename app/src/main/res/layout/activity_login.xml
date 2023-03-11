@@ -41,7 +41,7 @@
             android:text="@string/titulo_iniciarsesion"
             android:fontFamily="@font/nunito_black"
             android:textAlignment="center"
-            android:textColor="#001E8A"
+            android:textColor="@color/blue"
             android:textSize="18sp"
             android:layout_marginBottom="10sp"
             android:textStyle="bold" />
@@ -99,16 +99,16 @@
         <Button
             android:id="@+id/btnlogin"
             android:layout_width="match_parent"
-            android:layout_height="55sp"
+            android:layout_height="60sp"
             android:letterSpacing="0.05"
             android:text="@string/btn_ingresarlogin"
             android:textAlignment="center"
             android:textAllCaps="true"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="14sp"
-            android:background="@drawable/button"
+            android:backgroundTint="@color/colorPrimaryBtn"
             android:fontFamily="@font/nunito_black"
-            app:cornerRadius="15sp"/>
+            app:cornerRadius="10sp"/>
 
         <TextView
             android:id="@+id/imei"

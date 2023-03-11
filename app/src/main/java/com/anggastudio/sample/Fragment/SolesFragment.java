@@ -43,15 +43,14 @@ public class SolesFragment extends DialogFragment {
 
         View view = inflater.inflate(R.layout.fragment_soles, container, false);
 
-        btncancelar   = view.findViewById(R.id.btncancelarsoles);
-        agregar       = view.findViewById(R.id.btnagregarsoles);
-        montosoles    = view.findViewById(R.id.montosoles);
-        alertsoles    = view.findViewById(R.id.textsoles);
-
         mAPIService   = GlobalInfo.getAPIService();
 
-        btncancelar.setOnClickListener(new View.OnClickListener() {
+        btncancelar   = view.findViewById(R.id.btncancelarsoles);
+        agregar       = view.findViewById(R.id.btnagregarsoles);
+        montosoles    = view.findViewById(R.id.inputmontosoles);
+        alertsoles    = view.findViewById(R.id.alertsoles);
 
+        btncancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { dismiss();}
         });
@@ -60,42 +59,35 @@ public class SolesFragment extends DialogFragment {
 
             @Override
             public void onClick(View view) {
+                String MontoSoles = montosoles.getText().toString();
 
-                textsol = getActivity().findViewById(R.id.txtimporte);
-
-                if(isEmpty(montosoles.getText().toString())){
+                if(isEmpty(MontoSoles)){
                     alertsoles.setError("El campo soles es obligatorio");
                     return;
                 }
 
-                BigDecimal bd = new BigDecimal(montosoles.getText().toString());
-                bd = bd.setScale(2, RoundingMode.HALF_UP);
+                Double DoubleMontoSoles = Double.parseDouble(MontoSoles);
 
-                textsol.setText(bd.toString());
+                Integer NumIntSoles     = Integer.parseInt(MontoSoles);
 
-                String textsol = montosoles.getText().toString();
-
-                Double solesmonto = Double.parseDouble(textsol);
-
-                int numsol   = Integer.parseInt(textsol);
-
-                if (numsol < 5){
+                if (NumIntSoles < 5){
                     alertsoles.setError("El valor debe ser mínimo 5.00");
-                }else if(9999 < numsol){
+                }else if(9999 < NumIntSoles){
                     alertsoles.setError("El valor debe ser maximo 9999");
                 }else {
-                    guardar_monto(GlobalInfo.getPistola10,solesmonto);
                     alertsoles.setErrorEnabled(false);
+                    guardar_monto(GlobalInfo.getPistola10,DoubleMontoSoles);
+
                     Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
-
             }
         });
 
         return view;
     }
 
+    /** Guardar - MONTO SOLES */
     private void guardar_monto(String manguera, Double valor){
 
         final Picos picos = new Picos(manguera,"01","1","05","DB5","S",valor);
@@ -110,7 +102,6 @@ public class SolesFragment extends DialogFragment {
                     Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
-
             }
 
             @Override

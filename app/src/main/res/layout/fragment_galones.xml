@@ -25,11 +25,10 @@
                 android:layout_weight="1"
                 android:text="@string/ope_galones"
                 android:fontFamily="@font/nunito_black"
-                android:textColor="#071C65"
+                android:textColor="@color/blue"
                 android:textSize="20sp"
                 android:layout_marginBottom="10sp"
                 android:textStyle="bold" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +36,7 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textgalones"
+                android:id="@+id/alertgalones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Cantidad de Galones"
@@ -55,9 +54,6 @@
                     android:layout_height="wrap_content"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -68,28 +64,29 @@
             <Button
                 android:id="@+id/btncancelargalones"
                 android:layout_width="wrap_content"
-                android:layout_height="60sp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5sp"
                 android:layout_weight="1"
-                android:backgroundTint="#D51A30"
+                android:backgroundTint="@color/colorDanger"
                 android:text="@string/btn_cancelar"
                 android:fontFamily="@font/nunito_extrabold"
                 android:textAllCaps="true"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
 
             <Button
                 android:id="@+id/btnagregargalones"
                 android:layout_width="wrap_content"
-                android:layout_height="60sp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5sp"
                 android:layout_weight="1"
                 android:text="@string/btn_agregar"
                 android:textAllCaps="true"
-                android:textColor="#fff"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/colorSuccess"
                 android:textSize="10sp"
                 android:fontFamily="@font/nunito_extrabold"
                 app:cornerRadius="10sp" />

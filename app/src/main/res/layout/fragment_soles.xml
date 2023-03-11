@@ -25,12 +25,12 @@
                 android:layout_weight="1"
                 android:text="@string/ope_soles"
                 android:fontFamily="@font/nunito_black"
-                android:textColor="#071C65"
+                android:textColor="@color/blue"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textsoles"
+            android:id="@+id/alertsoles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Monto Soles"
@@ -41,7 +41,7 @@
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/icon_money">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/montosoles"
+                android:id="@+id/inputmontosoles"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="14sp"
                 android:layout_width="match_parent"
@@ -57,27 +57,28 @@
             <Button
                 android:id="@+id/btncancelarsoles"
                 android:layout_width="wrap_content"
-                android:layout_height="60sp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:backgroundTint="#D51A30"
+                android:backgroundTint="@color/colorDanger"
                 android:text="@string/btn_cancelar"
                 android:layout_margin="5sp"
                 android:fontFamily="@font/nunito_extrabold"
                 android:textAllCaps="true"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
             <Button
                 android:id="@+id/btnagregarsoles"
                 android:layout_width="wrap_content"
-                android:layout_height="60sp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:backgroundTint="@color/colorSuccess"
                 android:text="@string/btn_agregar"
                 android:textAllCaps="true"
                 android:layout_margin="5sp"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 android:fontFamily="@font/nunito_extrabold"
                 app:cornerRadius="10sp" />

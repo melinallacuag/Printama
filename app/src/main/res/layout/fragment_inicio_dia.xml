@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/nunito_black"
             android:text="@string/menu_iniciodia"
-            android:textColor="#071C65"
+            android:textColor="@color/blue"
             android:textSize="20sp"
             android:textAlignment="center"
             android:textStyle="bold" />
@@ -36,7 +36,7 @@
             android:gravity="center_horizontal"
             android:text="¿Desea generar inicio de día?"
             android:textAlignment="center"
-            android:textColor="#071C65"
+            android:textColor="@color/gris"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
                 android:layout_marginEnd="10sp"
                 android:layout_marginRight="10sp"
                 android:layout_weight="1"
-                android:backgroundTint="#D51A30"
+                android:backgroundTint="@color/colorDanger"
                 android:fontFamily="@font/nunito_extrabold"
                 android:text="cancelar"
                 android:textAllCaps="true"
@@ -73,7 +73,8 @@
                 android:fontFamily="@font/nunito_extrabold"
                 android:text="aceptar"
                 android:textAllCaps="true"
-                android:textColor="#fff"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/colorSuccess"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/contain">
@@ -20,12 +19,8 @@
         android:paddingEnd="20sp"
         android:paddingTop="10sp"
         android:paddingBottom="10sp"
-        app:layout_constraintCircleRadius="@dimen/cardview_default_radius"
-        android:backgroundTint="#FFFFFF"
-        android:background="@drawable/cardmodal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:backgroundTint="@color/white"
+        android:background="@drawable/cardmodal">
 
         <TextView
             android:layout_width="match_parent"
@@ -33,9 +28,8 @@
             android:layout_gravity="center"
             android:fontFamily="@font/nunito_black"
             android:text="@string/ope_factura"
-            android:textColor="#071C65"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textColor="@color/blue"
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,13 +58,15 @@
             <Button
                 android:id="@+id/btnplaca"
                 android:layout_width="200sp"
-                android:layout_height="60sp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10sp"
                 android:text="@string/btn_buscar"
                 android:textSize="10sp"
                 android:fontFamily="@font/nunito_extrabold"
                 android:layout_weight="1"
                 app:cornerRadius="10sp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/colorSecondary"
                 android:layout_marginTop="2sp"
                 android:layout_marginLeft="10sp" />
         </LinearLayout>
@@ -103,12 +99,14 @@
             <Button
                 android:id="@+id/btnsunat"
                 android:layout_width="200sp"
-                android:layout_height="60sp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10sp"
                 android:text="@string/btn_sunat"
                 android:textSize="10sp"
                 android:layout_weight="1"
                 app:cornerRadius="10sp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/colorSecondary"
                 android:fontFamily="@font/nunito_extrabold"
                 android:layout_marginTop="2sp"
                 android:layout_marginLeft="10sp" />
@@ -197,12 +195,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
             android:text="Forma de Pago:"
             android:fontFamily="@font/nunito_extrabold"
-            android:textColor="#071C65"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textColor="@color/blue"
+            android:textSize="16sp" />
 
         <RadioGroup
             android:id="@+id/radioformapago"
@@ -218,8 +214,7 @@
                 android:checked="false"
                 android:text="Efectivo"
                 android:fontFamily="@font/nunito_extrabold"
-                android:textColor="#123456"
-                android:textColorHint="#404143"
+                android:textColor="@color/gris"
                 android:textSize="14sp" />
 
             <RadioButton
@@ -230,8 +225,7 @@
                 android:checked="false"
                 android:text="Tarjeta"
                 android:fontFamily="@font/nunito_extrabold"
-                android:textColor="#123456"
-                android:textColorHint="#404143"
+                android:textColor="@color/gris"
                 android:textSize="14sp" />
 
             <RadioButton
@@ -242,8 +236,7 @@
                 android:checked="false"
                 android:text="Credito"
                 android:fontFamily="@font/nunito_extrabold"
-                android:textColor="#123456"
-                android:textColorHint="#404143"
+                android:textColor="@color/gris"
                 android:textSize="14sp" />
         </RadioGroup>
 
@@ -262,21 +255,18 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="50sp">
-            </Spinner>
+                android:layout_height="50sp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/modopagoefectivo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50sp"
             android:layout_gravity="center"
-            android:layout_marginTop="3.5sp"
-            android:layout_marginBottom="5sp"
             android:background="@drawable/cardlogin"
-            android:backgroundTint="#41C9F3"
+            android:backgroundTint="@color/colorInfo"
             android:fontFamily="@font/nunito_extralight"
-            android:padding="15sp"
+            android:gravity="center"
             android:text="Se realizara el modo de Pago en Efectivo"
             android:textAlignment="center"
             android:textColor="#fff"
@@ -334,14 +324,14 @@
             <Button
                 android:id="@+id/btncancelar"
                 android:layout_width="wrap_content"
-                android:layout_height="55sp"
+                android:layout_height="wrap_content"
                 android:text="@string/btn_cancelar"
                 android:fontFamily="@font/nunito_extrabold"
                 android:layout_gravity="center"
                 android:textAllCaps="true"
                 android:layout_margin="5sp"
-                android:backgroundTint="#D51A30"
-                android:textColor="#fff"
+                android:backgroundTint="@color/colorDanger"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp"
                 android:layout_weight="1" />
@@ -349,12 +339,13 @@
             <Button
                 android:id="@+id/btnagregarboleta"
                 android:layout_width="wrap_content"
-                android:layout_height="55sp"
+                android:layout_height="wrap_content"
                 android:text="@string/btn_agregar"
                 android:layout_gravity="center"
                 android:textAllCaps="true"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 android:textSize="10sp"
+                android:backgroundTint="@color/colorSuccess"
                 android:layout_margin="5sp"
                 android:fontFamily="@font/nunito_extrabold"
                 app:cornerRadius="10sp"

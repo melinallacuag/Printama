@@ -21,24 +21,23 @@
         <Button
             android:id="@+id/automatiStop"
             android:layout_width="match_parent"
-            android:layout_height="50sp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#21AFA3"
+            android:backgroundTint="@color/colorSecondary"
             android:fontFamily="@font/nunito_black"
-            android:gravity="center"
             android:text="@string/btn_stop"
-            android:textAlignment="center"
-            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:textSize="10sp"
             app:cornerRadius="10sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_black"
-            android:textColor="#3C4048"
+            android:text="@string/ope_cara"
+            android:textColor="@color/black"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="@string/ope_cara" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -53,10 +52,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
             android:fontFamily="@font/nunito_black"
             android:text="@string/op_manguera"
-            android:textColor="#3C4048"
+            android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -73,10 +71,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
             android:fontFamily="@font/nunito_black"
             android:text="@string/op_modalida"
-            android:textColor="#3C4048"
+            android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -87,51 +84,45 @@
             <Button
                 android:id="@+id/btnlibre"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
                 android:layout_margin="2sp"
                 android:layout_weight="1"
-                android:background="@drawable/button"
+                android:backgroundTint="@color/colorPrimaryBtn"
                 android:fontFamily="@font/nunito_black"
                 android:gravity="center"
                 android:text="@string/ope_libre"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
 
             <Button
                 android:id="@+id/btnsoles"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
                 android:layout_margin="2sp"
                 android:layout_weight="1"
-                android:background="@drawable/button"
+                android:backgroundTint="@color/colorPrimaryBtn"
                 android:fontFamily="@font/nunito_black"
                 android:gravity="center"
                 android:text="@string/ope_soles"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
 
             <Button
                 android:id="@+id/btngalones"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
                 android:layout_margin="2sp"
                 android:layout_weight="1"
-                android:background="@drawable/button"
+                android:backgroundTint="@color/colorPrimaryBtn"
                 android:fontFamily="@font/nunito_black"
                 android:gravity="center"
                 android:text="@string/ope_galones"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
         </LinearLayout>
@@ -139,16 +130,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
             android:fontFamily="@font/nunito_black"
             android:text="@string/op_operacion"
-            android:textColor="#3C4048"
+            android:textColor="@color/black"
             android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.005"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -157,53 +143,45 @@
             <Button
                 android:id="@+id/btnboleta"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
                 android:layout_margin="2sp"
                 android:layout_weight="1"
-                android:background="@drawable/button"
+                android:backgroundTint="@color/colorPrimaryBtn"
                 android:fontFamily="@font/nunito_black"
                 android:gravity="center"
-                android:onClick="boleta"
                 android:text="@string/ope_boleta"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
 
             <Button
                 android:id="@+id/btnfactura"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
                 android:layout_margin="2sp"
                 android:layout_weight="1"
-                android:background="@drawable/button"
+                android:backgroundTint="@color/colorPrimaryBtn"
                 android:fontFamily="@font/nunito_black"
                 android:gravity="center"
-                android:onClick="factura"
                 android:text="@string/ope_factura"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
 
             <Button
                 android:id="@+id/btnnotadespacho"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
                 android:layout_margin="2sp"
                 android:layout_weight="1"
-                android:background="@drawable/button"
+                android:backgroundTint="@color/colorPrimaryBtn"
                 android:fontFamily="@font/nunito_black"
                 android:gravity="center"
                 android:text="@string/ope_NDespacho"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
         </LinearLayout>
@@ -215,51 +193,45 @@
             <Button
                 android:id="@+id/btnserafin"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
                 android:layout_margin="2sp"
                 android:layout_weight="1"
-                android:background="@drawable/button"
+                android:backgroundTint="@color/colorPrimaryBtn"
                 android:fontFamily="@font/nunito_black"
                 android:gravity="center"
                 android:text="@string/ope_serafin"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
 
             <Button
                 android:id="@+id/btnpuntos"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
                 android:layout_margin="2sp"
                 android:layout_weight="1"
-                android:background="@drawable/button"
+                android:backgroundTint="@color/colorPrimaryBtn"
                 android:fontFamily="@font/nunito_black"
                 android:gravity="center"
                 android:text="@string/ope_puntos"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
 
             <Button
                 android:id="@+id/btnimprimir"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
+                android:layout_height="wrap_content"
                 android:layout_margin="2sp"
                 android:layout_weight="1"
-                android:background="@drawable/button"
+                android:backgroundTint="@color/colorPrimaryBtn"
                 android:fontFamily="@font/nunito_black"
                 android:gravity="center"
                 android:text="@string/ope_canje"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="10sp"
                 app:cornerRadius="10sp" />
         </LinearLayout>
@@ -267,22 +239,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
             android:fontFamily="@font/nunito_black"
             android:text="@string/op_transacciones"
-            android:textColor="#3C4048"
+            android:textColor="@color/black"
             android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gridLayout2" />
+            android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/carddetalleventa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#001E89"
+            android:backgroundTint="@color/colorPrimaryBtn"
             app:cardCornerRadius="10dp">
 
             <HorizontalScrollView
@@ -296,53 +263,49 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="40sp"
+                        android:layout_width="50sp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_Cara"
-                        android:textColor="#fff"
+                        android:textColor="@color/white"
                         android:textSize="8sp" />
 
                     <TextView
-                        android:layout_width="40sp"
+                        android:layout_width="50sp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_TPago"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
-                        android:layout_width="45sp"
+                        android:layout_width="60sp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_Impuesto"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
-                        android:layout_width="50sp"
+                        android:layout_width="60sp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_Placa"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
-                        android:layout_width="50sp"
+                        android:layout_width="60sp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_TPuntos"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
                         android:layout_width="80sp"
@@ -350,9 +313,8 @@
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_ClienteID"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp"/>
 
                     <TextView
                         android:layout_width="80sp"
@@ -360,21 +322,17 @@
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_RUC"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
                         android:layout_width="150sp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="2sp"
-                        android:layout_marginRight="2sp"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_RazSocial"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
                         android:layout_width="80sp"
@@ -382,29 +340,26 @@
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_Direccion"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
-                        android:layout_width="80sp"
+                        android:layout_width="100sp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_TarjetaND"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
-                        android:layout_width="80sp"
+                        android:layout_width="90sp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_TarjCredito"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
                         android:layout_width="80sp"
@@ -412,19 +367,17 @@
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_NrpOperacion"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
-                        android:layout_width="70sp"
+                        android:layout_width="80sp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_Observacion"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
                         android:layout_width="80sp"
@@ -432,40 +385,35 @@
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
                         android:text="@string/detalleV_Kilometraje"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="60sp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_extrabold"
-                        android:gravity="center"
-                        android:text="@string/detalleV_Efectivo"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
                         android:layout_width="70sp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:text="@string/detalleV_SaldoCredito"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:text="@string/detalleV_Efectivo"
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
 
                     <TextView
-                        android:layout_width="90sp"
+                        android:layout_width="80sp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extrabold"
                         android:gravity="center"
-                        android:inputType="textCapCharacters"
+                        android:text="@string/detalleV_SaldoCredito"
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
+
+                    <TextView
+                        android:layout_width="80sp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extrabold"
+                        android:gravity="center"
                         android:text="@string/detalleV_PtosDisponibles"
-                        android:textColor="#fff"
-                        android:textSize="8sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="8sp" />
                 </LinearLayout>
             </HorizontalScrollView>
         </androidx.cardview.widget.CardView>

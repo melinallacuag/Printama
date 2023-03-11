@@ -814,7 +814,7 @@ public class VentaFragment extends Fragment{
         timer.cancel();
         mTimerRunning = false;
         automatiStop.setText("Stop");
-        automatiStop.setBackgroundColor(Color.parseColor("#21AFA3"));
+        automatiStop.setBackgroundColor(Color.parseColor("#6c757d"));
     }
 
     private void actualizarVista() {
@@ -844,7 +844,7 @@ public class VentaFragment extends Fragment{
 
         mTimerRunning = true;
         automatiStop.setText("Automático");
-        automatiStop.setBackgroundColor(Color.parseColor("#001E89"));
+        automatiStop.setBackgroundColor(Color.parseColor("#001E8A"));
     }
 
     /** Datos de la Company */

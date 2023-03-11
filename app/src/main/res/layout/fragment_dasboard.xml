@@ -29,7 +29,7 @@
                 android:id="@+id/nombreuser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 android:textSize="15sp"
                 android:fontFamily="@font/nunito_semibold"
                 android:textStyle="bold" />
@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="FECHA:"
-                    android:textColor="#fff"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:fontFamily="@font/nunito_semibold"
                     android:textStyle="bold" />
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:textColor="#fff"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:fontFamily="@font/nunito_semibold"
                     android:textStyle="bold"
@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TURNO:"
-                    android:textColor="#fff"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:fontFamily="@font/nunito_semibold"
                     android:textStyle="bold" />
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:textColor="#fff"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:fontFamily="@font/nunito_semibold"
                     android:textStyle="bold"
@@ -122,7 +122,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:fontFamily="@font/nunito_black"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -138,7 +138,7 @@
                     android:layout_marginStart="5sp"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_black"
-                    android:textColor="#fff"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textColor="#3C3F41"
+                android:textColor="@color/gris"
                 android:textSize="18sp"
                 android:fontFamily="@font/nunito_black"
                 android:textStyle="bold" />
@@ -183,7 +183,7 @@
             android:layout_marginBottom="10dp"
             android:clickable="true"
             android:foreground="@drawable/selectcard"
-            app:cardBackgroundColor="#E69050F1"
+            app:cardBackgroundColor="@color/purple_200"
             app:cardCornerRadius="10dp"
             app:cardElevation="2sp">
 
@@ -207,7 +207,7 @@
                     android:letterSpacing="0.15"
                     android:text="@string/menu_ventas"
                     android:textAlignment="center"
-                    android:textColor="#fff"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -225,7 +225,7 @@
             android:layout_marginBottom="10dp"
             android:clickable="true"
             android:foreground="@drawable/selectcard"
-            app:cardBackgroundColor="#E6E53D3D"
+            app:cardBackgroundColor="@color/red_200"
             app:cardCornerRadius="10dp"
             app:cardElevation="2sp">
 
@@ -249,7 +249,7 @@
                     android:letterSpacing="0.15"
                     android:text="@string/menu_cierrex"
                     android:textAlignment="center"
-                    android:textColor="#fff"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -268,7 +268,7 @@
             android:layout_marginBottom="10dp"
             android:clickable="true"
             android:foreground="@drawable/selectcard"
-            app:cardBackgroundColor="#D92B92EC"
+            app:cardBackgroundColor="@color/skyclue_500"
             app:cardCornerRadius="10dp"
             app:cardElevation="2sp">
 
@@ -292,7 +292,7 @@
                     android:letterSpacing="0.15"
                     android:text="@string/menu_cambioturno"
                     android:textAlignment="center"
-                    android:textColor="#fff"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -310,7 +310,7 @@
             android:layout_marginBottom="10dp"
             android:clickable="true"
             android:foreground="@drawable/selectcard"
-            app:cardBackgroundColor="#D96ED6C3"
+            app:cardBackgroundColor="@color/teal_200"
             app:cardCornerRadius="10dp"
             app:cardElevation="2sp">
 
@@ -334,7 +334,7 @@
                     android:letterSpacing="0.15"
                     android:text="@string/menu_iniciodia"
                     android:textAlignment="center"
-                    android:textColor="#fff"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
