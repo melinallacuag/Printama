@@ -609,7 +609,7 @@ public class VentaFragment extends Fragment{
                                             alertpefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
                                             return;
                                         }else{
-                                            detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+                                            detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                         }
 
                                     }else if (datotipotarjeta.equals("Credito")) {
@@ -618,7 +618,7 @@ public class VentaFragment extends Fragment{
                                             alertpefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
                                             return;
                                         }else{
-                                            detalleVenta.setMontoSoles(Double.valueOf(textpagoefectivo.getText().toString()));
+                                            detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                         }
 
                                     }
