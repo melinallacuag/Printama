@@ -28,7 +28,6 @@ public interface APIService {
     /**
      * User
      */
-
     @GET("api/users/listado")
     Call<List<Users>> getUsers();
 
@@ -38,7 +37,6 @@ public interface APIService {
     /**
      * Company
      */
-
     @GET("api/company/listado")
     Call<List<Company>> getCompany();
 
@@ -48,7 +46,6 @@ public interface APIService {
     /**
      * Terminal
      */
-
     @GET("api/terminal/listado")
     Call<List<Terminal>> getTerminal();
 
@@ -58,7 +55,6 @@ public interface APIService {
     /**
      * Cara o Lado
      */
-
     @GET("api/lados/listado")
     Call<List<Lados>> getLados();
 
@@ -68,7 +64,6 @@ public interface APIService {
     /**
      * Manguera
      */
-
     @GET("api/picos/listado")
     Call<List<Picos>> getPico();
 
@@ -81,21 +76,18 @@ public interface APIService {
     /**
      * Optran
      */
-
     @GET("api/optran/listado/{id}")
     Call<List<Optran>> findOptran(@Path("id") String id);
 
     /**
      * Detalle de la Venta
      */
-
     @GET("api/detalleventa/listado/{id}")
     Call<List<DetalleVenta>> findDetalleVenta(@Path("id") String id);
 
     /**
      * CARD - Spinner Tarjeta
      */
-
     @GET("api/card/listado")
     Call<List<Card>> getCard();
 
@@ -105,7 +97,6 @@ public interface APIService {
     /**
      * Cliente RUC - DNI
      */
-
     @GET("api/cliente/listado")
     Call<List<Cliente>> getCliente();
 
@@ -121,7 +112,6 @@ public interface APIService {
     /**
      * Placa
      */
-
     @GET("api/placa/listado")
     Call<List<Placa>> getPlaca();
 
@@ -131,7 +121,6 @@ public interface APIService {
     /**
      * Configuración
      */
-
     @GET("api/setting/listado")
     Call<List<Setting>> getSetting();
 
@@ -141,7 +130,6 @@ public interface APIService {
     /**
      * Ajustes
      */
-
     @GET("api/settingTask/listado")
     Call<List<SettingTask>> getSettingTask();
 

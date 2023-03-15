@@ -67,8 +67,8 @@ public class VentaFragment extends Fragment{
     /**  Id Cara */
     private String mCara;
 
-    TextView  producto,cara,importetotal,textcara,textmanguera;
-    CardView  grias;
+    /**  Atributos de la Venta */
+    TextView  producto,cara,importetotal;
     Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos,automatiStop;
 
     /**  AdapterList - Recycler */
@@ -103,11 +103,7 @@ public class VentaFragment extends Fragment{
 
         mAPIService  = GlobalInfo.getAPIService();
 
-       /* producto        = view.findViewById(R.id.textmanguera);
-        cara            = view.findViewById(R.id.textcara);
-        importetotal    = view.findViewById(R.id.txtimporte);
-        grias           = view.findViewById(R.id.card);*/
-
+        automatiStop    = view.findViewById(R.id.automatiStop);
         btnlibre        = view.findViewById(R.id.btnlibre);
         btnsoles        = view.findViewById(R.id.btnsoles);
         btngalones      = view.findViewById(R.id.btngalones);
@@ -116,9 +112,6 @@ public class VentaFragment extends Fragment{
         btnnotadespacho = view.findViewById(R.id.btnnotadespacho);
         btnserafin      = view.findViewById(R.id.btnserafin);
         btnpuntos       = view.findViewById(R.id.btnpuntos);
-
-        automatiStop    = view.findViewById(R.id.automatiStop);
-
 
         /** Boton Time Task */
         automatiStop.setOnClickListener(new View.OnClickListener() {
@@ -804,11 +797,9 @@ public class VentaFragment extends Fragment{
 
         /** API Retrofit - Consumiendo */
         findOptran(GlobalInfo.getterminalImei10);
-
         findLados(GlobalInfo.getterminalImei10);
         findDetalleVenta(GlobalInfo.getterminalImei10);
         findSetting(GlobalInfo.getterminalCompanyID10);
-
 
         return view;
     }
@@ -860,7 +851,7 @@ public class VentaFragment extends Fragment{
         automatiStop.setBackgroundColor(Color.parseColor("#001E8A"));
     }
 
-    /** Impresión de Boletas */
+    /** Impresión de Boletas Simple */
     private  void boletas(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
                           String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
                           String ProductoOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
@@ -901,24 +892,19 @@ public class VentaFragment extends Fragment{
         String BranchU = segundaBranch;
         String BranchD = primeraBranch;
 
-        /** Fecha y Hora que se imite el comprobante */
-        Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
-        SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-        String FechaHora      = sdf.format(cal.getTime());
-
         /** Operación Gravada */
-        double subtotal     = (SolesOptran/1.18);
-        double roundOff     = Math.round(subtotal*100.0)/100.0;
-        String valorventa   = String.valueOf(roundOff);
+        double Subtotal     = (SolesOptran/1.18);
+        double SubtotalOff  = Math.round(Subtotal*100.0)/100.0;
+        String OpeGravada   = String.valueOf(SubtotalOff);
 
         /** IGV */
-        double impuesto     = (SolesOptran-roundOff);
-        double impuestoOff  = Math.round(impuesto*100.0)/100.0;
-        String igv          = String.valueOf(impuestoOff);
+        double Impuesto     = (SolesOptran-SubtotalOff);
+        double ImpuestoOff  = Math.round(Impuesto*100.0)/100.0;
+        String IGV          = String.valueOf(ImpuestoOff);
 
         /** Convertir número a letras */
-        Numero_Letras numToWord = new Numero_Letras();
-        String letraimporte     = numToWord.Convertir(String.valueOf(SolesOptran),true);
+        Numero_Letras NumLetra = new Numero_Letras();
+        String LetraSoles      = NumLetra.Convertir(String.valueOf(SolesOptran),true);
 
         /** Imprimir Comprobante */
         Printama.with(getContext()).connect(printama -> {
@@ -953,9 +939,9 @@ public class VentaFragment extends Fragment{
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
             printama.setSmallText();
-            printama.printTextln("OP. GRAVADAS: S/ "+ valorventa, Printama.RIGHT);
+            printama.printTextln("OP. GRAVADAS: S/ "+ OpeGravada, Printama.RIGHT);
             printama.printTextln("OP. EXONERADAS: S/  "+ "0.00" , Printama.RIGHT);
-            printama.printTextln("I.G.V. 18%: S/  "+ igv, Printama.RIGHT);
+            printama.printTextln("I.G.V. 18%: S/  "+ IGV, Printama.RIGHT);
             printama.printTextlnBold("TOTAL VENTA: S/ "+ SolesOptran, Printama.RIGHT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
@@ -964,7 +950,7 @@ public class VentaFragment extends Fragment{
             printama.printTextlnBold("CONDICION DE PAGO:", Printama.LEFT);
             printama.printTextlnBold("CONTADO: S/ " + SolesOptran, Printama.RIGHT);
             printama.setSmallText();
-            printama.printTextln("SON: " + letraimporte, Printama.LEFT);
+            printama.printTextln("SON: " + LetraSoles, Printama.LEFT);
             printama.feedPaper();
             printama.close();
         }, this::showToast);
