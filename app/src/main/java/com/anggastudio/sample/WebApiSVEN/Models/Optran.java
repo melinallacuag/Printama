@@ -4,29 +4,32 @@ import java.math.BigInteger;
 
 public class Optran {
 
-    private Double tranID;
-    private String cara;
+    private Integer tranID;
+    private String nroLado;
     private String manguera;
-    private String hora_tran;
-    private String producto;
+    private String fechaTran;
+    private String articuloID;
+    private String productoDs;
     private Double precio;
     private Double galones;
     private Double soles;
+    private String operador;
+    private String cliente;
 
-    public Double getTranID() {
+    public Integer getTranID() {
         return tranID;
     }
 
-    public void setTranID(Double tranID) {
+    public void setTranID(Integer tranID) {
         this.tranID = tranID;
     }
 
-    public String getCara() {
-        return cara;
+    public String getNroLado() {
+        return nroLado;
     }
 
-    public void setCara(String cara) {
-        this.cara = cara;
+    public void setNroLado(String nroLado) {
+        this.nroLado = nroLado;
     }
 
     public String getManguera() {
@@ -37,20 +40,28 @@ public class Optran {
         this.manguera = manguera;
     }
 
-    public String getHora_tran() {
-        return hora_tran;
+    public String getFechaTran() {
+        return fechaTran;
     }
 
-    public void setHora_tran(String hora_tran) {
-        this.hora_tran = hora_tran;
+    public void setFechaTran(String fechaTran) {
+        this.fechaTran = fechaTran;
     }
 
-    public String getProducto() {
-        return producto;
+    public String getArticuloID() {
+        return articuloID;
     }
 
-    public void setProducto(String producto) {
-        this.producto = producto;
+    public void setArticuloID(String articuloID) {
+        this.articuloID = articuloID;
+    }
+
+    public String getProductoDs() {
+        return productoDs;
+    }
+
+    public void setProductoDs(String productoDs) {
+        this.productoDs = productoDs;
     }
 
     public Double getPrecio() {
@@ -75,5 +86,21 @@ public class Optran {
 
     public void setSoles(Double soles) {
         this.soles = soles;
+    }
+
+    public String getOperador() {
+        return operador;
+    }
+
+    public void setOperador(String operador) {
+        this.operador = operador;
+    }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 }

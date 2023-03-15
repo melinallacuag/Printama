@@ -85,11 +85,15 @@ public interface APIService {
     @GET("api/optran/listado/{id}")
     Call<List<Optran>> findOptran(@Path("id") String id);
 
+    /**
+     * Detalle de la Venta
+     */
+
     @GET("api/detalleventa/listado/{id}")
     Call<List<DetalleVenta>> findDetalleVenta(@Path("id") String id);
 
     /**
-     * Detalle de la Venta
+     * CARD - Spinner Tarjeta
      */
 
     @GET("api/card/listado")

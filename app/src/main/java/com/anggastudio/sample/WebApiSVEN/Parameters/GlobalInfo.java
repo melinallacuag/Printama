@@ -7,7 +7,6 @@ public class GlobalInfo {
     /**
      * Datos de la Compania
      */
-
     public static String getNameCompany10;
     public static String getRucCompany10;
     public static String getAddressCompany10;
@@ -20,21 +19,18 @@ public class GlobalInfo {
     /**
      * Datos del User
      */
-
     public static String getuserName10;
     public static String getuserPass10;
 
     /**
      * Datos de la Cara y Manguera
      */
-
     public static String getCara10;
     public static String getPistola10;
 
     /**
      * Datos de la Terminal
      */
-
     public static String  getterminalID10 = "";
     public static String  getterminalImei10;
     public static String  getterminalFecha10;
@@ -65,7 +61,6 @@ public class GlobalInfo {
     /**
      * Datos de la Placa
      */
-
     public static String getNroPlaca10;
     public static String getplacaClienteID10;
     public static String getplacaClienteRZ10;
@@ -74,7 +69,6 @@ public class GlobalInfo {
     /**
      * Datos del Cliente RUC-DNI
      */
-
     public static String  getclienteId10;
     public static String  getclienteRUC10;
     public static String  getclienteRZ10;
@@ -86,7 +80,6 @@ public class GlobalInfo {
     /**
      * Datos de la Setting
      */
-
     public static Integer getsettingCompanyId10;
     public static String  getsettingTituloApp10;
     public static String  getsettingFuelName10;
@@ -105,7 +98,24 @@ public class GlobalInfo {
     public static Double  getsettingDNIMontoMinimo10;
     public static String  getsettingtimerAppVenta10;
 
+    /**
+     * Datos de la Optran
+     */
+    public static Integer  getoptranTranID10;
+    public static String   getoptranNroLado10;
+    public static String   getoptranManguera10;
+    public static String   getoptranFechaTran10;
+    public static String   getoptranArticuloID10;
+    public static String   getoptranProductoDs10;
+    public static Double   getoptranPrecio10;
+    public static Double   getoptranGalones10;
+    public static Double   getoptranSoles10;
+    public static String   getoptranOperador10;
+    public static String   getoptranCliente10;
 
+    /**
+     * URL - APIService
+     */
     public static final String BASE_URL = "http://192.168.1.4:8081/";
 
     public static APIService getAPIService() {

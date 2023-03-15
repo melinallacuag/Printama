@@ -15,12 +15,14 @@ import androidx.fragment.app.DialogFragment;
 
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
+import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,6 +37,10 @@ public class SolesFragment extends DialogFragment {
     EditText montosoles;
     TextInputLayout alertsoles;
     TextView textsol;
+
+    /**  Id Cara */
+    private String mCara;
+    List<DetalleVenta> detalleVentaList;
 
     private APIService mAPIService;
 
@@ -59,29 +65,31 @@ public class SolesFragment extends DialogFragment {
 
             @Override
             public void onClick(View view) {
-                String MontoSoles = montosoles.getText().toString();
 
-                if(isEmpty(MontoSoles)){
-                    alertsoles.setError("El campo soles es obligatorio");
-                    return;
-                }
+                String MontoSoles = montosoles.getText().toString();
+                    if(isEmpty(MontoSoles)){
+                        alertsoles.setError("El campo soles es obligatorio");
+                        return;
+                    }
 
                 Double DoubleMontoSoles = Double.parseDouble(MontoSoles);
 
                 Integer NumIntSoles     = Integer.parseInt(MontoSoles);
 
-                if (NumIntSoles < 5){
-                    alertsoles.setError("El valor debe ser mínimo 5.00");
-                }else if(9999 < NumIntSoles){
-                    alertsoles.setError("El valor debe ser maximo 9999");
-                }else {
-                    alertsoles.setErrorEnabled(false);
-                    guardar_monto(GlobalInfo.getPistola10,DoubleMontoSoles);
+                    if (NumIntSoles < 5){
+                        alertsoles.setError("El valor debe ser mínimo 5.00");
+                    }else if(9999 < NumIntSoles){
+                        alertsoles.setError("El valor debe ser maximo 9999");
+                    }else {
+                        alertsoles.setErrorEnabled(false);
+                        guardar_monto(GlobalInfo.getPistola10,DoubleMontoSoles);
 
-                    Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
-                    dismiss();
-                }
+                        Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                        dismiss();
+                    }
             }
+
+
         });
 
         return view;

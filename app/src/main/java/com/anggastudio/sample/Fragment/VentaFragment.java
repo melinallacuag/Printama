@@ -1,5 +1,6 @@
 package com.anggastudio.sample.Fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -28,12 +29,15 @@ import com.anggastudio.sample.Adapter.CaraAdapter;
 import com.anggastudio.sample.Adapter.CardAdapter;
 import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
+import com.anggastudio.sample.Numero_Letras;
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.Card;
 import com.anggastudio.sample.WebApiSVEN.Models.Cliente;
+import com.anggastudio.sample.WebApiSVEN.Models.Company;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
+import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Models.Placa;
 import com.anggastudio.sample.WebApiSVEN.Models.Setting;
@@ -115,6 +119,7 @@ public class VentaFragment extends Fragment{
 
         automatiStop    = view.findViewById(R.id.automatiStop);
 
+
         /** Boton Time Task */
         automatiStop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +167,8 @@ public class VentaFragment extends Fragment{
         btnboleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 for(DetalleVenta detalleVenta : detalleVentaList){
 
                     String mnCara = detalleVenta.getCara().toString();
@@ -394,6 +401,8 @@ public class VentaFragment extends Fragment{
                                 alertDialog.dismiss();
                             }
                         });
+                    }else{
+                        Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -628,6 +637,8 @@ public class VentaFragment extends Fragment{
                                     alertDialog.dismiss();
                             }
                         });
+                    }else{
+                        Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -792,9 +803,12 @@ public class VentaFragment extends Fragment{
         recyclerCara.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         /** API Retrofit - Consumiendo */
+        findOptran(GlobalInfo.getterminalImei10);
+
         findLados(GlobalInfo.getterminalImei10);
         findDetalleVenta(GlobalInfo.getterminalImei10);
         findSetting(GlobalInfo.getterminalCompanyID10);
+
 
         return view;
     }
@@ -818,15 +832,15 @@ public class VentaFragment extends Fragment{
 
     private void realizarOperacion() {
 
-        Toast.makeText(getContext(), "hola", Toast.LENGTH_SHORT).show();
-
         timerTask = new TimerTask() {
             public void run() {
-
                 handler.post(new Runnable() {
                     public void run() {
 
-                        boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10,GlobalInfo.getAddressCompany10,GlobalInfo.getBranchCompany10, String.valueOf(GlobalInfo.getterminalTurno10), GlobalInfo.getuserName10);
+                        boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
+                                GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
+                                GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
+                                GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,GlobalInfo.getoptranSoles10);
 
                         Calendar calendar = Calendar.getInstance();
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd:MMMM:yyyy HH:mm:ss a");
@@ -847,7 +861,9 @@ public class VentaFragment extends Fragment{
     }
 
     /** Impresión de Boletas */
-    private  void boletas(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany, String TurnoTerminal,String CajeroTerminal) {
+    private  void boletas(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
+                          String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
+                          String ProductoOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
 
         /** Logo */
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
@@ -890,30 +906,113 @@ public class VentaFragment extends Fragment{
         SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         String FechaHora      = sdf.format(cal.getTime());
 
+        /** Operación Gravada */
+        double subtotal     = (SolesOptran/1.18);
+        double roundOff     = Math.round(subtotal*100.0)/100.0;
+        String valorventa   = String.valueOf(roundOff);
+
+        /** IGV */
+        double impuesto     = (SolesOptran-roundOff);
+        double impuestoOff  = Math.round(impuesto*100.0)/100.0;
+        String igv          = String.valueOf(impuestoOff);
+
+        /** Convertir número a letras */
+        Numero_Letras numToWord = new Numero_Letras();
+        String letraimporte     = numToWord.Convertir(String.valueOf(SolesOptran),true);
+
         /** Imprimir Comprobante */
         Printama.with(getContext()).connect(printama -> {
             printama.setNormalText();
+            printama.printTextln("                 ", Printama.CENTER);
+            printama.printImage(logo, 200);
+            printama.setSmallText();
             printama.printTextlnBold(NameCompany, Printama.CENTER);
             printama.printTextlnBold("PRINCIPAL: " + AddressD, Printama.CENTER);
             printama.printTextlnBold(AddressU, Printama.CENTER);
             printama.printTextlnBold("SUCURSAL: " + BranchD, Printama.CENTER);
             printama.printTextlnBold(BranchU, Printama.CENTER);
             printama.printTextlnBold("RUC: " + RUCCompany, Printama.CENTER);
-            printama.printTextlnBold("FACTURA DE VENTA ELECTRONICA", Printama.CENTER);
+            printama.printTextlnBold("BOLETA DE VENTA ELECTRONICA", Printama.CENTER);
             printama.printTextlnBold("0000000",Printama.CENTER);
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
             printama.setSmallText();
-            printama.printTextln("Fecha - Hora : "+ FechaHora + "   Turno: "+ TurnoTerminal,Printama.LEFT);
+            printama.printTextln("Fecha - Hora : "+ FechaTranOptran + "   Turno: "+ TurnoTerminal,Printama.LEFT);
             printama.printTextln("Cajero : "+ CajeroTerminal , Printama.LEFT);
-            printama.printTextln("Lado   :01 ", Printama.LEFT);
+            printama.printTextln("Lado   : "+ NroLadoOptran, Printama.LEFT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextlnBold("PRODUCTO      "+"U/MED   "+"PRECIO   "+"CANTIDAD  "+"IMPORTE",Printama.RIGHT);
+            printama.setSmallText();
+            printama.printTextln(ProductoOptran,Printama.LEFT);
+            printama.printTextln("GLL"+"    " + PrecioOptran+"      " + GalonesOptran +"     "+ SolesOptran,Printama.RIGHT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextln("OP. GRAVADAS: S/ "+ valorventa, Printama.RIGHT);
+            printama.printTextln("OP. EXONERADAS: S/  "+ "0.00" , Printama.RIGHT);
+            printama.printTextln("I.G.V. 18%: S/  "+ igv, Printama.RIGHT);
+            printama.printTextlnBold("TOTAL VENTA: S/ "+ SolesOptran, Printama.RIGHT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextlnBold("CONDICION DE PAGO:", Printama.LEFT);
+            printama.printTextlnBold("CONTADO: S/ " + SolesOptran, Printama.RIGHT);
+            printama.setSmallText();
+            printama.printTextln("SON: " + letraimporte, Printama.LEFT);
             printama.feedPaper();
             printama.close();
         }, this::showToast);
+
+    }
+
+    /** API SERVICE - Optran */
+    private void findOptran(String id){
+
+        Call<List<Optran>> call = mAPIService.findOptran(id);
+        call.enqueue(new Callback<List<Optran>>() {
+            @Override
+            public void onResponse(Call<List<Optran>> call, Response<List<Optran>> response) {
+
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<Optran> optranList = response.body();
+
+                    for(Optran optran: optranList) {
+
+                        GlobalInfo.getoptranTranID10     = Integer.valueOf(optran.getTranID());
+                        GlobalInfo.getoptranNroLado10    = String.valueOf(optran.getNroLado());
+                        GlobalInfo.getoptranManguera10   = String.valueOf(optran.getManguera());
+                        GlobalInfo.getoptranFechaTran10  = String.valueOf(optran.getFechaTran());
+                        GlobalInfo.getoptranArticuloID10 = String.valueOf(optran.getArticuloID());
+                        GlobalInfo.getoptranProductoDs10 = String.valueOf(optran.getProductoDs());
+                        GlobalInfo.getoptranPrecio10     = Double.valueOf(optran.getPrecio());
+                        GlobalInfo.getoptranGalones10    = Double.valueOf(optran.getGalones());
+                        GlobalInfo.getoptranSoles10      = Double.valueOf(optran.getSoles());
+                        GlobalInfo.getoptranOperador10   = String.valueOf(optran.getOperador());
+                        GlobalInfo.getoptranCliente10    = String.valueOf(optran.getCliente());
+                    }
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<List<Optran>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Pico - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -1205,6 +1304,9 @@ public class VentaFragment extends Fragment{
                     caraAdapter = new CaraAdapter(ladosList, getContext(), new CaraAdapter.OnItemClickListener() {
                         @Override
                         public int onItemClick(Lados item) {
+
+
+
 
                             GlobalInfo.getCara10 = item.getNroLado();
 
