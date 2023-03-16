@@ -134,8 +134,9 @@ public class VentaFragment extends Fragment{
             }
         });
 
-        btnlibre.setEnabled(false);
+
         btnsoles.setEnabled(false);
+        btnlibre.setEnabled(false);
         btngalones.setEnabled(false);
 
         /** Modalidad Libre */
