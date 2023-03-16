@@ -986,7 +986,6 @@ public class VentaFragment extends Fragment{
             printama.printTextlnBold("CONTADO: S/ " + SolesOptran, Printama.RIGHT);
             printama.setSmallText();
             printama.printTextln("SON: " + LetraSoles, Printama.LEFT);
-            printama.setSmallText();
             printama.printTextln("                 ", Printama.CENTER);
             QRCodeWriter writer = new QRCodeWriter();
             BitMatrix bitMatrix;
