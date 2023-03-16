@@ -140,4 +140,100 @@ public class Terminal {
     public void setVenta_Serafin(Boolean venta_Serafin) {
         this.venta_Serafin = venta_Serafin;
     }
+
+    public String getFactura_Serie() {
+        return factura_Serie;
+    }
+
+    public void setFactura_Serie(String factura_Serie) {
+        this.factura_Serie = factura_Serie;
+    }
+
+    public String getFactura_Numero() {
+        return factura_Numero;
+    }
+
+    public void setFactura_Numero(String factura_Numero) {
+        this.factura_Numero = factura_Numero;
+    }
+
+    public String getBoleta_Serie() {
+        return boleta_Serie;
+    }
+
+    public void setBoleta_Serie(String boleta_Serie) {
+        this.boleta_Serie = boleta_Serie;
+    }
+
+    public String getBoleta_Numero() {
+        return boleta_Numero;
+    }
+
+    public void setBoleta_Numero(String boleta_Numero) {
+        this.boleta_Numero = boleta_Numero;
+    }
+
+    public String getnCredito_Serie() {
+        return nCredito_Serie;
+    }
+
+    public void setnCredito_Serie(String nCredito_Serie) {
+        this.nCredito_Serie = nCredito_Serie;
+    }
+
+    public String getnCredito_Numero() {
+        return nCredito_Numero;
+    }
+
+    public void setnCredito_Numero(String nCredito_Numero) {
+        this.nCredito_Numero = nCredito_Numero;
+    }
+
+    public String getnDebito_Serie() {
+        return nDebito_Serie;
+    }
+
+    public void setnDebito_Serie(String nDebito_Serie) {
+        this.nDebito_Serie = nDebito_Serie;
+    }
+
+    public String getnDebito_Numero() {
+        return nDebito_Numero;
+    }
+
+    public void setnDebito_Numero(String nDebito_Numero) {
+        this.nDebito_Numero = nDebito_Numero;
+    }
+
+    public String getSerafin_Serie() {
+        return serafin_Serie;
+    }
+
+    public void setSerafin_Serie(String serafin_Serie) {
+        this.serafin_Serie = serafin_Serie;
+    }
+
+    public String getSerafin_Numero() {
+        return serafin_Numero;
+    }
+
+    public void setSerafin_Numero(String serafin_Numero) {
+        this.serafin_Numero = serafin_Numero;
+    }
+
+    public String getnDespacho_Serie() {
+        return nDespacho_Serie;
+    }
+
+    public void setnDespacho_Serie(String nDespacho_Serie) {
+        this.nDespacho_Serie = nDespacho_Serie;
+    }
+
+    public String getnDespacho_Numero() {
+        return nDespacho_Numero;
+    }
+
+    public void setnDespacho_Numero(String nDespacho_Numero) {
+        this.nDespacho_Numero = nDespacho_Numero;
+    }
 }

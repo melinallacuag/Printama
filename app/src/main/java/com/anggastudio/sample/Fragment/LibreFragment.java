@@ -47,9 +47,15 @@ public class LibreFragment extends DialogFragment {
         btnactivarLibre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guardar_modolibre(GlobalInfo.getPistola10);
-                Toast.makeText(getContext(), "SE ACTIVO EL MODO LIBRE", Toast.LENGTH_SHORT).show();
-                dismiss();
+
+                if (GlobalInfo.getPistola10 == null){
+                    Toast.makeText(getContext(), "Seleccionar Cara y Manguera", Toast.LENGTH_SHORT).show();
+                }else{
+                    guardar_modolibre(GlobalInfo.getPistola10);
+                    Toast.makeText(getContext(), "SE ACTIVO EL MODO LIBRE", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }
+
             }
         });
 

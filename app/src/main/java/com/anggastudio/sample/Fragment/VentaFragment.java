@@ -1,7 +1,9 @@
 package com.anggastudio.sample.Fragment;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AutomaticZenRule;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -41,9 +43,14 @@ import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Models.Placa;
 import com.anggastudio.sample.WebApiSVEN.Models.Setting;
+import com.anggastudio.sample.WebApiSVEN.Models.SettingTask;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -66,6 +73,7 @@ public class VentaFragment extends Fragment{
 
     /**  Id Cara */
     private String mCara;
+
 
     /**  Atributos de la Venta */
     TextView  producto,cara,importetotal;
@@ -126,6 +134,10 @@ public class VentaFragment extends Fragment{
             }
         });
 
+        btnlibre.setEnabled(false);
+        btnsoles.setEnabled(false);
+        btngalones.setEnabled(false);
+
         /** Modalidad Libre */
         btnlibre.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +178,9 @@ public class VentaFragment extends Fragment{
 
                     String mnCara = detalleVenta.getCara().toString();
 
-                    if(mnCara.equals(mCara)) {
+                    if(mCara == null){
+                        Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
+                    }else if(mnCara.equals(mCara)) {
 
                         /** Abrir Modal */
                         builder = new AlertDialog.Builder(getActivity());
@@ -394,8 +408,6 @@ public class VentaFragment extends Fragment{
                                 alertDialog.dismiss();
                             }
                         });
-                    }else{
-                        Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -410,7 +422,9 @@ public class VentaFragment extends Fragment{
 
                     String mnCara = detalleVenta.getCara().toString();
 
-                    if(mnCara.equals(mCara) ) {
+                    if(mCara == null){
+                        Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
+                    } else if(mnCara.equals(mCara) ) {
 
                         /** Abrir Modal */
                         builder = new AlertDialog.Builder(getActivity());
@@ -630,8 +644,6 @@ public class VentaFragment extends Fragment{
                                     alertDialog.dismiss();
                             }
                         });
-                    }else{
-                        Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -644,7 +656,10 @@ public class VentaFragment extends Fragment{
 
                 for (DetalleVenta detalleVenta : detalleVentaList){
                     String mnCara = detalleVenta.getCara().toString();
-                    if(mnCara.equals(mCara) ) {
+
+                    if(mCara == null){
+                        Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
+                    }else if(mnCara.equals(mCara) ) {
 
                         builder = new AlertDialog.Builder(getActivity());
                         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -810,7 +825,7 @@ public class VentaFragment extends Fragment{
 
         realizarOperacion();
 
-        timer.schedule(timerTask,  5000);
+        timer.schedule(timerTask,5000);
     }
 
     public void stoptimertask() {
@@ -906,9 +921,29 @@ public class VentaFragment extends Fragment{
         Numero_Letras NumLetra = new Numero_Letras();
         String LetraSoles      = NumLetra.Convertir(String.valueOf(SolesOptran),true);
 
+        /** Fecha para Codigo QR */
+        String tipodocumento    = "03";
+        String boleta           = GlobalInfo.getterminalBoletaSerie10 + "-" + GlobalInfo.getterminalBoletaNumero10;
+        String tipodni          = GlobalInfo.getsettingClienteID10;
+        String dni              = GlobalInfo.getsettingClienteRZ10;
+        String fechaEmision     = FechaTranOptran.substring(6,10) + "-" + FechaTranOptran.substring(3,5) + "-" + FechaTranOptran.substring(0,2);
+
+        /** Generar codigo QR */
+        StringBuilder QRBoleta = new StringBuilder();
+        QRBoleta.append(RUCCompany + "|".toString());
+        QRBoleta.append(tipodocumento+ "|".toString());
+        QRBoleta.append(boleta+ "|".toString());
+        QRBoleta.append(IGV+ "|".toString());
+        QRBoleta.append(SolesOptran+ "|".toString());
+        QRBoleta.append(fechaEmision+ "|".toString());
+        QRBoleta.append(tipodni+ "|".toString());
+        QRBoleta.append(dni+ "|".toString());
+
+        String Qrboleta = QRBoleta.toString();
+
+
         /** Imprimir Comprobante */
         Printama.with(getContext()).connect(printama -> {
-            printama.setNormalText();
             printama.printTextln("                 ", Printama.CENTER);
             printama.printImage(logo, 200);
             printama.setSmallText();
@@ -919,7 +954,7 @@ public class VentaFragment extends Fragment{
             printama.printTextlnBold(BranchU, Printama.CENTER);
             printama.printTextlnBold("RUC: " + RUCCompany, Printama.CENTER);
             printama.printTextlnBold("BOLETA DE VENTA ELECTRONICA", Printama.CENTER);
-            printama.printTextlnBold("0000000",Printama.CENTER);
+            printama.printTextlnBold(boleta,Printama.CENTER);
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
@@ -951,6 +986,30 @@ public class VentaFragment extends Fragment{
             printama.printTextlnBold("CONTADO: S/ " + SolesOptran, Printama.RIGHT);
             printama.setSmallText();
             printama.printTextln("SON: " + LetraSoles, Printama.LEFT);
+            printama.setSmallText();
+            printama.printTextln("                 ", Printama.CENTER);
+            QRCodeWriter writer = new QRCodeWriter();
+            BitMatrix bitMatrix;
+            try {
+                bitMatrix = writer.encode(Qrboleta, BarcodeFormat.QR_CODE, 200, 200);
+                int width = bitMatrix.getWidth();
+                int height = bitMatrix.getHeight();
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        int color = Color.WHITE;
+                        if (bitMatrix.get(x, y)) color = Color.BLACK;
+                        bitmap.setPixel(x, y, color);
+                    }
+                }
+                if (bitmap != null) {
+                    printama.printImage(bitmap);
+                }
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+            printama.setSmallText();
+            printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la boleta de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
             printama.feedPaper();
             printama.close();
         }, this::showToast);
@@ -1291,8 +1350,9 @@ public class VentaFragment extends Fragment{
                         @Override
                         public int onItemClick(Lados item) {
 
-
-
+                            btnlibre.setEnabled(true);
+                            btnsoles.setEnabled(true);
+                            btngalones.setEnabled(true);
 
                             GlobalInfo.getCara10 = item.getNroLado();
 
@@ -1343,10 +1403,12 @@ public class VentaFragment extends Fragment{
                         @Override
                         public void onItemClick(Picos item) {
 
+
                           /*  textmanguera =  getActivity().findViewById(R.id.textmanguera);
                             String descripcionmanguera = item.getDescripcion();
                             textmanguera.setText(descripcionmanguera);*/
                             GlobalInfo.getPistola10 = item.getMangueraID();
+
 
                         }
                     });
@@ -1400,6 +1462,42 @@ public class VentaFragment extends Fragment{
             @Override
             public void onFailure(Call<List<DetalleVenta>> call, Throwable t) {
                 Toast.makeText(getContext(), "Error de conexión APICORE Detalle Venta - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /** API SERVICE - Setting Task */
+    private void findSettingTask(String id){
+
+        Call<List<SettingTask>> call = mAPIService.findSettingTask(id);
+        call.enqueue(new Callback<List<SettingTask>>() {
+            @Override
+            public void onResponse(Call<List<SettingTask>> call, Response<List<SettingTask>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<SettingTask> settingTaskList = response.body();
+
+                    for(SettingTask settingTask: settingTaskList) {
+
+                        GlobalInfo.getsettingtaskID10     = settingTask.getTaskID();
+                        GlobalInfo.getsettingtaskName10   = settingTask.getName();
+                        GlobalInfo.getsettingtaskIsTask10 = Boolean.valueOf(settingTask.getTask());
+
+                    }
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SettingTask>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Pico - RED - WIFI", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

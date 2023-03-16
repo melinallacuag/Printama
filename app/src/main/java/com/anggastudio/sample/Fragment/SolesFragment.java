@@ -38,9 +38,7 @@ public class SolesFragment extends DialogFragment {
     TextInputLayout alertsoles;
     TextView textsol;
 
-    /**  Id Cara */
-    private String mCara;
-    List<DetalleVenta> detalleVentaList;
+    private String ddd = GlobalInfo.getPistola10;
 
     private APIService mAPIService;
 
@@ -61,20 +59,22 @@ public class SolesFragment extends DialogFragment {
             public void onClick(View view) { dismiss();}
         });
 
+        agregar.setEnabled(false);
+
         agregar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                String MontoSoles = montosoles.getText().toString();
+                    String MontoSoles = montosoles.getText().toString();
                     if(isEmpty(MontoSoles)){
                         alertsoles.setError("El campo soles es obligatorio");
                         return;
                     }
 
-                Double DoubleMontoSoles = Double.parseDouble(MontoSoles);
+                    Double DoubleMontoSoles = Double.parseDouble(MontoSoles);
 
-                Integer NumIntSoles     = Integer.parseInt(MontoSoles);
+                    Integer NumIntSoles     = Integer.parseInt(MontoSoles);
 
                     if (NumIntSoles < 5){
                         alertsoles.setError("El valor debe ser mínimo 5.00");
@@ -83,12 +83,10 @@ public class SolesFragment extends DialogFragment {
                     }else {
                         alertsoles.setErrorEnabled(false);
                         guardar_monto(GlobalInfo.getPistola10,DoubleMontoSoles);
-
                         Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                         dismiss();
                     }
-            }
-
+                }
 
         });
 

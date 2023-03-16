@@ -55,27 +55,32 @@ public class GalonesFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                String textgalones = galones.getText().toString().trim();
+                if (GlobalInfo.getPistola10 == null){
+                    Toast.makeText(getContext(), "Seleccionar Cara y Manguera", Toast.LENGTH_SHORT).show();
+                }else{
+                    String textgalones = galones.getText().toString().trim();
 
-                if(textgalones.isEmpty()){
-                    alertgalones.setError("El campo galones es obligatorio");
-                    return;
+                    if(textgalones.isEmpty()){
+                        alertgalones.setError("El campo galones es obligatorio");
+                        return;
+                    }
+                    Double galonesmonto  = Double.parseDouble(textgalones);
+
+                    Integer numgalones   = Integer.parseInt(textgalones);
+
+                    if (numgalones < 1){
+                        alertgalones.setError("El valor debe ser minimo 1 ");
+                    }else if(999 < numgalones){
+                        alertgalones.setError("El valor debe ser maximo 999");
+                    }else {
+                        alertgalones.setErrorEnabled(false);
+                        guardar_galones(GlobalInfo.getPistola10,galonesmonto);
+
+                        Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                        dismiss();
+                    }
                 }
-                Double galonesmonto  = Double.parseDouble(textgalones);
 
-                Integer numgalones   = Integer.parseInt(textgalones);
-
-                if (numgalones < 1){
-                    alertgalones.setError("El valor debe ser minimo 1 ");
-                }else if(999 < numgalones){
-                    alertgalones.setError("El valor debe ser maximo 999");
-                }else {
-                    alertgalones.setErrorEnabled(false);
-                    guardar_galones(GlobalInfo.getPistola10,galonesmonto);
-
-                    Toast.makeText(getContext(), "SE AGREGO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
-                    dismiss();
-                }
 
             }
         });

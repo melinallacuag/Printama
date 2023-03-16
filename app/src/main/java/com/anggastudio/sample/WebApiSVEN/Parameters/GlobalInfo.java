@@ -1,5 +1,7 @@
 package com.anggastudio.sample.WebApiSVEN.Parameters;
 
+import android.widget.Button;
+
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 
 public class GlobalInfo {
@@ -45,18 +47,18 @@ public class GlobalInfo {
     public static Boolean getterminalVentaTarjeta10;
     public static Boolean getterminalVentaGratuita10;
     public static Boolean getterminalVentaSerafin10;
-    public static String  getterminalFacturaSerie10 = "";
-    public static String  getterminalFacturaNumero10 = "";
-    public static String  getterminalBoletaSerie10 = "";
-    public static String  getterminalBoletaNumero10 = "";
-    public static String  getterminalCreditoSerie10 = "";
-    public static String  getterminalCreditoNumero10 = "";
-    public static String  getterminalDebitoSerie10 = "";
-    public static String  getterminalDebitoNumero10 = "";
-    public static String  getterminalSerafinSerie10 = "";
-    public static String  getterminalSerafinNumero10 = "";
-    public static String  getterminalDespachoSerie10 = "";
-    public static String  getterminalDespachoNumero10 = "";
+    public static String  getterminalFacturaSerie10;
+    public static String  getterminalFacturaNumero10;
+    public static String  getterminalBoletaSerie10;
+    public static String  getterminalBoletaNumero10;
+    public static String  getterminalCreditoSerie10;
+    public static String  getterminalCreditoNumero10;
+    public static String  getterminalDebitoSerie10;
+    public static String  getterminalDebitoNumero10;
+    public static String  getterminalSerafinSerie10;
+    public static String  getterminalSerafinNumero10;
+    public static String  getterminalDespachoSerie10;
+    public static String  getterminalDespachoNumero10;
 
     /**
      * Datos de la Placa
@@ -99,6 +101,13 @@ public class GlobalInfo {
     public static String  getsettingtimerAppVenta10;
 
     /**
+     * Datos de la Setting Task
+     */
+    public static String  getsettingtaskID10;
+    public static String  getsettingtaskName10;
+    public static Boolean getsettingtaskIsTask10;
+
+    /**
      * Datos de la Optran
      */
     public static Integer  getoptranTranID10;
@@ -112,6 +121,7 @@ public class GlobalInfo {
     public static Double   getoptranSoles10;
     public static String   getoptranOperador10;
     public static String   getoptranCliente10;
+
 
     /**
      * URL - APIService

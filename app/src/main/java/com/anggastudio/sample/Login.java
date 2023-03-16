@@ -182,6 +182,20 @@ public class Login extends AppCompatActivity {
                         GlobalInfo.getterminalVentaTarjeta10    = Boolean.valueOf(terminal.getVenta_Tarjeta());
                         GlobalInfo.getterminalVentaGratuita10   = Boolean.valueOf(terminal.getVenta_Gratuita());
                         GlobalInfo.getterminalVentaSerafin10    = Boolean.valueOf(terminal.getVenta_Serafin());
+
+                        GlobalInfo.getterminalFacturaSerie10    = terminal.getFactura_Serie();
+                        GlobalInfo.getterminalFacturaNumero10   = terminal.getFactura_Numero();
+                        GlobalInfo.getterminalBoletaSerie10     = terminal.getBoleta_Serie();
+                        GlobalInfo.getterminalBoletaNumero10    = terminal.getBoleta_Numero();
+                        GlobalInfo.getterminalCreditoSerie10    = terminal.getnCredito_Serie();
+                        GlobalInfo.getterminalCreditoNumero10   = terminal.getnCredito_Numero();
+                        GlobalInfo.getterminalDebitoSerie10     = terminal.getnDebito_Serie();
+                        GlobalInfo.getterminalDebitoNumero10    = terminal.getnDebito_Numero();
+                        GlobalInfo.getterminalSerafinSerie10    = terminal.getSerafin_Serie();
+                        GlobalInfo.getterminalSerafinNumero10   = terminal.getSerafin_Numero();
+                        GlobalInfo.getterminalDespachoSerie10   = terminal.getnDespacho_Serie();
+                        GlobalInfo.getterminalDespachoNumero10  = terminal.getnDespacho_Numero();
+
                     }
 
                     if (GlobalInfo.getterminalID10.isEmpty() || GlobalInfo.getterminalID10 == null) {
