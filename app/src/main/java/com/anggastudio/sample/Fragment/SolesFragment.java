@@ -59,8 +59,6 @@ public class SolesFragment extends DialogFragment {
             public void onClick(View view) { dismiss();}
         });
 
-        agregar.setEnabled(false);
-
         agregar.setOnClickListener(new View.OnClickListener() {
 
             @Override

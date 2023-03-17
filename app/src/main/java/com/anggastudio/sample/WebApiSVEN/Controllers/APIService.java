@@ -4,6 +4,7 @@ import com.anggastudio.sample.Adapter.Grias;
 import com.anggastudio.sample.WebApiSVEN.Models.Card;
 import com.anggastudio.sample.WebApiSVEN.Models.Cliente;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
+import com.anggastudio.sample.WebApiSVEN.Models.Correlativo;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
@@ -135,5 +136,14 @@ public interface APIService {
 
     @GET("api/settingTask/listado/{id}")
     Call<List<SettingTask>> findSettingTask(@Path("id") String id);
+
+    /**
+     * Correlativo
+     */
+    @GET("api/correlativo/listado")
+    Call<List<Correlativo>> getCorrelativo();
+
+    @GET("api/correlativo/listado/{id}/01")
+    Call<List<Correlativo>> findCorrelativo(@Path("id") String id);
 
 }

@@ -15,6 +15,7 @@ public class Optran {
     private Double soles;
     private String operador;
     private String cliente;
+    private String uniMed;
 
     public Integer getTranID() {
         return tranID;
@@ -102,5 +103,13 @@ public class Optran {
 
     public void setCliente(String cliente) {
         this.cliente = cliente;
+    }
+
+    public String getUniMed() {
+        return uniMed;
+    }
+
+    public void setUniMed(String uniMed) {
+        this.uniMed = uniMed;
     }
 }

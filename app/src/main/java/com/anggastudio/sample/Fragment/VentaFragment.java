@@ -10,11 +10,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +40,7 @@ import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.Card;
 import com.anggastudio.sample.WebApiSVEN.Models.Cliente;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
+import com.anggastudio.sample.WebApiSVEN.Models.Correlativo;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
@@ -73,6 +77,9 @@ public class VentaFragment extends Fragment{
 
     /**  Id Cara */
     private String mCara;
+
+    private CaraAdapter opcionSeleccionada1 = null;
+    private MangueraAdapter opcionSeleccionada2 = null;
 
 
     /**  Atributos de la Venta */
@@ -134,9 +141,8 @@ public class VentaFragment extends Fragment{
             }
         });
 
-
-        btnsoles.setEnabled(false);
         btnlibre.setEnabled(false);
+        btnsoles.setEnabled(false);
         btngalones.setEnabled(false);
 
         /** Modalidad Libre */
@@ -153,9 +159,11 @@ public class VentaFragment extends Fragment{
         btnsoles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SolesFragment solesFragment = new SolesFragment();
-                solesFragment.show(getActivity().getSupportFragmentManager(), "Soles");
-                solesFragment.setCancelable(false);
+
+                    SolesFragment solesFragment = new SolesFragment();
+                    solesFragment.show(getActivity().getSupportFragmentManager(), "Soles");
+                    solesFragment.setCancelable(false);
+
             }
         });
 
@@ -219,6 +227,39 @@ public class VentaFragment extends Fragment{
                         btngenerar       = dialogView.findViewById(R.id.btngenerarcliente);
                         buscardni        = dialogView.findViewById(R.id.btnrenic);
                         buscarplaca      = dialogView.findViewById(R.id.btnplaca);
+
+
+                        txtplaca.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                String inputText = s.toString().toUpperCase().replace("-", "");
+
+                                String formattedText = "";
+                                if (inputText.length() >= 2 && inputText.length() <= 6) {
+                                    formattedText = inputText.substring(0, 2) + "-" + inputText.substring(2);
+                                } else if (inputText.length() > 6 && inputText.length() <= 6) {
+                                    formattedText = inputText.substring(0, 3) + "-" + inputText.substring(3);
+                                } else {
+                                    txtplaca.setTextColor(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark));
+                                }
+
+                                if (!formattedText.isEmpty()) {
+                                    txtplaca.removeTextChangedListener(this);
+                                    txtplaca.setText(formattedText);
+                                    txtplaca.setSelection(formattedText.length());
+                                    txtplaca.addTextChangedListener(this);
+                                    txtplaca.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                                }
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
+                            }
+                        });
 
                         /** Spinner de Tipo de Pago */
                         getCard();
@@ -816,6 +857,7 @@ public class VentaFragment extends Fragment{
         findLados(GlobalInfo.getterminalImei10);
         findDetalleVenta(GlobalInfo.getterminalImei10);
         findSetting(GlobalInfo.getterminalCompanyID10);
+        findCorrelativo(GlobalInfo.getterminalImei10);
 
         return view;
     }
@@ -847,16 +889,8 @@ public class VentaFragment extends Fragment{
                         boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
                                 GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
                                 GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
-                                GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,GlobalInfo.getoptranSoles10);
-
-                        Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd:MMMM:yyyy HH:mm:ss a");
-                        final String strDate = simpleDateFormat.format(calendar.getTime());
-
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(getContext(), strDate, duration);
-                        toast.show();
-
+                                GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
+                                GlobalInfo.getoptranSoles10);
                     }
                 });
             }
@@ -870,7 +904,7 @@ public class VentaFragment extends Fragment{
     /** Impresión de Boletas Simple */
     private  void boletas(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
                           String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
-                          String ProductoOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
+                          String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
 
         /** Logo */
         Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
@@ -924,7 +958,7 @@ public class VentaFragment extends Fragment{
 
         /** Fecha para Codigo QR */
         String tipodocumento    = "03";
-        String boleta           = GlobalInfo.getterminalBoletaSerie10 + "-" + GlobalInfo.getterminalBoletaNumero10;
+        String boleta           = GlobalInfo.getcorrelativoSerie  + "-" +   GlobalInfo.getcorrelativoNumero ;
         String tipodni          = GlobalInfo.getsettingClienteID10;
         String dni              = GlobalInfo.getsettingClienteRZ10;
         String fechaEmision     = FechaTranOptran.substring(6,10) + "-" + FechaTranOptran.substring(3,5) + "-" + FechaTranOptran.substring(0,2);
@@ -970,7 +1004,7 @@ public class VentaFragment extends Fragment{
             printama.printTextlnBold("PRODUCTO      "+"U/MED   "+"PRECIO   "+"CANTIDAD  "+"IMPORTE",Printama.RIGHT);
             printama.setSmallText();
             printama.printTextln(ProductoOptran,Printama.LEFT);
-            printama.printTextln("GLL"+"    " + PrecioOptran+"      " + GalonesOptran +"     "+ SolesOptran,Printama.RIGHT);
+            printama.printTextln(UndMedOptran+"    " + PrecioOptran+"      " + GalonesOptran +"     "+ SolesOptran,Printama.RIGHT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
@@ -1016,6 +1050,46 @@ public class VentaFragment extends Fragment{
 
     }
 
+    /** API SERVICE - Correlativo */
+
+    private void findCorrelativo(String id){
+
+        Call<List<Correlativo>> call = mAPIService.findCorrelativo(id);
+
+        call.enqueue(new Callback<List<Correlativo>>() {
+            @Override
+            public void onResponse(Call<List<Correlativo>> call, Response<List<Correlativo>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<Correlativo> correlativoList = response.body();
+
+                    for(Correlativo correlativo: correlativoList) {
+
+                        GlobalInfo.getcorrelativoTerminalID  = String.valueOf(correlativo.getTerminalID());
+                        GlobalInfo.getcorrelativoImei        = String.valueOf(correlativo.getImei());
+                        GlobalInfo.getcorrelativoTurno       = Integer.valueOf(correlativo.getTurno());
+                        GlobalInfo.getcorrelativoSerie       = String.valueOf(correlativo.getSerie());
+                        GlobalInfo.getcorrelativoNumero      = String.valueOf(correlativo.getNumero());
+
+                    }
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(),ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Correlativo>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Correlativo - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     /** API SERVICE - Optran */
     private void findOptran(String id){
 
@@ -1045,6 +1119,7 @@ public class VentaFragment extends Fragment{
                         GlobalInfo.getoptranSoles10      = Double.valueOf(optran.getSoles());
                         GlobalInfo.getoptranOperador10   = String.valueOf(optran.getOperador());
                         GlobalInfo.getoptranCliente10    = String.valueOf(optran.getCliente());
+                        GlobalInfo.getoptranUniMed10     = String.valueOf(optran.getUniMed());
                     }
 
                 }catch (Exception ex){
@@ -1055,7 +1130,7 @@ public class VentaFragment extends Fragment{
 
             @Override
             public void onFailure(Call<List<Optran>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE Pico - RED - WIFI", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error de conexión APICORE Optran - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -1103,7 +1178,7 @@ public class VentaFragment extends Fragment{
 
             @Override
             public void onFailure(Call<List<Setting>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE Cliente - RED - WIFI", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error de conexión APICORE Setting - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -1151,7 +1226,7 @@ public class VentaFragment extends Fragment{
 
             @Override
             public void onFailure(Call<List<Cliente>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE Cliente - RED - WIFI", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error de conexión APICORE Cliente DNI - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -1198,7 +1273,7 @@ public class VentaFragment extends Fragment{
 
             @Override
             public void onFailure(Call<List<Cliente>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE Cliente - RED - WIFI", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error de conexión APICORE Cliente RUC - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -1350,14 +1425,8 @@ public class VentaFragment extends Fragment{
                         @Override
                         public int onItemClick(Lados item) {
 
-                            btnlibre.setEnabled(true);
-                            btnsoles.setEnabled(true);
-                            btngalones.setEnabled(true);
-
                             GlobalInfo.getCara10 = item.getNroLado();
-
                             mCara = item.getNroLado();
-
                             findPico(GlobalInfo.getCara10);
 
                         /*    textcara =  getActivity().findViewById(R.id.textcara);
@@ -1365,6 +1434,7 @@ public class VentaFragment extends Fragment{
                             textcara.setText(numlado);*/
 
                             return 0;
+
                         }
                     });
 
@@ -1383,7 +1453,7 @@ public class VentaFragment extends Fragment{
 
     }
 
-    /** API SERVICE - Pico */
+    /** API SERVICE - Pico o Manguera */
     private void findPico(String id){
 
         Call<List<Picos>> call = mAPIService.findPico(id);
@@ -1403,12 +1473,28 @@ public class VentaFragment extends Fragment{
                         @Override
                         public void onItemClick(Picos item) {
 
+                            if (mCara == null && GlobalInfo.getPistola10 == null ) {
+                                btnlibre.setEnabled(false);
+                                btnsoles.setEnabled(false);
+                                btngalones.setEnabled(false);
 
-                          /*  textmanguera =  getActivity().findViewById(R.id.textmanguera);
-                            String descripcionmanguera = item.getDescripcion();
-                            textmanguera.setText(descripcionmanguera);*/
+
+
+                            } else {
+                                btnlibre.setEnabled(true);
+                                btnsoles.setEnabled(true);
+                                btngalones.setEnabled(true);
+                            }
+
+                           /* btnlibre.setEnabled(true);
+                            btnsoles.setEnabled(true);
+                            btngalones.setEnabled(true);*/
+
                             GlobalInfo.getPistola10 = item.getMangueraID();
 
+                              /*  textmanguera =  getActivity().findViewById(R.id.textmanguera);
+                            String descripcionmanguera = item.getDescripcion();
+                            textmanguera.setText(descripcionmanguera);*/
 
                         }
                     });
@@ -1496,7 +1582,7 @@ public class VentaFragment extends Fragment{
 
             @Override
             public void onFailure(Call<List<SettingTask>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE Pico - RED - WIFI", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error de conexión APICORE Setting Task - RED - WIFI", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -1528,7 +1614,7 @@ public class VentaFragment extends Fragment{
 
             @Override
             public void onFailure(Call<List<Card>> call, Throwable t) {
-                Toast.makeText(getContext(), "Error de conexión APICORE Card - RED - WIFI", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error de conexión APICORE Tarjetas - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
     }

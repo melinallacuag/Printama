@@ -117,7 +117,7 @@ public class DasboardFragment extends Fragment{
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                             finalize();
-                            Toast.makeText(getContext(), "SE GENERO EL INICIO DE DÍA", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "SE GENERO EL CAMBIO DE TURNO ", Toast.LENGTH_SHORT).show();
                         } catch (Throwable e) {
                             e.printStackTrace();
                         }
@@ -153,7 +153,7 @@ public class DasboardFragment extends Fragment{
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                             finalize();
-                            Toast.makeText(getContext(), "SE GENERO EL CAMBIO DE TURNO", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "SE GENERO EL INICIO DE DÍA", Toast.LENGTH_SHORT).show();
                         } catch (Throwable e) {
                             e.printStackTrace();
                         }

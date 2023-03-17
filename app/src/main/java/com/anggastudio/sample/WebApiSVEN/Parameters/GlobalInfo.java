@@ -121,6 +121,23 @@ public class GlobalInfo {
     public static Double   getoptranSoles10;
     public static String   getoptranOperador10;
     public static String   getoptranCliente10;
+    public static String   getoptranUniMed10;
+
+    /**
+     * Datos de la VentaCA
+     */
+
+    public static String  getventaca10;
+
+    /**
+     * Datos de la Correlativo
+     */
+    public static String  getcorrelativoTerminalID;
+    public static String  getcorrelativoImei;
+    public static Integer getcorrelativoTurno;
+    public static String  getcorrelativoSerie;
+    public static String  getcorrelativoNumero;
+
 
 
     /**

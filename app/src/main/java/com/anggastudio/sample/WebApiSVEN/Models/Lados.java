@@ -20,4 +20,6 @@ public class Lados {
     public void setTerminalID(String terminalID) {
         this.terminalID = terminalID;
     }
+
+
 }
