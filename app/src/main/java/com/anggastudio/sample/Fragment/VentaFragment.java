@@ -137,7 +137,7 @@ public class VentaFragment extends Fragment{
                 if (mTimerRunning) {
                     stoptimertask();
                 } else {
-                    startTimer();
+                    startTimerGR1();
                 }
             }
         });
@@ -858,6 +858,49 @@ public class VentaFragment extends Fragment{
         findSetting(GlobalInfo.getterminalCompanyID10);
 
         return view;
+    }
+
+    private void startTimerGR1() {
+
+        timer = new Timer();
+
+        mTimerRunning = true;
+        automatiStop.setText("Automático");
+        automatiStop.setBackgroundColor(Color.parseColor("#001E8A"));
+
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                findOptran(GlobalInfo.getterminalImei10);
+
+                if (GlobalInfo.getpase10 == true){
+
+                    findCorrelativo(GlobalInfo.getterminalImei10,"03");
+
+                    if (GlobalInfo.getcorrelativoNumero.isEmpty() || GlobalInfo.getcorrelativoNumero == null) {
+                        return;
+                    }
+
+                    guardar_ventaCa(GlobalInfo.getcorrelativoSerie,GlobalInfo.getcorrelativoNumero);
+
+                    boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
+                            GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
+                            GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
+                            GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
+                            GlobalInfo.getoptranSoles10);
+
+                    GlobalInfo.getcorrelativoNumero = "";
+                    GlobalInfo.getpase10 = false;
+
+                }
+
+            }
+
+        };
+
+        timer.schedule(timerTask,0,2000);
+
     }
 
     private void startTimer() {
