@@ -857,7 +857,6 @@ public class VentaFragment extends Fragment{
         findDetalleVenta(GlobalInfo.getterminalImei10);
         findSetting(GlobalInfo.getterminalCompanyID10);
 
-
         return view;
     }
 
@@ -893,7 +892,7 @@ public class VentaFragment extends Fragment{
 
                     findCorrelativo(GlobalInfo.getterminalImei10,"03");
 
-                    if (GlobalInfo.getcorrelativoSerie == null && GlobalInfo.getcorrelativoNumero == null) {
+                    if (GlobalInfo.getcorrelativoNumero.isEmpty() || GlobalInfo.getcorrelativoNumero == null) {
                         return;
                     }
 
