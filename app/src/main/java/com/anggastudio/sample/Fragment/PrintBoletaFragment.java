@@ -74,7 +74,7 @@ public class PrintBoletaFragment extends DialogFragment {
 
         Bundle bundle         = this.getArguments();
         //LOGO DE LA EMPRESA
-        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
+        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoprincipal);
 
         //FECHA-HORA
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));

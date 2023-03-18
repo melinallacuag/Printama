@@ -90,7 +90,7 @@
             android:layout_width="120sp"
             android:layout_height="120sp"
             android:scaleType="centerCrop"
-            android:src="@drawable/logoroble"
+            android:src="@drawable/logoprincipal"
             app:shapeAppearanceOverlay="@style/roudperfil" />
 
     </LinearLayout>

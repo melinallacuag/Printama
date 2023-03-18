@@ -66,7 +66,7 @@ public class PrintNotaDespachoFragment extends DialogFragment {
     private  void notadespacho(int turno ,String cajero,long kilometraje,String placa,long dni,String clientes,long tarjeta,String umed) {
         Bundle bundle         = this.getArguments();
         //LOGO
-        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
+        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoprincipal);
 
         //FECHAHORA
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));

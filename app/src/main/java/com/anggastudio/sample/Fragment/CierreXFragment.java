@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
 import com.anggastudio.sample.R;
+import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 
 
 public class CierreXFragment extends Fragment {
@@ -39,7 +40,7 @@ public class CierreXFragment extends Fragment {
             printama.printDoubleDashedLine();
             printama.setSmallText();
             printama.printText("VENTAS POR TIPO DE PAGO\n", Printama.CENTER);
-            printama.printTextJustify("EFECTIVO","100.00\n");
+            printama.printTextJustify("EFECTIVO", String.valueOf(GlobalInfo.getoptranSoles10));
             printama.printTextJustify("TARJETA DE CREDITO","20.00\n");
             printama.printTextJustify("SERAFINES","0.00\n");
             printama.printTextJustify("T.Gratuita","0.00\n");

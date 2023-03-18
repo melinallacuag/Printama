@@ -70,7 +70,7 @@ Button cerrar;
     private  void facturacion(int turno ,String cajero,long kilometraje,String placa,long ruc,String clientes ,String direccion,String umed) {
         Bundle bundle         = this.getArguments();
         //LOGO DE  LA EMPRESA
-        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoroble);
+        Bitmap logo = Printama.getBitmapFromVector(getContext(), R.drawable.logoprincipal);
 
         //Fecha y Hora
         Calendar cal          = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
@@ -232,6 +232,7 @@ Button cerrar;
             dismiss();
         }, this::showToast);
     }
+
     private void showToast(String message) {
         Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
     }

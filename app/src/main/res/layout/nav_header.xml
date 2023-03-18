@@ -14,7 +14,7 @@
         android:layout_marginStart="100sp"
         android:scaleType="centerCrop"
         android:layout_marginTop="2sp"
-        android:src="@drawable/logoroble"
+        android:src="@drawable/logoprincipal"
         android:layout_gravity="center"
         app:shapeAppearanceOverlay="@style/roudperfil"
         android:layout_marginLeft="100sp" />

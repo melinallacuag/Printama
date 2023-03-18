@@ -89,6 +89,8 @@ public class Printama {
         return printer;
     }
 
+
+
     public BluetoothDevice getConnectedPrinter() {
         return getPrinter();
     }
