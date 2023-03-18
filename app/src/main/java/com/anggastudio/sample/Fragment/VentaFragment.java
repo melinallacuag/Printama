@@ -48,6 +48,7 @@ import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Models.Placa;
 import com.anggastudio.sample.WebApiSVEN.Models.Setting;
 import com.anggastudio.sample.WebApiSVEN.Models.SettingTask;
+import com.anggastudio.sample.WebApiSVEN.Models.VentaCA;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -236,15 +237,11 @@ public class VentaFragment extends Fragment{
 
                             @Override
                             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                String inputText = s.toString().toUpperCase().replace("-", "");
-
+                                String inputText = s.toString().replace("-", "");
                                 String formattedText = "";
-                                if (inputText.length() >= 2 && inputText.length() <= 6) {
-                                    formattedText = inputText.substring(0, 2) + "-" + inputText.substring(2);
-                                } else if (inputText.length() > 6 && inputText.length() <= 6) {
-                                    formattedText = inputText.substring(0, 3) + "-" + inputText.substring(3);
-                                } else {
-                                    txtplaca.setTextColor(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark));
+
+                                if (inputText.matches("^\\d{3,4}(\\d{3})$|^\\d{4}(\\d{4})$")) {
+                                    formattedText = inputText.replaceAll("^\\d{3,4}(\\d{3})$|^\\d{4}(\\d{4})$", "$1-$2");
                                 }
 
                                 if (!formattedText.isEmpty()) {
@@ -253,6 +250,8 @@ public class VentaFragment extends Fragment{
                                     txtplaca.setSelection(formattedText.length());
                                     txtplaca.addTextChangedListener(this);
                                     txtplaca.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                                } else {
+                                    txtplaca.setTextColor(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark));
                                 }
                             }
 
@@ -853,11 +852,11 @@ public class VentaFragment extends Fragment{
         recyclerCara.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         /** API Retrofit - Consumiendo */
-        findOptran(GlobalInfo.getterminalImei10);
+
         findLados(GlobalInfo.getterminalImei10);
         findDetalleVenta(GlobalInfo.getterminalImei10);
         findSetting(GlobalInfo.getterminalCompanyID10);
-        findCorrelativo(GlobalInfo.getterminalImei10);
+
 
         return view;
     }
@@ -866,9 +865,13 @@ public class VentaFragment extends Fragment{
 
         timer = new Timer();
 
+        mTimerRunning = true;
+        automatiStop.setText("Automático");
+        automatiStop.setBackgroundColor(Color.parseColor("#001E8A"));
+
         realizarOperacion();
 
-        timer.schedule(timerTask,5000);
+        timer.schedule(timerTask,2000,2000);
     }
 
     public void stoptimertask() {
@@ -883,22 +886,58 @@ public class VentaFragment extends Fragment{
 
         timerTask = new TimerTask() {
             public void run() {
-                handler.post(new Runnable() {
-                    public void run() {
 
-                        boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
-                                GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
-                                GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
-                                GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
-                                GlobalInfo.getoptranSoles10);
+                findOptran(GlobalInfo.getterminalImei10);
+
+                if (GlobalInfo.getpase10 == true){
+
+                    findCorrelativo(GlobalInfo.getterminalImei10,"03");
+
+                    if (GlobalInfo.getcorrelativoSerie == null && GlobalInfo.getcorrelativoNumero == null) {
+                        return;
                     }
-                });
+
+                    guardar_ventaCa(GlobalInfo.getcorrelativoSerie,GlobalInfo.getcorrelativoNumero);
+
+                    boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
+                                    GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
+                                    GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
+                                    GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
+                                    GlobalInfo.getoptranSoles10);
+
+                    GlobalInfo.getpase10 = false;
+                }
+
             }
         };
 
-        mTimerRunning = true;
-        automatiStop.setText("Automático");
-        automatiStop.setBackgroundColor(Color.parseColor("#001E8A"));
+    }
+
+    private void guardar_ventaCa(String _serieDocumento, String _nroDocumento){
+
+        String tranIDR = String.valueOf(GlobalInfo.getoptranTranID10);
+
+        final VentaCA ventaCA = new VentaCA(1,"03",_serieDocumento,_nroDocumento,"PUNTO2","","","","",1,"",
+                "","",0.00,0.00,0.00,0.00,"","","","","","",
+                "",0.00,0.00,0.00,"",1,"","","",1,0,0,0.00,0.00,
+                0.00,0.00,tranIDR,"","","",1,0,"",0.00,0.00,"");
+
+        Call<VentaCA> call = mAPIService.postVentaCA(ventaCA);
+
+        call.enqueue(new Callback<VentaCA>() {
+            @Override
+            public void onResponse(Call<VentaCA> call, Response<VentaCA> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VentaCA> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /** Impresión de Boletas Simple */
@@ -1052,9 +1091,9 @@ public class VentaFragment extends Fragment{
 
     /** API SERVICE - Correlativo */
 
-    private void findCorrelativo(String id){
+    private void findCorrelativo(String id , String tipo){
 
-        Call<List<Correlativo>> call = mAPIService.findCorrelativo(id);
+        Call<List<Correlativo>> call = mAPIService.findCorrelativo(id,"03");
 
         call.enqueue(new Callback<List<Correlativo>>() {
             @Override
@@ -1106,7 +1145,13 @@ public class VentaFragment extends Fragment{
                     }
                     List<Optran> optranList = response.body();
 
+                    if (optranList == null || optranList.isEmpty()) {
+                        return;
+                    }
+
                     for(Optran optran: optranList) {
+
+                        GlobalInfo.getpase10 = true;
 
                         GlobalInfo.getoptranTranID10     = Integer.valueOf(optran.getTranID());
                         GlobalInfo.getoptranNroLado10    = String.valueOf(optran.getNroLado());
@@ -1120,6 +1165,7 @@ public class VentaFragment extends Fragment{
                         GlobalInfo.getoptranOperador10   = String.valueOf(optran.getOperador());
                         GlobalInfo.getoptranCliente10    = String.valueOf(optran.getCliente());
                         GlobalInfo.getoptranUniMed10     = String.valueOf(optran.getUniMed());
+
                     }
 
                 }catch (Exception ex){

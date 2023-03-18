@@ -38,8 +38,6 @@ public class SolesFragment extends DialogFragment {
     TextInputLayout alertsoles;
     TextView textsol;
 
-    private String ddd = GlobalInfo.getPistola10;
-
     private APIService mAPIService;
 
     @Override

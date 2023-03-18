@@ -1,5 +1,6 @@
 package com.anggastudio.sample.WebApiSVEN.Parameters;
 
+import android.text.BoringLayout;
 import android.widget.Button;
 
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
@@ -137,6 +138,8 @@ public class GlobalInfo {
     public static Integer getcorrelativoTurno;
     public static String  getcorrelativoSerie;
     public static String  getcorrelativoNumero;
+
+    public static Boolean getpase10 = false;
 
 
 

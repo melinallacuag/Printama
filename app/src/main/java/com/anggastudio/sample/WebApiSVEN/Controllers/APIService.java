@@ -15,6 +15,7 @@ import com.anggastudio.sample.WebApiSVEN.Models.SettingTask;
 import com.anggastudio.sample.WebApiSVEN.Models.Terminal;
 import com.anggastudio.sample.WebApiSVEN.Models.Tipotarjeta;
 import com.anggastudio.sample.WebApiSVEN.Models.Users;
+import com.anggastudio.sample.WebApiSVEN.Models.VentaCA;
 
 import java.util.List;
 
@@ -73,6 +74,12 @@ public interface APIService {
 
     @POST("api/picos/guardar")
     Call<Picos> postPicos(@Body Picos picos);
+
+    /**
+     * VentaCA
+     */
+    @POST("api/ventaca/guardar")
+    Call<VentaCA> postVentaCA(@Body VentaCA ventaCA);
 
     /**
      * Optran
@@ -143,7 +150,7 @@ public interface APIService {
     @GET("api/correlativo/listado")
     Call<List<Correlativo>> getCorrelativo();
 
-    @GET("api/correlativo/listado/{id}/01")
-    Call<List<Correlativo>> findCorrelativo(@Path("id") String id);
+    @GET("api/correlativo/listado/{id}/{tipo}")
+    Call<List<Correlativo>> findCorrelativo(@Path("id") String id, @Path("tipo") String tipo);
 
 }
