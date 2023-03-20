@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/contain">
+    android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,9 +11,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="370sp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_gravity="center"
         android:paddingStart="20sp"
         android:paddingEnd="20sp"
         android:paddingTop="10sp"
@@ -208,7 +208,7 @@
 
             <RadioButton
                 android:id="@+id/radioEfectivo"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="false"
@@ -219,7 +219,7 @@
 
             <RadioButton
                 android:id="@+id/radioTarjeta"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="false"
@@ -230,7 +230,7 @@
 
             <RadioButton
                 android:id="@+id/radioCredito"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="false"
@@ -335,6 +335,7 @@
                 android:textSize="10sp"
                 app:cornerRadius="10sp"
                 android:layout_weight="1" />
+
 
             <Button
                 android:id="@+id/btnagregarboleta"

@@ -2,6 +2,7 @@ package com.anggastudio.sample.Fragment;
 
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,9 +19,13 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -78,10 +83,8 @@ public class VentaFragment extends Fragment{
     /**  Id Cara */
     private String mCara;
 
-
-
     /**  Atributos de la Venta */
-    TextView  producto,cara,importetotal;
+    TextView  producto,cara,importetotal,terminalID;
     Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos,automatiStop;
 
     /**  AdapterList - Recycler */
@@ -95,7 +98,6 @@ public class VentaFragment extends Fragment{
     boolean mTimerRunning;
     Timer timer;
     TimerTask timerTask;
-    final Handler handler = new Handler();
 
     /** Datos de la Boleta - Factura */
     Card cards = null;
@@ -106,8 +108,10 @@ public class VentaFragment extends Fragment{
     TextInputEditText  textid,txtplaca,textrazsocial,textdni,textruc,textnombre,textdireccion,textkilometraje,textobservacion,textpagoefectivo,textNroOperacio;
     TextInputLayout alertpefectivo,alertoperacion,alertid,alertplaca,alertdni,alertruc, alertnombre,alertrazsocial,textdropStatus;
     Button btnagregar,btncancelar,btngenerar,buscarplaca,buscardni,buscarruc,buscarid;
+
     AlertDialog.Builder builder;
-    AlertDialog alertDialog;
+
+    private Dialog modalBoleta,modalFactura,modalNDespacho;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -115,6 +119,10 @@ public class VentaFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
         mAPIService  = GlobalInfo.getAPIService();
+
+        /** Nombre de la Terminal ID */
+        terminalID = view.findViewById(R.id.terminalID);
+        terminalID.setText(GlobalInfo.getterminalID10);
 
         automatiStop    = view.findViewById(R.id.automatiStop);
         btnlibre        = view.findViewById(R.id.btnlibre);
@@ -139,9 +147,15 @@ public class VentaFragment extends Fragment{
             }
         });
 
+        /** Boton Bloqueados */
         btnlibre.setEnabled(false);
         btnsoles.setEnabled(false);
         btngalones.setEnabled(false);
+        btnboleta.setEnabled(false);
+        btnfactura.setEnabled(false);
+        btnnotadespacho.setEnabled(false);
+        btnserafin.setEnabled(false);
+        btnpuntos.setEnabled(false);
 
         /** Modalidad Libre */
         btnlibre.setOnClickListener(new View.OnClickListener() {
@@ -175,11 +189,16 @@ public class VentaFragment extends Fragment{
             }
         });
 
-        /** Operación de Boleta */
+        /** Mostrar Formulario de Boleta y Realizar la Operacion */
+
+        modalBoleta = new Dialog(getContext());
+        modalBoleta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        modalBoleta.setContentView(R.layout.fragment_boleta);
+        modalBoleta.setCancelable(false);
+
         btnboleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 for(DetalleVenta detalleVenta : detalleVentaList){
 
@@ -189,73 +208,59 @@ public class VentaFragment extends Fragment{
                         Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
                     }else if(mnCara.equals(mCara)) {
 
-                        /** Abrir Modal */
-                        builder = new AlertDialog.Builder(getActivity());
-                        LayoutInflater inflater = getActivity().getLayoutInflater();
-                        View dialogView = inflater.inflate(R.layout.fragment_boleta, null);
-                        builder.setView(dialogView);
-                        abrirmodal();
+                        modalBoleta.show();
 
-                        alertplaca       = dialogView.findViewById(R.id.alertPlaca);
-                        alertdni         = dialogView.findViewById(R.id.alertDNI);
-                        alertnombre      = dialogView.findViewById(R.id.alertNombre);
-                        alertpefectivo   = dialogView.findViewById(R.id.alertPEfectivo);
-                        alertoperacion   = dialogView.findViewById(R.id.alertOperacion);
+                        alertplaca       = modalBoleta.findViewById(R.id.alertPlaca);
+                        alertdni         = modalBoleta.findViewById(R.id.alertDNI);
+                        alertnombre      = modalBoleta.findViewById(R.id.alertNombre);
+                        alertpefectivo   = modalBoleta.findViewById(R.id.alertPEfectivo);
+                        alertoperacion   = modalBoleta.findViewById(R.id.alertOperacion);
 
-                        txtplaca         = dialogView.findViewById(R.id.inputPlaca);
-                        textdni          = dialogView.findViewById(R.id.inputDNI);
-                        textnombre       = dialogView.findViewById(R.id.inputNombre);
-                        textdireccion    = dialogView.findViewById(R.id.inputDireccion);
-                        textkilometraje  = dialogView.findViewById(R.id.inputKilometraje);
-                        textobservacion  = dialogView.findViewById(R.id.inputObservacion);
-                        textNroOperacio  = dialogView.findViewById(R.id.inputOperacion);
-                        textpagoefectivo = dialogView.findViewById(R.id.inputPEfectivo);
-                        modopagoefectivo = dialogView.findViewById(R.id.modopagoefectivo);
+                        txtplaca         = modalBoleta.findViewById(R.id.inputPlaca);
+                        textdni          = modalBoleta.findViewById(R.id.inputDNI);
+                        textnombre       = modalBoleta.findViewById(R.id.inputNombre);
+                        textdireccion    = modalBoleta.findViewById(R.id.inputDireccion);
+                        textkilometraje  = modalBoleta.findViewById(R.id.inputKilometraje);
+                        textobservacion  = modalBoleta.findViewById(R.id.inputObservacion);
+                        textNroOperacio  = modalBoleta.findViewById(R.id.inputOperacion);
+                        textpagoefectivo = modalBoleta.findViewById(R.id.inputPEfectivo);
+                        modopagoefectivo = modalBoleta.findViewById(R.id.modopagoefectivo);
 
-                        radioGroup       = dialogView.findViewById(R.id.radioformapago);
-                        cbefectivo       = dialogView.findViewById(R.id.radioEfectivo);
-                        cbtarjeta        = dialogView.findViewById(R.id.radioTarjeta);
-                        cbcredito        = dialogView.findViewById(R.id.radioCredito);
+                        radioGroup       = modalBoleta.findViewById(R.id.radioformapago);
+                        cbefectivo       = modalBoleta.findViewById(R.id.radioEfectivo);
+                        cbtarjeta        = modalBoleta.findViewById(R.id.radioTarjeta);
+                        cbcredito        = modalBoleta.findViewById(R.id.radioCredito);
 
-                        dropStatus       = dialogView.findViewById(R.id.dropStatus);
-                        textdropStatus   = dialogView.findViewById(R.id.textdropStatus);
+                        dropStatus       = modalBoleta.findViewById(R.id.dropStatus);
+                        textdropStatus   = modalBoleta.findViewById(R.id.textdropStatus);
 
-                        btnagregar       = dialogView.findViewById(R.id.btnagregarboleta);
-                        btncancelar      = dialogView.findViewById(R.id.btncancelar);
-                        btngenerar       = dialogView.findViewById(R.id.btngenerarcliente);
-                        buscardni        = dialogView.findViewById(R.id.btnrenic);
-                        buscarplaca      = dialogView.findViewById(R.id.btnplaca);
+                        btnagregar       = modalBoleta.findViewById(R.id.btnagregarboleta);
+                        btncancelar      = modalBoleta.findViewById(R.id.btncancelar);
+                        btngenerar       = modalBoleta.findViewById(R.id.btngenerarcliente);
+                        buscardni        = modalBoleta.findViewById(R.id.btnrenic);
+                        buscarplaca      = modalBoleta.findViewById(R.id.btnplaca);
 
-
-                        txtplaca.addTextChangedListener(new TextWatcher() {
+                        /*textdni.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                            public void onClick(View v) {
+                                builder = new AlertDialog.Builder(getActivity());
+                                LayoutInflater inflater = getActivity().getLayoutInflater();
+                                View dialogView = inflater.inflate(R.layout.fragment_clientes, null);
+                                builder.setView(dialogView);
+
+                                abrirmodal();
+                                alertDialog.setCancelable(true);
+                                btncancelar    = dialogView.findViewById(R.id.btncancelar);
+
+                                btncancelar.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        alertDialog.dismiss();
+                                    }
+                                });
                             }
 
-                            @Override
-                            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                String inputText = s.toString().replace("-", "");
-                                String formattedText = "";
-
-                                if (inputText.matches("^\\d{3,4}(\\d{3})$|^\\d{4}(\\d{4})$")) {
-                                    formattedText = inputText.replaceAll("^\\d{3,4}(\\d{3})$|^\\d{4}(\\d{4})$", "$1-$2");
-                                }
-
-                                if (!formattedText.isEmpty()) {
-                                    txtplaca.removeTextChangedListener(this);
-                                    txtplaca.setText(formattedText);
-                                    txtplaca.setSelection(formattedText.length());
-                                    txtplaca.addTextChangedListener(this);
-                                    txtplaca.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-                                } else {
-                                    txtplaca.setTextColor(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark));
-                                }
-                            }
-
-                            @Override
-                            public void afterTextChanged(Editable s) {
-                            }
-                        });
+                        });*/
 
                         /** Spinner de Tipo de Pago */
                         getCard();
@@ -274,7 +279,7 @@ public class VentaFragment extends Fragment{
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                                radioButton = dialogView.findViewById(checkedId);
+                                radioButton = modalBoleta.findViewById(checkedId);
                                 if (checkedId == cbefectivo.getId()){
                                     modopagoefectivo.setVisibility(View.VISIBLE);
                                     textdropStatus.setVisibility(View.GONE);
@@ -297,7 +302,7 @@ public class VentaFragment extends Fragment{
                         btncancelar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                alertDialog.dismiss();
+                                modalBoleta.dismiss();
                             }
                         });
 
@@ -396,7 +401,7 @@ public class VentaFragment extends Fragment{
 
                                 }
 
-                                double value = Double.parseDouble(textnpagoefectivo);
+                                double value = Double.parseDouble(textnpagoefectivo.toString());
                                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
                                 alertplaca.setErrorEnabled(false);
@@ -443,15 +448,32 @@ public class VentaFragment extends Fragment{
 
                                 recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
                                 Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
-                                alertDialog.dismiss();
+
+                                modalBoleta.dismiss();
+
+                                txtplaca.getText().clear();
+                                textdni.getText().clear();
+                                textnombre.getText().clear();
+                                textdireccion.getText().clear();
+                                textkilometraje.getText().clear();
+                                textobservacion.getText().clear();
+                                textNroOperacio.getText().clear();
+                                textpagoefectivo.getText().clear();
                             }
                         });
                     }
                 }
+
             }
         });
 
-        /** Operación de Factura */
+        /** Mostrar Formulario de Factura y Realizar la Operacion */
+
+        modalFactura = new Dialog(getContext());
+        modalFactura.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        modalFactura.setContentView(R.layout.fragment_factura);
+        modalFactura.setCancelable(false);
+
         btnfactura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -464,41 +486,36 @@ public class VentaFragment extends Fragment{
                         Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
                     } else if(mnCara.equals(mCara) ) {
 
-                        /** Abrir Modal */
-                        builder = new AlertDialog.Builder(getActivity());
-                        LayoutInflater inflater = getActivity().getLayoutInflater();
-                        View dialogView = inflater.inflate(R.layout.fragment_factura, null);
-                        builder.setView(dialogView);
-                        abrirmodal();
+                        modalFactura.show();
 
-                        alertplaca       = dialogView.findViewById(R.id.alertPlaca);
-                        alertruc         = dialogView.findViewById(R.id.alertRUC);
-                        alertrazsocial   = dialogView.findViewById(R.id.alertRazSocial);
-                        alertpefectivo   = dialogView.findViewById(R.id.alertPEfectivo);
-                        alertoperacion   = dialogView.findViewById(R.id.alertOperacion);
+                        alertplaca       = modalFactura.findViewById(R.id.alertPlaca);
+                        alertruc         = modalFactura.findViewById(R.id.alertRUC);
+                        alertrazsocial   = modalFactura.findViewById(R.id.alertRazSocial);
+                        alertpefectivo   = modalFactura.findViewById(R.id.alertPEfectivo);
+                        alertoperacion   = modalFactura.findViewById(R.id.alertOperacion);
 
-                        txtplaca         = dialogView.findViewById(R.id.inputPlaca);
-                        textruc          = dialogView.findViewById(R.id.inputRUC);
-                        textrazsocial    = dialogView.findViewById(R.id.inputRazSocial);
-                        textdireccion    = dialogView.findViewById(R.id.inputDireccion);
-                        textkilometraje  = dialogView.findViewById(R.id.inputKilometraje);
-                        textobservacion  = dialogView.findViewById(R.id.inputObservacion);
-                        textNroOperacio  = dialogView.findViewById(R.id.inputOperacion);
-                        textpagoefectivo = dialogView.findViewById(R.id.inputPEfectivo);
-                        modopagoefectivo = dialogView.findViewById(R.id.modopagoefectivo);
+                        txtplaca         = modalFactura.findViewById(R.id.inputPlaca);
+                        textruc          = modalFactura.findViewById(R.id.inputRUC);
+                        textrazsocial    = modalFactura.findViewById(R.id.inputRazSocial);
+                        textdireccion    = modalFactura.findViewById(R.id.inputDireccion);
+                        textkilometraje  = modalFactura.findViewById(R.id.inputKilometraje);
+                        textobservacion  = modalFactura.findViewById(R.id.inputObservacion);
+                        textNroOperacio  = modalFactura.findViewById(R.id.inputOperacion);
+                        textpagoefectivo = modalFactura.findViewById(R.id.inputPEfectivo);
+                        modopagoefectivo = modalFactura.findViewById(R.id.modopagoefectivo);
 
-                        radioGroup     = dialogView.findViewById(R.id.radioformapago);
-                        cbefectivo     = dialogView.findViewById(R.id.radioEfectivo);
-                        cbtarjeta      = dialogView.findViewById(R.id.radioTarjeta);
-                        cbcredito      = dialogView.findViewById(R.id.radioCredito);
+                        radioGroup       = modalFactura.findViewById(R.id.radioformapago);
+                        cbefectivo       = modalFactura.findViewById(R.id.radioEfectivo);
+                        cbtarjeta        = modalFactura.findViewById(R.id.radioTarjeta);
+                        cbcredito        = modalFactura.findViewById(R.id.radioCredito);
 
-                        dropStatus            = dialogView.findViewById(R.id.dropStatus);
-                        textdropStatus        = dialogView.findViewById(R.id.textdropStatus);
+                        dropStatus       = modalFactura.findViewById(R.id.dropStatus);
+                        textdropStatus   = modalFactura.findViewById(R.id.textdropStatus);
 
-                        btnagregar     = dialogView.findViewById(R.id.btnagregarboleta);
-                        btncancelar    = dialogView.findViewById(R.id.btncancelar);
-                        buscarruc      = dialogView.findViewById(R.id.btnsunat);
-                        buscarplaca    = dialogView.findViewById(R.id.btnplaca);
+                        btnagregar       = modalFactura.findViewById(R.id.btnagregarboleta);
+                        btncancelar      = modalFactura.findViewById(R.id.btncancelar);
+                        buscarruc        = modalFactura.findViewById(R.id.btnsunat);
+                        buscarplaca      = modalFactura.findViewById(R.id.btnplaca);
 
                         /** Spinner de Tipo de Pago */
                         getCard();
@@ -517,7 +534,7 @@ public class VentaFragment extends Fragment{
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                                radioButton = dialogView.findViewById(checkedId);
+                                radioButton = modalFactura.findViewById(checkedId);
 
                                 if (checkedId == cbefectivo.getId()){
                                     modopagoefectivo.setVisibility(View.VISIBLE);
@@ -541,7 +558,7 @@ public class VentaFragment extends Fragment{
                         btncancelar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                alertDialog.dismiss();
+                                modalFactura.dismiss();
                             }
                         });
 
@@ -557,9 +574,11 @@ public class VentaFragment extends Fragment{
                                 } else {
                                     alertplaca.setErrorEnabled(false);
                                     findPlaca(getPlacaFactura,"01");
-                                    textruc.setText("");
-                                    textrazsocial.setText("");
-                                    textdireccion.setText("");
+
+                                    textruc.getText().clear();
+                                    textrazsocial.getText().clear();
+                                    textdireccion.getText().clear();
+
                                 }
 
                             }
@@ -577,8 +596,10 @@ public class VentaFragment extends Fragment{
                                 }else{
                                     alertruc.setErrorEnabled(false);
                                     findClienteRUC(getClienteRuc);
-                                    textrazsocial.setText("");
-                                    textdireccion.setText("");
+
+                                    textruc.getText().clear();
+                                    textrazsocial.getText().clear();
+
                                 }
                             }
                         });
@@ -679,7 +700,17 @@ public class VentaFragment extends Fragment{
 
                                     recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
                                     Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
-                                    alertDialog.dismiss();
+
+                                     modalFactura.dismiss();
+
+                                txtplaca.getText().clear();
+                                textruc.getText().clear();
+                                textrazsocial.getText().clear();
+                                textdireccion.getText().clear();
+                                textkilometraje.getText().clear();
+                                textobservacion.getText().clear();
+                                textNroOperacio.getText().clear();
+                                textpagoefectivo.getText().clear();
                             }
                         });
                     }
@@ -687,7 +718,13 @@ public class VentaFragment extends Fragment{
             }
         });
 
-        /** Operación de Nota de Despacho */
+        /** Mostrar Formulario de Nota de Despacho y Realizar la Operacion */
+
+        modalNDespacho = new Dialog(getContext());
+        modalNDespacho.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        modalNDespacho.setContentView(R.layout.fragment_nota_despacho);
+        modalNDespacho.setCancelable(false);
+
         btnnotadespacho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -699,34 +736,30 @@ public class VentaFragment extends Fragment{
                         Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
                     }else if(mnCara.equals(mCara) ) {
 
-                        builder = new AlertDialog.Builder(getActivity());
-                        LayoutInflater inflater = getActivity().getLayoutInflater();
-                        View dialogView = inflater.inflate(R.layout.fragment_nota_despacho, null);
-                        builder.setView(dialogView);
-                        abrirmodal();
+                        modalNDespacho.show();
 
-                        alertplaca      = dialogView.findViewById(R.id.alertPlacalaca);
-                        alertid         = dialogView.findViewById(R.id.alertIDCliente);
-                        alertruc        = dialogView.findViewById(R.id.alertRUC);
-                        alertrazsocial  = dialogView.findViewById(R.id.alertRazSocial);
+                        alertplaca      = modalNDespacho.findViewById(R.id.alertPlacalaca);
+                        alertid         = modalNDespacho.findViewById(R.id.alertIDCliente);
+                        alertruc        = modalNDespacho.findViewById(R.id.alertRUC);
+                        alertrazsocial  = modalNDespacho.findViewById(R.id.alertRazSocial);
 
-                        txtplaca        = dialogView.findViewById(R.id.inputPlaca);
-                        textid          = dialogView.findViewById(R.id.inputIDCliente);
-                        textruc         = dialogView.findViewById(R.id.inputRUC);
-                        textnombre      = dialogView.findViewById(R.id.inputRazSocial);
-                        textdireccion   = dialogView.findViewById(R.id.inputDireccion);
-                        textkilometraje = dialogView.findViewById(R.id.inputKilometraje);
-                        textobservacion = dialogView.findViewById(R.id.inputObservacion);
+                        txtplaca        = modalNDespacho.findViewById(R.id.inputPlaca);
+                        textid          = modalNDespacho.findViewById(R.id.inputIDCliente);
+                        textruc         = modalNDespacho.findViewById(R.id.inputRUC);
+                        textnombre      = modalNDespacho.findViewById(R.id.inputRazSocial);
+                        textdireccion   = modalNDespacho.findViewById(R.id.inputDireccion);
+                        textkilometraje = modalNDespacho.findViewById(R.id.inputKilometraje);
+                        textobservacion = modalNDespacho.findViewById(R.id.inputObservacion);
 
-                        btnagregar      = dialogView.findViewById(R.id.btnagregarboleta);
-                        btncancelar     = dialogView.findViewById(R.id.btncancelarboleta);
-                        buscarid        = dialogView.findViewById(R.id.btnsunat);
-                        buscarplaca     = dialogView.findViewById(R.id.btnplaca);
+                        btnagregar      = modalNDespacho.findViewById(R.id.btnagregarboleta);
+                        btncancelar     = modalNDespacho.findViewById(R.id.btncancelarboleta);
+                        buscarid        = modalNDespacho.findViewById(R.id.btnsunat);
+                        buscarplaca     = modalNDespacho.findViewById(R.id.btnplaca);
 
                         btncancelar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                alertDialog.dismiss();
+                                modalNDespacho.dismiss();
                             }
                         });
 
@@ -738,14 +771,14 @@ public class VentaFragment extends Fragment{
                                 LayoutInflater inflater = getActivity().getLayoutInflater();
                                 View dialogView = inflater.inflate(R.layout.fragment_clientes, null);
                                 builder.setView(dialogView);
-                                abrirmodal();
+
 
                                 btncancelar    = dialogView.findViewById(R.id.btncancelar);
 
                                 btncancelar.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        alertDialog.dismiss();
+                                        modalNDespacho.dismiss();
                                     }
                                 });
 
@@ -762,9 +795,11 @@ public class VentaFragment extends Fragment{
                                 }else{
                                     alertid.setErrorEnabled(false);
                                     findCliente(getClienteId,"99");
-                                    textruc.setText("");
-                                    textnombre.setText("");
-                                    textdireccion.setText("");
+
+                                    textruc.getText().clear();
+                                    textnombre.getText().clear();
+                                    textdireccion.getText().clear();
+
                                 }
                             }
                         });
@@ -802,7 +837,16 @@ public class VentaFragment extends Fragment{
 
                                     recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
                                     Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
-                                    alertDialog.dismiss();
+
+                                    modalNDespacho.dismiss();
+
+                                    txtplaca.getText().clear();
+                                    textid.getText().clear();
+                                    textruc.getText().clear();
+                                    textnombre.getText().clear();
+                                    textdireccion.getText().clear();
+                                    textkilometraje.getText().clear();
+                                    textobservacion.getText().clear();
                                 }
                             }
                         });
@@ -849,14 +893,13 @@ public class VentaFragment extends Fragment{
         recyclerCara.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         /** API Retrofit - Consumiendo */
-
         findLados(GlobalInfo.getterminalImei10);
         findDetalleVenta(GlobalInfo.getterminalImei10);
         findSetting(GlobalInfo.getterminalCompanyID10);
 
-
         return view;
     }
+
 
     private void startTimerGR1() {
 
@@ -864,7 +907,7 @@ public class VentaFragment extends Fragment{
 
         realizarOperacion();
 
-        timer.schedule(timerTask,2000,3000);
+        timer.schedule(timerTask,2000,4000);
 
     }
 
@@ -886,7 +929,7 @@ public class VentaFragment extends Fragment{
 
                 if (GlobalInfo.getpase10 == true){
 
-                    findCorrelativo(GlobalInfo.getterminalImei10,"01");
+                    findCorrelativo(GlobalInfo.getterminalImei10,"03");
 
                     if (GlobalInfo.getcorrelativoNumero == null){
                         return;
@@ -897,11 +940,11 @@ public class VentaFragment extends Fragment{
                     }
 
                     guardar_ventaCa(GlobalInfo.getterminalCompanyID10, GlobalInfo.getcorrelativoSerie,GlobalInfo.getcorrelativoNumero,GlobalInfo.getterminalID10,GlobalInfo.getsettingClienteID10,GlobalInfo.getsettingClienteRZ10,GlobalInfo.getterminalTurno10,GlobalInfo.getterminalFecha10,
-                            GlobalInfo.getoptranFechaTran10,GlobalInfo.getoptranSoles10, GlobalInfo.getsettingNroPlaca10,
-                            GlobalInfo.getoptranUniMed10,
-                            GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10);
+                                    GlobalInfo.getoptranFechaTran10,GlobalInfo.getoptranSoles10, GlobalInfo.getsettingNroPlaca10,
+                                    GlobalInfo.getoptranUniMed10,
+                                    GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10);
 
-                    facturacion(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
+                    boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
                             GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
                             GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
                             GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
@@ -929,7 +972,7 @@ public class VentaFragment extends Fragment{
 
         String tranIDR = String.valueOf(GlobalInfo.getoptranTranID10);
 
-        final VentaCA ventaCA = new VentaCA(_companyID,"01",_serieDocumento,_nroDocumento,_terminalID,_clienteID,"",_clienteRZ,"",_turno,_fecchaproceso,
+        final VentaCA ventaCA = new VentaCA(_companyID,"03",_serieDocumento,_nroDocumento,_terminalID,_clienteID,"",_clienteRZ,"",_turno,_fecchaproceso,
                 "",_fechaAtencion,0.00,0.00,0.00,_mtoTotal,_nroPlaca,"","","","","",
                 "",0.00,0.00,0.00,"",1,"","",_uniMed,1,0,0,0.00,0.00,
                 0.00,0.00,tranIDR,_nroLado,_manguera,"",1,0,"",0.00,0.00,"");
@@ -996,6 +1039,8 @@ public class VentaFragment extends Fragment{
 
         String PrecioPRIM2 = String.format("%.2f",PrecioOptran);
 
+        String GALONESPRIM3 = String.format("%.3f",GalonesOptran);
+
         String TotalPRIM2 = String.format("%.2f",SolesOptran);
 
         /** Operación Gravada */
@@ -1059,7 +1104,7 @@ public class VentaFragment extends Fragment{
             printama.printTextlnBold("PRODUCTO      "+"U/MED   "+"PRECIO   "+"CANTIDAD  "+"IMPORTE",Printama.RIGHT);
             printama.setSmallText();
             printama.printTextln(ProductoOptran,Printama.LEFT);
-            printama.printTextln(UndMedOptran+"    " + PrecioPRIM2 + "      " + GalonesOptran +"     "+ TotalPRIM2,Printama.RIGHT);
+            printama.printTextln(UndMedOptran+"    " + PrecioPRIM2 + "      " + GALONESPRIM3 +"     "+ TotalPRIM2,Printama.RIGHT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
@@ -1265,11 +1310,202 @@ public class VentaFragment extends Fragment{
         }, this::showToast);
     }
 
+    /** Impresión de Nota de Despacho Simple */
+    private  void notaDespacho(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
+                              String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
+                              String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
+        /** Logo */
+        Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
+
+        /** Organizar la cadena de texto de Address y Branch */
+        Matcher matcher;
+        Pattern patronsintaxi;
+
+        patronsintaxi = Pattern.compile("(?<!\\S)\\p{Lu}+\\.? \\w+ - \\w+ - \\w+(\\.? \\d+)?(?!\\S)");
+        matcher = patronsintaxi.matcher(AddressCompany);
+
+        String segundaAddress = null;
+        String primeraAddress = null;
+        if (matcher.find()) {
+            segundaAddress    = matcher.group();
+            String[] partes   = AddressCompany.split(segundaAddress);
+            primeraAddress    = partes[0].trim();
+            segundaAddress    = segundaAddress.trim();
+        }
+
+        String AddressU = segundaAddress;
+        String AddressD = primeraAddress;
+
+        matcher = patronsintaxi.matcher(BranchCompany);
+
+        String segundaBranch = null;
+        String primeraBranch = null;
+        if (matcher.find()) {
+            segundaBranch    = matcher.group();
+            String[] partes  = BranchCompany.split(segundaBranch);
+            primeraBranch    = partes[0].trim();
+            segundaBranch    = segundaBranch.trim();
+        }
+
+        String BranchU = segundaBranch;
+        String BranchD = primeraBranch;
+
+
+        String PrecioPRIM2 = String.format("%.2f",PrecioOptran);
+
+        String TotalPRIM2 = String.format("%.2f",SolesOptran);
+
+        /** Serie y Número Correlativo */
+        String SerieNumero           = GlobalInfo.getcorrelativoSerie  + "-" +   GlobalInfo.getcorrelativoNumero ;
+
+        String clientes     = "Cliente Varios";
+        String placa        = "000-0000";
+        String ruccliente   = "11111111111";
+        String tarjeta      = "7020130000000309";
+
+        Printama.with(getContext()).connect(printama -> {
+            printama.printTextln("                 ", Printama.CENTER);
+            printama.printImage(logoRobles, 200);
+            printama.setSmallText();
+            printama.printTextlnBold(NameCompany, Printama.CENTER);
+            printama.printTextlnBold("PRINCIPAL: " + AddressD, Printama.CENTER);
+            printama.printTextlnBold(AddressU, Printama.CENTER);
+            printama.printTextlnBold("SUCURSAL: " + BranchD, Printama.CENTER);
+            printama.printTextlnBold(BranchU, Printama.CENTER);
+            printama.printTextlnBold("RUC: " + RUCCompany, Printama.CENTER);
+            printama.printTextlnBold("NOTA DE DESPACHO", Printama.CENTER);
+            printama.printTextlnBold(SerieNumero,Printama.CENTER);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextln("Fecha - Hora : "+ FechaTranOptran + "   Turno: "+ TurnoTerminal,Printama.LEFT);
+            printama.printTextln("Cajero : "+ CajeroTerminal , Printama.LEFT);
+            printama.printTextln("Lado   : "+ NroLadoOptran, Printama.LEFT);
+            printama.printTextln("Placa  : "+ placa, Printama.LEFT);
+            printama.printTextln("RUC / DNI : "+ ruccliente, Printama.LEFT);
+            printama.printTextln("Cliente   : "+ clientes, Printama.LEFT);
+            printama.printTextln("#Tarjeta  : "+ tarjeta, Printama.LEFT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextlnBold("PRODUCTO      "+"U/MED   "+"PRECIO   "+"CANTIDAD  "+"IMPORTE",Printama.RIGHT);
+            printama.setSmallText();
+            printama.printTextln(ProductoOptran,Printama.LEFT);
+            printama.printTextln(UndMedOptran+"    " + PrecioPRIM2 + "      " + GalonesOptran +"     "+ TotalPRIM2,Printama.RIGHT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.addNewLine(1);
+            printama.printTextlnBold("TOTAL VENTA: S/ "+ TotalPRIM2, Printama.RIGHT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextln("NOMBRE:", Printama.LEFT);
+            printama.printTextln("DNI:", Printama.LEFT);
+            printama.printTextln("FIRMA:", Printama.LEFT);
+            printama.feedPaper();
+            printama.close();
+        }, this::showToast);
+    }
+
+    /** Impresión de Serafin */
+
+    private  void serafin(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
+                               String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
+                               String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
+        /** Logo */
+        Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
+
+        /** Organizar la cadena de texto de Address y Branch */
+        Matcher matcher;
+        Pattern patronsintaxi;
+
+        patronsintaxi = Pattern.compile("(?<!\\S)\\p{Lu}+\\.? \\w+ - \\w+ - \\w+(\\.? \\d+)?(?!\\S)");
+        matcher = patronsintaxi.matcher(AddressCompany);
+
+        String segundaAddress = null;
+        String primeraAddress = null;
+        if (matcher.find()) {
+            segundaAddress    = matcher.group();
+            String[] partes   = AddressCompany.split(segundaAddress);
+            primeraAddress    = partes[0].trim();
+            segundaAddress    = segundaAddress.trim();
+        }
+
+        String AddressU = segundaAddress;
+        String AddressD = primeraAddress;
+
+        matcher = patronsintaxi.matcher(BranchCompany);
+
+        String segundaBranch = null;
+        String primeraBranch = null;
+        if (matcher.find()) {
+            segundaBranch    = matcher.group();
+            String[] partes  = BranchCompany.split(segundaBranch);
+            primeraBranch    = partes[0].trim();
+            segundaBranch    = segundaBranch.trim();
+        }
+
+        String BranchU = segundaBranch;
+        String BranchD = primeraBranch;
+
+
+        String PrecioPRIM2 = String.format("%.2f",PrecioOptran);
+
+        String TotalPRIM2 = String.format("%.2f",SolesOptran);
+
+        /** Serie y Número Correlativo */
+        String SerieNumero           = GlobalInfo.getcorrelativoSerie  + "-" +   GlobalInfo.getcorrelativoNumero ;
+
+
+        String kilometraje  = "0000000";
+
+        Printama.with(getContext()).connect(printama -> {
+            printama.printTextln("                 ", Printama.CENTER);
+            printama.printImage(logoRobles, 200);
+            printama.setSmallText();
+            printama.printTextlnBold(NameCompany, Printama.CENTER);
+            printama.printTextlnBold("PRINCIPAL: " + AddressD, Printama.CENTER);
+            printama.printTextlnBold(AddressU, Printama.CENTER);
+            printama.printTextlnBold("SUCURSAL: " + BranchD, Printama.CENTER);
+            printama.printTextlnBold(BranchU, Printama.CENTER);
+            printama.printTextlnBold("RUC: " + RUCCompany, Printama.CENTER);
+            printama.printTextlnBold("TICKET SERAFIN", Printama.CENTER);
+            printama.printTextlnBold(SerieNumero,Printama.CENTER);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextln("Fecha - Hora : "+ FechaTranOptran + "   Turno: "+ TurnoTerminal,Printama.LEFT);
+            printama.printTextln("Cajero : "+ CajeroTerminal , Printama.LEFT);
+            printama.printTextln("Lado   : " + NroLadoOptran + "   Kilometraje : " +kilometraje, Printama.LEFT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextlnBold("PRODUCTO      "+"U/MED   "+"PRECIO   "+"CANTIDAD  "+"IMPORTE",Printama.RIGHT);
+            printama.setSmallText();
+            printama.printTextln(ProductoOptran,Printama.LEFT);
+            printama.printTextln(UndMedOptran+"    " + PrecioPRIM2 + "      " + GalonesOptran +"     "+ TotalPRIM2,Printama.RIGHT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.setSmallText();
+            printama.addNewLine(1);
+            printama.printTextlnBold("TOTAL VENTA: S/ "+ TotalPRIM2, Printama.RIGHT);
+            printama.feedPaper();
+            printama.close();
+        }, this::showToast);
+    }
+
+
     /** API SERVICE - Correlativo */
 
     private void findCorrelativo(String id , String tipo){
 
-        Call<List<Correlativo>> call = mAPIService.findCorrelativo(id,"01");
+        Call<List<Correlativo>> call = mAPIService.findCorrelativo(id,"03");
 
         call.enqueue(new Callback<List<Correlativo>>() {
             @Override
@@ -1648,13 +1884,16 @@ public class VentaFragment extends Fragment{
                         @Override
                         public int onItemClick(Lados item) {
 
+                            btnlibre.setEnabled(false);
+                            btnsoles.setEnabled(false);
+                            btngalones.setEnabled(false);
+                            btnboleta.setEnabled(false);
+                            btnfactura.setEnabled(false);
+                            btnnotadespacho.setEnabled(false);
+
                             GlobalInfo.getCara10 = item.getNroLado();
                             mCara = item.getNroLado();
                             findPico(GlobalInfo.getCara10);
-
-                        /*    textcara =  getActivity().findViewById(R.id.textcara);
-                            String numlado = item.getNroLado();
-                            textcara.setText(numlado);*/
 
                             return 0;
 
@@ -1696,28 +1935,14 @@ public class VentaFragment extends Fragment{
                         @Override
                         public void onItemClick(Picos item) {
 
-                            if (mCara == null && GlobalInfo.getPistola10 == null ) {
-                                btnlibre.setEnabled(false);
-                                btnsoles.setEnabled(false);
-                                btngalones.setEnabled(false);
-
-
-
-                            } else {
-                                btnlibre.setEnabled(true);
-                                btnsoles.setEnabled(true);
-                                btngalones.setEnabled(true);
-                            }
-
-                           /* btnlibre.setEnabled(true);
+                            btnlibre.setEnabled(true);
                             btnsoles.setEnabled(true);
-                            btngalones.setEnabled(true);*/
+                            btngalones.setEnabled(true);
+                            btnboleta.setEnabled(true);
+                            btnfactura.setEnabled(true);
+                            btnnotadespacho.setEnabled(true);
 
                             GlobalInfo.getPistola10 = item.getMangueraID();
-
-                              /*  textmanguera =  getActivity().findViewById(R.id.textmanguera);
-                            String descripcionmanguera = item.getDescripcion();
-                            textmanguera.setText(descripcionmanguera);*/
 
                         }
                     });
@@ -1842,16 +2067,9 @@ public class VentaFragment extends Fragment{
         });
     }
 
-    /** Modal - Dialog */
-    private void abrirmodal(){
-        alertDialog = builder.create();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertDialog.show();
-        alertDialog.setCancelable(false);
-    }
-
     /** Alerta de Conexión de Bluetooth */
     private void showToast(String message) {
         Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
     }
+
 }
