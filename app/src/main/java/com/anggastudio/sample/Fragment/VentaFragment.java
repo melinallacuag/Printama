@@ -255,8 +255,6 @@ public class VentaFragment extends Fragment{
                         modalCliente.setContentView(R.layout.fragment_clientes);
                         modalCliente.setCancelable(false);
 
-
-
                         textdni.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -266,47 +264,17 @@ public class VentaFragment extends Fragment{
                                 btncancelar    = modalCliente.findViewById(R.id.btncancelar);
                                 buscadorUser   = modalCliente.findViewById(R.id.searchView);
 
+                                /** API Retrofit - CLIENTE DNI */
+                                getClienteDNI();
 
-                                /** Listado de Cliente */
+                                /**  Listado de Cliente */
                                 recyclerCliente = modalCliente.findViewById(R.id.recyclercliente);
                                 recyclerCliente.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-                                /** Array Cliente */
-                                List<Cliente> clienteList = new ArrayList<>();
-
-                                for (int i = 0; i < 1; i++){
-                                    clienteList.add(new Cliente("KALIE","Kalie.com"));
-                                    clienteList.add(new Cliente("HUMBERTO","Humberto.com"));
-                                    clienteList.add(new Cliente("MANUEL","Manuel.com"));
-                                    clienteList.add(new Cliente("HUMBERTO","Humberto.com"));
-                                    clienteList.add(new Cliente("MANUEL","Manuel.com"));
-                                    clienteList.add(new Cliente("MANUEL","Manuel.com"));
-                                    clienteList.add(new Cliente("Diedo","Humberto.com"));
-                                    clienteList.add(new Cliente("Dielmes","Manuel.com"));
-                                    clienteList.add(new Cliente("Edilsier","Manuel.com"));
-                                }
-
-                                clienteAdapter = new ClienteAdapter(clienteList, getContext(), new ClienteAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(Cliente item) {
-
-                                        String clienteID = item.getClienteID();
-                                        textnombre.setText(clienteID);
-
-                                      //  Toast.makeText(getContext(), "ClienteID" +clienteID , Toast.LENGTH_SHORT).show();
-                                        modalCliente.dismiss();
-
-                                    }
-                                });
-
-                                recyclerCliente.setAdapter(clienteAdapter);
-
-
+                                /**  Buscador por Nombre - DNI */
                                 buscadorUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                                     @Override
                                     public boolean onQueryTextSubmit(String query) {
-
                                         return false;
                                     }
 
@@ -320,15 +288,20 @@ public class VentaFragment extends Fragment{
                                 btncancelar.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+
                                         modalCliente.dismiss();
+
+                                        buscadorUser.setQuery("", false);
+
                                     }
                                 });
                             }
 
                         });
 
-                        /** Spinner de Tipo de Pago */
+                        /** API Retrofit - Tipo de Pago */
                         getCard();
+
                         dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -364,13 +337,14 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
+                        /** Boton para cancelar operación */
                         btncancelar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 
                                 modalBoleta.dismiss();
 
-                                txtplaca.getText().clear();
+                                txtplaca.setText("000-0000");
                                 textdni.getText().clear();
                                 textnombre.getText().clear();
                                 textdireccion.getText().clear();
@@ -378,6 +352,12 @@ public class VentaFragment extends Fragment{
                                 textobservacion.getText().clear();
                                 textNroOperacio.getText().clear();
                                 textpagoefectivo.getText().clear();
+
+                                alertplaca.setErrorEnabled(false);
+                                alertdni.setErrorEnabled(false);
+                                alertnombre.setErrorEnabled(false);
+                                alertoperacion.setErrorEnabled(false);
+                                alertpefectivo.setErrorEnabled(false);
                             }
                         });
 
@@ -392,10 +372,12 @@ public class VentaFragment extends Fragment{
                                     alertplaca.setError("* El campo Placa es obligatorio");
                                 }else{
                                     alertplaca.setErrorEnabled(false);
+
                                     findPlaca(getPlacaBoleta,"03");
-                                    textdni.setText("");
-                                    textnombre.setText("");
-                                    textdireccion.setText("");
+
+                                    textdni.getText().clear();
+                                    textnombre.getText().clear();
+                                    textdireccion.getText().clear();
                                 }
                             }
                         });
@@ -411,10 +393,12 @@ public class VentaFragment extends Fragment{
                                 if (getClienteDni.isEmpty()) {
                                     alertdni.setError("* El campo DNI es obligatorio");
                                 } else {
+
                                     alertdni.setErrorEnabled(false);
+
                                     findClienteDNI(getClienteDni);
-                                    textnombre.setText("");
-                                    textdireccion.setText("");
+                                    textnombre.getText().clear();
+                                    textdireccion.getText().clear();
                                 }
 
                             }
@@ -476,8 +460,7 @@ public class VentaFragment extends Fragment{
 
                                 }
 
-                                double value = Double.parseDouble(textnpagoefectivo.toString());
-                                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
 
                                 alertplaca.setErrorEnabled(false);
                                 alertdni.setErrorEnabled(false);
@@ -498,14 +481,19 @@ public class VentaFragment extends Fragment{
 
                                 detalleVenta.setTarjetaCredito("");
                                 detalleVenta.setOperacionREF("");
-                                detalleVenta.setMontoSoles(Double.parseDouble(String.valueOf(0)));
+                                detalleVenta.setMontoSoles(0.00);
+
 
                                 if (datotipotarjeta.equals("Tarjeta")){
+
+                                    Double value = Double.valueOf(textnpagoefectivo);
+                                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
                                     detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
                                     detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
 
-                                    if( value != Double.parseDouble(decimalFormat.format(value))){
-                                        alertpefectivo.setError("* Por favor ingrese un valor con 2 decimales");
+                                    if(value != Double.parseDouble(decimalFormat.format(value))){
+                                        alertpefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
                                         return;
                                     }else{
                                         detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
@@ -513,8 +501,11 @@ public class VentaFragment extends Fragment{
 
                                 }else if (datotipotarjeta.equals("Credito")) {
 
+                                    Double value = Double.valueOf(textnpagoefectivo);
+                                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
                                     if(value != Double.parseDouble(decimalFormat.format(value))){
-                                        alertpefectivo.setError("* Por favor ingrese un valor con 2 decimales");
+                                        alertpefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
                                         return;
                                     }else{
                                         detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
@@ -526,7 +517,7 @@ public class VentaFragment extends Fragment{
 
                                 modalBoleta.dismiss();
 
-                                txtplaca.getText().clear();
+                                txtplaca.setText("000-0000");
                                 textdni.getText().clear();
                                 textnombre.getText().clear();
                                 textdireccion.getText().clear();
@@ -591,8 +582,60 @@ public class VentaFragment extends Fragment{
                         buscarruc        = modalFactura.findViewById(R.id.btnsunat);
                         buscarplaca      = modalFactura.findViewById(R.id.btnplaca);
 
-                        /** Spinner de Tipo de Pago */
+                        /** Mostrar Formulario de Cliente y Realizar la Operacion */
+                        modalCliente = new Dialog(getContext());
+                        modalCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        modalCliente.setContentView(R.layout.fragment_clientes);
+                        modalCliente.setCancelable(false);
+
+                        textruc.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                modalCliente.show();
+
+                                btncancelar    = modalCliente.findViewById(R.id.btncancelar);
+                                buscadorUser   = modalCliente.findViewById(R.id.searchView);
+
+                                /** API Retrofit - CLIENTE DNI */
+                                getClienteRUC();
+
+                                /**  Listado de Cliente */
+                                recyclerCliente = modalCliente.findViewById(R.id.recyclercliente);
+                                recyclerCliente.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                                /**  Buscador por Nombre - DNI */
+                                buscadorUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                    @Override
+                                    public boolean onQueryTextSubmit(String query) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onQueryTextChange(String newText) {
+                                        clienteAdapter.filtrado(newText);
+                                        return false;
+                                    }
+                                });
+
+                                btncancelar.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        modalCliente.dismiss();
+
+                                        buscadorUser.setQuery("", false);
+
+                                    }
+                                });
+                            }
+
+                        });
+
+
+                        /** API Retrofit - Tipo de Pago */
                         getCard();
+
                         dropStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -629,10 +672,26 @@ public class VentaFragment extends Fragment{
                             }
                         });
 
+                        /** Boton para cancelar operación */
                         btncancelar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 modalFactura.dismiss();
+
+                                txtplaca.getText().clear();
+                                textruc.getText().clear();
+                                textrazsocial.getText().clear();
+                                textdireccion.getText().clear();
+                                textkilometraje.getText().clear();
+                                textobservacion.getText().clear();
+                                textNroOperacio.getText().clear();
+                                textpagoefectivo.getText().clear();
+
+                                alertplaca.setErrorEnabled(false);
+                                alertruc.setErrorEnabled(false);
+                                alertrazsocial.setErrorEnabled(false);
+                                alertoperacion.setErrorEnabled(false);
+                                alertpefectivo.setErrorEnabled(false);
                             }
                         });
 
@@ -646,7 +705,9 @@ public class VentaFragment extends Fragment{
                                 if (getPlacaFactura.isEmpty()) {
                                     alertplaca.setError("* El campo Placa es obligatorio");
                                 } else {
+
                                     alertplaca.setErrorEnabled(false);
+
                                     findPlaca(getPlacaFactura,"01");
 
                                     textruc.getText().clear();
@@ -669,10 +730,11 @@ public class VentaFragment extends Fragment{
                                     alertruc.setError("* El campo RUC es obligatorio");
                                 }else{
                                     alertruc.setErrorEnabled(false);
+
                                     findClienteRUC(getClienteRuc);
 
-                                    textruc.getText().clear();
                                     textrazsocial.getText().clear();
+                                    textdireccion.getText().clear();
 
                                 }
                             }
@@ -725,8 +787,7 @@ public class VentaFragment extends Fragment{
                                     }
                                 }
 
-                                double value = Double.parseDouble(textnpagoefectivo);
-                                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
 
                                 alertplaca.setErrorEnabled(false);
                                 alertruc.setErrorEnabled(false);
@@ -747,9 +808,11 @@ public class VentaFragment extends Fragment{
 
                                 detalleVenta.setTarjetaCredito("");
                                 detalleVenta.setOperacionREF("");
-                                detalleVenta.setMontoSoles(Double.parseDouble(String.valueOf(0)));
+                                detalleVenta.setMontoSoles(0.00);
 
                                     if (datotipotarjeta.equals("Tarjeta")){
+                                        Double value = Double.parseDouble(textnpagoefectivo);
+                                        DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
                                         detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
                                         detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
@@ -762,6 +825,9 @@ public class VentaFragment extends Fragment{
                                         }
 
                                     }else if (datotipotarjeta.equals("Credito")) {
+
+                                        Double value = Double.parseDouble(textnpagoefectivo);
+                                        DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
                                         if(value != Double.parseDouble(decimalFormat.format(value))){
                                             alertpefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
@@ -2010,7 +2076,7 @@ public class VentaFragment extends Fragment{
                             btngalones.setEnabled(true);
                             btnboleta.setEnabled(true);
                             btnfactura.setEnabled(true);
-                            btnnotadespacho.setEnabled(true);
+
 
                             GlobalInfo.getPistola10 = item.getMangueraID();
 
@@ -2136,9 +2202,9 @@ public class VentaFragment extends Fragment{
             }
         });
     }
-
-    private void getCliente(){
-        Call<List<Cliente>> call = mAPIService.getCliente();
+    /** Listado de Clientes con DNI */
+    private void getClienteDNI(){
+        Call<List<Cliente>> call = mAPIService.getClienteDNI();
 
         call.enqueue(new Callback<List<Cliente>>() {
             @Override
@@ -2154,10 +2220,17 @@ public class VentaFragment extends Fragment{
                     clienteAdapter = new ClienteAdapter(clienteList, getContext(), new ClienteAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(Cliente item) {
-                            String textsol = item.getClienteID();
-                            textnombre.setText(textsol);
-                            Toast.makeText(getContext(), "fddf" +textsol , Toast.LENGTH_SHORT).show();
+                            String SelectDNI       = item.getClienteID();
+                            String SelectNombre    = item.getClienteRZ();
+                            String SelectDireccion = item.getClienteDR();
+
+                            textdni.setText(SelectDNI);
+                            textnombre.setText(SelectNombre);
+                            textdireccion.setText(SelectDireccion);
+                            Toast.makeText(getContext(), "Se seleccionó : " + SelectDNI , Toast.LENGTH_SHORT).show();
                             modalCliente.dismiss();
+
+                            buscadorUser.setQuery("", false);
                         }
                     });
 
@@ -2175,6 +2248,51 @@ public class VentaFragment extends Fragment{
         });
     }
 
+    /** Listado de Clientes con DNI */
+    private void getClienteRUC(){
+        Call<List<Cliente>> call = mAPIService.getClienteRUC();
+
+        call.enqueue(new Callback<List<Cliente>>() {
+            @Override
+            public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<Cliente> clienteList = response.body();
+
+                    clienteAdapter = new ClienteAdapter(clienteList, getContext(), new ClienteAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Cliente item) {
+                            String SelectRUC       = item.getClienteID();
+                            String SelectRZSocial    = item.getClienteRZ();
+                            String SelectDireccion = item.getClienteDR();
+
+                            textruc.setText(SelectRUC);
+                            textrazsocial.setText(SelectRZSocial);
+                            textdireccion.setText(SelectDireccion);
+                            Toast.makeText(getContext(), "Se seleccionó : " + SelectRUC , Toast.LENGTH_SHORT).show();
+                            modalCliente.dismiss();
+
+                            buscadorUser.setQuery("", false);
+                        }
+                    });
+
+                    recyclerCliente.setAdapter(clienteAdapter);
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Cliente>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Tarjetas - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     /** Alerta de Conexión de Bluetooth */
     private void showToast(String message) {

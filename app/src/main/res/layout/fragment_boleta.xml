@@ -12,9 +12,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="370sp"
             android:layout_height="wrap_content"
             android:background="@drawable/cardmodal"
+            android:layout_gravity="center"
             android:backgroundTint="@color/white"
             android:orientation="vertical"
             android:paddingStart="20sp"
@@ -40,7 +41,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/alertPlaca"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="300sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Ingresar N° de Placa"
@@ -83,7 +84,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/alertDNI"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="300sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Ingresar DNI"

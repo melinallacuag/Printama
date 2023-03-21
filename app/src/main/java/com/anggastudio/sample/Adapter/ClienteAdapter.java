@@ -77,13 +77,13 @@ public class ClienteAdapter  extends RecyclerView.Adapter<ClienteAdapter.ViewHol
         } else {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                 List<Cliente> collecion = clienteList.stream()
-                        .filter(i -> i.getClienteID().toLowerCase().contains(txtBuscar.toLowerCase()))
+                        .filter(i -> i.getClienteRZ().toLowerCase().contains(txtBuscar.toLowerCase()))
                         .collect(Collectors.toList());
                 clienteList.clear();
                 clienteList.addAll(collecion);
             } else {
                 for (Cliente c : listaOriginal) {
-                    if (c.getClienteID().toLowerCase().contains(txtBuscar.toLowerCase())) {
+                    if (c.getClienteRZ().toLowerCase().contains(txtBuscar.toLowerCase())) {
                         clienteList.add(c);
                     }
                 }
@@ -101,7 +101,7 @@ public class ClienteAdapter  extends RecyclerView.Adapter<ClienteAdapter.ViewHol
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            cardView        = itemView.findViewById(R.id.carddetalleventa);
+            cardView        = itemView.findViewById(R.id.cardCliente);
             textID          = itemView.findViewById(R.id.textID);
             textRUC         = itemView.findViewById(R.id.textRUC);
             textRazoSocial  = itemView.findViewById(R.id.textRazoSocial);

@@ -65,7 +65,7 @@ public class LibreFragment extends DialogFragment {
     /** Guardar - MODO LIBRE */
     private void guardar_modolibre(String manguera){
 
-        final Picos picos = new Picos(manguera,"01","1","05","DB5","S",9999.00);
+        final Picos picos = new Picos(manguera,"01","1","05","DB5","G",999.00);
 
         Call<Picos> call = mAPIService.postPicos(picos);
 
