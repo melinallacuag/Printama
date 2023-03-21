@@ -10,6 +10,11 @@ public class Cliente {
     private Double dias_Credito;
     private String tipo_Cliente;
 
+    public Cliente(String clienteID, String clienteRUC) {
+        this.clienteID = clienteID;
+        this.clienteRUC = clienteRUC;
+    }
+
     public String getClienteID() {
         return clienteID;
     }

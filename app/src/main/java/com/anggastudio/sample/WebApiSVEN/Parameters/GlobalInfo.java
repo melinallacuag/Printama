@@ -141,7 +141,13 @@ public class GlobalInfo {
 
     public static Boolean getpase10 = false;
 
-
+    /**
+     * Datos de la Cliente Sellecion
+     */
+    public static String  getclClienteID10;
+    public static String getclClienteRUC10;
+    public static String  getclClienteRZ10;
+    public static String  getclClienteDR10;
 
     /**
      * URL - APIService

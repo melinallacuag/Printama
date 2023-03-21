@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragment.ClientesFragment">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,6 +41,7 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
@@ -116,55 +116,6 @@
                 </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8sp"
-            android:background="@drawable/input_border"
-            android:backgroundTint="#fff"
-            android:clickable="true"
-            android:columnCount="3"
-            android:elevation="5sp"
-            android:foreground="@drawable/selectcard"
-            android:padding="15sp"
-            android:rowCount="1">
-
-            <TextView
-                android:layout_width="90sp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="5sp"
-                android:fontFamily="@font/nunito_semibold"
-
-                android:text="7154859623451"
-                android:textColor="#071C65"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginRight="5sp" />
-
-            <TextView
-                android:layout_width="90sp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5sp"
-                android:fontFamily="@font/nunito_semibold"
-
-                android:text="Nombre Razon Social"
-                android:textColor="#071C65"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginRight="5sp" />
-
-            <TextView
-                android:layout_width="100sp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5sp"
-                android:fontFamily="@font/nunito_semibold"
-                android:gravity="center"
-                android:text="los angeles N°300"
-                android:textColor="#071C65"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginRight="5sp" />
-        </GridLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -177,6 +128,10 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+    <TextView
+        android:id="@+id/camponame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"

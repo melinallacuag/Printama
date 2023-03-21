@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +38,7 @@ import android.widget.Toast;
 import com.anggastudio.printama.Printama;
 import com.anggastudio.sample.Adapter.CaraAdapter;
 import com.anggastudio.sample.Adapter.CardAdapter;
+import com.anggastudio.sample.Adapter.ClienteAdapter;
 import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
 import com.anggastudio.sample.Adapter.MangueraAdapter;
 import com.anggastudio.sample.Numero_Letras;
@@ -88,7 +90,9 @@ public class VentaFragment extends Fragment{
     Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos,automatiStop;
 
     /**  AdapterList - Recycler */
-    RecyclerView recyclerCara, recyclerManguera, recyclerDetalleVenta;
+    RecyclerView recyclerCara, recyclerManguera, recyclerDetalleVenta,recyclerCliente;
+    ClienteAdapter clienteAdapter;
+    List<Cliente> clienteList;
     CaraAdapter caraAdapter;
     MangueraAdapter mangueraAdapter;
     DetalleVentaAdapter detalleVentaAdapter;
@@ -111,7 +115,12 @@ public class VentaFragment extends Fragment{
 
     AlertDialog.Builder builder;
 
-    private Dialog modalBoleta,modalFactura,modalNDespacho;
+    SearchView buscadorUser;
+
+    private Dialog modalBoleta,modalFactura,modalNDespacho,modalCliente;
+
+
+    TextView txtname;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -190,7 +199,6 @@ public class VentaFragment extends Fragment{
         });
 
         /** Mostrar Formulario de Boleta y Realizar la Operacion */
-
         modalBoleta = new Dialog(getContext());
         modalBoleta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         modalBoleta.setContentView(R.layout.fragment_boleta);
@@ -240,27 +248,84 @@ public class VentaFragment extends Fragment{
                         buscardni        = modalBoleta.findViewById(R.id.btnrenic);
                         buscarplaca      = modalBoleta.findViewById(R.id.btnplaca);
 
-                        /*textdni.setOnClickListener(new View.OnClickListener() {
+
+                        /** Mostrar Formulario de Cliente y Realizar la Operacion */
+                        modalCliente = new Dialog(getContext());
+                        modalCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        modalCliente.setContentView(R.layout.fragment_clientes);
+                        modalCliente.setCancelable(false);
+
+
+
+                        textdni.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                builder = new AlertDialog.Builder(getActivity());
-                                LayoutInflater inflater = getActivity().getLayoutInflater();
-                                View dialogView = inflater.inflate(R.layout.fragment_clientes, null);
-                                builder.setView(dialogView);
 
-                                abrirmodal();
-                                alertDialog.setCancelable(true);
-                                btncancelar    = dialogView.findViewById(R.id.btncancelar);
+                                modalCliente.show();
+
+                                btncancelar    = modalCliente.findViewById(R.id.btncancelar);
+                                buscadorUser   = modalCliente.findViewById(R.id.searchView);
+
+
+                                /** Listado de Cliente */
+                                recyclerCliente = modalCliente.findViewById(R.id.recyclercliente);
+                                recyclerCliente.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+                                /** Array Cliente */
+                                List<Cliente> clienteList = new ArrayList<>();
+
+                                for (int i = 0; i < 1; i++){
+                                    clienteList.add(new Cliente("KALIE","Kalie.com"));
+                                    clienteList.add(new Cliente("HUMBERTO","Humberto.com"));
+                                    clienteList.add(new Cliente("MANUEL","Manuel.com"));
+                                    clienteList.add(new Cliente("HUMBERTO","Humberto.com"));
+                                    clienteList.add(new Cliente("MANUEL","Manuel.com"));
+                                    clienteList.add(new Cliente("MANUEL","Manuel.com"));
+                                    clienteList.add(new Cliente("Diedo","Humberto.com"));
+                                    clienteList.add(new Cliente("Dielmes","Manuel.com"));
+                                    clienteList.add(new Cliente("Edilsier","Manuel.com"));
+                                }
+
+                                clienteAdapter = new ClienteAdapter(clienteList, getContext(), new ClienteAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(Cliente item) {
+
+                                        String clienteID = item.getClienteID();
+                                        textnombre.setText(clienteID);
+
+                                      //  Toast.makeText(getContext(), "ClienteID" +clienteID , Toast.LENGTH_SHORT).show();
+                                        modalCliente.dismiss();
+
+                                    }
+                                });
+
+                                recyclerCliente.setAdapter(clienteAdapter);
+
+
+                                buscadorUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                    @Override
+                                    public boolean onQueryTextSubmit(String query) {
+
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onQueryTextChange(String newText) {
+                                        clienteAdapter.filtrado(newText);
+                                        return false;
+                                    }
+                                });
 
                                 btncancelar.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        alertDialog.dismiss();
+                                        modalCliente.dismiss();
                                     }
                                 });
                             }
 
-                        });*/
+                        });
 
                         /** Spinner de Tipo de Pago */
                         getCard();
@@ -302,7 +367,17 @@ public class VentaFragment extends Fragment{
                         btncancelar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
                                 modalBoleta.dismiss();
+
+                                txtplaca.getText().clear();
+                                textdni.getText().clear();
+                                textnombre.getText().clear();
+                                textdireccion.getText().clear();
+                                textkilometraje.getText().clear();
+                                textobservacion.getText().clear();
+                                textNroOperacio.getText().clear();
+                                textpagoefectivo.getText().clear();
                             }
                         });
 
@@ -468,7 +543,6 @@ public class VentaFragment extends Fragment{
         });
 
         /** Mostrar Formulario de Factura y Realizar la Operacion */
-
         modalFactura = new Dialog(getContext());
         modalFactura.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         modalFactura.setContentView(R.layout.fragment_factura);
@@ -719,7 +793,6 @@ public class VentaFragment extends Fragment{
         });
 
         /** Mostrar Formulario de Nota de Despacho y Realizar la Operacion */
-
         modalNDespacho = new Dialog(getContext());
         modalNDespacho.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         modalNDespacho.setContentView(R.layout.fragment_nota_despacho);
@@ -899,7 +972,6 @@ public class VentaFragment extends Fragment{
 
         return view;
     }
-
 
     private void startTimerGR1() {
 
@@ -1412,7 +1484,6 @@ public class VentaFragment extends Fragment{
     }
 
     /** Impresión de Serafin */
-
     private  void serafin(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
                                String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
                                String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
@@ -1502,7 +1573,6 @@ public class VentaFragment extends Fragment{
 
 
     /** API SERVICE - Correlativo */
-
     private void findCorrelativo(String id , String tipo){
 
         Call<List<Correlativo>> call = mAPIService.findCorrelativo(id,"03");
@@ -2067,9 +2137,50 @@ public class VentaFragment extends Fragment{
         });
     }
 
+    private void getCliente(){
+        Call<List<Cliente>> call = mAPIService.getCliente();
+
+        call.enqueue(new Callback<List<Cliente>>() {
+            @Override
+            public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<Cliente> clienteList = response.body();
+
+                    clienteAdapter = new ClienteAdapter(clienteList, getContext(), new ClienteAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Cliente item) {
+                            String textsol = item.getClienteID();
+                            textnombre.setText(textsol);
+                            Toast.makeText(getContext(), "fddf" +textsol , Toast.LENGTH_SHORT).show();
+                            modalCliente.dismiss();
+                        }
+                    });
+
+                    recyclerCliente.setAdapter(clienteAdapter);
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Cliente>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Tarjetas - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     /** Alerta de Conexión de Bluetooth */
     private void showToast(String message) {
         Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
     }
+
+
 
 }
