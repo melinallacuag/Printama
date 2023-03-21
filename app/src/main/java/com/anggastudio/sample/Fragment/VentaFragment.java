@@ -255,9 +255,9 @@ public class VentaFragment extends Fragment{
                         modalCliente.setContentView(R.layout.fragment_clientes);
                         modalCliente.setCancelable(false);
 
-                        textdni.setOnClickListener(new View.OnClickListener() {
+                        final GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
                             @Override
-                            public void onClick(View v) {
+                            public boolean onDoubleTap(MotionEvent e) {
 
                                 modalCliente.show();
 
@@ -295,9 +295,23 @@ public class VentaFragment extends Fragment{
 
                                     }
                                 });
+                                return true;
                             }
-
                         });
+
+                        textdni.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                gestureDetector.onTouchEvent(event);
+                                if (!gestureDetector.onTouchEvent(event)) {
+
+                                    return false;
+                                }
+                                return true;
+                            }
+                        });
+
+
 
                         /** API Retrofit - Tipo de Pago */
                         getCard();
@@ -390,13 +404,14 @@ public class VentaFragment extends Fragment{
 
                                 String getClienteDni = textdni.getText().toString();
 
-                                if (getClienteDni.isEmpty()) {
+                                if (getClienteDni.isEmpty() || getClienteDni == null) {
                                     alertdni.setError("* El campo DNI es obligatorio");
-                                } else {
+                                }else {
 
                                     alertdni.setErrorEnabled(false);
 
                                     findClienteDNI(getClienteDni);
+
                                     textnombre.getText().clear();
                                     textdireccion.getText().clear();
                                 }
@@ -435,7 +450,10 @@ public class VentaFragment extends Fragment{
                                 } else if (textndni.isEmpty()) {
                                     alertdni.setError("* El campo DNI es obligatorio");
                                     return;
-                                } else if (textnnombre.isEmpty()) {
+                                } else if (textndni.length() < 8) {
+                                    alertdni.setError("* El DNI debe tener 8 dígitos");
+                                    return;
+                                }else if (textnnombre.isEmpty()) {
                                     alertnombre.setError("* El campo Nombre es obligatorio");
                                     return;
                                 } else if (radioGroup.getCheckedRadioButtonId() == -1) {
@@ -582,54 +600,75 @@ public class VentaFragment extends Fragment{
                         buscarruc        = modalFactura.findViewById(R.id.btnsunat);
                         buscarplaca      = modalFactura.findViewById(R.id.btnplaca);
 
-                        /** Mostrar Formulario de Cliente y Realizar la Operacion */
-                        modalCliente = new Dialog(getContext());
-                        modalCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        modalCliente.setContentView(R.layout.fragment_clientes);
-                        modalCliente.setCancelable(false);
-
-                        textruc.setOnClickListener(new View.OnClickListener() {
+                        final GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
                             @Override
-                            public void onClick(View v) {
+                            public boolean onDoubleTap(MotionEvent e) {
 
-                                modalCliente.show();
+                                /** Mostrar Formulario de Cliente y Realizar la Operacion */
+                                modalCliente = new Dialog(getContext());
+                                modalCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                modalCliente.setContentView(R.layout.fragment_clientes);
+                                modalCliente.setCancelable(false);
 
-                                btncancelar    = modalCliente.findViewById(R.id.btncancelar);
-                                buscadorUser   = modalCliente.findViewById(R.id.searchView);
-
-                                /** API Retrofit - CLIENTE DNI */
-                                getClienteRUC();
-
-                                /**  Listado de Cliente */
-                                recyclerCliente = modalCliente.findViewById(R.id.recyclercliente);
-                                recyclerCliente.setLayoutManager(new LinearLayoutManager(getContext()));
-
-                                /**  Buscador por Nombre - DNI */
-                                buscadorUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                textruc.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public boolean onQueryTextSubmit(String query) {
-                                        return false;
+                                    public void onClick(View v) {
+
+                                        modalCliente.show();
+
+                                        btncancelar    = modalCliente.findViewById(R.id.btncancelar);
+                                        buscadorUser   = modalCliente.findViewById(R.id.searchView);
+
+                                        /** API Retrofit - CLIENTE DNI */
+                                        getClienteRUC();
+
+                                        /**  Listado de Cliente */
+                                        recyclerCliente = modalCliente.findViewById(R.id.recyclercliente);
+                                        recyclerCliente.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                                        /**  Buscador por Nombre - DNI */
+                                        buscadorUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                            @Override
+                                            public boolean onQueryTextSubmit(String query) {
+                                                return false;
+                                            }
+
+                                            @Override
+                                            public boolean onQueryTextChange(String newText) {
+                                                clienteAdapter.filtrado(newText);
+                                                return false;
+                                            }
+                                        });
+
+                                        btncancelar.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+
+                                                modalCliente.dismiss();
+
+                                                buscadorUser.setQuery("", false);
+
+                                            }
+                                        });
                                     }
 
-                                    @Override
-                                    public boolean onQueryTextChange(String newText) {
-                                        clienteAdapter.filtrado(newText);
-                                        return false;
-                                    }
                                 });
 
-                                btncancelar.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
-                                        modalCliente.dismiss();
-
-                                        buscadorUser.setQuery("", false);
-
-                                    }
-                                });
+                                return true;
                             }
+                        });
 
+                        textruc.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+
+                                gestureDetector.onTouchEvent(event);
+                                if (!gestureDetector.onTouchEvent(event)) {
+
+                                    return false;
+                                }
+                                return true;
+                            }
                         });
 
 
@@ -729,7 +768,9 @@ public class VentaFragment extends Fragment{
                                 if(getClienteRuc.isEmpty()){
                                     alertruc.setError("* El campo RUC es obligatorio");
                                 }else{
+
                                     alertruc.setErrorEnabled(false);
+                                    alertruc.setError("* No se encontró consulta RUC");
 
                                     findClienteRUC(getClienteRuc);
 
@@ -760,7 +801,10 @@ public class VentaFragment extends Fragment{
                                 } else if (textnruc.isEmpty()) {
                                     alertruc.setError("* El campo DNI es obligatorio");
                                     return;
-                                } else if (textnnombre.isEmpty()) {
+                                } else if (textnruc.length() < 8) {
+                                    alertruc.setError("* El RUC debe tener 11 dígitos");
+                                    return;
+                                }else if (textnnombre.isEmpty()) {
                                     alertrazsocial.setError("* El campo Nombre es obligatorio");
                                     return;
                                 }else if (radioGroup.getCheckedRadioButtonId() == -1){
@@ -1785,19 +1829,23 @@ public class VentaFragment extends Fragment{
                 try {
 
                     if(!response.isSuccessful()){
+                        if (clienteList == null || clienteList.isEmpty()) {
+                            if (textdni.length() < 8){
+                                alertdni.setError("* El DNI debe tener 8 dígitos");
+                                return;
+                            }else{
+                                alertdni.setErrorEnabled(false);
+                            }
+                            return;
+                        }
                         Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
                         return;
                     }
+
+
                     List<Cliente> clienteList = response.body();
 
-                    if (clienteList == null || clienteList.isEmpty()) {
-                        if (textdni.length() < 8){
-                            alertdni.setError("* El DNI debe tener 8 dígitos");
-                        }else{
-                            alertdni.setError("* No se encontró ningún DNI");
-                        }
-                        return;
-                    }
+
 
                     Cliente cliente = clienteList.get(0);
 
@@ -1832,19 +1880,20 @@ public class VentaFragment extends Fragment{
                 try {
 
                     if(!response.isSuccessful()){
+                        if (clienteList == null || clienteList.isEmpty()) {
+                            if (textruc.length() < 11){
+                                alertruc.setError("* El RUC debe tener 11 dígitos");
+                            }else{
+                                alertruc.setErrorEnabled(false);
+                            }
+                            return;
+                        }
                         Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     List<Cliente> clienteList = response.body();
 
-                    if (clienteList == null || clienteList.isEmpty()) {
-                        if (textruc.length() < 11){
-                            alertruc.setError("* El RUC debe tener 11 dígitos");
-                        }else{
-                            alertruc.setError("* No se encontró ningún RUC");
-                        }
-                        return;
-                    }
+
 
                     Cliente cliente = clienteList.get(0);
 
@@ -2021,7 +2070,7 @@ public class VentaFragment extends Fragment{
                             btnboleta.setEnabled(false);
                             btnfactura.setEnabled(false);
                             btnnotadespacho.setEnabled(false);
-                            btnserafin.setEnabled(true);
+                            btnserafin.setEnabled(false);
 
                             GlobalInfo.getCara10 = item.getNroLado();
                             mCara = item.getNroLado();

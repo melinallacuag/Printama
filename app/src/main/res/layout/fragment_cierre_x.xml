@@ -18,11 +18,11 @@
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="15dp"
             android:background="@drawable/contenedor_detalle"
             android:elevation="2sp"
             android:orientation="vertical"
-            android:padding="20dp"
+            android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -32,18 +32,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/nunito_extrabold"
-                android:text="VENTAS POR CARA"
+                android:text="CIERRE PARCIAL DE CAJA (X)"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="#1E2025"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
-                android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp" />
+                android:layout_marginTop="10sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,22 +50,21 @@
                 android:layout_marginTop="10sp">
 
                 <TextView
+                    android:layout_width="280sp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="Fecha/Hora Ini      :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:layout_weight="1"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="left"
-                    android:text="Cara Nro.01:"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="200sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
                     android:text="120.00"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
@@ -79,35 +77,54 @@
                 android:layout_marginTop="10sp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="280sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="left"
-                    android:text="T.Gratuita:"
+                    android:text="Fecha/Hora Fin     :"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="200sp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
+
                     android:text="0.00"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <View
-                android:layout_width="100sp"
-                android:layout_height="1sp"
-                android:layout_gravity="end"
-                android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp"
-                android:background="@drawable/separador" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:layout_width="280sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="Fecha Trabajo       :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,23 +132,212 @@
                 android:layout_marginTop="10sp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="280sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
-                    android:text="Total S/"
+                    android:gravity="left"
+                    android:text="Turno                     :"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="200sp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
-                    android:text="120.00"
+
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:layout_width="280sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="Nro. Despacho      :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:layout_width="280sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="SubTotal        (S/) :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:layout_width="280sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="I.G.V.               (S/) :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:layout_width="280sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="Total               (S/) :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:layout_width="280sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="Doc. Anulados      :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:layout_width="400sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="Total Doc. Anulados  (S/) :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp">
+
+                <TextView
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="Total Impresion X  :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -149,11 +355,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/nunito_extrabold"
-                android:text="VENTAS POR TIPO PAGO"
+                android:text="VENTAS POR CONTOMETRO"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="#1E2025"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <View
@@ -167,109 +373,57 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="350sp"
+                    android:layout_width="300sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="left"
-                    android:text="EFECTIVO:"
+                    android:gravity="center"
+                    android:text="L"
                     android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="300sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
-                    android:text="100.00"
+                    android:gravity="center"
+                    android:text="P"
                     android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="center"
+                    android:text="C.I"
+                    android:textColor="#1E2025"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="center"
+                    android:text="C.F"
+                    android:textColor="#1E2025"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="center"
+                    android:text="GAL."
+                    android:textColor="#1E2025"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="350sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="left"
-                    android:text="TARJETA DE CREDITO:"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
-                    android:text="20.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="350sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="left"
-                    android:text="SERAFINES:"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
-                    android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="350sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="left"
-                    android:text="T.Gratuita:"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
-                    android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
             <View
                 android:layout_width="100sp"
                 android:layout_height="1sp"
@@ -277,11 +431,403 @@
                 android:layout_marginTop="10sp"
                 android:layout_marginBottom="10sp"
                 android:background="@drawable/separador" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="Total Volumen  :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="150sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="center"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
+                android:background="@drawable/separador" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="VENTAS POR PRODUCTOS"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="#1E2025"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="400sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="center"
+                    android:text="PRODUCTO"
+                    android:textColor="#1E2025"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="380sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="center"
+                    android:text="VOLUMEN"
+                    android:textColor="#1E2025"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="380sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="center"
+                    android:text="SOLES"
+                    android:textColor="#1E2025"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="400sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="center"
+                    android:text="DESCUENTO"
+                    android:textColor="#1E2025"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="420sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="T. Gratuita     :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="420sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="left"
+                    android:text="Promociones :"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_width="400sp"
+                    android:layout_height="1sp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"/>
+                <View
+                    android:layout_width="380sp"
+                    android:layout_height="1sp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp" />
+                <View
+                    android:layout_width="380sp"
+                    android:layout_height="1sp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:background="@drawable/separador" />
+                <View
+                    android:layout_width="400sp"
+                    android:layout_height="1sp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="420sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="end"
+                    android:text="Total   S/  "
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1sp"
+                android:layout_marginTop="10sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="250sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Total  LIQ. "
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="250sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Total  GLP. "
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_width="400sp"
+                    android:layout_height="1sp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"/>
+                <View
+                    android:layout_width="380sp"
+                    android:layout_height="1sp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:background="@drawable/separador" />
+                <View
+                    android:layout_width="380sp"
+                    android:layout_height="1sp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp" />
+                <View
+                    android:layout_width="400sp"
+                    android:layout_height="1sp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="250sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Total  VOL. "
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp">
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
+                android:background="@drawable/separador" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="VENTAS POR TIPO DE PAGO "
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="#1E2025"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="T.Gratuito"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="end"
+                    android:text="120.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Promociones"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="end"
+                    android:text="120.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_width="100sp"
+                android:layout_height="1sp"
+                android:layout_gravity="end"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
+                android:background="@drawable/separador" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -295,6 +841,32 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_width="150sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="end"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Tot.Descuento"
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -306,66 +878,31 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1sp"
-                android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="350sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="left"
-                    android:text="Tot.Descuento:"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
-                    android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="350sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="left"
-                    android:text="Tot.Incremento:"
+                    android:text="Tot.Incremento"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
-                    android:text="0.00"
+                    android:text="120.00"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
             <View
                 android:layout_width="100sp"
                 android:layout_height="1sp"
@@ -373,11 +910,9 @@
                 android:layout_marginTop="10sp"
                 android:layout_marginBottom="10sp"
                 android:background="@drawable/separador" />
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10sp">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -391,12 +926,12 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="200sp"
+                    android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
-                    android:text="120.00"
+                    android:text="0.00"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
