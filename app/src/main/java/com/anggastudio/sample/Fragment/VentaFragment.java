@@ -998,12 +998,7 @@ public class VentaFragment extends Fragment{
         btnserafin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("producto",producto.getText().toString());
-                bundle.putString("lado",cara.getText().toString());
-                bundle.putString("importe",importetotal.getText().toString());
                 SerafinFragment serafinFragment = new SerafinFragment();
-                serafinFragment.setArguments(bundle);
                 serafinFragment.show(getActivity().getSupportFragmentManager(), "Serafin");
                 serafinFragment.setCancelable(false);
             }
@@ -2026,6 +2021,7 @@ public class VentaFragment extends Fragment{
                             btnboleta.setEnabled(false);
                             btnfactura.setEnabled(false);
                             btnnotadespacho.setEnabled(false);
+                            btnserafin.setEnabled(true);
 
                             GlobalInfo.getCara10 = item.getNroLado();
                             mCara = item.getNroLado();
@@ -2076,7 +2072,7 @@ public class VentaFragment extends Fragment{
                             btngalones.setEnabled(true);
                             btnboleta.setEnabled(true);
                             btnfactura.setEnabled(true);
-
+                            btnserafin.setEnabled(true);
 
                             GlobalInfo.getPistola10 = item.getMangueraID();
 
