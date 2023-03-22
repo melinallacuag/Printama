@@ -717,7 +717,7 @@ public class VentaFragment extends Fragment{
                             public void onClick(View view) {
                                 modalFactura.dismiss();
 
-                                txtplaca.getText().clear();
+                                txtplaca.setText("000-0000");
                                 textruc.getText().clear();
                                 textrazsocial.getText().clear();
                                 textdireccion.getText().clear();
@@ -831,8 +831,6 @@ public class VentaFragment extends Fragment{
                                     }
                                 }
 
-
-
                                 alertplaca.setErrorEnabled(false);
                                 alertruc.setErrorEnabled(false);
                                 alertrazsocial.setErrorEnabled(false);
@@ -852,7 +850,7 @@ public class VentaFragment extends Fragment{
 
                                 detalleVenta.setTarjetaCredito("");
                                 detalleVenta.setOperacionREF("");
-                                detalleVenta.setMontoSoles(0.00);
+                                detalleVenta.setMontoSoles(0.0);
 
                                     if (datotipotarjeta.equals("Tarjeta")){
                                         Double value = Double.parseDouble(textnpagoefectivo);
@@ -887,7 +885,7 @@ public class VentaFragment extends Fragment{
 
                                      modalFactura.dismiss();
 
-                                txtplaca.getText().clear();
+                                txtplaca.setText("000-0000");
                                 textruc.getText().clear();
                                 textrazsocial.getText().clear();
                                 textdireccion.getText().clear();
@@ -1121,7 +1119,7 @@ public class VentaFragment extends Fragment{
                                     GlobalInfo.getoptranUniMed10,
                                     GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10);
 
-                    boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
+                    gratuita(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
                             GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
                             GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
                             GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
@@ -1326,6 +1324,178 @@ public class VentaFragment extends Fragment{
         }, this::showToast);
 
     }
+
+    /** Impresión de Transferencia Gratuita  */
+    private  void gratuita(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
+                          String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
+                          String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
+
+        /** Logo */
+        Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
+
+        String modoCero = "0.00";
+
+        /** Organizar la cadena de texto de Address y Branch */
+        Matcher matcher;
+        Pattern patronsintaxi;
+
+        patronsintaxi = Pattern.compile("(?<!\\S)\\p{Lu}+\\.? \\w+ - \\w+ - \\w+(\\.? \\d+)?(?!\\S)");
+        matcher = patronsintaxi.matcher(AddressCompany);
+
+        String segundaAddress = null;
+        String primeraAddress = null;
+        if (matcher.find()) {
+            segundaAddress    = matcher.group();
+            String[] partes   = AddressCompany.split(segundaAddress);
+            primeraAddress    = partes[0].trim();
+            segundaAddress    = segundaAddress.trim();
+        }
+
+        String AddressU = segundaAddress;
+        String AddressD = primeraAddress;
+
+        matcher = patronsintaxi.matcher(BranchCompany);
+
+        String segundaBranch = null;
+        String primeraBranch = null;
+        if (matcher.find()) {
+            segundaBranch    = matcher.group();
+            String[] partes  = BranchCompany.split(segundaBranch);
+            primeraBranch    = partes[0].trim();
+            segundaBranch    = segundaBranch.trim();
+        }
+
+        String BranchU = segundaBranch;
+        String BranchD = primeraBranch;
+
+
+        String PrecioPRIM2 = String.format("%.2f",PrecioOptran);
+
+        String GALONESPRIM3 = String.format("%.3f",GalonesOptran);
+
+        String TotalPRIM2 = String.format("%.2f",SolesOptran);
+
+        /** Operación Gravada */
+        double Subtotal     = (Double.valueOf(SolesOptran) /1.18);
+        double SubtotalOff  = Math.round(Subtotal*100.0)/100.0;
+        String OpeGravada   = String.format("%.2f",SubtotalOff);
+
+        /** IGV */
+        double Impuesto     = (Double.valueOf(SolesOptran)-SubtotalOff);
+        double ImpuestoOff  = Math.round(Impuesto*100.0)/100.0;
+        String IGV          = String.format("%.2f",ImpuestoOff);
+
+        /** Convertir número a letras */
+        Numero_Letras NumLetra = new Numero_Letras();
+        String LetraSoles      = NumLetra.Convertir(String.valueOf(modoCero),true);
+
+        /** Fecha para Codigo QR */
+        String tipodocumento    = "03";
+        String boleta           = GlobalInfo.getcorrelativoSerie  + "-" +   GlobalInfo.getcorrelativoNumero ;
+        String tipodni          = GlobalInfo.getsettingClienteID10;
+        String dni              = GlobalInfo.getsettingClienteRZ10;
+        String fechaEmision     = FechaTranOptran.substring(6,10) + "-" + FechaTranOptran.substring(3,5) + "-" + FechaTranOptran.substring(0,2);
+
+        /** Generar codigo QR */
+        StringBuilder QRBoleta = new StringBuilder();
+        QRBoleta.append(RUCCompany + "|".toString());
+        QRBoleta.append(tipodocumento+ "|".toString());
+        QRBoleta.append(boleta+ "|".toString());
+        QRBoleta.append(IGV+ "|".toString());
+        QRBoleta.append(SolesOptran+ "|".toString());
+        QRBoleta.append(fechaEmision+ "|".toString());
+        QRBoleta.append(tipodni+ "|".toString());
+        QRBoleta.append(dni+ "|".toString());
+
+        String Qrboleta = QRBoleta.toString();
+
+        //GENERAR QR
+        String clientes        ="Cliente Varios";
+        String placa        ="000-0000";
+        String ruccliente     ="11111111111";
+        String direccion     ="-";
+
+
+        /** Imprimir Comprobante */
+        Printama.with(getContext()).connect(printama -> {
+            printama.printTextln("                 ", Printama.CENTER);
+            printama.printImage(logoRobles, 200);
+            printama.setSmallText();
+            printama.printTextlnBold(NameCompany, Printama.CENTER);
+            printama.printTextlnBold("PRINCIPAL: " + AddressD, Printama.CENTER);
+            printama.printTextlnBold(AddressU, Printama.CENTER);
+            printama.printTextlnBold("SUCURSAL: " + BranchD, Printama.CENTER);
+            printama.printTextlnBold(BranchU, Printama.CENTER);
+            printama.printTextlnBold("RUC: " + RUCCompany, Printama.CENTER);
+            printama.printTextlnBold("        ", Printama.CENTER);
+            printama.printTextlnBold("***** TRANSFERENCIA GRATUITA *****", Printama.CENTER);
+            printama.printTextlnBold("BOLETA DE VENTA ELECTRONICA", Printama.CENTER);
+            printama.printTextlnBold(boleta,Printama.CENTER);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextln("Fecha - Hora : "+ FechaTranOptran + "   Turno: "+ TurnoTerminal,Printama.LEFT);
+            printama.printTextln("Cajero : "+ CajeroTerminal , Printama.LEFT);
+            printama.printTextln("Lado   : "+ NroLadoOptran, Printama.LEFT);
+            printama.printTextln("R.U.C.    : "+ ruccliente, Printama.LEFT);
+            printama.printTextln("Cliente   : "+clientes, Printama.LEFT);
+            printama.printTextln("Dirección : "+direccion, Printama.LEFT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextlnBold("PRODUCTO      "+"U/MED   "+"PRECIO   "+"CANTIDAD  "+"IMPORTE",Printama.RIGHT);
+            printama.setSmallText();
+            printama.printTextln(ProductoOptran,Printama.LEFT);
+            printama.printTextln(UndMedOptran+"    " + PrecioPRIM2 + "      " + GALONESPRIM3 +"     "+ modoCero,Printama.RIGHT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextln("OP. GRAVADAS: S/ "+modoCero, Printama.RIGHT);
+            printama.printTextln("OP. EXONERADAS: S/  "+ PrecioPRIM2 , Printama.RIGHT);
+            printama.printTextln("OP. EXONERADAS: S/  "+ "0.00" , Printama.RIGHT);
+            printama.printTextln("I.G.V. 18%: S/  "+ modoCero, Printama.RIGHT);
+            printama.printTextlnBold("TOTAL VENTA: S/ "+ modoCero , Printama.RIGHT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextlnBold("CONDICION DE PAGO:", Printama.LEFT);
+            printama.printTextlnBold("CONTADO: S/ " + modoCero, Printama.RIGHT);
+            printama.setSmallText();
+            printama.printTextln("SON: " + LetraSoles, Printama.LEFT);
+            printama.printTextln("                 ", Printama.CENTER);
+            QRCodeWriter writer = new QRCodeWriter();
+            BitMatrix bitMatrix;
+            try {
+                bitMatrix = writer.encode(Qrboleta, BarcodeFormat.QR_CODE, 200, 200);
+                int width = bitMatrix.getWidth();
+                int height = bitMatrix.getHeight();
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        int color = Color.WHITE;
+                        if (bitMatrix.get(x, y)) color = Color.BLACK;
+                        bitmap.setPixel(x, y, color);
+                    }
+                }
+                if (bitmap != null) {
+                    printama.printImage(bitmap);
+                }
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+            printama.setSmallText();
+            printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la boleta de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
+            printama.feedPaper();
+            printama.close();
+        }, this::showToast);
+
+    }
+
+
 
     /** Impresión de Factura Simple */
     private  void facturacion(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,

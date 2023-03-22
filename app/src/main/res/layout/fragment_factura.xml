@@ -50,6 +50,7 @@
                     android:id="@+id/inputPlaca"
                     android:fontFamily="@font/nunito_semibold"
                     android:textSize="12sp"
+                    android:text="000-0000"
                     android:inputType="textCapCharacters"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
