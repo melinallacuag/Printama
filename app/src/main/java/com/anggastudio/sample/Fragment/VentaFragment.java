@@ -1447,6 +1447,7 @@ public class VentaFragment extends Fragment{
             printama.setSmallText();
             printama.printTextln("OP. GRAVADAS: S/ "+modoCero, Printama.RIGHT);
             printama.printTextlnBold("OP. GRATUITA: S/  "+ TotalPRIM2 , Printama.RIGHT);
+            printama.setSmallText();
             printama.printTextln("OP. EXONERADAS: S/  "+ "0.00" , Printama.RIGHT);
             printama.printTextln("I.G.V. 18%: S/  "+ modoCero, Printama.RIGHT);
             printama.printTextln("TOTAL VENTA: S/ "+ modoCero , Printama.RIGHT);
