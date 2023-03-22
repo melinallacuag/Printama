@@ -1409,11 +1409,6 @@ public class VentaFragment extends Fragment{
 
         String Qrboleta = QRBoleta.toString();
 
-        //GENERAR QR
-        String clientes        ="Cliente Varios";
-        String placa        ="000-0000";
-        String ruccliente     ="11111111111";
-        String direccion     ="-";
 
 
         /** Imprimir Comprobante */
@@ -1438,9 +1433,6 @@ public class VentaFragment extends Fragment{
             printama.printTextln("Fecha - Hora : "+ FechaTranOptran + "   Turno: "+ TurnoTerminal,Printama.LEFT);
             printama.printTextln("Cajero : "+ CajeroTerminal , Printama.LEFT);
             printama.printTextln("Lado   : "+ NroLadoOptran, Printama.LEFT);
-            printama.printTextln("R.U.C.    : "+ ruccliente, Printama.LEFT);
-            printama.printTextln("Cliente   : "+clientes, Printama.LEFT);
-            printama.printTextln("Dirección : "+direccion, Printama.LEFT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
@@ -1454,10 +1446,10 @@ public class VentaFragment extends Fragment{
             printama.addNewLine(1);
             printama.setSmallText();
             printama.printTextln("OP. GRAVADAS: S/ "+modoCero, Printama.RIGHT);
-            printama.printTextln("OP. GRATUITA: S/  "+ TotalPRIM2 , Printama.RIGHT);
+            printama.printTextlnBold("OP. GRATUITA: S/  "+ TotalPRIM2 , Printama.RIGHT);
             printama.printTextln("OP. EXONERADAS: S/  "+ "0.00" , Printama.RIGHT);
             printama.printTextln("I.G.V. 18%: S/  "+ modoCero, Printama.RIGHT);
-            printama.printTextlnBold("TOTAL VENTA: S/ "+ modoCero , Printama.RIGHT);
+            printama.printTextln("TOTAL VENTA: S/ "+ modoCero , Printama.RIGHT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
