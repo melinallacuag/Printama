@@ -8,6 +8,11 @@ import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 public class GlobalInfo {
 
     /**
+     * Variable de numero de copias impresión
+     */
+    public static Integer getNumeroVecesIMP10;
+
+    /**
      * Datos de la Compania
      */
     public static String getNameCompany10;

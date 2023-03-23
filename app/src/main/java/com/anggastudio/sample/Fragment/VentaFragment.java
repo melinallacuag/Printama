@@ -1082,12 +1082,11 @@ public class VentaFragment extends Fragment{
 
         realizarOperacion();
 
-        timer.schedule(timerTask,2000,4000);
+        timer.schedule(timerTask,1000,2000);
 
     }
 
     public void stoptimertask() {
-
         timer.cancel();
         mTimerRunning = false;
         automatiStop.setText("Stop");
@@ -1106,27 +1105,31 @@ public class VentaFragment extends Fragment{
 
                     findCorrelativo(GlobalInfo.getterminalImei10,"03");
 
-                    if (GlobalInfo.getcorrelativoNumero == null){
+                    String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
+
+                    GlobalInfo.getcorrelativoNumero = "";
+
+                    GlobalInfo.getpase10 = false;
+
+                    if (NumeroDocumento == null){
                         return;
                     }
 
-                    if (GlobalInfo.getcorrelativoNumero.isEmpty()) {
+                    if (NumeroDocumento.isEmpty()) {
                         return;
                     }
 
-                    guardar_ventaCa(GlobalInfo.getterminalCompanyID10, GlobalInfo.getcorrelativoSerie,GlobalInfo.getcorrelativoNumero,GlobalInfo.getterminalID10,GlobalInfo.getsettingClienteID10,GlobalInfo.getsettingClienteRZ10,GlobalInfo.getterminalTurno10,GlobalInfo.getterminalFecha10,
+                    if (GlobalInfo.getcorrelativoSerie.isEmpty()) {
+                        return;
+                    }
+
+                    guardar_ventaCa(GlobalInfo.getterminalCompanyID10, GlobalInfo.getcorrelativoSerie,NumeroDocumento.toString(),GlobalInfo.getterminalID10,GlobalInfo.getsettingClienteID10,GlobalInfo.getsettingClienteRZ10,GlobalInfo.getterminalTurno10,GlobalInfo.getterminalFecha10,
                                     GlobalInfo.getoptranFechaTran10,GlobalInfo.getoptranSoles10, GlobalInfo.getsettingNroPlaca10,
                                     GlobalInfo.getoptranUniMed10,
                                     GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10);
 
-                    gratuita(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
-                            GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
-                            GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
-                            GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
-                            GlobalInfo.getoptranSoles10);
-
-                    GlobalInfo.getcorrelativoNumero = "";
-                    GlobalInfo.getpase10 = false;
+                    GlobalInfo.getcorrelativoSerie = "";
+                    NumeroDocumento = "";
 
                 }
 
@@ -1140,17 +1143,25 @@ public class VentaFragment extends Fragment{
 
     }
 
-    private void guardar_ventaCa(Integer _companyID, String _serieDocumento, String _nroDocumento, String _terminalID, String _clienteID, String _clienteRZ, Integer _turno,String _fecchaproceso,
+    private void guardar_ventaCa(Integer _companyID, String _serieDocumento, String _nroDocumento, String _terminalID, String _clienteID, String _clienteRZ, Integer _turno,String _fechaproceso,
                                  String _fechaAtencion, Double _mtoTotal, String _nroPlaca,
                                  String _uniMed,
                                  String _nroLado, String _manguera){
 
+        GlobalInfo.getNumeroVecesIMP10 = 0;
+
+        boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
+                 GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
+                 GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
+                 GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
+                 GlobalInfo.getoptranSoles10, _nroDocumento.toString());
+
         String tranIDR = String.valueOf(GlobalInfo.getoptranTranID10);
 
-        final VentaCA ventaCA = new VentaCA(_companyID,"03",_serieDocumento,_nroDocumento,_terminalID,_clienteID,"",_clienteRZ,"",_turno,_fecchaproceso,
-                "",_fechaAtencion,0.00,0.00,0.00,_mtoTotal,_nroPlaca,"","","","","",
-                "",0.00,0.00,0.00,"",1,"","",_uniMed,1,0,0,0.00,0.00,
-                0.00,0.00,tranIDR,_nroLado,_manguera,"",1,0,"",0.00,0.00,"");
+        final VentaCA ventaCA = new VentaCA(_companyID,"03",_serieDocumento,_nroDocumento,_terminalID,_clienteID,"",_clienteRZ,"",_turno,_fechaproceso,
+                "",_fechaAtencion,0.00,0.00,0.00,_mtoTotal,_nroPlaca,"","T","","","",
+                "",0.00,0.00,0.00,GlobalInfo.getuserName10,1,"",GlobalInfo.getoptranProductoDs10,_uniMed,1,10,18,GlobalInfo.getoptranPrecio10,GlobalInfo.getoptranPrecio10,
+                GlobalInfo.getoptranGalones10,0.00,tranIDR,_nroLado,_manguera,"",1,0,"",_mtoTotal,0.00,"");
 
         Call<VentaCA> call = mAPIService.postVentaCA(ventaCA);
 
@@ -1173,8 +1184,8 @@ public class VentaFragment extends Fragment{
     /** Impresión de Boletas Simple */
     private  void boletas(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
                           String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
-                          String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
-
+                          String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,
+                          Double SolesOptran, String NumeroDocumento) {
         /** Logo */
         Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
 
@@ -1327,8 +1338,9 @@ public class VentaFragment extends Fragment{
 
     /** Impresión de Transferencia Gratuita  */
     private  void gratuita(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
-                          String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
-                          String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
+                           String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
+                           String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,
+                           Double SolesOptran, String NumeroDocumento) {
 
         /** Logo */
         Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
@@ -1336,10 +1348,11 @@ public class VentaFragment extends Fragment{
         String modoCero = "0.00";
 
         /** Organizar la cadena de texto de Address y Branch */
-        Matcher matcher;
-        Pattern patronsintaxi;
+        Matcher matcher,matcher2;
+        Pattern patronsintaxi,patronsintaxi2;
 
         patronsintaxi = Pattern.compile("(?<!\\S)\\p{Lu}+\\.? \\w+ - \\w+ - \\w+(\\.? \\d+)?(?!\\S)");
+       /** Direccion principal **/
         matcher = patronsintaxi.matcher(AddressCompany);
 
         String segundaAddress = null;
@@ -1354,19 +1367,18 @@ public class VentaFragment extends Fragment{
         String AddressU = segundaAddress;
         String AddressD = primeraAddress;
 
-        matcher = patronsintaxi.matcher(BranchCompany);
+        String sucursal = BranchCompany;
 
-        String segundaBranch = null;
-        String primeraBranch = null;
-        if (matcher.find()) {
-            segundaBranch    = matcher.group();
-            String[] partes  = BranchCompany.split(segundaBranch);
-            primeraBranch    = partes[0].trim();
-            segundaBranch    = segundaBranch.trim();
-        }
+        int indiceGuion1 = sucursal.indexOf("-");
+        int indiceGuion2 = sucursal.lastIndexOf("-");
 
-        String BranchU = segundaBranch;
-        String BranchD = primeraBranch;
+        String direccion = sucursal.substring(0, indiceGuion1).trim();
+        String ubicacion = sucursal.substring(indiceGuion1 + 1, sucursal.length()).trim();
+
+      /*  String[] partesDireccion = sucursal.split(" - ");
+
+        String direccion = partesDireccion[0];
+        String ubicacion = partesDireccion[1];*/
 
 
         String PrecioPRIM2 = String.format("%.2f",PrecioOptran);
@@ -1391,7 +1403,7 @@ public class VentaFragment extends Fragment{
 
         /** Fecha para Codigo QR */
         String tipodocumento    = "03";
-        String boleta           = GlobalInfo.getcorrelativoSerie  + "-" +   GlobalInfo.getcorrelativoNumero ;
+        String boleta           = GlobalInfo.getcorrelativoSerie  + "-" +   NumeroDocumento.toString() ;
         String tipodni          = GlobalInfo.getsettingClienteID10;
         String dni              = GlobalInfo.getsettingClienteRZ10;
         String fechaEmision     = FechaTranOptran.substring(6,10) + "-" + FechaTranOptran.substring(3,5) + "-" + FechaTranOptran.substring(0,2);
@@ -1409,18 +1421,24 @@ public class VentaFragment extends Fragment{
 
         String Qrboleta = QRBoleta.toString();
 
-
-
         /** Imprimir Comprobante */
         Printama.with(getContext()).connect(printama -> {
+
+            GlobalInfo.getNumeroVecesIMP10 += 1;
+
+            if(GlobalInfo.getNumeroVecesIMP10 > 1){
+                printama.close();
+                return;
+            }
+
             printama.printTextln("                 ", Printama.CENTER);
             printama.printImage(logoRobles, 200);
             printama.setSmallText();
             printama.printTextlnBold(NameCompany, Printama.CENTER);
             printama.printTextlnBold("PRINCIPAL: " + AddressD, Printama.CENTER);
             printama.printTextlnBold(AddressU, Printama.CENTER);
-            printama.printTextlnBold("SUCURSAL: " + BranchD, Printama.CENTER);
-            printama.printTextlnBold(BranchU, Printama.CENTER);
+            printama.printTextlnBold(" SUCURSAL: " + direccion, Printama.CENTER);
+            printama.printTextlnBold(ubicacion, Printama.CENTER);
             printama.printTextlnBold("RUC: " + RUCCompany, Printama.CENTER);
             printama.printTextlnBold("        ", Printama.CENTER);
             printama.printTextlnBold("***** TRANSFERENCIA GRATUITA *****", Printama.CENTER);
@@ -1445,12 +1463,9 @@ public class VentaFragment extends Fragment{
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
             printama.setSmallText();
-            printama.printTextln("OP. GRAVADAS: S/ "+modoCero, Printama.RIGHT);
             printama.printTextlnBold("OP. GRATUITA: S/  "+ TotalPRIM2 , Printama.RIGHT);
             printama.setSmallText();
-            printama.printTextln("OP. EXONERADAS: S/  "+ "0.00" , Printama.RIGHT);
-            printama.printTextln("I.G.V. 18%: S/  "+ modoCero, Printama.RIGHT);
-            printama.printTextln("TOTAL VENTA: S/ "+ modoCero , Printama.RIGHT);
+            printama.printTextlnBold("TOTAL VENTA: S/ "+ modoCero , Printama.RIGHT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
@@ -1481,7 +1496,7 @@ public class VentaFragment extends Fragment{
                 e.printStackTrace();
             }
             printama.setSmallText();
-            printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la boleta de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
+            printama.printTextln("Autorizado mediante resolución de Superintendencia Nro. 203-2015 SUNAT. Representación impresa de la boleta de venta electrónica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
             printama.feedPaper();
             printama.close();
         }, this::showToast);
@@ -1752,9 +1767,10 @@ public class VentaFragment extends Fragment{
     }
 
     /** Impresión de Serafin */
+
     private  void serafin(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
-                               String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
-                               String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
+                          String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
+                          String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
         /** Logo */
         Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
 
@@ -1883,6 +1899,7 @@ public class VentaFragment extends Fragment{
     private void findOptran(String id){
 
         Call<List<Optran>> call = mAPIService.findOptran(id);
+
         call.enqueue(new Callback<List<Optran>>() {
             @Override
             public void onResponse(Call<List<Optran>> call, Response<List<Optran>> response) {
@@ -1893,6 +1910,7 @@ public class VentaFragment extends Fragment{
                         Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
                         return;
                     }
+
                     List<Optran> optranList = response.body();
 
                     if (optranList == null || optranList.isEmpty()) {
@@ -1900,9 +1918,7 @@ public class VentaFragment extends Fragment{
                     }
 
                     for(Optran optran: optranList) {
-
                         GlobalInfo.getpase10 = true;
-
                         GlobalInfo.getoptranTranID10     = Integer.valueOf(optran.getTranID());
                         GlobalInfo.getoptranNroLado10    = String.valueOf(optran.getNroLado());
                         GlobalInfo.getoptranManguera10   = String.valueOf(optran.getManguera());
@@ -1915,15 +1931,12 @@ public class VentaFragment extends Fragment{
                         GlobalInfo.getoptranOperador10   = String.valueOf(optran.getOperador());
                         GlobalInfo.getoptranCliente10    = String.valueOf(optran.getCliente());
                         GlobalInfo.getoptranUniMed10     = String.valueOf(optran.getUniMed());
-
-
                     }
 
                 }catch (Exception ex){
                     Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
-
 
             @Override
             public void onFailure(Call<List<Optran>> call, Throwable t) {

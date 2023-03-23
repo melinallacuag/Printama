@@ -193,10 +193,13 @@ public class DasboardFragment extends Fragment{
                         GlobalInfo.getManagerCompany10 = String.valueOf(company.getManager());
                         GlobalInfo.getSloganCompany10  = String.valueOf(company.getEslogan());
 
-                        nombregrigo.setText(company.getNames());
-                        sucursal.setText(company.getBranch());
-                        slogangrifo.setText(company.getEslogan());
+                        String DirSucursal = company.getBranch();
 
+                        DirSucursal = DirSucursal.replace("-","");
+
+                        nombregrigo.setText(company.getNames());
+                        sucursal.setText(DirSucursal.toString());
+                        slogangrifo.setText(company.getEslogan());
 
                     }
 
