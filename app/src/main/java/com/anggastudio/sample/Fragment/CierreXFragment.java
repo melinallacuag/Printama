@@ -15,22 +15,37 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
+import com.anggastudio.sample.Adapter.DetalleVentaAdapter;
 import com.anggastudio.sample.Adapter.VContometroAdapter;
 import com.anggastudio.sample.Adapter.VProductoAdapter;
 import com.anggastudio.sample.Adapter.VTipoPagoAdapter;
 import com.anggastudio.sample.R;
+import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
+import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
+import com.anggastudio.sample.WebApiSVEN.Models.Optran;
+import com.anggastudio.sample.WebApiSVEN.Models.Setting;
 import com.anggastudio.sample.WebApiSVEN.Models.VContometro;
 import com.anggastudio.sample.WebApiSVEN.Models.VProducto;
 import com.anggastudio.sample.WebApiSVEN.Models.VTipoPago;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class CierreXFragment extends Fragment {
+    private APIService mAPIService;
 
-    TextView TotalImprsionX,TotalDocAnulados,DocAnulados,Total,IGV,SubTotal,NroDespacho,Cajero,Turno,FechaTrabajo,FechaHoraFin,FechaHoraIni,TotalVolumenContometro;
+
+    TextView TotalImprsionX,TotalDocAnulados,DocAnulados,Total,IGV,SubTotal,NroDespacho,Cajero,Turno,FechaTrabajo,
+            FechaHoraFin,FechaHoraIni,TotalVolumenContometro,textSucural,textNombreEmpresa;
 
     VContometroAdapter vContometroAdapter;
     RecyclerView recyclerVContometro;
@@ -50,96 +65,187 @@ public class CierreXFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_cierre_x, container, false);
 
-        TotalImprsionX      = view.findViewById(R.id.TotalImprsionX);
-        TotalDocAnulados    = view.findViewById(R.id.TotalDocAnulados);
-        DocAnulados         = view.findViewById(R.id.DocAnulados);
-        Total               = view.findViewById(R.id.Total);
-        IGV                 = view.findViewById(R.id.IGV);
-        SubTotal            = view.findViewById(R.id.SubTotal);
-        NroDespacho         = view.findViewById(R.id.NroDespacho);
-        Cajero              = view.findViewById(R.id.Cajero);
-        Turno               = view.findViewById(R.id.Turno);
-        FechaTrabajo        = view.findViewById(R.id.FechaTrabajo);
-        FechaHoraFin        = view.findViewById(R.id.FechaHoraFin);
+        mAPIService  = GlobalInfo.getAPIService();
+
+        textNombreEmpresa   = view.findViewById(R.id.textNombreEmpresa);
+        textSucural         = view.findViewById(R.id.textSucural);
         FechaHoraIni        = view.findViewById(R.id.FechaHoraIni);
+        FechaHoraFin        = view.findViewById(R.id.FechaHoraFin);
+        FechaTrabajo        = view.findViewById(R.id.FechaTrabajo);
+        Turno               = view.findViewById(R.id.Turno);
+        Cajero              = view.findViewById(R.id.Cajero);
+        NroDespacho         = view.findViewById(R.id.NroDespacho);
+        DocAnulados         = view.findViewById(R.id.DocAnulados);
+        TotalDocAnulados    = view.findViewById(R.id.TotalDocAnulados);
         TotalVolumenContometro = view.findViewById(R.id.TotalVolumenContometro);
 
+
+        /** Fecha de Impresión */
+        Calendar calendarprint       = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+        SimpleDateFormat formatdate  = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        String FechaHoraImpresion    = formatdate.format(calendarprint.getTime());
+
+        textNombreEmpresa.setText(GlobalInfo.getNameCompany10);
+        textSucural.setText(GlobalInfo.getBranchCompany10);
         FechaHoraIni.setText(GlobalInfo.getterminalFecha10);
-        FechaHoraFin.setText("21/03/2023 12:27:50");
-        FechaTrabajo.setText("21/03/2023");
+        FechaHoraFin.setText(FechaHoraImpresion);
+        FechaTrabajo.setText(GlobalInfo.getterminalFecha10);
         Turno.setText(GlobalInfo.getterminalTurno10.toString());
         Cajero.setText(GlobalInfo.getuserName10);
-        NroDespacho.setText("3");
-        SubTotal.setText("199.15");
-        IGV.setText("39.15");
-        Total.setText("235.15");
+        NroDespacho.setText("0");
         DocAnulados.setText("0");
         TotalDocAnulados.setText("0.00");
-        TotalImprsionX.setText("1");
-        TotalVolumenContometro.setText("13.468");
-
-
-        /** VENTA POR  CONTOMETRO */
-        recyclerVContometro = view.findViewById(R.id.recyclerVContometro);
-        recyclerVContometro.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        vContometroList = new ArrayList<>();
-
-        for (int i = 0; i < 1; i++){
-            vContometroList.add(new VContometro("01","DB5","221436.283","221447.718","11.435"));
-            vContometroList.add(new VContometro("02","G84","2069.288","2069.288","0.000"));
-            vContometroList.add(new VContometro("01","DB5","221436.283","221447.718","11.435"));
-            vContometroList.add(new VContometro("02","G84","2069.288","2069.288","0.000"));
-        }
-
-
-        vContometroAdapter = new VContometroAdapter(vContometroList, getContext());
-
-        recyclerVContometro.setAdapter(vContometroAdapter);
-        recyclerVContometro.setLayoutManager(new LinearLayoutManager(getContext()));
-
-            /** VENTA POR  PRODUCTO */
-
-        recyclerVProducto = view.findViewById(R.id.recyclerVProductos);
-        recyclerVProducto.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        vProductoList = new ArrayList<>();
-
-        for (int i = 0; i < 1; i++){
-            vProductoList.add(new VProducto("DIESEL B5 S50","11.435","200.00"," "));
-            vProductoList.add(new VProducto("DIESEL B5 S50","11.435","200.00"," "));
-            vProductoList.add(new VProducto("DIESEL B5 S50","11.435","200.00"," "));
-            vProductoList.add(new VProducto("DIESEL B5 S50","11.435","200.00"," "));
-        }
-
-
-        vProductoAdapter = new VProductoAdapter(vProductoList, getContext());
-
-        recyclerVProducto.setAdapter(vProductoAdapter);
-        recyclerVProducto.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        /** TIPO DE PAGO */
-
-        recyclerVTipoPago = view.findViewById(R.id.recyclerVTipoPago);
-        recyclerVTipoPago.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        vTipoPagoList = new ArrayList<>();
-
-        for (int i = 0; i < 1; i++){
-            vTipoPagoList.add(new VTipoPago("EFECTIVO                      ","215.00"));
-            vTipoPagoList.add(new VTipoPago("TARJETA                       ","20.00"));
-          }
-
-
-        vTipoPagoAdapter = new VTipoPagoAdapter(vTipoPagoList, getContext());
-
-        recyclerVTipoPago.setAdapter(vTipoPagoAdapter);
-        recyclerVTipoPago.setLayoutManager(new LinearLayoutManager(getContext()));
+        TotalVolumenContometro.setText("0.00");
 
 
         view.findViewById(R.id.imprimircierrex).setOnClickListener(v -> cierrex());
+
+        /** Listado de Venta por Contometros  */
+        recyclerVContometro = view.findViewById(R.id.recyclerVContometro);
+        recyclerVContometro.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        /** Listado de Venta por Productos  */
+        recyclerVProducto = view.findViewById(R.id.recyclerVProductos);
+        recyclerVProducto.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        /** Listado de Venta por Tipo de Pago  */
+        recyclerVTipoPago = view.findViewById(R.id.recyclerVTipoPago);
+        recyclerVTipoPago.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        /** API Retrofit - Consumiendo */
+        findVContometro(GlobalInfo.getterminalID10);
+        findVProducto(GlobalInfo.getterminalID10,GlobalInfo.getterminalTurno10);
+        findVTipoPago(GlobalInfo.getterminalID10,GlobalInfo.getterminalTurno10);
         return view;
     }
+
+    /** API SERVICE - Venta por Contrometro */
+    private void findVContometro(String id){
+
+        Call<List<VContometro>> call = mAPIService.findVContometro(id);
+
+        call.enqueue(new Callback<List<VContometro>>() {
+            @Override
+            public void onResponse(Call<List<VContometro>> call, Response<List<VContometro>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<VContometro> vContometroList = response.body();
+                    for(VContometro vContometro: vContometroList) {
+                        GlobalInfo.getvcontomFechaProceso10   = String.valueOf(vContometro.getFechaProceso());
+                        GlobalInfo.getvcontomTurno10          = Integer.valueOf(vContometro.getTurno());
+                        GlobalInfo.getvcontomnRoLado10        = String.valueOf(vContometro.getNroLado());
+                        GlobalInfo.getvcontomManguera10       = String.valueOf(vContometro.getManguera());
+                        GlobalInfo.getvcontomArticuloID10     = String.valueOf(vContometro.getArticuloID());
+                        GlobalInfo.getvcontomArticuloDS10     = String.valueOf(vContometro.getArticuloDS());
+                        GlobalInfo.getvcontomContomInicial10  = Double.valueOf(vContometro.getContomInicial());
+                        GlobalInfo.getvcontomContomFinal10    = Double.valueOf(vContometro.getContomFinal());
+                        GlobalInfo.getvcontomGalones10        = Double.valueOf(vContometro.getGalones());
+                        GlobalInfo.getvcontomPrecio10         = Double.valueOf(vContometro.getPrecio());
+                        GlobalInfo.getvcontomSoles10          = Double.valueOf(vContometro.getSoles());
+                    }
+
+                    vContometroAdapter = new VContometroAdapter(vContometroList, getContext());
+
+                    recyclerVContometro.setAdapter(vContometroAdapter);
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<VContometro>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Optran - RED - WIFI", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+    /** API SERVICE - Venta por Contrometro */
+    private void findVProducto(String id,Integer turno){
+
+        Call<List<VProducto>> call = mAPIService.findVProducto(id,turno);
+
+        call.enqueue(new Callback<List<VProducto>>() {
+            @Override
+            public void onResponse(Call<List<VProducto>> call, Response<List<VProducto>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<VProducto> vProductoList = response.body();
+                    for(VProducto vProducto: vProductoList) {
+
+
+                    }
+                    vProductoAdapter = new VProductoAdapter(vProductoList, getContext());
+
+                    recyclerVProducto.setAdapter(vProductoAdapter);
+
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<VProducto>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Optran - RED - WIFI", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+    /** API SERVICE - Venta por Tipo de Pago */
+    private void findVTipoPago(String id,Integer turno){
+
+        Call<List<VTipoPago>> call = mAPIService.findVTipoPago(id,turno);
+
+        call.enqueue(new Callback<List<VTipoPago>>() {
+            @Override
+            public void onResponse(Call<List<VTipoPago>> call, Response<List<VTipoPago>> response) {
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<VTipoPago> vTipoPagoList = response.body();
+                    for(VTipoPago vTipoPago: vTipoPagoList) {
+
+
+                    }
+
+                    vTipoPagoAdapter = new VTipoPagoAdapter(vTipoPagoList, getContext());
+
+                    recyclerVTipoPago.setAdapter(vTipoPagoAdapter);
+
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<VTipoPago>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Optran - RED - WIFI", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
     private  void cierrexj() {
         String importe = "120.00";
         Printama.with(getContext()).connect(printama -> {
@@ -173,6 +279,7 @@ public class CierreXFragment extends Fragment {
         DasboardFragment dasboardFragment  = new DasboardFragment();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
     }
+
     private void cierrex() {
         View view = getView().findViewById(R.id.linearLayout2);
         Printama.with(getContext()).connect(printama -> {

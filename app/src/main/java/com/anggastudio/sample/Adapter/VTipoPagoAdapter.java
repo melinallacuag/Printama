@@ -36,8 +36,8 @@ public class VTipoPagoAdapter extends RecyclerView.Adapter<VTipoPagoAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull VTipoPagoAdapter.ViewHolder holder, int position) {
-        holder.textventatipopago.setText(vTipoPagoList.get(position).getTipoPago());
-        holder.textventatipopagomonto.setText(vTipoPagoList.get(position).getMontoTotal());
+        holder.textventatipopago.setText(vTipoPagoList.get(position).getNames());
+        holder.textventatipopagomonto.setText(String.valueOf(vTipoPagoList.get(position).getSoles()));
 
     }
 

@@ -154,6 +154,22 @@ public class GlobalInfo {
     public static String  getclClienteRZ10;
     public static String  getclClienteDR10;
 
+
+    /**
+     * Datos de Venta por Contometro
+     */
+
+    public static String  getvcontomFechaProceso10;
+    public static Integer getvcontomTurno10;
+    public static String getvcontomnRoLado10;
+    public static String  getvcontomManguera10;
+    public static String  getvcontomArticuloID10;
+    public static String  getvcontomArticuloDS10;
+    public static Double  getvcontomContomInicial10;
+    public static Double  getvcontomContomFinal10;
+    public static Double  getvcontomGalones10;
+    public static Double  getvcontomPrecio10;
+    public static Double  getvcontomSoles10;
     /**
      * URL - APIService
      */
@@ -162,5 +178,8 @@ public class GlobalInfo {
     public static APIService getAPIService() {
         return RetrofitClient.getClient(BASE_URL).create(APIService.class);
     }
+
+
+
 
 }

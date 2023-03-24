@@ -15,6 +15,9 @@ import com.anggastudio.sample.WebApiSVEN.Models.SettingTask;
 import com.anggastudio.sample.WebApiSVEN.Models.Terminal;
 import com.anggastudio.sample.WebApiSVEN.Models.Tipotarjeta;
 import com.anggastudio.sample.WebApiSVEN.Models.Users;
+import com.anggastudio.sample.WebApiSVEN.Models.VContometro;
+import com.anggastudio.sample.WebApiSVEN.Models.VProducto;
+import com.anggastudio.sample.WebApiSVEN.Models.VTipoPago;
 import com.anggastudio.sample.WebApiSVEN.Models.VentaCA;
 
 import java.util.List;
@@ -158,5 +161,37 @@ public interface APIService {
 
     @GET("api/correlativo/listado/{id}/{tipo}")
     Call<List<Correlativo>> findCorrelativo(@Path("id") String id, @Path("tipo") String tipo);
+
+
+    /**
+     * Venta por Contometro
+     */
+
+    @GET("api/rcontom/listado")
+    Call<List<VContometro>> getVContometro();
+
+    @GET("api/rcontom/listado/{id}")
+    Call<List<VContometro>> findVContometro(@Path("id") String id);
+
+    /**
+     * Venta por Producto
+     */
+
+    @GET("api/rproducto/listado")
+    Call<List<VProducto>> getVProducto();
+
+    @GET("api/rproducto/listado/{id}/{turno}")
+    Call<List<VProducto>> findVProducto(@Path("id") String id,@Path("turno") Integer turno);
+
+    /**
+     * Venta por Pago
+     */
+
+    @GET("api/rpago/listado")
+    Call<List<VTipoPago>> getVTipoPago();
+
+    @GET("api/rpago/listado/{id}/{turno}")
+    Call<List<VTipoPago>> findVTipoPago(@Path("id") String id,@Path("turno") Integer turno);
+
 
 }

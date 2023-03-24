@@ -2,57 +2,118 @@ package com.anggastudio.sample.WebApiSVEN.Models;
 
 public class VContometro {
 
-    private String lado;
-    private String producto;
-    private String cantidadI;
-    private String cantidadF;
-    private String galones;
+    private String fechaProceso;
+    private Integer turno;
+    private String nroLado;
+    private String manguera;
+    private String articuloID;
+    private String articuloDS;
+    private Double contomInicial;
+    private Double contomFinal;
+    private Double galones;
+    private Double precio;
+    private Double soles;
 
-    public VContometro(String lado, String producto, String cantidadI, String cantidadF, String galones) {
-        this.lado = lado;
-        this.producto = producto;
-        this.cantidadI = cantidadI;
-        this.cantidadF = cantidadF;
+    public VContometro(String fechaProceso, Integer turno, String nroLado, String manguera, String articuloID, String articuloDS, Double contomInicial, Double contomFinal, Double galones, Double precio, Double soles) {
+        this.fechaProceso = fechaProceso;
+        this.turno = turno;
+        this.nroLado = nroLado;
+        this.manguera = manguera;
+        this.articuloID = articuloID;
+        this.articuloDS = articuloDS;
+        this.contomInicial = contomInicial;
+        this.contomFinal = contomFinal;
         this.galones = galones;
+        this.precio = precio;
+        this.soles = soles;
     }
 
-    public String getLado() {
-        return lado;
+
+    public String getFechaProceso() {
+        return fechaProceso;
     }
 
-    public void setLado(String lado) {
-        this.lado = lado;
+    public void setFechaProceso(String fechaProceso) {
+        this.fechaProceso = fechaProceso;
     }
 
-    public String getProducto() {
-        return producto;
+    public Integer getTurno() {
+        return turno;
     }
 
-    public void setProducto(String producto) {
-        this.producto = producto;
+    public void setTurno(Integer turno) {
+        this.turno = turno;
     }
 
-    public String getCantidadI() {
-        return cantidadI;
+    public String getNroLado() {
+        return nroLado;
     }
 
-    public void setCantidadI(String cantidadI) {
-        this.cantidadI = cantidadI;
+    public void setNroLado(String nroLado) {
+        this.nroLado = nroLado;
     }
 
-    public String getCantidadF() {
-        return cantidadF;
+    public String getManguera() {
+        return manguera;
     }
 
-    public void setCantidadF(String cantidadF) {
-        this.cantidadF = cantidadF;
+    public void setManguera(String manguera) {
+        this.manguera = manguera;
     }
 
-    public String getGalones() {
+    public String getArticuloID() {
+        return articuloID;
+    }
+
+    public void setArticuloID(String articuloID) {
+        this.articuloID = articuloID;
+    }
+
+    public String getArticuloDS() {
+        return articuloDS;
+    }
+
+    public void setArticuloDS(String articuloDS) {
+        this.articuloDS = articuloDS;
+    }
+
+    public Double getContomInicial() {
+        return contomInicial;
+    }
+
+    public void setContomInicial(Double contomInicial) {
+        this.contomInicial = contomInicial;
+    }
+
+    public Double getContomFinal() {
+        return contomFinal;
+    }
+
+    public void setContomFinal(Double contomFinal) {
+        this.contomFinal = contomFinal;
+    }
+
+    public Double getGalones() {
         return galones;
     }
 
-    public void setGalones(String galones) {
+    public void setGalones(Double galones) {
         this.galones = galones;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
+
+    public Double getSoles() {
+        return soles;
+    }
+
+    public void setSoles(Double soles) {
+        this.soles = soles;
     }
 }

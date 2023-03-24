@@ -454,10 +454,10 @@ public class VentaFragment extends Fragment{
                                         return;
                                     }
                                 } else if (checkedRadioButtonId == cbcredito.getId()) {
-                                     if (textnpagoefectivo.isEmpty()) {
-                                         alertpefectivo.setError("* El campo Pago Efectivo es obligatorio");
+                                    if (textnpagoefectivo.isEmpty()) {
+                                        alertpefectivo.setError("* El campo Pago Efectivo es obligatorio");
                                         return;
-                                     }
+                                    }
 
                                 }
 
@@ -835,38 +835,38 @@ public class VentaFragment extends Fragment{
                                 detalleVenta.setOperacionREF("");
                                 detalleVenta.setMontoSoles(0.0);
 
-                                    if (datotipotarjeta.equals("Tarjeta")){
-                                        Double value = Double.parseDouble(textnpagoefectivo);
-                                        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                                if (datotipotarjeta.equals("Tarjeta")){
+                                    Double value = Double.parseDouble(textnpagoefectivo);
+                                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
-                                        detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
-                                        detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
+                                    detalleVenta.setTarjetaCredito(String.valueOf(Integer.valueOf(cards.getCardID())));
+                                    detalleVenta.setOperacionREF(textNroOperacio.getText().toString());
 
-                                        if(value != Double.parseDouble(decimalFormat.format(value))){
-                                            alertpefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
-                                            return;
-                                        }else{
-                                            detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
-                                        }
-
-                                    }else if (datotipotarjeta.equals("Credito")) {
-
-                                        Double value = Double.parseDouble(textnpagoefectivo);
-                                        DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
-                                        if(value != Double.parseDouble(decimalFormat.format(value))){
-                                            alertpefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
-                                            return;
-                                        }else{
-                                            detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
-                                        }
-
+                                    if(value != Double.parseDouble(decimalFormat.format(value))){
+                                        alertpefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
+                                        return;
+                                    }else{
+                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                     }
 
-                                    recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
-                                    Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
+                                }else if (datotipotarjeta.equals("Credito")) {
 
-                                     modalFactura.dismiss();
+                                    Double value = Double.parseDouble(textnpagoefectivo);
+                                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+                                    if(value != Double.parseDouble(decimalFormat.format(value))){
+                                        alertpefectivo.setError("* Por favor ingrese un valor con dos decimales solamente");
+                                        return;
+                                    }else{
+                                        detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
+                                    }
+
+                                }
+
+                                recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+                                Toast.makeText(getContext(), "Se agrego correctamente", Toast.LENGTH_SHORT).show();
+
+                                modalFactura.dismiss();
 
                                 txtplaca.setText("000-0000");
                                 textruc.getText().clear();
@@ -1065,7 +1065,7 @@ public class VentaFragment extends Fragment{
 
         realizarOperacion();
 
-        timer.schedule(timerTask,1000,2000);
+        timer.schedule(timerTask,1000,3000);
 
     }
 
@@ -1086,41 +1086,161 @@ public class VentaFragment extends Fragment{
 
                 if (GlobalInfo.getpase10 == true){
 
-                    findCorrelativo(GlobalInfo.getterminalImei10,"03");
+                    String mCara = GlobalInfo.getoptranNroLado10;
 
-                        String NumeroSerie = GlobalInfo.getcorrelativoSerie;
-                        String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
 
-                        GlobalInfo.getcorrelativoSerie = "";
-                        GlobalInfo.getcorrelativoNumero = "";
 
-                        GlobalInfo.getpase10 = false;
+                    for(DetalleVenta detalleVenta : detalleVentaList) {
 
-                        if (NumeroSerie == null){
-                            return;
-                        }
+                        String mnCara = detalleVenta.getCara().toString();
+                        String mnTipoPago = detalleVenta.getTipoPago().toString();
+                        Double mnImpuesto = detalleVenta.getImpuesto();
+                        String mnNroPlaca = detalleVenta.getNroPlaca();
+                        String mnTarjetaPuntos = detalleVenta.getTarjetaPuntos();
+                        String mnClienteID = detalleVenta.getClienteID();
+                        String mnClienteRUC = detalleVenta.getClienteRUC();
+                        String mnClienteRS = detalleVenta.getClienteRS().toString();
+                        String mnCliernteDR = detalleVenta.getClienteDR().toString();
+                        String mnTarjND = detalleVenta.getTarjetaND().toString();
+                        String mnTarjetaCredito = detalleVenta.getTarjetaCredito().toString();
+                        String mnOperacionREF = detalleVenta.getOperacionREF().toString();
+                        String mnObservacion = detalleVenta.getObservacion().toString();
+                        String mnKilometraje = detalleVenta.getKilometraje().toString();
+                        Double mnMontoSoles = detalleVenta.getMontoSoles();
+                        Double mnMtoSaldoCredito = detalleVenta.getMtoSaldoCredito();
+                        Double mnPtosDisponibles = detalleVenta.getPtosDisponible();
 
-                        if (NumeroSerie.isEmpty()) {
-                            return;
-                        }
 
-                        if (NumeroDocumento == null){
-                            return;
-                        }
 
-                        if (NumeroDocumento.isEmpty()) {
-                            return;
-                        }
+                        if(mnCara.equals(mCara)) {
 
-                        guardar_ventaCa(GlobalInfo.getterminalCompanyID10, NumeroSerie.toString(),NumeroDocumento.toString(),GlobalInfo.getterminalID10,GlobalInfo.getsettingClienteID10,GlobalInfo.getsettingClienteRZ10,GlobalInfo.getterminalTurno10,GlobalInfo.getterminalFecha10,
+                            String   mnTipoDocumento = "03";
+
+                            if (mnClienteRUC.length() == 11){
+
+                                mnTipoDocumento = "01";
+
+                                findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento);
+
+                                String NumeroSerie = GlobalInfo.getcorrelativoSerie;
+                                String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
+
+                                GlobalInfo.getcorrelativoSerie = "";
+                                GlobalInfo.getcorrelativoNumero = "";
+
+                                GlobalInfo.getpase10 = false;
+
+                                if (NumeroSerie == null){
+                                    return;
+                                }
+
+                                if (NumeroSerie.isEmpty()) {
+                                    return;
+                                }
+
+                                if (NumeroDocumento == null){
+                                    return;
+                                }
+
+                                if (NumeroDocumento.isEmpty()) {
+                                    return;
+                                }
+
+                                guardar_ventaCa(GlobalInfo.getterminalCompanyID10,mnTipoDocumento.toString(), NumeroSerie.toString(),NumeroDocumento.toString(),
+                                        GlobalInfo.getterminalID10,GlobalInfo.getsettingClienteID10,GlobalInfo.getsettingClienteRZ10,GlobalInfo.getterminalTurno10,GlobalInfo.getterminalFecha10,
                                         GlobalInfo.getoptranFechaTran10,GlobalInfo.getoptranSoles10, GlobalInfo.getsettingNroPlaca10,
                                         GlobalInfo.getoptranUniMed10,
                                         GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10);
 
-                        NumeroSerie = "";
-                        NumeroDocumento = "";
+                                NumeroSerie = "";
+                                NumeroDocumento = "";
+
+                                return;
+                            }
+                            if (mnClienteID.length() == 8 && mnClienteRUC.length() == 0){
+
+                                mnTipoDocumento = "03";
+
+                                findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento);
+
+                                String NumeroSerie = GlobalInfo.getcorrelativoSerie;
+                                String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
+
+                                GlobalInfo.getcorrelativoSerie = "";
+                                GlobalInfo.getcorrelativoNumero = "";
+
+                                GlobalInfo.getpase10 = false;
+
+                                if (NumeroSerie == null){
+                                    return;
+                                }
+
+                                if (NumeroSerie.isEmpty()) {
+                                    return;
+                                }
+
+                                if (NumeroDocumento == null){
+                                    return;
+                                }
+
+                                if (NumeroDocumento.isEmpty()) {
+                                    return;
+                                }
+
+                                guardar_ventaCa(GlobalInfo.getterminalCompanyID10,mnTipoDocumento.toString(), NumeroSerie.toString(),NumeroDocumento.toString(),
+                                        GlobalInfo.getterminalID10,GlobalInfo.getsettingClienteID10,GlobalInfo.getsettingClienteRZ10,GlobalInfo.getterminalTurno10,GlobalInfo.getterminalFecha10,
+                                        GlobalInfo.getoptranFechaTran10,GlobalInfo.getoptranSoles10, GlobalInfo.getsettingNroPlaca10,
+                                        GlobalInfo.getoptranUniMed10,
+                                        GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10);
+
+                                NumeroSerie = "";
+                                NumeroDocumento = "";
+
+                                return;
+                            }
+
+                            findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento);
+
+                            String NumeroSerie = GlobalInfo.getcorrelativoSerie;
+                            String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
+
+                            GlobalInfo.getcorrelativoSerie = "";
+                            GlobalInfo.getcorrelativoNumero = "";
+
+                            GlobalInfo.getpase10 = false;
+
+                            if (NumeroSerie == null){
+                                return;
+                            }
+
+                            if (NumeroSerie.isEmpty()) {
+                                return;
+                            }
+
+                            if (NumeroDocumento == null){
+                                return;
+                            }
+
+                            if (NumeroDocumento.isEmpty()) {
+                                return;
+                            }
+
+                            guardar_ventaCa(GlobalInfo.getterminalCompanyID10,mnTipoDocumento.toString(), NumeroSerie.toString(),NumeroDocumento.toString(),
+                                    GlobalInfo.getterminalID10,GlobalInfo.getsettingClienteID10,GlobalInfo.getsettingClienteRZ10,GlobalInfo.getterminalTurno10,GlobalInfo.getterminalFecha10,
+                                    GlobalInfo.getoptranFechaTran10,GlobalInfo.getoptranSoles10, GlobalInfo.getsettingNroPlaca10,
+                                    GlobalInfo.getoptranUniMed10,
+                                    GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10);
+
+                            NumeroSerie = "";
+                            NumeroDocumento = "";
+                        }
+
 
                     }
+
+
+
+                }
 
             }
         };
@@ -1131,18 +1251,33 @@ public class VentaFragment extends Fragment{
 
     }
 
-    private void guardar_ventaCa(Integer _companyID, String _serieDocumento, String _nroDocumento, String _terminalID, String _clienteID, String _clienteRZ, Integer _turno,String _fechaproceso,
+    private void guardar_ventaCa(Integer _companyID,String mnTipoDocumento, String _serieDocumento, String _nroDocumento, String _terminalID, String _clienteID, String _clienteRZ, Integer _turno,String _fechaproceso,
                                  String _fechaAtencion, Double _mtoTotal, String _nroPlaca,
                                  String _uniMed,
                                  String _nroLado, String _manguera){
 
         GlobalInfo.getNumeroVecesIMP10 = 0;
 
-        boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
-                GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
-                GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
-                GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
-                GlobalInfo.getoptranSoles10, _serieDocumento.toString(), _nroDocumento.toString());
+        if (mnTipoDocumento == "01"){
+            facturacion(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
+                    GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
+                    GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
+                    GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
+                    GlobalInfo.getoptranSoles10, _serieDocumento.toString(), _nroDocumento.toString());
+        }else if (mnTipoDocumento == "03"){
+            boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
+                    GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
+                    GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
+                    GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
+                    GlobalInfo.getoptranSoles10, _serieDocumento.toString(), _nroDocumento.toString());
+        }else if (mnTipoDocumento == "98"){
+            serafin(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
+                    GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
+                    GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
+                    GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
+                    GlobalInfo.getoptranSoles10, _serieDocumento.toString(), _nroDocumento.toString());
+        }
+
 
 
         String tranIDR = String.valueOf(GlobalInfo.getoptranTranID10);
@@ -1151,7 +1286,7 @@ public class VentaFragment extends Fragment{
         SimpleDateFormat formatdate  = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
         String _fechadocumento    = formatdate.format(calendarprint.getTime());
 
-        final VentaCA ventaCA = new VentaCA(_companyID,"03",_serieDocumento,_nroDocumento,_terminalID,_clienteID,"",_clienteRZ,"",_turno,_fechaproceso,
+        final VentaCA ventaCA = new VentaCA(_companyID,mnTipoDocumento,_serieDocumento,_nroDocumento,_terminalID,_clienteID,"",_clienteRZ,"",_turno,_fechaproceso,
                 "",_fechaAtencion,0.00,0.00,0.00,_mtoTotal,_nroPlaca,"","T","","","",
                 "",0.00,0.00,0.00,GlobalInfo.getuserName10,1,"",GlobalInfo.getoptranProductoDs10,_uniMed,1,10,18,GlobalInfo.getoptranPrecio10,GlobalInfo.getoptranPrecio10,
                 GlobalInfo.getoptranGalones10,0.00,tranIDR,_nroLado,_manguera,"",1,0,"",_mtoTotal,0.00,"");
@@ -1356,7 +1491,7 @@ public class VentaFragment extends Fragment{
         Pattern patronsintaxi,patronsintaxi2;
 
         patronsintaxi = Pattern.compile("(?<!\\S)\\p{Lu}+\\.? \\w+ - \\w+ - \\w+(\\.? \\d+)?(?!\\S)");
-       /** Direccion principal **/
+        /** Direccion principal **/
         matcher = patronsintaxi.matcher(AddressCompany);
 
         String segundaAddress = null;
@@ -1380,7 +1515,6 @@ public class VentaFragment extends Fragment{
         String ubicacion = sucursal.substring(indiceGuion1 + 1, sucursal.length()).trim();
 
       /*  String[] partesDireccion = sucursal.split(" - ");
-
         String direccion = partesDireccion[0];
         String ubicacion = partesDireccion[1];*/
 
@@ -1679,8 +1813,8 @@ public class VentaFragment extends Fragment{
 
     /** Impresión de Nota de Despacho Simple */
     private  void notaDespacho(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
-                              String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
-                              String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
+                               String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
+                               String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
         /** Logo */
         Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
 
@@ -1874,9 +2008,9 @@ public class VentaFragment extends Fragment{
 
 
     /** API SERVICE - Correlativo */
-    private void findCorrelativo(String id , String tipo){
+    private void findCorrelativo(String id , String mnTipoDocumento){
 
-        Call<List<Correlativo>> call = mAPIService.findCorrelativo(id,"03");
+        Call<List<Correlativo>> call = mAPIService.findCorrelativo(id,mnTipoDocumento);
 
         call.enqueue(new Callback<List<Correlativo>>() {
             @Override
@@ -2349,7 +2483,7 @@ public class VentaFragment extends Fragment{
                         Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    
+
 
                     detalleVentaList = response.body();
 

@@ -36,11 +36,11 @@ public class VContometroAdapter extends RecyclerView.Adapter<VContometroAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textlado.setText(vContometroList.get(position).getLado());
-        holder.textproducto.setText(vContometroList.get(position).getProducto());
-        holder.textcantidadI.setText(vContometroList.get(position).getCantidadI());
-        holder.textcantidadF.setText(String.valueOf(vContometroList.get(position).getCantidadF()));
-        holder.textgalones.setText(vContometroList.get(position).getGalones());
+        holder.textlado.setText(vContometroList.get(position).getNroLado());
+        holder.textproducto.setText(vContometroList.get(position).getArticuloDS());
+        holder.textcantidadI.setText(String.valueOf(vContometroList.get(position).getContomInicial()));
+        holder.textcantidadF.setText(String.valueOf(vContometroList.get(position).getContomFinal()));
+        holder.textgalones.setText(String.valueOf(vContometroList.get(position).getGalones()));
     }
 
     @Override

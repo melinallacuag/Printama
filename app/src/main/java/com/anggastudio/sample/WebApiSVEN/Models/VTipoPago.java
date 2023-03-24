@@ -1,27 +1,31 @@
 package com.anggastudio.sample.WebApiSVEN.Models;
 
 public class VTipoPago {
-    private String tipoPago;
-    private String MontoTotal;
+    private String pagoID;
+    private String names;
+    private Double soles;
 
-    public VTipoPago(String tipoPago, String montoTotal) {
-        this.tipoPago = tipoPago;
-        MontoTotal = montoTotal;
+    public String getPagoID() {
+        return pagoID;
     }
 
-    public String getTipoPago() {
-        return tipoPago;
+    public void setPagoID(String pagoID) {
+        this.pagoID = pagoID;
     }
 
-    public void setTipoPago(String tipoPago) {
-        this.tipoPago = tipoPago;
+    public String getNames() {
+        return names;
     }
 
-    public String getMontoTotal() {
-        return MontoTotal;
+    public void setNames(String names) {
+        this.names = names;
     }
 
-    public void setMontoTotal(String montoTotal) {
-        MontoTotal = montoTotal;
+    public Double getSoles() {
+        return soles;
+    }
+
+    public void setSoles(Double soles) {
+        this.soles = soles;
     }
 }

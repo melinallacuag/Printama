@@ -2,47 +2,49 @@ package com.anggastudio.sample.WebApiSVEN.Models;
 
 public class VProducto {
 
-    private String descripcion;
-    private String cantidad;
-    private String soles;
-    private String descuentos;
+    private String articuloID;
+    private String articuloDS;
+    private Double cantidad;
+    private Double soles;
+    private Double descuento;
 
-    public VProducto(String descripcion, String cantidad, String soles, String descuentos) {
-        this.descripcion = descripcion;
-        this.cantidad = cantidad;
-        this.soles = soles;
-        this.descuentos = descuentos;
+    public String getArticuloID() {
+        return articuloID;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public void setArticuloID(String articuloID) {
+        this.articuloID = articuloID;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public String getArticuloDS() {
+        return articuloDS;
     }
 
-    public String getCantidad() {
+    public void setArticuloDS(String articuloDS) {
+        this.articuloDS = articuloDS;
+    }
+
+    public Double getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(String cantidad) {
+    public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
     }
 
-    public String getSoles() {
+    public Double getSoles() {
         return soles;
     }
 
-    public void setSoles(String soles) {
+    public void setSoles(Double soles) {
         this.soles = soles;
     }
 
-    public String getDescuentos() {
-        return descuentos;
+    public Double getDescuento() {
+        return descuento;
     }
 
-    public void setDescuentos(String descuentos) {
-        this.descuentos = descuentos;
+    public void setDescuento(Double descuento) {
+        this.descuento = descuento;
     }
 }
