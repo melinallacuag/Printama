@@ -170,6 +170,9 @@ public class GlobalInfo {
     public static Double  getvcontomGalones10;
     public static Double  getvcontomPrecio10;
     public static Double  getvcontomSoles10;
+
+    public static Double getvcontomGalones101 = 0.00;
+
     /**
      * URL - APIService
      */

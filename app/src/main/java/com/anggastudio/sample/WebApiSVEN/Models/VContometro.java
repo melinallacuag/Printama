@@ -14,20 +14,6 @@ public class VContometro {
     private Double precio;
     private Double soles;
 
-    public VContometro(String fechaProceso, Integer turno, String nroLado, String manguera, String articuloID, String articuloDS, Double contomInicial, Double contomFinal, Double galones, Double precio, Double soles) {
-        this.fechaProceso = fechaProceso;
-        this.turno = turno;
-        this.nroLado = nroLado;
-        this.manguera = manguera;
-        this.articuloID = articuloID;
-        this.articuloDS = articuloDS;
-        this.contomInicial = contomInicial;
-        this.contomFinal = contomFinal;
-        this.galones = galones;
-        this.precio = precio;
-        this.soles = soles;
-    }
-
 
     public String getFechaProceso() {
         return fechaProceso;

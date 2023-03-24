@@ -37,9 +37,9 @@ public class VProductoAdapter extends RecyclerView.Adapter<VProductoAdapter.View
     @Override
     public void onBindViewHolder(@NonNull VProductoAdapter.ViewHolder holder, int position) {
         holder.textPproducto.setText(vProductoList.get(position).getArticuloDS());
-        holder.textPvolumen.setText(String.valueOf(vProductoList.get(position).getCantidad()));
-        holder.textPsoles.setText(String.valueOf(vProductoList.get(position).getSoles()));
-        holder.textPdescuento.setText(String.valueOf(vProductoList.get(position).getDescuento()));
+        holder.textPvolumen.setText(String.valueOf(String.format("%.3f",vProductoList.get(position).getCantidad())));
+        holder.textPsoles.setText(String.valueOf(String.format("%.2f",vProductoList.get(position).getSoles())));
+        holder.textPdescuento.setText(String.valueOf(String.format("%.2f",vProductoList.get(position).getDescuento())));
     }
 
     @Override

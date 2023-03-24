@@ -369,11 +369,16 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
-                    android:text="GAL."
+                    android:text="VOLUMEN"
                     android:textColor="#1E2025"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -401,14 +406,14 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="left"
-                    android:text="Total Volumen  :"
+                    android:text="TOTAL VOLUMEN  :"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/TotalVolumenContometro"
-                    android:layout_width="150sp"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
@@ -492,7 +497,11 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
-
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -506,57 +515,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
                 android:layout_marginTop="10sp" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="420sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="left"
-                    android:text="T. Gratuita     :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="420sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="left"
-                    android:text="Promociones :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -574,137 +532,32 @@
                     android:layout_height="1sp"
                     android:layout_marginTop="10sp"
                     android:layout_marginBottom="10sp"
-                    android:layout_weight="1" />
+                    android:layout_marginEnd="5sp"
+                    android:layout_weight="1"
+                    android:background="@drawable/separador"
+                    android:layout_marginRight="5sp" />
+
 
                 <View
                     android:layout_width="380sp"
                     android:layout_height="1sp"
                     android:layout_marginTop="10sp"
                     android:layout_marginBottom="10sp"
+                    android:layout_marginEnd="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/separador" />
-
-                <View
-                    android:layout_width="400sp"
-                    android:layout_height="1sp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="420sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
-                    android:text="Total   S/  "
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1sp"
-                android:layout_marginTop="10sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="250sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:text="Total  LIQ. "
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="250sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:text="Total  GLP. "
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <View
-                    android:layout_width="400sp"
-                    android:layout_height="1sp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
-                    android:layout_weight="1" />
+                    android:background="@drawable/separador"
+                    android:layout_marginRight="5sp" />
 
                 <View
                     android:layout_width="380sp"
                     android:layout_height="1sp"
                     android:layout_marginTop="10sp"
                     android:layout_marginBottom="10sp"
+                    android:layout_marginEnd="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/separador" />
+                    android:background="@drawable/separador"
+                    android:layout_marginRight="5sp" />
 
-                <View
-                    android:layout_width="380sp"
-                    android:layout_height="1sp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
-                    android:layout_weight="1" />
-
-                <View
-                    android:layout_width="400sp"
-                    android:layout_height="1sp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
-                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -712,24 +565,54 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="250sp"
+                    android:layout_width="400sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:text="Total  VOL. "
+                    android:gravity="center"
+                    android:text="TOTALES :"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/textMtogalones"
+                    android:layout_width="380sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:text="0.00"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
+
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/TotalSolesproducto"
+                    android:layout_width="380sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="0.00"
+
+                    android:textColor="#1E2025"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/TotalDescuento"
+                    android:layout_width="400sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:gravity="center"
+                    android:text="0.00"
+                    android:textColor="#1E2025"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
+
             </LinearLayout>
 
             <View
@@ -821,7 +704,7 @@
             </LinearLayout>
 
             <View
-                android:layout_width="100sp"
+                android:layout_width="90sp"
                 android:layout_height="1sp"
                 android:layout_gravity="end"
                 android:layout_marginTop="10sp"
@@ -838,12 +721,13 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
-                    android:text="Total Neto S/"
+                    android:text="TOTAL NETO S/"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/totalpago"
                     android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -908,7 +792,7 @@
             </LinearLayout>
 
             <View
-                android:layout_width="100sp"
+                android:layout_width="90sp"
                 android:layout_height="1sp"
                 android:layout_gravity="end"
                 android:layout_marginTop="10sp"
@@ -925,12 +809,13 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
-                    android:text="Total Bruto S/"
+                    android:text="TOTAL BRUTO S/"
                     android:textColor="#1E2025"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/totalpagobruto"
                     android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -958,7 +843,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
-                    android:text="Total Bruto S/"
                     android:textColor="#fff"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -969,7 +853,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
-                    android:text="0.00"
                     android:textColor="#fff"
                     android:textSize="15sp"
                     android:textStyle="bold" />

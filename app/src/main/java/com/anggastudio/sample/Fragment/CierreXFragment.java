@@ -41,11 +41,12 @@ import retrofit2.Response;
 
 
 public class CierreXFragment extends Fragment {
+
     private APIService mAPIService;
 
-
     TextView TotalImprsionX,TotalDocAnulados,DocAnulados,Total,IGV,SubTotal,NroDespacho,Cajero,Turno,FechaTrabajo,
-            FechaHoraFin,FechaHoraIni,TotalVolumenContometro,textSucural,textNombreEmpresa;
+            FechaHoraFin,FechaHoraIni,TotalVolumenContometro,textSucural,textNombreEmpresa,
+            TotalSolesproducto,TotalMontoPago,TotalMtogalones,TotalDescuento,totalpagobruto;
 
     VContometroAdapter vContometroAdapter;
     RecyclerView recyclerVContometro;
@@ -58,6 +59,8 @@ public class CierreXFragment extends Fragment {
     VTipoPagoAdapter vTipoPagoAdapter;
     RecyclerView recyclerVTipoPago;
     List<VTipoPago> vTipoPagoList;
+
+    Double RContometrosTotalGLL, RProductosTotalGLL, RProductosTotalSoles, RProductosTotalDesc, RPagosTotalSoles;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,11 +81,16 @@ public class CierreXFragment extends Fragment {
         DocAnulados         = view.findViewById(R.id.DocAnulados);
         TotalDocAnulados    = view.findViewById(R.id.TotalDocAnulados);
         TotalVolumenContometro = view.findViewById(R.id.TotalVolumenContometro);
+        TotalMtogalones     = view.findViewById(R.id.textMtogalones);
+        TotalSolesproducto  = view.findViewById(R.id.TotalSolesproducto);
+        TotalDescuento      = view.findViewById(R.id.TotalDescuento);
+        TotalMontoPago      = view.findViewById(R.id.totalpago);
+        totalpagobruto      = view.findViewById(R.id.totalpagobruto);
 
 
         /** Fecha de Impresión */
         Calendar calendarprint       = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
-        SimpleDateFormat formatdate  = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        SimpleDateFormat formatdate  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String FechaHoraImpresion    = formatdate.format(calendarprint.getTime());
 
         textNombreEmpresa.setText(GlobalInfo.getNameCompany10);
@@ -95,7 +103,6 @@ public class CierreXFragment extends Fragment {
         NroDespacho.setText("0");
         DocAnulados.setText("0");
         TotalDocAnulados.setText("0.00");
-        TotalVolumenContometro.setText("0.00");
 
 
         view.findViewById(R.id.imprimircierrex).setOnClickListener(v -> cierrex());
@@ -112,10 +119,17 @@ public class CierreXFragment extends Fragment {
         recyclerVTipoPago = view.findViewById(R.id.recyclerVTipoPago);
         recyclerVTipoPago.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        RContometrosTotalGLL = 0.00;
+        RProductosTotalGLL = 0.00;
+        RProductosTotalSoles = 0.00;
+        RProductosTotalDesc = 0.00;
+        RPagosTotalSoles = 0.00;
+
         /** API Retrofit - Consumiendo */
         findVContometro(GlobalInfo.getterminalID10);
         findVProducto(GlobalInfo.getterminalID10,GlobalInfo.getterminalTurno10);
         findVTipoPago(GlobalInfo.getterminalID10,GlobalInfo.getterminalTurno10);
+
         return view;
     }
 
@@ -134,20 +148,18 @@ public class CierreXFragment extends Fragment {
                         return;
                     }
 
-                    List<VContometro> vContometroList = response.body();
+                    vContometroList = response.body();
+
                     for(VContometro vContometro: vContometroList) {
-                        GlobalInfo.getvcontomFechaProceso10   = String.valueOf(vContometro.getFechaProceso());
-                        GlobalInfo.getvcontomTurno10          = Integer.valueOf(vContometro.getTurno());
-                        GlobalInfo.getvcontomnRoLado10        = String.valueOf(vContometro.getNroLado());
-                        GlobalInfo.getvcontomManguera10       = String.valueOf(vContometro.getManguera());
-                        GlobalInfo.getvcontomArticuloID10     = String.valueOf(vContometro.getArticuloID());
-                        GlobalInfo.getvcontomArticuloDS10     = String.valueOf(vContometro.getArticuloDS());
-                        GlobalInfo.getvcontomContomInicial10  = Double.valueOf(vContometro.getContomInicial());
-                        GlobalInfo.getvcontomContomFinal10    = Double.valueOf(vContometro.getContomFinal());
-                        GlobalInfo.getvcontomGalones10        = Double.valueOf(vContometro.getGalones());
-                        GlobalInfo.getvcontomPrecio10         = Double.valueOf(vContometro.getPrecio());
-                        GlobalInfo.getvcontomSoles10          = Double.valueOf(vContometro.getSoles());
+
+
+                        RContometrosTotalGLL += Double.valueOf(vContometro.getGalones());
+
                     }
+
+                    String TotalVolumen = String.format("%.3f",RContometrosTotalGLL);
+
+                    TotalVolumenContometro.setText(TotalVolumen);
 
                     vContometroAdapter = new VContometroAdapter(vContometroList, getContext());
 
@@ -183,10 +195,27 @@ public class CierreXFragment extends Fragment {
                     }
 
                     List<VProducto> vProductoList = response.body();
+
                     for(VProducto vProducto: vProductoList) {
 
+                        RProductosTotalGLL += Double.valueOf(vProducto.getCantidad());
+                        RProductosTotalSoles += Double.valueOf(vProducto.getSoles());
+                        RProductosTotalDesc += Double.valueOf(vProducto.getDescuento());
 
                     }
+
+                    String SProductosTotalGLL = String.format("%.3f",RProductosTotalGLL);
+
+                    TotalMtogalones.setText(SProductosTotalGLL);
+
+                    String SProductosTotalSoles = String.format("%.2f",RProductosTotalSoles);
+
+                    TotalSolesproducto.setText(SProductosTotalSoles);
+
+                    String SProductosTotalDesc = String.format("%.2f",RProductosTotalDesc);
+
+                    TotalDescuento.setText(SProductosTotalDesc);
+
                     vProductoAdapter = new VProductoAdapter(vProductoList, getContext());
 
                     recyclerVProducto.setAdapter(vProductoAdapter);
@@ -222,10 +251,18 @@ public class CierreXFragment extends Fragment {
                     }
 
                     List<VTipoPago> vTipoPagoList = response.body();
+
                     for(VTipoPago vTipoPago: vTipoPagoList) {
 
+                        RPagosTotalSoles += Double.valueOf(vTipoPago.getSoles());
 
                     }
+
+                    String TotalPagosSoles = String.format("%.2f",RPagosTotalSoles);
+
+                    TotalMontoPago.setText(TotalPagosSoles);
+
+                    totalpagobruto.setText(TotalPagosSoles);
 
                     vTipoPagoAdapter = new VTipoPagoAdapter(vTipoPagoList, getContext());
 
