@@ -1,6 +1,4 @@
 package com.anggastudio.sample.Fragment;
-
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.res.Resources;
@@ -9,24 +7,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
 import androidx.appcompat.widget.SearchView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.GestureDetector;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -34,7 +23,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.anggastudio.printama.Printama;
 import com.anggastudio.sample.Adapter.CaraAdapter;
 import com.anggastudio.sample.Adapter.CardAdapter;
@@ -62,7 +50,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,7 +60,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,7 +72,7 @@ public class VentaFragment extends Fragment{
     private String mCara;
 
     /**  Atributos de la Venta */
-    TextView  producto,cara,importetotal,terminalID;
+    TextView  terminalID;
     Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos,automatiStop;
 
     /**  AdapterList - Recycler */
@@ -115,12 +101,11 @@ public class VentaFragment extends Fragment{
 
     AlertDialog.Builder builder;
 
+    /** Buscador por nombres del Cliente */
     SearchView buscadorUser;
 
+    /** Formularios */
     private Dialog modalBoleta,modalFactura,modalNDespacho,modalCliente;
-
-
-    TextView txtname;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -130,9 +115,7 @@ public class VentaFragment extends Fragment{
         mAPIService  = GlobalInfo.getAPIService();
 
         /** Nombre de la Terminal ID */
-        terminalID = view.findViewById(R.id.terminalID);
-        terminalID.setText(GlobalInfo.getterminalID10);
-
+        terminalID      = view.findViewById(R.id.terminalID);
         automatiStop    = view.findViewById(R.id.automatiStop);
         btnlibre        = view.findViewById(R.id.btnlibre);
         btnsoles        = view.findViewById(R.id.btnsoles);
@@ -142,6 +125,8 @@ public class VentaFragment extends Fragment{
         btnnotadespacho = view.findViewById(R.id.btnnotadespacho);
         btnserafin      = view.findViewById(R.id.btnserafin);
         btnpuntos       = view.findViewById(R.id.btnpuntos);
+
+        terminalID.setText(GlobalInfo.getterminalID10);
 
         /** Boton Time Task */
         automatiStop.setOnClickListener(new View.OnClickListener() {
@@ -180,11 +165,9 @@ public class VentaFragment extends Fragment{
         btnsoles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                    SolesFragment solesFragment = new SolesFragment();
-                    solesFragment.show(getActivity().getSupportFragmentManager(), "Soles");
-                    solesFragment.setCancelable(false);
-
+                SolesFragment solesFragment = new SolesFragment();
+                solesFragment.show(getActivity().getSupportFragmentManager(), "Soles");
+                solesFragment.setCancelable(false);
             }
         });
 
@@ -1105,36 +1088,41 @@ public class VentaFragment extends Fragment{
 
                     findCorrelativo(GlobalInfo.getterminalImei10,"03");
 
-                    String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
+                        String NumeroSerie = GlobalInfo.getcorrelativoSerie;
+                        String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
 
-                    GlobalInfo.getcorrelativoNumero = "";
+                        GlobalInfo.getcorrelativoSerie = "";
+                        GlobalInfo.getcorrelativoNumero = "";
 
-                    GlobalInfo.getpase10 = false;
+                        GlobalInfo.getpase10 = false;
 
-                    if (NumeroDocumento == null){
-                        return;
+                        if (NumeroSerie == null){
+                            return;
+                        }
+
+                        if (NumeroSerie.isEmpty()) {
+                            return;
+                        }
+
+                        if (NumeroDocumento == null){
+                            return;
+                        }
+
+                        if (NumeroDocumento.isEmpty()) {
+                            return;
+                        }
+
+                        guardar_ventaCa(GlobalInfo.getterminalCompanyID10, NumeroSerie.toString(),NumeroDocumento.toString(),GlobalInfo.getterminalID10,GlobalInfo.getsettingClienteID10,GlobalInfo.getsettingClienteRZ10,GlobalInfo.getterminalTurno10,GlobalInfo.getterminalFecha10,
+                                        GlobalInfo.getoptranFechaTran10,GlobalInfo.getoptranSoles10, GlobalInfo.getsettingNroPlaca10,
+                                        GlobalInfo.getoptranUniMed10,
+                                        GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10);
+
+                        NumeroSerie = "";
+                        NumeroDocumento = "";
+
                     }
-
-                    if (NumeroDocumento.isEmpty()) {
-                        return;
-                    }
-
-                    if (GlobalInfo.getcorrelativoSerie.isEmpty()) {
-                        return;
-                    }
-
-                    guardar_ventaCa(GlobalInfo.getterminalCompanyID10, GlobalInfo.getcorrelativoSerie,NumeroDocumento.toString(),GlobalInfo.getterminalID10,GlobalInfo.getsettingClienteID10,GlobalInfo.getsettingClienteRZ10,GlobalInfo.getterminalTurno10,GlobalInfo.getterminalFecha10,
-                                    GlobalInfo.getoptranFechaTran10,GlobalInfo.getoptranSoles10, GlobalInfo.getsettingNroPlaca10,
-                                    GlobalInfo.getoptranUniMed10,
-                                    GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10);
-
-                    GlobalInfo.getcorrelativoSerie = "";
-                    NumeroDocumento = "";
-
-                }
 
             }
-
         };
 
         mTimerRunning = true;
@@ -1151,12 +1139,17 @@ public class VentaFragment extends Fragment{
         GlobalInfo.getNumeroVecesIMP10 = 0;
 
         boletas(GlobalInfo.getNameCompany10,GlobalInfo.getRucCompany10, GlobalInfo.getAddressCompany10,
-                 GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
-                 GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
-                 GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
-                 GlobalInfo.getoptranSoles10, _nroDocumento.toString());
+                GlobalInfo.getBranchCompany10,GlobalInfo.getoptranFechaTran10, GlobalInfo.getterminalTurno10,
+                GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10,GlobalInfo.getoptranProductoDs10,
+                GlobalInfo.getoptranUniMed10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
+                GlobalInfo.getoptranSoles10, _serieDocumento.toString(), _nroDocumento.toString());
+
 
         String tranIDR = String.valueOf(GlobalInfo.getoptranTranID10);
+        /** Fecha de Impresión */
+        Calendar calendarprint       = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+        SimpleDateFormat formatdate  = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        String _fechadocumento    = formatdate.format(calendarprint.getTime());
 
         final VentaCA ventaCA = new VentaCA(_companyID,"03",_serieDocumento,_nroDocumento,_terminalID,_clienteID,"",_clienteRZ,"",_turno,_fechaproceso,
                 "",_fechaAtencion,0.00,0.00,0.00,_mtoTotal,_nroPlaca,"","T","","","",
@@ -1185,11 +1178,17 @@ public class VentaFragment extends Fragment{
     private  void boletas(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
                           String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
                           String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,
-                          Double SolesOptran, String NumeroDocumento) {
-        /** Logo */
+                          Double SolesOptran,String NumeroSerie, String NumeroDocumento) {
+
+        /** Fecha de Impresión */
+        Calendar calendarprint       = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+        SimpleDateFormat formatdate  = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        String FechaHoraImpresion    = formatdate.format(calendarprint.getTime());
+
+        /** Logo de la Empresa */
         Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
 
-        /** Organizar la cadena de texto de Address y Branch */
+        /** Dirección Principal de la Empresa */
         Matcher matcher;
         Pattern patronsintaxi;
 
@@ -1198,6 +1197,7 @@ public class VentaFragment extends Fragment{
 
         String segundaAddress = null;
         String primeraAddress = null;
+
         if (matcher.find()) {
             segundaAddress    = matcher.group();
             String[] partes   = AddressCompany.split(segundaAddress);
@@ -1208,19 +1208,18 @@ public class VentaFragment extends Fragment{
         String AddressU = segundaAddress;
         String AddressD = primeraAddress;
 
-        matcher = patronsintaxi.matcher(BranchCompany);
 
-        String segundaBranch = null;
-        String primeraBranch = null;
-        if (matcher.find()) {
-            segundaBranch    = matcher.group();
-            String[] partes  = BranchCompany.split(segundaBranch);
-            primeraBranch    = partes[0].trim();
-            segundaBranch    = segundaBranch.trim();
-        }
 
-        String BranchU = segundaBranch;
-        String BranchD = primeraBranch;
+
+        /**  Sucursal de la Empresa */
+
+        String sucursal = BranchCompany;
+
+        int indiceGuion1 = sucursal.indexOf("-");
+        int indiceGuion2 = sucursal.lastIndexOf("-");
+
+        String direccion = sucursal.substring(0, indiceGuion1).trim();
+        String ubicacion = sucursal.substring(indiceGuion1 + 1, sucursal.length()).trim();
 
 
         String PrecioPRIM2 = String.format("%.2f",PrecioOptran);
@@ -1245,7 +1244,7 @@ public class VentaFragment extends Fragment{
 
         /** Fecha para Codigo QR */
         String tipodocumento    = "03";
-        String boleta           = GlobalInfo.getcorrelativoSerie  + "-" +   GlobalInfo.getcorrelativoNumero ;
+        String boleta           = NumeroSerie  + "-" +   NumeroDocumento ;
         String tipodni          = GlobalInfo.getsettingClienteID10;
         String dni              = GlobalInfo.getsettingClienteRZ10;
         String fechaEmision     = FechaTranOptran.substring(6,10) + "-" + FechaTranOptran.substring(3,5) + "-" + FechaTranOptran.substring(0,2);
@@ -1265,14 +1264,22 @@ public class VentaFragment extends Fragment{
 
         /** Imprimir Comprobante */
         Printama.with(getContext()).connect(printama -> {
+
+            GlobalInfo.getNumeroVecesIMP10 += 1;
+
+            if(GlobalInfo.getNumeroVecesIMP10 > 1){
+                printama.close();
+                return;
+            }
+
             printama.printTextln("                 ", Printama.CENTER);
             printama.printImage(logoRobles, 200);
             printama.setSmallText();
             printama.printTextlnBold(NameCompany, Printama.CENTER);
             printama.printTextlnBold("PRINCIPAL: " + AddressD, Printama.CENTER);
             printama.printTextlnBold(AddressU, Printama.CENTER);
-            printama.printTextlnBold("SUCURSAL: " + BranchD, Printama.CENTER);
-            printama.printTextlnBold(BranchU, Printama.CENTER);
+            printama.printTextlnBold("SUCURSAL: " + direccion, Printama.CENTER);
+            printama.printTextlnBold(ubicacion, Printama.CENTER);
             printama.printTextlnBold("RUC: " + RUCCompany, Printama.CENTER);
             printama.printTextlnBold("BOLETA DE VENTA ELECTRONICA", Printama.CENTER);
             printama.printTextlnBold(boleta,Printama.CENTER);
@@ -1280,7 +1287,7 @@ public class VentaFragment extends Fragment{
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
             printama.setSmallText();
-            printama.printTextln("Fecha - Hora : "+ FechaTranOptran + "   Turno: "+ TurnoTerminal,Printama.LEFT);
+            printama.printTextln("Fecha - Hora : "+ FechaHoraImpresion + "  Turno: "+ TurnoTerminal,Printama.LEFT);
             printama.printTextln("Cajero : "+ CajeroTerminal , Printama.LEFT);
             printama.printTextln("Lado   : "+ NroLadoOptran, Printama.LEFT);
             printama.setSmallText();
@@ -1295,9 +1302,6 @@ public class VentaFragment extends Fragment{
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
             printama.setSmallText();
-            printama.printTextln("OP. GRAVADAS: S/ "+OpeGravada, Printama.RIGHT);
-            printama.printTextln("OP. EXONERADAS: S/  "+ "0.00" , Printama.RIGHT);
-            printama.printTextln("I.G.V. 18%: S/  "+ IGV, Printama.RIGHT);
             printama.printTextlnBold("TOTAL VENTA: S/ "+ TotalPRIM2 , Printama.RIGHT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
@@ -1503,12 +1507,17 @@ public class VentaFragment extends Fragment{
 
     }
 
-
-
     /** Impresión de Factura Simple */
     private  void facturacion(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
                               String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
-                              String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
+                              String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,
+                              Double SolesOptran,String NumeroSerie, String NumeroDocumento) {
+
+        /** Fecha de Impresión */
+        Calendar calendarprint       = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+        SimpleDateFormat formatdate  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String FechaHoraImpresion    = formatdate.format(calendarprint.getTime());
+
         /** Logo */
         Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
 
@@ -1531,19 +1540,15 @@ public class VentaFragment extends Fragment{
         String AddressU = segundaAddress;
         String AddressD = primeraAddress;
 
-        matcher = patronsintaxi.matcher(BranchCompany);
 
-        String segundaBranch = null;
-        String primeraBranch = null;
-        if (matcher.find()) {
-            segundaBranch    = matcher.group();
-            String[] partes  = BranchCompany.split(segundaBranch);
-            primeraBranch    = partes[0].trim();
-            segundaBranch    = segundaBranch.trim();
-        }
 
-        String BranchU = segundaBranch;
-        String BranchD = primeraBranch;
+        String sucursal = BranchCompany;
+
+        int indiceGuion1 = sucursal.indexOf("-");
+        int indiceGuion2 = sucursal.lastIndexOf("-");
+
+        String direccion = sucursal.substring(0, indiceGuion1).trim();
+        String ubicacion = sucursal.substring(indiceGuion1 + 1, sucursal.length()).trim();
 
 
         String PrecioPRIM2 = String.format("%.2f",PrecioOptran);
@@ -1566,7 +1571,7 @@ public class VentaFragment extends Fragment{
 
         /** Fecha para Codigo QR */
         String tipodocumento    = "01";
-        String boleta           = GlobalInfo.getcorrelativoSerie  + "-" +   GlobalInfo.getcorrelativoNumero ;
+        String factura          = NumeroSerie  + "-" +   NumeroDocumento ;
         String tipodni          = GlobalInfo.getsettingClienteID10;
         String dni              = GlobalInfo.getsettingClienteRZ10;
         String fechaEmision     = FechaTranOptran.substring(6,10) + "-" + FechaTranOptran.substring(3,5) + "-" + FechaTranOptran.substring(0,2);
@@ -1575,7 +1580,7 @@ public class VentaFragment extends Fragment{
         StringBuilder QRBoleta = new StringBuilder();
         QRBoleta.append(RUCCompany + "|".toString());
         QRBoleta.append(tipodocumento+ "|".toString());
-        QRBoleta.append(boleta+ "|".toString());
+        QRBoleta.append(factura+ "|".toString());
         QRBoleta.append(IGV+ "|".toString());
         QRBoleta.append(SolesOptran+ "|".toString());
         QRBoleta.append(fechaEmision+ "|".toString());
@@ -1585,34 +1590,41 @@ public class VentaFragment extends Fragment{
         String Qrboleta = QRBoleta.toString();
 
         //GENERAR QR
-        String clientes        ="Cliente Varios";
-        String placa        ="000-0000";
-        String ruccliente     ="11111111111";
-        String direccion     ="-";
+        String clientes          ="Cliente Varios";
+        String placa             ="000-0000";
+        String ruccliente        ="11111111111";
+        String direccioncliente  ="-";
 
         Printama.with(getContext()).connect(printama -> {
+
+            GlobalInfo.getNumeroVecesIMP10 += 1;
+
+            if(GlobalInfo.getNumeroVecesIMP10 > 1){
+                printama.close();
+                return;
+            }
             printama.printTextln("                 ", Printama.CENTER);
             printama.printImage(logoRobles, 200);
             printama.setSmallText();
             printama.printTextlnBold(NameCompany, Printama.CENTER);
             printama.printTextlnBold("PRINCIPAL: " + AddressD, Printama.CENTER);
             printama.printTextlnBold(AddressU, Printama.CENTER);
-            printama.printTextlnBold("SUCURSAL: " + BranchD, Printama.CENTER);
-            printama.printTextlnBold(BranchU, Printama.CENTER);
+            printama.printTextlnBold("SUCURSAL: " + direccion, Printama.CENTER);
+            printama.printTextlnBold(ubicacion, Printama.CENTER);
             printama.printTextlnBold("RUC: " + RUCCompany, Printama.CENTER);
             printama.printTextlnBold("FACTURA DE VENTA ELECTRONICA", Printama.CENTER);
-            printama.printTextlnBold(boleta,Printama.CENTER);
+            printama.printTextlnBold(factura,Printama.CENTER);
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
             printama.setSmallText();
-            printama.printTextln("Fecha - Hora : "+ FechaTranOptran + "   Turno: "+ TurnoTerminal,Printama.LEFT);
+            printama.printTextln("Fecha - Hora : "+ FechaHoraImpresion + "   Turno: "+ TurnoTerminal,Printama.LEFT);
             printama.printTextln("Cajero : "+ CajeroTerminal , Printama.LEFT);
             printama.printTextln("Lado   : "+ NroLadoOptran, Printama.LEFT);
             printama.printTextln("Placa  : "+ placa, Printama.LEFT);
             printama.printTextln("R.U.C.    : "+ ruccliente, Printama.LEFT);
             printama.printTextln("Cliente   : "+clientes, Printama.LEFT);
-            printama.printTextln("Dirección : "+direccion, Printama.LEFT);
+            printama.printTextln("Dirección : "+direccioncliente, Printama.LEFT);
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
@@ -1767,12 +1779,17 @@ public class VentaFragment extends Fragment{
     }
 
     /** Impresión de Serafin */
-
     private  void serafin(String NameCompany, String RUCCompany,String AddressCompany, String BranchCompany,
                           String FechaTranOptran,  Integer TurnoTerminal,String CajeroTerminal, String NroLadoOptran,
-                          String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,Double SolesOptran) {
+                          String ProductoOptran,String UndMedOptran,Double PrecioOptran, Double GalonesOptran,
+                          Double SolesOptran, String NumeroDocumento, String SerieDocumento) {
         /** Logo */
         Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
+
+        /** Fecha de Impresión */
+        Calendar calendarprint       = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+        SimpleDateFormat formatdate  = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        String FechaHoraImpresion    = formatdate.format(calendarprint.getTime());
 
         /** Organizar la cadena de texto de Address y Branch */
         Matcher matcher;
@@ -1834,7 +1851,7 @@ public class VentaFragment extends Fragment{
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
             printama.setSmallText();
-            printama.printTextln("Fecha - Hora : "+ FechaTranOptran + "   Turno: "+ TurnoTerminal,Printama.LEFT);
+            printama.printTextln("Fecha - Hora : "+ FechaHoraImpresion + "   Turno: "+ TurnoTerminal,Printama.LEFT);
             printama.printTextln("Cajero : "+ CajeroTerminal , Printama.LEFT);
             printama.printTextln("Lado   : " + NroLadoOptran + "   Kilometraje : " +kilometraje, Printama.LEFT);
             printama.setSmallText();
@@ -2332,8 +2349,7 @@ public class VentaFragment extends Fragment{
                         Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
                         return;
                     }
-
-                 //   List<DetalleVenta> detalleVentaList = response.body();
+                    
 
                     detalleVentaList = response.body();
 
@@ -2423,6 +2439,7 @@ public class VentaFragment extends Fragment{
             }
         });
     }
+
     /** Listado de Clientes con DNI */
     private void getClienteDNI(){
         Call<List<Cliente>> call = mAPIService.getClienteDNI();
@@ -2519,7 +2536,5 @@ public class VentaFragment extends Fragment{
     private void showToast(String message) {
         Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
     }
-
-
 
 }
