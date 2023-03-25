@@ -105,7 +105,7 @@ public class VentaFragment extends Fragment{
     SearchView buscadorUser;
 
     /** Formularios */
-    private Dialog modalBoleta,modalFactura,modalNDespacho,modalCliente;
+    private Dialog modalBoleta,modalFactura,modalNDespacho,modalCliente,modalClienteRUC;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -462,7 +462,6 @@ public class VentaFragment extends Fragment{
                                 }
 
 
-
                                 alertplaca.setErrorEnabled(false);
                                 alertdni.setErrorEnabled(false);
                                 alertnombre.setErrorEnabled(false);
@@ -583,34 +582,43 @@ public class VentaFragment extends Fragment{
                         buscarruc        = modalFactura.findViewById(R.id.btnsunat);
                         buscarplaca      = modalFactura.findViewById(R.id.btnplaca);
 
-                        final GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
-                            @Override
+
+                        /** Mostrar Formulario de Cliente y Realizar la Operacion */
+                        modalClienteRUC = new Dialog(getContext());
+                        modalClienteRUC.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        modalClienteRUC.setContentView(R.layout.fragment_clientes);
+                        modalClienteRUC.setCancelable(false);
+
+                        final GestureDetector gestureDetector2 = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+
+
                             public boolean onDoubleTap(MotionEvent e) {
 
-                                /** Mostrar Formulario de Cliente y Realizar la Operacion */
-                                modalCliente = new Dialog(getContext());
-                                modalCliente.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                modalCliente.setContentView(R.layout.fragment_clientes);
-                                modalCliente.setCancelable(false);
+                                modalClienteRUC.show();
 
-                                textruc.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
+                                btncancelar    = modalClienteRUC.findViewById(R.id.btncancelar);
+                                buscadorUser   = modalClienteRUC.findViewById(R.id.searchView);
 
-                                        modalCliente.show();
+                                /** API Retrofit - CLIENTE DNI */
+                                getClienteRUC();
 
-                                        btncancelar    = modalCliente.findViewById(R.id.btncancelar);
-                                        buscadorUser   = modalCliente.findViewById(R.id.searchView);
+                                /**  Listado de Cliente */
+                                recyclerCliente = modalClienteRUC.findViewById(R.id.recyclercliente);
+                                recyclerCliente.setLayoutManager(new LinearLayoutManager(getContext()));
 
-                                        /** API Retrofit - CLIENTE DNI */
-                                        getClienteRUC();
+                                btncancelar.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
 
-                                        /**  Listado de Cliente */
-                                        recyclerCliente = modalCliente.findViewById(R.id.recyclercliente);
-                                        recyclerCliente.setLayoutManager(new LinearLayoutManager(getContext()));
+                                                modalClienteRUC.dismiss();
 
-                                        /**  Buscador por Nombre - DNI */
-                                        buscadorUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                                buscadorUser.setQuery("", false);
+
+                                            }
+                                        });
+
+                                /**  Buscador por Nombre - DNI */
+                                buscadorUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                                             @Override
                                             public boolean onQueryTextSubmit(String query) {
                                                 return false;
@@ -623,30 +631,16 @@ public class VentaFragment extends Fragment{
                                             }
                                         });
 
-                                        btncancelar.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-
-                                                modalCliente.dismiss();
-
-                                                buscadorUser.setQuery("", false);
-
-                                            }
-                                        });
-                                    }
-
-                                });
-
                                 return true;
                             }
                         });
 
                         textruc.setOnTouchListener(new View.OnTouchListener() {
                             @Override
-                            public boolean onTouch(View v, MotionEvent event) {
+                            public boolean onTouch(View v, MotionEvent event2) {
 
-                                gestureDetector.onTouchEvent(event);
-                                if (!gestureDetector.onTouchEvent(event)) {
+                                gestureDetector2.onTouchEvent(event2);
+                                if (!gestureDetector2.onTouchEvent(event2)) {
 
                                     return false;
                                 }
@@ -753,7 +747,6 @@ public class VentaFragment extends Fragment{
                                 }else{
 
                                     alertruc.setErrorEnabled(false);
-                                    alertruc.setError("* No se encontró consulta RUC");
 
                                     findClienteRUC(getClienteRuc);
 
@@ -793,9 +786,6 @@ public class VentaFragment extends Fragment{
                                 }else if (radioGroup.getCheckedRadioButtonId() == -1){
                                     Toast.makeText(getContext(), "Por favor, seleccione Tipo de Pago", Toast.LENGTH_SHORT).show();
                                     return;
-                                } else if (textnpagoefectivo.isEmpty()){
-                                    alertpefectivo.setError("* El campo Pago Efectivo es obligatorio");
-                                    return;
                                 } else if (checkedRadioButtonId == cbtarjeta.getId()) {
                                     if (textnNroOperacio.isEmpty()) {
                                         alertoperacion.setError("* El campo Nro Operación es obligatorio");
@@ -833,7 +823,7 @@ public class VentaFragment extends Fragment{
 
                                 detalleVenta.setTarjetaCredito("");
                                 detalleVenta.setOperacionREF("");
-                                detalleVenta.setMontoSoles(0.0);
+                                detalleVenta.setMontoSoles(0.00);
 
                                 if (datotipotarjeta.equals("Tarjeta")){
                                     Double value = Double.parseDouble(textnpagoefectivo);
@@ -2646,7 +2636,7 @@ public class VentaFragment extends Fragment{
                             textrazsocial.setText(SelectRZSocial);
                             textdireccion.setText(SelectDireccion);
                             Toast.makeText(getContext(), "Se seleccionó : " + SelectRUC , Toast.LENGTH_SHORT).show();
-                            modalCliente.dismiss();
+                            modalClienteRUC.dismiss();
 
                             buscadorUser.setQuery("", false);
                         }
