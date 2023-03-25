@@ -3,6 +3,7 @@ package com.anggastudio.sample.Fragment;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -45,6 +46,8 @@ public class DasboardFragment extends Fragment{
     Button btncancelar,btnagregar;
 
     private APIService mAPIService;
+
+    private Dialog modalCambioTurno,modalIcioDia;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,31 +93,35 @@ public class DasboardFragment extends Fragment{
             }
         });
 
+        /** Mostrar Modal de Cambio de Turno */
+        modalCambioTurno = new Dialog(getContext());
+        modalCambioTurno.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        modalCambioTurno.setContentView(R.layout.fragment_cambio_turno);
+        modalCambioTurno.setCancelable(false);
+
         btncambioturno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.fragment_cambio_turno, null);
-                builder.setView(dialogView);
-                abrirmodal();
+                modalCambioTurno.show();
 
-                btncancelar    = dialogView.findViewById(R.id.btncancelarcambioturno);
-                btnagregar     = dialogView.findViewById(R.id.btnagregarcambioturno);
+                btncancelar    = modalCambioTurno.findViewById(R.id.btncancelarcambioturno);
+                btnagregar     = modalCambioTurno.findViewById(R.id.btnagregarcambioturno);
 
                 btncancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        alertDialog.dismiss();
+                        modalCambioTurno.dismiss();
                     }
                 });
                 btnagregar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
+
                             Intent intent = new Intent(getContext(), Login.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                             startActivity(intent);
                             finalize();
                             Toast.makeText(getContext(), "SE GENERO EL CAMBIO DE TURNO ", Toast.LENGTH_SHORT).show();
@@ -127,22 +134,26 @@ public class DasboardFragment extends Fragment{
             }
         });
 
+
+        /** Mostrar Modal de Inicio de Día */
+        modalIcioDia = new Dialog(getContext());
+        modalIcioDia.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        modalIcioDia.setContentView(R.layout.fragment_inicio_dia);
+        modalIcioDia.setCancelable(false);
+
         btniniciodia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.fragment_inicio_dia, null);
-                builder.setView(dialogView);
-                abrirmodal();
 
-                btncancelar    = dialogView.findViewById(R.id.btncancelariniciodia);
-                btnagregar     = dialogView.findViewById(R.id.btnagregariniciodia);
+                modalIcioDia.show();
+
+                btncancelar    = modalIcioDia.findViewById(R.id.btncancelariniciodia);
+                btnagregar     = modalIcioDia.findViewById(R.id.btnagregariniciodia);
 
                 btncancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        alertDialog.dismiss();
+                        modalIcioDia.dismiss();
                     }
                 });
                 btnagregar.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +162,7 @@ public class DasboardFragment extends Fragment{
                         try {
                             Intent intent = new Intent(getContext(), Login.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                             startActivity(intent);
                             finalize();
                             Toast.makeText(getContext(), "SE GENERO EL INICIO DE DÍA", Toast.LENGTH_SHORT).show();
