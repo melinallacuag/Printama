@@ -24,7 +24,10 @@ import android.widget.Toast;
 import com.anggastudio.sample.Login;
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
+import com.anggastudio.sample.WebApiSVEN.Models.CDia;
+import com.anggastudio.sample.WebApiSVEN.Models.CTurno;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
+import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 
 import java.util.List;
@@ -122,6 +125,8 @@ public class DasboardFragment extends Fragment{
                             Intent intent = new Intent(getContext(), Login.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+                            cerrarTurno(GlobalInfo.getterminalID10);
+
                             startActivity(intent);
                             finalize();
                             Toast.makeText(getContext(), "SE GENERO EL CAMBIO DE TURNO ", Toast.LENGTH_SHORT).show();
@@ -163,6 +168,8 @@ public class DasboardFragment extends Fragment{
                             Intent intent = new Intent(getContext(), Login.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+                            iniciarDia(GlobalInfo.getterminalID10);
+
                             startActivity(intent);
                             finalize();
                             Toast.makeText(getContext(), "SE GENERO EL INICIO DE DÍA", Toast.LENGTH_SHORT).show();
@@ -175,6 +182,47 @@ public class DasboardFragment extends Fragment{
         });
 
        return view;
+
+    }
+
+    private void cerrarTurno(String _terminalID){
+
+        Call<CTurno> call = mAPIService.postCTurno(_terminalID);
+
+        call.enqueue(new Callback<CTurno>() {
+            @Override
+            public void onResponse(Call<CTurno> call, Response<CTurno> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CTurno> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void iniciarDia(String _terminalID){
+
+        Call<CDia> call = mAPIService.postCDia(_terminalID);
+
+        call.enqueue(new Callback<CDia>() {
+            @Override
+            public void onResponse(Call<CDia> call, Response<CDia> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CDia> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -226,11 +274,6 @@ public class DasboardFragment extends Fragment{
             }
         });
     }
-    private void abrirmodal(){
-        alertDialog = builder.create();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertDialog.show();
-        alertDialog.setCancelable(false);
-    }
+
 
 }

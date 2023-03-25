@@ -1,6 +1,8 @@
 package com.anggastudio.sample.WebApiSVEN.Controllers;
 
 import com.anggastudio.sample.Adapter.Grias;
+import com.anggastudio.sample.WebApiSVEN.Models.CDia;
+import com.anggastudio.sample.WebApiSVEN.Models.CTurno;
 import com.anggastudio.sample.WebApiSVEN.Models.Card;
 import com.anggastudio.sample.WebApiSVEN.Models.Cliente;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
@@ -193,5 +195,16 @@ public interface APIService {
     @GET("api/rpago/listado/{id}/{turno}")
     Call<List<VTipoPago>> findVTipoPago(@Path("id") String id,@Path("turno") Integer turno);
 
+    /**
+     * Incio de Día
+     */
+    @POST("api/cdia/iniciar/{id}")
+    Call<CDia> postCDia(@Path("id") String id);
+
+    /**
+     * Cambio de Turno
+     */
+    @POST("api/cturno/cerrar/{id}")
+    Call<CTurno> postCTurno(@Path("id") String id);
 
 }
