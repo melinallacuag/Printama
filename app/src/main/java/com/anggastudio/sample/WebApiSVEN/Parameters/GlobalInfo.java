@@ -27,6 +27,7 @@ public class GlobalInfo {
     /**
      * Datos del User
      */
+    public static String getuserID10;
     public static String getuserName10;
     public static String getuserPass10;
 
@@ -140,6 +141,7 @@ public class GlobalInfo {
      */
     public static String  getcorrelativoTerminalID;
     public static String  getcorrelativoImei;
+    public static String  getcorrelativoFecha;
     public static Integer getcorrelativoTurno;
     public static String  getcorrelativoSerie;
     public static String  getcorrelativoNumero;
@@ -181,8 +183,5 @@ public class GlobalInfo {
     public static APIService getAPIService() {
         return RetrofitClient.getClient(BASE_URL).create(APIService.class);
     }
-
-
-
 
 }

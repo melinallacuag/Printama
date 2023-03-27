@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.anggastudio.printama.Printama;
@@ -67,6 +68,7 @@ import retrofit2.Response;
 public class VentaFragment extends Fragment{
 
     private APIService mAPIService;
+    AlertDialog.Builder builder;
 
     /**  Id Cara */
     private String mCara;
@@ -99,12 +101,10 @@ public class VentaFragment extends Fragment{
     TextInputLayout alertpefectivo,alertoperacion,alertid,alertplaca,alertdni,alertruc, alertnombre,alertrazsocial,textdropStatus;
     Button btnagregar,btncancelar,btngenerar,buscarplaca,buscardni,buscarruc,buscarid;
 
-    AlertDialog.Builder builder;
-
     /** Buscador por nombres del Cliente */
     SearchView buscadorUser;
 
-    /** Formularios */
+    /** Formularios -  Dialog*/
     private Dialog modalBoleta,modalFactura,modalNDespacho,modalCliente,modalClienteRUC;
 
     @Override
@@ -1053,18 +1053,532 @@ public class VentaFragment extends Fragment{
 
         timer = new Timer();
 
-        realizarOperacion();
+        registrarVenta();
 
-        timer.schedule(timerTask,1000,3000);
+        timer.schedule(timerTask,0,3000);
 
     }
 
     public void stoptimertask() {
         timer.cancel();
+        timer.purge();
         mTimerRunning = false;
         automatiStop.setText("Stop");
         automatiStop.setBackgroundColor(Color.parseColor("#6c757d"));
     }
+
+    private void registrarVenta(){
+
+        timerTask = new TimerTask() {
+
+            public void run() {
+
+                /** Consultando ventas pendientes por terminal*/
+                findOptran(GlobalInfo.getterminalImei10);
+
+                if (GlobalInfo.getpase10 == true) {
+
+                    GlobalInfo.getpase10 = false;
+
+                    String mCara = "";
+                    String mnTipoPago = "";
+                    Double mnImpuesto = 0.00;
+                    String mnNroPlaca = "";
+                    String mnTarjetaPuntos = "";
+                    String mnClienteID = "";
+                    String mnClienteRUC = "";
+                    String mnClienteRS = "";
+                    String mnCliernteDR = "";
+                    String mnTarjND = "";
+                    String mnTarjetaCredito = "";
+                    String mnOperacionREF = "";
+                    String mnObservacion = "";
+                    String mnKilometraje = "";
+                    Double mnMontoSoles = 0.00;
+                    Double mnMtoSaldoCredito = 0.00;
+                    Double mnPtosDisponibles = 0.00;
+
+                    String mnTipoVenta = "V";
+                    String mnReferencia = "";
+
+                    Double mnPtosGanados = 0.00;
+
+                    Double mnMtoDescuento = 0.00;
+                    Double mnMtoCanje = 0.00;
+
+                    Double mnMtoSubTotal0 = 0.00;
+                    Double mnMtoSubTotal1 = 0.00;
+                    String mnMtoSubTotal2 = "";
+
+                    Double mnMtoImpuesto0 = 0.00;
+                    Double mnMtoImpuesto1 = 0.00;
+                    String mnMtoImpuesto2 = "";
+
+                    Double mnMtoTotal = 0.00;
+                    String mnMtoTotal2 = "";
+
+                    Integer mnItem = 1;
+                    Double mnFise = 0.00;
+                    String mnobservacionDet = "";
+
+                    Integer mnPagoID = 1;
+                    Integer mnTarjetaCreditoID = 0;
+                    Double mnmtoPagoUSD = 0.00;
+                    String mnobservacionPag = "";
+
+                    /** CALCULAR TOTALES IGV-SUBTOTAL-TOTAL VENTA*/
+
+                    if (GlobalInfo.getoptranSoles10 == null){
+                        return;
+                    }
+
+                    if (GlobalInfo.getoptranSoles10 == 0){
+                        return;
+                    }
+
+                    mnMtoTotal = GlobalInfo.getoptranSoles10;
+                    mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                    mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                    mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                    mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                    mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                    mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                    mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+
+                    /** FIN CALCULAR TOTALES IGV-SUBTOTAL-TOTAL VENTA*/
+
+                    mCara = GlobalInfo.getoptranNroLado10;
+
+                    /** Consultando datos de la lista por nrolado GRID*/
+                    for (DetalleVenta detalleVenta : detalleVentaList) {
+
+                        String mnCara = detalleVenta.getCara().toString();
+
+                        if (mnCara.equals(mCara)) {
+
+                            mnTipoPago = detalleVenta.getTipoPago().toString();
+                            mnImpuesto = detalleVenta.getImpuesto();
+                            mnNroPlaca = detalleVenta.getNroPlaca();
+                            mnTarjetaPuntos = detalleVenta.getTarjetaPuntos();
+                            mnClienteID = detalleVenta.getClienteID();
+                            mnClienteRUC = detalleVenta.getClienteRUC();
+                            mnClienteRS = detalleVenta.getClienteRS().toString();
+                            mnCliernteDR = detalleVenta.getClienteDR().toString();
+                            mnTarjND = detalleVenta.getTarjetaND().toString();
+                            mnTarjetaCredito = detalleVenta.getTarjetaCredito().toString();
+                            mnOperacionREF = detalleVenta.getOperacionREF().toString();
+                            mnObservacion = detalleVenta.getObservacion().toString();
+                            mnKilometraje = detalleVenta.getKilometraje().toString();
+                            mnMontoSoles = detalleVenta.getMontoSoles();
+                            mnMtoSaldoCredito = detalleVenta.getMtoSaldoCredito();
+                            mnPtosDisponibles = detalleVenta.getPtosDisponible();
+                            break;
+
+                        }
+                    }
+
+                    /** FIN Consultando datos de la lista por nrolado GRID*/
+
+                    /** Consultando datos del DOCUMENTO*/
+                    String mnTipoDocumento = "03";
+
+                    switch (mnTipoPago) {
+                        case "E" :
+                            if (mnClienteRUC.length() == 11) {
+                                mnClienteID = mnClienteRUC;
+                                mnTipoDocumento = "01";
+                            } else if (mnClienteRUC.length() == 0) {
+                                mnTipoDocumento = "03";
+                            }
+                            break;
+                        case "T" :
+                            if (mnClienteRUC.length() == 11) {
+                                mnClienteID = mnClienteRUC;
+                                mnTipoDocumento = "01";
+                            } else if (mnClienteRUC.length() == 0) {
+                                mnTipoDocumento = "03";
+                            }
+                            mnPagoID = 2;
+                            mnTarjetaCreditoID = Integer.valueOf(mnTarjetaCredito);
+                            break;
+                        case "C" :
+                            mnPagoID = 4;
+                            break;
+                        case "G" :
+                            mnTipoVenta = "G";
+                            break;
+                        case "S" :
+                            mnTipoDocumento = "98";
+                            mnClienteID = "";
+                            mnClienteRUC = "";
+                            mnClienteRS = "";
+                            mnCliernteDR = "";
+                            mnNroPlaca = "";
+                            break;
+                    }
+
+                    if(mnTipoPago == "S"){
+                        mnTipoDocumento = "98";
+                        mnClienteID = "";
+                        mnClienteRUC = "";
+                        mnClienteRS = "";
+                        mnCliernteDR = "";
+                        mnNroPlaca = "";
+                    }
+
+                    if (mnClienteID.length() == 0 && mnTipoDocumento == "03") {
+                        mnClienteID = "11111111";
+                        mnClienteRUC = "";
+                        mnClienteRS = "CLIENTE VARIOS";
+                        mnCliernteDR = "";
+                        mnNroPlaca = "000-0000";
+                    }
+
+                    findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento);
+
+                    String NumeroSerie = GlobalInfo.getcorrelativoSerie;
+                    String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
+
+                    if (NumeroSerie == null){
+                        return;
+                    }
+
+                    if (NumeroSerie.isEmpty()) {
+                        return;
+                    }
+
+                    if (NumeroDocumento == null){
+                        return;
+                    }
+
+                    if (NumeroDocumento.isEmpty()) {
+                        return;
+                    }
+
+                    String NroComprobante = GlobalInfo.getcorrelativoSerie + "-" + GlobalInfo.getcorrelativoNumero;
+
+                    /** Fecha de Impresión */
+                    Calendar calendarprint       = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+                    SimpleDateFormat formatdate  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    String xFechaHoraImpresion   = formatdate.format(calendarprint.getTime());
+                    String xFechaDocumento       = xFechaHoraImpresion.substring(6,10) + xFechaHoraImpresion.substring(3,5) + xFechaHoraImpresion.substring(0,2) + " " + xFechaHoraImpresion.substring(11,19);
+                    String xFechaDocumentoQR     = xFechaHoraImpresion.substring(6,10) + "-" + xFechaHoraImpresion.substring(3,5) + "-" + xFechaHoraImpresion.substring(0,2);
+
+                    /** FIN Consultando datos del DOCUMENTO-SERIE-CORRELATIVO*/
+
+
+                    /** GRABAR VENTA EN BASE DE DATOS*/
+
+
+                    grabarVentaCA(GlobalInfo.getterminalCompanyID10, mnTipoDocumento, GlobalInfo.getcorrelativoSerie, GlobalInfo.getcorrelativoNumero,
+                                  GlobalInfo.getterminalID10, mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR,
+                                  GlobalInfo.getterminalTurno10, GlobalInfo.getcorrelativoFecha, xFechaDocumento, GlobalInfo.getoptranFechaTran10,
+                                  mnMtoDescuento, mnMtoSubTotal1, mnMtoImpuesto1, mnMtoTotal,
+                                  mnNroPlaca, mnKilometraje, mnTipoVenta, mnObservacion, mnReferencia,
+                                  mnTarjND, mnTarjetaPuntos, mnPtosGanados, mnPtosDisponibles,
+                                  mnMtoCanje, GlobalInfo.getuserID10,
+                                  mnItem, GlobalInfo.getoptranArticuloID10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10, GlobalInfo.getterminalAlmacenID10,
+                                  GlobalInfo.getsettingImpuestoID110, GlobalInfo.getsettingImpuestoValor110, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
+                                  mnFise, GlobalInfo.getoptranTranID10, mCara, GlobalInfo.getoptranManguera10,
+                                  mnobservacionDet,
+                                  mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoTotal, mnmtoPagoUSD, mnobservacionPag);
+
+                    /** FIN GRABAR VENTA EN BASE DE DATOS*/
+
+
+                    /** IMPRESION DEL COMPROBANTE*/
+
+                    imprimirGR10(mnTipoDocumento, NroComprobante, xFechaHoraImpresion, GlobalInfo.getterminalTurno10,
+                                 GlobalInfo.getuserName10, mCara, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
+                                 GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
+                                 mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
+                                 mnPagoID, mnTarjetaCreditoID, mnOperacionREF);
+
+                    /** FIN IMPRESION DEL COMPROBANTE*/
+
+                    findDetalleVenta(GlobalInfo.getterminalImei10);
+
+                    GlobalInfo.getoptranTranID10     = 0;
+                    GlobalInfo.getoptranNroLado10    = "";
+                    GlobalInfo.getoptranManguera10   = "";
+                    GlobalInfo.getoptranFechaTran10  = "";
+                    GlobalInfo.getoptranArticuloID10 = "";
+                    GlobalInfo.getoptranProductoDs10 = "";
+                    GlobalInfo.getoptranPrecio10     = 0.00;
+                    GlobalInfo.getoptranGalones10    = 0.000;
+                    GlobalInfo.getoptranSoles10      = 0.00;
+                    GlobalInfo.getoptranOperador10   = "";
+                    GlobalInfo.getoptranCliente10    = "";
+                    GlobalInfo.getoptranUniMed10     = "";
+
+                    GlobalInfo.getcorrelativoFecha   = "";
+                    GlobalInfo.getcorrelativoSerie   = "";
+                    GlobalInfo.getcorrelativoNumero  = "";
+
+                }
+                /** FIN Consultando datos OPTRAN*/
+
+            }
+
+        };
+
+        mTimerRunning = true;
+        automatiStop.setText("Automático");
+        automatiStop.setBackgroundColor(Color.parseColor("#001E8A"));
+
+    }
+
+    private void grabarVentaCA(Integer _companyID, String _tipoDocumento, String _serieDocumento, String _nroDocumento, String _terminalID,
+                               String _clienteID, String _clienteRUC, String _clienteRZ, String _clienteDR, Integer _turno,
+                               String _fechaproceso, String _fechadocumento, String _fechaAtencion,
+                               Double _mtoDescuento, Double _mtoSubTotal, Double _mtoImpuesto, Double _mtoTotal,
+                               String _nroPlaca, String _odometro, String _tipoventa, String _observacion, String _referencia,
+                               String _nroTarjetaND, String _nroTarjetaPuntos, Double _ptosGanados, Double _ptosDisponibles,
+                               Double _mtoCanjeado, String _userID,
+                               Integer _nroItem, String _articuloID, String _productoDs, String _uniMed, Integer _almacenID,
+                               Integer impuestoID, Integer impuestoValor, Double _precio1, Double _precio2, Double _cantidad,
+                               Double _fise, Integer _tranID, String _nroLado, String _manguera,
+                               String _observacionDet,
+                               Integer _pagoID, Integer _tarjetaID, String _TarjetaDS, Double _mtoPagoPEN, Double _mtoPagoUSD,
+                               String _observacionPag
+                               ){
+
+        String xtranID = _tranID.toString();
+
+        final VentaCA ventaCA = new VentaCA(_companyID, _tipoDocumento, _serieDocumento, _nroDocumento, _terminalID,
+                                            _clienteID, _clienteRUC, _clienteRZ, _clienteDR, _turno,
+                                            _fechaproceso, _fechadocumento, _fechaAtencion,
+                                            _mtoDescuento, _mtoSubTotal, _mtoImpuesto, _mtoTotal,
+                                            _nroPlaca, _odometro, _tipoventa, _observacion, _referencia,
+                                            _nroTarjetaND, _nroTarjetaPuntos, _ptosGanados, _ptosDisponibles,
+                                            _mtoCanjeado, _userID,
+                                            _nroItem, _articuloID, _productoDs, _uniMed, _almacenID,
+                                            impuestoID, impuestoValor, _precio1, _precio2, _cantidad,
+                                            _fise, xtranID, _nroLado, _manguera,
+                                            _observacionDet,
+                                            _pagoID, _tarjetaID, _TarjetaDS, _mtoPagoPEN, _mtoPagoUSD,
+                                            _observacionPag);
+
+        Call<VentaCA> call = mAPIService.postVentaCA(ventaCA);
+
+        call.enqueue(new Callback<VentaCA>() {
+            @Override
+            public void onResponse(Call<VentaCA> call, Response<VentaCA> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VentaCA> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    /** Impresión del Comprobante */
+
+    private void imprimirGR10(String _TipoDocumento, String _NroDocumento, String _FechaDocumento, Integer _Turno,
+                              String _Cajero, String _nroLado, String _ArticuloDS, String _ArticuloUMED,
+                              Double _Precio, Double _Cantidad, Double _MtoTotal, Double _MtoSubTotal, Double _MtoImpuesto,
+                              String _ClienteID, String _ClienteRUC, String _ClienteRZ, String _ClienteDR, String _NroPlaca,
+                              String _FechaQR, Integer _PagoID, Integer _TarjetaCreditoID, String _OperacionREF){
+
+        /** Logo de la Empresa */
+        Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
+
+        String NameCompany = GlobalInfo.getNameCompany10;
+        String RUCCompany = GlobalInfo.getRucCompany10;
+        String AddressCompany = GlobalInfo.getAddressCompany10;
+        String Address1 = AddressCompany.substring(0,26);
+        String Address2 = AddressCompany.substring(27,50);
+        String BranchCompany = GlobalInfo.getBranchCompany10;
+        String Branch1 = BranchCompany.substring(0,32);
+        String Branch2 = BranchCompany.substring(35,51);
+
+        String TituloTk = "";
+        String TipoDNI = "1";
+
+        switch (_TipoDocumento) {
+            case "01" :
+                TituloTk = "FACTURA DE VENTA ELECTRONICA";
+                TipoDNI = "6";
+                break;
+            case "03" :
+                TituloTk = "BOLETA DE VENTA ELECTRONICA";
+                break;
+            case "98" :
+                TituloTk = "NOTA DE DESPACHO";
+                break;
+            case "99" :
+                TituloTk = "TICKET SERAFIN";
+                break;
+        }
+
+        String PrecioFF = String.format("%.2f",_Precio);
+
+        String CantidadFF = String.format("%.3f",_Cantidad);
+
+        String MtoSubTotalFF = String.format("%.2f",_MtoSubTotal);
+
+        String MtoImpuestoFF = String.format("%.2f",_MtoImpuesto);
+
+        String MtoTotalFF = String.format("%.2f",_MtoTotal);
+
+        /** Convertir número a letras */
+        Numero_Letras NumLetra = new Numero_Letras();
+        String LetraSoles      = NumLetra.Convertir(String.valueOf(_MtoTotal),true);
+
+        /** Generar codigo QR */
+        StringBuilder qrSVEN = new StringBuilder();
+        qrSVEN.append(RUCCompany + "|".toString());
+        qrSVEN.append(_TipoDocumento+ "|".toString());
+        qrSVEN.append(_NroDocumento+ "|".toString());
+        qrSVEN.append(MtoImpuestoFF+ "|".toString());
+        qrSVEN.append(MtoTotalFF+ "|".toString());
+        qrSVEN.append(_FechaQR+ "|".toString());
+        qrSVEN.append(TipoDNI+ "|".toString());
+        qrSVEN.append(_ClienteID+ "|".toString());
+
+        String qrSven = qrSVEN.toString();
+
+        Printama.with(getContext()).connect(printama -> {
+
+            printama.printTextln("                 ", Printama.CENTER);
+            printama.printImage(logoRobles, 200);
+            printama.setSmallText();
+            printama.printTextlnBold(NameCompany, Printama.CENTER);
+            printama.printTextlnBold("PRINCIPAL: " + Address1, Printama.CENTER);
+            printama.printTextlnBold(Address2, Printama.CENTER);
+            printama.printTextlnBold("SUCURSAL: " + Branch1, Printama.CENTER);
+            printama.printTextlnBold(Branch2, Printama.CENTER);
+            printama.printTextlnBold("RUC: " + RUCCompany, Printama.CENTER);
+            printama.printTextlnBold("BOLETA DE VENTA ELECTRONICA", Printama.CENTER);
+            printama.printTextlnBold(_NroDocumento,Printama.CENTER);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextln("Fecha - Hora : "+ _FechaDocumento + "  Turno: "+ _Turno,Printama.LEFT);
+            printama.printTextln("Cajero       : "+ _Cajero , Printama.LEFT);
+            printama.printTextln("Lado         : "+ _nroLado, Printama.LEFT);
+            printama.printTextln("Nro. PLaca   : "+ _NroPlaca, Printama.LEFT);
+
+            switch (_TipoDocumento) {
+                case "01" :
+                    printama.printTextln("RUC          : "+ _ClienteID , Printama.LEFT);
+                    printama.printTextln("Razon Social : "+ _ClienteRZ, Printama.LEFT);
+                case "03" :
+                    printama.printTextln("DNI          : "+ _ClienteID , Printama.LEFT);
+                    printama.printTextln("Nombres      : "+ _ClienteRZ, Printama.LEFT);
+                case "99" :
+
+            }
+
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextlnBold("PRODUCTO      "+"U/MED   "+"PRECIO   "+"CANTIDAD  "+"IMPORTE",Printama.RIGHT);
+            printama.setSmallText();
+            printama.printTextln(_ArticuloDS,Printama.LEFT);
+            printama.printTextln(_ArticuloUMED+"    " + PrecioFF + "      " + CantidadFF +"     "+ MtoTotalFF,Printama.RIGHT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+            printama.printTextlnBold("TOTAL VENTA: S/ "+ MtoTotalFF , Printama.RIGHT);
+            printama.setSmallText();
+            printama.printDoubleDashedLine();
+            printama.addNewLine(1);
+            printama.setSmallText();
+
+            switch (_PagoID) {
+                case 1 :
+                    printama.printTextlnBold("CONDICION DE PAGO:", Printama.LEFT);
+                    printama.printTextlnBold("CONTADO: S/ " + MtoTotalFF, Printama.RIGHT);
+                    break;
+                case 2 :
+
+                    printama.printTextlnBold("CONDICION DE PAGO: CONTADO", Printama.LEFT);
+
+                    switch (_TarjetaCreditoID) {
+                        case 1 :
+                            printama.printTextlnBold("VISA: S/ " + MtoTotalFF, Printama.RIGHT);
+                            printama.setSmallText();
+                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                            break;
+                        case 2 :
+                            printama.printTextlnBold("MASTERCARD: S/ " + MtoTotalFF, Printama.RIGHT);
+                            printama.setSmallText();
+                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                            break;
+                        case 3 :
+                            printama.printTextlnBold("DINERS: S/ " + MtoTotalFF, Printama.RIGHT);
+                            printama.setSmallText();
+                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                            break;
+                        case 4 :
+                            printama.printTextlnBold("YAPE: S/ " + MtoTotalFF, Printama.RIGHT);
+                            printama.setSmallText();
+                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                            break;
+                        case 5 :
+                            printama.printTextlnBold("AMERICAN EXPRES: S/ " + MtoTotalFF, Printama.RIGHT);
+                            printama.setSmallText();
+                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                            break;
+                        case 6 :
+                            printama.printTextlnBold("PLIN: S/ " + MtoTotalFF, Printama.RIGHT);
+                            printama.setSmallText();
+                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                            break;
+                    }
+
+                    break;
+
+                case 4 :
+                    printama.printTextlnBold("CONDICION DE PAGO: 30 DIAS DE", Printama.LEFT);
+                    printama.printTextlnBold("CREDITO: S/ " + MtoTotalFF, Printama.RIGHT);
+                    break;
+            }
+
+            printama.setSmallText();
+            printama.printTextln("SON: " + LetraSoles, Printama.LEFT);
+            printama.printTextln("                 ", Printama.CENTER);
+            QRCodeWriter writer = new QRCodeWriter();
+            BitMatrix bitMatrix;
+            try {
+                bitMatrix = writer.encode(qrSven, BarcodeFormat.QR_CODE, 200, 200);
+                int width = bitMatrix.getWidth();
+                int height = bitMatrix.getHeight();
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        int color = Color.WHITE;
+                        if (bitMatrix.get(x, y)) color = Color.BLACK;
+                        bitmap.setPixel(x, y, color);
+                    }
+                }
+                if (bitmap != null) {
+                    printama.printImage(bitmap);
+                }
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+            printama.setSmallText();
+            printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la boleta de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
+            printama.feedPaper();
+            printama.close();
+
+        }, this::showToast);
+
+    }
+
 
     private void realizarOperacion() {
 
@@ -1077,8 +1591,6 @@ public class VentaFragment extends Fragment{
                 if (GlobalInfo.getpase10 == true){
 
                     String mCara = GlobalInfo.getoptranNroLado10;
-
-
 
                     for(DetalleVenta detalleVenta : detalleVentaList) {
 
@@ -2016,11 +2528,9 @@ public class VentaFragment extends Fragment{
 
                     for(Correlativo correlativo: correlativoList) {
 
-                        GlobalInfo.getcorrelativoTerminalID  = String.valueOf(correlativo.getTerminalID());
-                        GlobalInfo.getcorrelativoImei        = String.valueOf(correlativo.getImei());
-                        GlobalInfo.getcorrelativoTurno       = Integer.valueOf(correlativo.getTurno());
-                        GlobalInfo.getcorrelativoSerie       = String.valueOf(correlativo.getSerie());
-                        GlobalInfo.getcorrelativoNumero      = String.valueOf(correlativo.getNumero());
+                        GlobalInfo.getcorrelativoFecha  = String.valueOf(correlativo.getFechaProceso());
+                        GlobalInfo.getcorrelativoSerie  = String.valueOf(correlativo.getSerie());
+                        GlobalInfo.getcorrelativoNumero = String.valueOf(correlativo.getNumero());
 
                     }
 

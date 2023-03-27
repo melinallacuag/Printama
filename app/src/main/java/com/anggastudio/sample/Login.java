@@ -119,10 +119,11 @@ public class Login extends AppCompatActivity {
 
                     for(Users user: usersList){
                         usuario.setText(user.getUserID());
-
+                        GlobalInfo.getuserID10 = user.getUserID();
                         GlobalInfo.getuserName10 = user.getNames();
                         GlobalInfo.getuserPass10  = user.getPassword();
                     }
+
                     String getName = usuario.getText().toString();
                     String getPass = checkpassword(contraseña.getText().toString());
 
@@ -135,7 +136,6 @@ public class Login extends AppCompatActivity {
                     else {
                         Toast.makeText(Login.this, "El usuario o la contraseña son incorrectos", Toast.LENGTH_SHORT).show();
                     }
-
 
                 }catch (Exception ex){
                     Toast.makeText(Login.this, ex.getMessage(), Toast.LENGTH_SHORT).show();

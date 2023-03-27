@@ -4,6 +4,7 @@ public class Correlativo {
 
     private String  terminalID;
     private String  imei;
+    private String  fechaProceso;
     private Integer turno;
     private String  serie;
     private String  numero;
@@ -22,6 +23,14 @@ public class Correlativo {
 
     public void setImei(String imei) {
         this.imei = imei;
+    }
+
+    public String getFechaProceso() {
+        return fechaProceso;
+    }
+
+    public void setFechaProceso(String fechaProceso) {
+        this.fechaProceso = fechaProceso;
     }
 
     public Integer getTurno() {
@@ -47,4 +56,5 @@ public class Correlativo {
     public void setNumero(String numero) {
         this.numero = numero;
     }
+
 }
