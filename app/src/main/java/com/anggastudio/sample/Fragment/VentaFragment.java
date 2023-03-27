@@ -74,7 +74,7 @@ public class VentaFragment extends Fragment{
     private String mCara;
 
     /**  Atributos de la Venta */
-    TextView  terminalID;
+    TextView  terminalID,turno;
     Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos,automatiStop;
 
     /**  AdapterList - Recycler */
@@ -115,6 +115,7 @@ public class VentaFragment extends Fragment{
         mAPIService  = GlobalInfo.getAPIService();
 
         /** Nombre de la Terminal ID */
+        turno           = view.findViewById(R.id.turno);
         terminalID      = view.findViewById(R.id.terminalID);
         automatiStop    = view.findViewById(R.id.automatiStop);
         btnlibre        = view.findViewById(R.id.btnlibre);
@@ -126,7 +127,8 @@ public class VentaFragment extends Fragment{
         btnserafin      = view.findViewById(R.id.btnserafin);
         btnpuntos       = view.findViewById(R.id.btnpuntos);
 
-        terminalID.setText(GlobalInfo.getterminalID10);
+        terminalID.setText(GlobalInfo.getterminalID10 + " - "+ "TURNO: " + GlobalInfo.getterminalTurno10.toString() );
+
 
         /** Boton Time Task */
         automatiStop.setOnClickListener(new View.OnClickListener() {
@@ -1472,11 +1474,13 @@ public class VentaFragment extends Fragment{
                 case "01" :
                     printama.printTextln("RUC          : "+ _ClienteID , Printama.LEFT);
                     printama.printTextln("Razon Social : "+ _ClienteRZ, Printama.LEFT);
+                    break;
                 case "03" :
                     printama.printTextln("DNI          : "+ _ClienteID , Printama.LEFT);
                     printama.printTextln("Nombres      : "+ _ClienteRZ, Printama.LEFT);
+                    break;
                 case "99" :
-
+                    break;
             }
 
             printama.setSmallText();

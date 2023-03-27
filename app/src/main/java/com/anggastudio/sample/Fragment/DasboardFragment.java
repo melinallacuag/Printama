@@ -27,6 +27,7 @@ import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.CDia;
 import com.anggastudio.sample.WebApiSVEN.Models.CTurno;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
+import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 
@@ -40,17 +41,13 @@ import retrofit2.Response;
 
 public class DasboardFragment extends Fragment{
 
+    private APIService mAPIService;
+
     TextView nombreusuario,fecha,turno,nombregrigo,sucursal,slogangrifo;
     CardView btnventa,btncierrex,btncambioturno,btniniciodia;
 
-    AlertDialog.Builder builder;
-    AlertDialog alertDialog;
-
     Button btncancelar,btnagregar;
-
-    private APIService mAPIService;
-
-    private Dialog modalCambioTurno,modalIcioDia;
+    private Dialog modalCambioTurno,modalIcioDia,modalAlerta;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +74,6 @@ public class DasboardFragment extends Fragment{
         fecha.setText(GlobalInfo.getterminalFecha10);
         turno.setText(GlobalInfo.getterminalTurno10.toString());
 
-
         findCompany(GlobalInfo.getterminalCompanyID10);
 
         btnventa.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +93,13 @@ public class DasboardFragment extends Fragment{
         });
 
         /** Mostrar Modal de Cambio de Turno */
+        modalAlerta = new Dialog(getContext());
+        modalAlerta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        modalAlerta.setContentView(R.layout.cambioturno_inciodia_alerta);
+        modalAlerta.setCancelable(true);
+
+
+        /** Mostrar Modal de Cambio de Turno */
         modalCambioTurno = new Dialog(getContext());
         modalCambioTurno.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         modalCambioTurno.setContentView(R.layout.fragment_cambio_turno);
@@ -106,7 +109,8 @@ public class DasboardFragment extends Fragment{
             @Override
             public void onClick(View view) {
 
-                modalCambioTurno.show();
+                /** API Retrofit - Cambio de Turno */
+                findOptranTurno(GlobalInfo.getterminalImei10);
 
                 btncancelar    = modalCambioTurno.findViewById(R.id.btncancelarcambioturno);
                 btnagregar     = modalCambioTurno.findViewById(R.id.btnagregarcambioturno);
@@ -150,7 +154,8 @@ public class DasboardFragment extends Fragment{
             @Override
             public void onClick(View view) {
 
-                modalIcioDia.show();
+                /** API Retrofit - Inicio de Día */
+                findOptranDia(GlobalInfo.getterminalImei10);
 
                 btncancelar    = modalIcioDia.findViewById(R.id.btncancelariniciodia);
                 btnagregar     = modalIcioDia.findViewById(R.id.btnagregariniciodia);
@@ -181,7 +186,8 @@ public class DasboardFragment extends Fragment{
               }
         });
 
-       return view;
+
+        return view;
 
     }
 
@@ -226,6 +232,7 @@ public class DasboardFragment extends Fragment{
 
     }
 
+    /** API SERVICE - Company */
     private void findCompany(Integer id){
 
         Call<List<Company>> call = mAPIService.findCompany(id);
@@ -275,5 +282,90 @@ public class DasboardFragment extends Fragment{
         });
     }
 
+    /** API SERVICE - Optran Cambio de Turno*/
+    private void findOptranTurno(String id){
+
+        Call<List<Optran>> call = mAPIService.findOptran(id);
+
+        call.enqueue(new Callback<List<Optran>>() {
+            @Override
+            public void onResponse(Call<List<Optran>> call, Response<List<Optran>> response) {
+
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<Optran> optranList = response.body();
+
+                    GlobalInfo.getpase10 = false;
+
+                    for(Optran optran: optranList) {
+                        GlobalInfo.getpase10 = true;
+                    }
+
+                    if (GlobalInfo.getpase10 == true){
+                        modalAlerta.show();
+                    }else{
+                        modalCambioTurno.show();
+                    }
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Optran>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Optran - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    /** API SERVICE - Optran Inicio de Día */
+    private void findOptranDia(String id){
+
+        Call<List<Optran>> call = mAPIService.findOptran(id);
+
+        call.enqueue(new Callback<List<Optran>>() {
+            @Override
+            public void onResponse(Call<List<Optran>> call, Response<List<Optran>> response) {
+
+                try {
+
+                    if(!response.isSuccessful()){
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    List<Optran> optranList = response.body();
+
+                    GlobalInfo.getpase10 = false;
+
+                    for(Optran optran: optranList) {
+                        GlobalInfo.getpase10 = true;
+                    }
+
+                    if (GlobalInfo.getpase10 == true){
+                        modalAlerta.show();
+                    }else{
+                        modalIcioDia.show();
+                    }
+
+                }catch (Exception ex){
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Optran>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE Optran - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
 }
