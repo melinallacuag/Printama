@@ -1107,7 +1107,6 @@ public class VentaFragment extends Fragment{
 
                     GlobalInfo.getpase10 = false;
 
-                    String mCara = "";
                     String mnTipoPago = "";
                     Double mnImpuesto = 0.00;
                     String mnNroPlaca = "";
@@ -2613,7 +2612,7 @@ public class VentaFragment extends Fragment{
                                   mnMtoCanje, GlobalInfo.getuserID10,
                                   mnItem, GlobalInfo.getoptranArticuloID10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10, GlobalInfo.getterminalAlmacenID10,
                                   GlobalInfo.getsettingImpuestoID110, GlobalInfo.getsettingImpuestoValor110, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
-                                  mnFise, GlobalInfo.getoptranTranID10, mCara, GlobalInfo.getoptranManguera10,
+                                  mnFise, GlobalInfo.getoptranTranID10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10,
                                   mnobservacionDet,
                                   mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoTotal, mnmtoPagoUSD, mnobservacionPag);
 
@@ -2622,7 +2621,7 @@ public class VentaFragment extends Fragment{
                     /** IMPRESION DEL COMPROBANTE*/
 
                     imprimirGR10(mnTipoDocumento, NroComprobante, xFechaHoraImpresion, GlobalInfo.getterminalTurno10,
-                                 GlobalInfo.getuserName10, mCara, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
+                                 GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
                                  GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
                                  mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
                                  mnPagoID, mnTarjetaCreditoID, mnOperacionREF);
