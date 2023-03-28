@@ -15,6 +15,7 @@ import com.anggastudio.sample.WebApiSVEN.Models.VContometro;
 import com.anggastudio.sample.WebApiSVEN.Models.VProducto;
 
 import java.util.List;
+import java.util.Locale;
 
 public class VProductoAdapter extends RecyclerView.Adapter<VProductoAdapter.ViewHolder>{
 
@@ -37,9 +38,9 @@ public class VProductoAdapter extends RecyclerView.Adapter<VProductoAdapter.View
     @Override
     public void onBindViewHolder(@NonNull VProductoAdapter.ViewHolder holder, int position) {
         holder.textPproducto.setText(vProductoList.get(position).getArticuloDS());
-        holder.textPvolumen.setText(String.valueOf(String.format("%.3f",vProductoList.get(position).getCantidad())));
-        holder.textPsoles.setText(String.valueOf(String.format("%.2f",vProductoList.get(position).getSoles())));
-        holder.textPdescuento.setText(String.valueOf(String.format("%.2f",vProductoList.get(position).getDescuento())));
+        holder.textPvolumen.setText(String.valueOf(String.format(Locale.getDefault(), "%,.3f" ,vProductoList.get(position).getCantidad())));
+        holder.textPsoles.setText(String.valueOf(String.format(Locale.getDefault(), "%,.2f" ,vProductoList.get(position).getSoles())));
+        holder.textPdescuento.setText(String.valueOf(String.format(Locale.getDefault(), "%,.2f" ,vProductoList.get(position).getDescuento())));
     }
 
     @Override

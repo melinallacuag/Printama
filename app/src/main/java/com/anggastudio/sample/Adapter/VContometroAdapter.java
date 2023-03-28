@@ -15,6 +15,7 @@ import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.VContometro;
 
 import java.util.List;
+import java.util.Locale;
 
 public class VContometroAdapter extends RecyclerView.Adapter<VContometroAdapter.ViewHolder> {
 
@@ -40,11 +41,13 @@ public class VContometroAdapter extends RecyclerView.Adapter<VContometroAdapter.
         holder.textproducto.setText(vContometroList.get(position).getArticuloDS());
         holder.textcantidadI.setText(String.valueOf(String.format("%.3f",vContometroList.get(position).getContomInicial())));
         holder.textcantidadF.setText(String.valueOf(String.format("%.3f",vContometroList.get(position).getContomFinal())));
-        holder.textgalones.setText(String.valueOf(String.format("%.3f",vContometroList.get(position).getGalones())));
+        holder.textgalones.setText(String.valueOf(String.format(Locale.getDefault(), "%,.3f" ,vContometroList.get(position).getGalones())));
     }
 
     @Override
     public int getItemCount() {
+
+      //  return Math.min(vContometroList.size(), 17);
         return vContometroList.size();
     }
 

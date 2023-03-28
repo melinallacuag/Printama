@@ -12,9 +12,8 @@
             android:layout_weight="1"
             android:fontFamily="@font/nunito_extrabold"
             android:gravity="center"
-            android:text="PRODUCTO"
-            android:textColor="#1E2025"
-            android:textSize="14sp"
+            android:textColor="@color/colorBlack"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <TextView
@@ -24,9 +23,8 @@
             android:layout_weight="1"
             android:fontFamily="@font/nunito_extrabold"
             android:gravity="center"
-            android:text="VOLUMEN"
-            android:textColor="#1E2025"
-            android:textSize="14sp"
+            android:textColor="@color/colorBlack"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <TextView
@@ -36,9 +34,8 @@
             android:layout_weight="1"
             android:fontFamily="@font/nunito_extrabold"
             android:gravity="center"
-            android:text="SOLES"
-            android:textColor="#1E2025"
-            android:textSize="14sp"
+            android:textColor="@color/colorBlack"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <TextView
@@ -48,9 +45,8 @@
             android:layout_weight="1"
             android:fontFamily="@font/nunito_extrabold"
             android:gravity="center"
-            android:text="DESCUENTO"
-            android:textColor="#1E2025"
-            android:textSize="14sp"
+            android:textColor="@color/colorBlack"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
     </LinearLayout>

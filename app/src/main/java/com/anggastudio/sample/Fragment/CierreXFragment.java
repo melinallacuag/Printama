@@ -1,5 +1,7 @@
 package com.anggastudio.sample.Fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,10 +31,12 @@ import com.anggastudio.sample.WebApiSVEN.Models.VProducto;
 import com.anggastudio.sample.WebApiSVEN.Models.VTipoPago;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import retrofit2.Call;
@@ -94,7 +98,7 @@ public class CierreXFragment extends Fragment {
         String FechaHoraImpresion    = formatdate.format(calendarprint.getTime());
 
         textNombreEmpresa.setText(GlobalInfo.getNameCompany10);
-        textSucural.setText(GlobalInfo.getBranchCompany10);
+        textSucural.setText("SUCURSAL: " + GlobalInfo.getBranchCompany10);
         FechaHoraIni.setText(GlobalInfo.getterminalFecha10);
         FechaHoraFin.setText(FechaHoraImpresion);
         FechaTrabajo.setText(GlobalInfo.getterminalFecha10);
@@ -157,7 +161,7 @@ public class CierreXFragment extends Fragment {
 
                     }
 
-                    String TotalVolumen = String.format("%.3f",RContometrosTotalGLL);
+                    String TotalVolumen = String.format(Locale.getDefault(), "%,.3f" ,RContometrosTotalGLL);
 
                     TotalVolumenContometro.setText(TotalVolumen);
 
@@ -204,15 +208,15 @@ public class CierreXFragment extends Fragment {
 
                     }
 
-                    String SProductosTotalGLL = String.format("%.3f",RProductosTotalGLL);
+                    String SProductosTotalGLL = String.format(Locale.getDefault(), "%,.3f" ,RProductosTotalGLL);
 
                     TotalMtogalones.setText(SProductosTotalGLL);
 
-                    String SProductosTotalSoles = String.format("%.2f",RProductosTotalSoles);
+                    String SProductosTotalSoles = String.format(Locale.getDefault(), "%,.2f" ,RProductosTotalSoles);
 
                     TotalSolesproducto.setText(SProductosTotalSoles);
 
-                    String SProductosTotalDesc = String.format("%.2f",RProductosTotalDesc);
+                    String SProductosTotalDesc = String.format(Locale.getDefault(), "%,.2f" ,RProductosTotalDesc);
 
                     TotalDescuento.setText(SProductosTotalDesc);
 
@@ -258,7 +262,7 @@ public class CierreXFragment extends Fragment {
 
                     }
 
-                    String TotalPagosSoles = String.format("%.2f",RPagosTotalSoles);
+                    String TotalPagosSoles = String.format(Locale.getDefault(), "%,.2f" ,RPagosTotalSoles);
 
                     TotalMontoPago.setText(TotalPagosSoles);
 
@@ -283,43 +287,12 @@ public class CierreXFragment extends Fragment {
 
     }
 
-    private  void cierrexj() {
-        String importe = "120.00";
-        Printama.with(getContext()).connect(printama -> {
-            printama.setSmallText();
-            printama.addNewLine(1);
-            printama.printText("VENTAS POR CARA\n", Printama.CENTER);
-            printama.printTextJustify("Cara Nro.1","120.00\n");
-            printama.printTextJustify("T.Gratuita","0.00\n");
-            printama.addNewLine(1);
-            printama.printTextln("Total S/: "+ importe, Printama.RIGHT);
-            printama.setNormalText();
-            printama.printDoubleDashedLine();
-            printama.setSmallText();
-            printama.printText("VENTAS POR TIPO DE PAGO\n", Printama.CENTER);
-            printama.printTextJustify("EFECTIVO", String.valueOf(GlobalInfo.getoptranSoles10));
-            printama.printTextJustify("TARJETA DE CREDITO","20.00\n");
-            printama.printTextJustify("SERAFINES","0.00\n");
-            printama.printTextJustify("T.Gratuita","0.00\n");
-            printama.addNewLine(1);
-            printama.printTextln("Total Neto S/: "+ importe, Printama.RIGHT);
-            printama.setNormalText();
-            printama.printDoubleDashedLine();
-            printama.setSmallText();
-            printama.printTextJustify("Tot.Descuento","0.00\n");
-            printama.printTextJustify("Tot.Incremento","0.00\n");
-            printama.addNewLine(1);
-            printama.printTextln("Total Bruto S/: "+ importe, Printama.RIGHT);
-            printama.feedPaper();
-            printama.close();
-        }, this::showToast);
-        DasboardFragment dasboardFragment  = new DasboardFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,dasboardFragment).commit();
-    }
-
     private void cierrex() {
+
+        Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
         View view = getView().findViewById(R.id.linearLayout2);
         Printama.with(getContext()).connect(printama -> {
+            printama.printImage(logoRobles, 100);
             printama.printFromView(view);
             new Handler().postDelayed(printama::close, 2000);
         }, this::showToast);

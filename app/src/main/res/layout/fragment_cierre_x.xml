@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,55 +16,48 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:background="@drawable/contenedor_detalle"
-            android:elevation="2sp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="0sp"
+            android:layout_marginBottom="2sp"
+            android:layout_marginStart="7sp"
+            android:layout_marginEnd="7sp"
+            android:background="@color/white"
+            android:elevation="5sp"
             android:orientation="vertical"
-            android:padding="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/logoprincipal"
-                android:layout_gravity="center"
-                />
-
+            android:paddingTop="0sp"
+            android:paddingBottom="5sp"
+            android:paddingStart="7sp"
+            android:paddingEnd="7sp">
 
             <TextView
                 android:id="@+id/textNombreEmpresa"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/nunito_extrabold"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="#1E2025"
-                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
                 android:textStyle="bold" />
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1sp"
-                android:layout_marginTop="10sp" />
+
             <TextView
                 android:id="@+id/textSucural"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/nunito_extrabold"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="#1E2025"
-                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
-                android:layout_marginTop="10sp" />
+                android:layout_marginTop="5sp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,29 +66,29 @@
                 android:text="CIERRE PARCIAL DE CAJA (X)"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="#1E2025"
-                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
-                android:layout_marginTop="10sp" />
+                android:layout_marginTop="3sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp">
+                android:layout_marginTop="5sp">
 
                 <TextView
-                    android:layout_width="280sp"
+                    android:layout_width="320sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="left"
                     android:text="Fecha/Hora Ini      :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -105,25 +97,25 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp">
+                android:layout_marginTop="5sp">
 
                 <TextView
-                    android:layout_width="280sp"
+                    android:layout_width="320sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="left"
                     android:text="Fecha/Hora Fin     :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -132,25 +124,25 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp">
+                android:layout_marginTop="5sp">
 
                 <TextView
-                    android:layout_width="280sp"
+                    android:layout_width="320sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="left"
                     android:text="Fecha Trabajo       :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -159,25 +151,25 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp">
+                android:layout_marginTop="5sp">
 
                 <TextView
-                    android:layout_width="280sp"
+                    android:layout_width="320sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="left"
                     android:text="Turno                     :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -186,24 +178,25 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp">
+                android:layout_marginTop="5sp">
 
                 <TextView
-                    android:layout_width="280sp"
+                    android:layout_width="320sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="left"
                     android:text="Cajero                    :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -212,24 +205,25 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp">
+                android:layout_marginTop="5sp">
 
                 <TextView
-                    android:layout_width="280sp"
+                    android:layout_width="320sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="left"
                     android:text="Nro. Despacho      :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -238,25 +232,25 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp">
+                android:layout_marginTop="5sp">
 
                 <TextView
-                    android:layout_width="280sp"
+                    android:layout_width="320sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="left"
                     android:text="Doc. Anulados      :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -265,25 +259,25 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp">
+                android:layout_marginTop="5sp">
 
                 <TextView
-                    android:layout_width="400sp"
+                    android:layout_width="450sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="left"
                     android:text="Total Doc. Anulados  (S/) :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -292,60 +286,57 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp"
-                android:background="@drawable/separador" />
+                android:layout_marginTop="10sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/nunito_extrabold"
-                android:text="VENTAS POR CONTOMETRO"
+                android:text="VENTAS POR CONTOMETROS DIGITALES"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="#1E2025"
-                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
-                android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp" />
+                android:layout_marginTop="3sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="250sp"
+                    android:layout_width="230sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
                     android:text="L"
-                    android:textColor="#1E2025"
-                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="250sp"
+                    android:layout_width="240sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
                     android:text="P"
-                    android:textColor="#1E2025"
-                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -355,8 +346,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
                     android:text="C.I"
-                    android:textColor="#1E2025"
-                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -366,8 +357,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
                     android:text="C.F"
-                    android:textColor="#1E2025"
-                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -377,31 +368,35 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
                     android:text="VOLUMEN"
-                    android:textColor="#1E2025"
-                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
-                android:layout_marginTop="5sp"
-                android:layout_marginBottom="5sp" />
+                android:layout_marginTop="5sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerVContometro"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
+
             <View
-                android:layout_width="100sp"
+                android:layout_width="90sp"
                 android:layout_height="1sp"
-                android:layout_gravity="end"
                 android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp"
-                android:background="@drawable/separador" />
+                android:layout_marginEnd="10sp"
+                android:layout_weight="1"
+                android:layout_gravity="end"
+                android:background="@drawable/separador"
+                android:layout_marginRight="10sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -414,8 +409,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="left"
                     android:text="TOTAL VOLUMEN  :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -425,8 +420,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -434,26 +429,25 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp"
                 android:background="@drawable/separador" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/nunito_extrabold"
                 android:text="VENTAS POR PRODUCTOS"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="#1E2025"
-                android:textSize="16sp"
+                android:textColor="@color/colorBlack"
+                android:layout_marginTop="5sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
-                android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp" />
+                android:layout_marginTop="5sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -466,8 +460,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
                     android:text="PRODUCTO"
-                    android:textColor="#1E2025"
-                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -477,8 +471,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
                     android:text="VOLUMEN"
-                    android:textColor="#1E2025"
-                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -488,8 +482,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
                     android:text="SOLES"
-                    android:textColor="#1E2025"
-                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -499,29 +493,29 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
                     android:text="DESCUENTO"
-                    android:textColor="#1E2025"
-                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
-                android:layout_marginTop="5sp"
-                android:layout_marginBottom="5sp" />
+                android:layout_marginTop="5sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerVProductos"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
+
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
-                android:layout_marginTop="10sp" />
+                android:layout_marginTop="5sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -530,15 +524,15 @@
                 <View
                     android:layout_width="400sp"
                     android:layout_height="1sp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginBottom="5sp"
                     android:layout_weight="1" />
 
                 <View
                     android:layout_width="380sp"
                     android:layout_height="1sp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginBottom="5sp"
                     android:layout_marginEnd="5sp"
                     android:layout_weight="1"
                     android:background="@drawable/separador"
@@ -548,8 +542,8 @@
                 <View
                     android:layout_width="380sp"
                     android:layout_height="1sp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginBottom="5sp"
                     android:layout_marginEnd="5sp"
                     android:layout_weight="1"
                     android:background="@drawable/separador"
@@ -558,8 +552,8 @@
                 <View
                     android:layout_width="380sp"
                     android:layout_height="1sp"
-                    android:layout_marginTop="10sp"
-                    android:layout_marginBottom="10sp"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginBottom="5sp"
                     android:layout_marginEnd="5sp"
                     android:layout_weight="1"
                     android:background="@drawable/separador"
@@ -578,8 +572,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
                     android:text="TOTALES :"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -589,9 +583,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
-
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     android:gravity="center" />
 
@@ -602,9 +595,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:text="0.00"
-
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     android:gravity="center" />
 
@@ -616,8 +608,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="center"
                     android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -626,50 +618,49 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp"
                 android:background="@drawable/separador" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/nunito_extrabold"
                 android:text="VENTAS POR TIPO DE PAGO "
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="#1E2025"
-                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
                 android:textStyle="bold" />
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
-                android:layout_marginTop="10sp" />
+                android:layout_marginTop="5sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerVTipoPago"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
+
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1sp"
-                android:layout_marginTop="10sp" />
+                android:layout_marginTop="5sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:text="T.Gratuito"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:text="Transferencia Gratuito"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -679,8 +670,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
                     android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -694,8 +685,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
                     android:text="Promociones"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -705,8 +696,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
                     android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -715,7 +706,6 @@
                 android:layout_height="1sp"
                 android:layout_gravity="end"
                 android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp"
                 android:background="@drawable/separador" />
 
             <LinearLayout
@@ -729,8 +719,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
                     android:text="TOTAL NETO S/"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -741,8 +731,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
                     android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -755,9 +745,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:text="Tot.Descuento"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:text="Total Descuento"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -767,8 +757,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
                     android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -781,9 +771,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/nunito_extrabold"
-                    android:text="Tot.Incremento"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:text="Total Incremento"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -793,8 +783,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
                     android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -803,7 +793,6 @@
                 android:layout_height="1sp"
                 android:layout_gravity="end"
                 android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp"
                 android:background="@drawable/separador" />
 
             <LinearLayout
@@ -817,8 +806,8 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
                     android:text="TOTAL BRUTO S/"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -829,52 +818,16 @@
                     android:fontFamily="@font/nunito_extrabold"
                     android:gravity="end"
                     android:text="0.00"
-                    android:textColor="#1E2025"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
-                android:layout_marginBottom="20sp"
-                android:background="@drawable/separador" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
-                    android:textColor="#fff"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="150sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:gravity="end"
-                    android:textColor="#fff"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50sp"
-                android:layout_marginBottom="20sp"
-                android:background="@drawable/separador" />
-
+                android:layout_marginTop="60sp"
+                android:layout_marginBottom="60sp" />
         </LinearLayout>
-
-
     </ScrollView>
 
     <Button

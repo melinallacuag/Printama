@@ -10,8 +10,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/nunito_extrabold"
-            android:textColor="#1E2025"
-            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
 
@@ -23,8 +23,8 @@
             android:layout_gravity="end"
             android:fontFamily="@font/nunito_extrabold"
             android:gravity="end"
-            android:textColor="#1E2025"
-            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:textSize="17sp"
             android:textStyle="bold" />
     </LinearLayout>
 
