@@ -74,7 +74,7 @@ public class VentaFragment extends Fragment{
     private String mCara;
 
     /**  Atributos de la Venta */
-    TextView  terminalID,turno;
+    TextView  terminalID;
     Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos,automatiStop;
 
     /**  AdapterList - Recycler */
@@ -115,7 +115,6 @@ public class VentaFragment extends Fragment{
         mAPIService  = GlobalInfo.getAPIService();
 
         /** Nombre de la Terminal ID */
-        turno           = view.findViewById(R.id.turno);
         terminalID      = view.findViewById(R.id.terminalID);
         automatiStop    = view.findViewById(R.id.automatiStop);
         btnlibre        = view.findViewById(R.id.btnlibre);
@@ -152,6 +151,7 @@ public class VentaFragment extends Fragment{
         btnnotadespacho.setEnabled(false);
         btnserafin.setEnabled(false);
         btnpuntos.setEnabled(false);
+
 
         /** Modalidad Libre */
         btnlibre.setOnClickListener(new View.OnClickListener() {
@@ -232,6 +232,18 @@ public class VentaFragment extends Fragment{
                         btngenerar       = modalBoleta.findViewById(R.id.btngenerarcliente);
                         buscardni        = modalBoleta.findViewById(R.id.btnrenic);
                         buscarplaca      = modalBoleta.findViewById(R.id.btnplaca);
+
+                        cbcredito.setEnabled(false);
+
+                        textNroOperacio.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                            @Override
+                            public void onFocusChange(View v, boolean hasFocus) {
+
+                                if (!hasFocus) {
+                                    textpagoefectivo.setText("0");
+                                }
+                            }
+                        });
 
 
                         /** Mostrar Formulario de Cliente y Realizar la Operacion */
@@ -350,7 +362,7 @@ public class VentaFragment extends Fragment{
                                 textkilometraje.getText().clear();
                                 textobservacion.getText().clear();
                                 textNroOperacio.getText().clear();
-                                textpagoefectivo.getText().clear();
+                                textpagoefectivo.setText("0");
 
                                 alertplaca.setErrorEnabled(false);
                                 alertdni.setErrorEnabled(false);
@@ -526,7 +538,7 @@ public class VentaFragment extends Fragment{
                                 textkilometraje.getText().clear();
                                 textobservacion.getText().clear();
                                 textNroOperacio.getText().clear();
-                                textpagoefectivo.getText().clear();
+                                textpagoefectivo.setText("0");
                             }
                         });
                     }
@@ -583,6 +595,18 @@ public class VentaFragment extends Fragment{
                         btncancelar      = modalFactura.findViewById(R.id.btncancelar);
                         buscarruc        = modalFactura.findViewById(R.id.btnsunat);
                         buscarplaca      = modalFactura.findViewById(R.id.btnplaca);
+
+                        cbcredito.setEnabled(false);
+
+                        textNroOperacio.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                            @Override
+                            public void onFocusChange(View v, boolean hasFocus) {
+
+                                if (!hasFocus) {
+                                    textpagoefectivo.setText("0");
+                                }
+                            }
+                        });
 
 
                         /** Mostrar Formulario de Cliente y Realizar la Operacion */
@@ -658,6 +682,7 @@ public class VentaFragment extends Fragment{
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 cards = (Card) dropStatus.getSelectedItem();
+
                             }
 
                             @Override
@@ -703,7 +728,7 @@ public class VentaFragment extends Fragment{
                                 textkilometraje.getText().clear();
                                 textobservacion.getText().clear();
                                 textNroOperacio.getText().clear();
-                                textpagoefectivo.getText().clear();
+                                textpagoefectivo.setText("0");
 
                                 alertplaca.setErrorEnabled(false);
                                 alertruc.setErrorEnabled(false);
@@ -841,7 +866,7 @@ public class VentaFragment extends Fragment{
                                         detalleVenta.setMontoSoles(Double.parseDouble(textpagoefectivo.getText().toString()));
                                     }
 
-                                }else if (datotipotarjeta.equals("Credito")) {
+                                }else if (datotipotarjeta.equals("Credito") ) {
 
                                     Double value = Double.parseDouble(textnpagoefectivo);
                                     DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -867,7 +892,7 @@ public class VentaFragment extends Fragment{
                                 textkilometraje.getText().clear();
                                 textobservacion.getText().clear();
                                 textNroOperacio.getText().clear();
-                                textpagoefectivo.getText().clear();
+                                textpagoefectivo.setText("0");
                             }
                         });
                     }
@@ -1057,7 +1082,7 @@ public class VentaFragment extends Fragment{
 
         registrarVenta();
 
-        timer.schedule(timerTask,0,3000);
+        timer.schedule(timerTask,0,1500);
 
     }
 
@@ -1100,6 +1125,10 @@ public class VentaFragment extends Fragment{
                     Double mnMtoSaldoCredito = 0.00;
                     Double mnPtosDisponibles = 0.00;
 
+                    mCara = GlobalInfo.getoptranNroLado10;
+
+                    /** FIN Consultando datos de la lista por nrolado GRID*/
+
                     String mnTipoVenta = "V";
                     String mnReferencia = "";
 
@@ -1128,31 +1157,6 @@ public class VentaFragment extends Fragment{
                     Double mnmtoPagoUSD = 0.00;
                     String mnobservacionPag = "";
 
-                    /** CALCULAR TOTALES IGV-SUBTOTAL-TOTAL VENTA*/
-
-                    if (GlobalInfo.getoptranSoles10 == null){
-                        return;
-                    }
-
-                    if (GlobalInfo.getoptranSoles10 == 0){
-                        return;
-                    }
-
-                    mnMtoTotal = GlobalInfo.getoptranSoles10;
-                    mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
-
-                    mnMtoSubTotal0 = mnMtoTotal / 1.18;
-                    mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
-                    mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
-
-                    mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
-                    mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
-                    mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
-
-                    /** FIN CALCULAR TOTALES IGV-SUBTOTAL-TOTAL VENTA*/
-
-                    mCara = GlobalInfo.getoptranNroLado10;
-
                     /** Consultando datos de la lista por nrolado GRID*/
                     for (DetalleVenta detalleVenta : detalleVentaList) {
 
@@ -1176,148 +1180,148 @@ public class VentaFragment extends Fragment{
                             mnMontoSoles = detalleVenta.getMontoSoles();
                             mnMtoSaldoCredito = detalleVenta.getMtoSaldoCredito();
                             mnPtosDisponibles = detalleVenta.getPtosDisponible();
-                            break;
 
+                            GlobalInfo.getpase11 = true;
+
+
+
+                            if (GlobalInfo.getoptranArticuloID10 == null){
+                                return;
+                            }
+
+                            if (GlobalInfo.getoptranArticuloID10.isEmpty()){
+                                return;
+                            }
+
+
+                            /** CALCULAR TOTALES IGV-SUBTOTAL-TOTAL VENTA*/
+
+                            if (GlobalInfo.getoptranSoles10 == null){
+                                return;
+                            }
+
+                            if (GlobalInfo.getoptranSoles10 == 0){
+                                return;
+                            }
+
+                            mnMtoTotal = GlobalInfo.getoptranSoles10;
+                            mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                            mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                            mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                            mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                            mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                            mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                            mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+
+                            /** FIN CALCULAR TOTALES IGV-SUBTOTAL-TOTAL VENTA*/
+
+                            /** Consultando datos del DOCUMENTO*/
+                            String mnTipoDocumento = "";
+
+                            switch (mnTipoPago) {
+                                case "E" :
+                                    if (mnClienteRUC.length() == 11) {
+                                        mnClienteID = mnClienteRUC;
+                                        mnTipoDocumento = "01";
+                                    } else if (mnClienteRUC.length() == 0) {
+                                        mnTipoDocumento = "03";
+                                    }
+                                    mnPagoID = 1;
+                                    mnTarjetaCreditoID = 0;
+                                    mnobservacionPag = "CONTADO";
+                                    break;
+                                case "T" :
+                                    if (mnClienteRUC.length() == 11) {
+                                        mnClienteID = mnClienteRUC;
+                                        mnTipoDocumento = "01";
+                                    } else if (mnClienteRUC.length() == 0) {
+                                        mnTipoDocumento = "03";
+                                    }
+                                    mnPagoID = 2;
+                                    mnTarjetaCreditoID = Integer.valueOf(mnTarjetaCredito);
+                                    mnobservacionPag = "TARJETA";
+                                    break;
+                                case "C" :
+                                    mnPagoID = 4;
+                                    mnTarjetaCreditoID = 0;
+                                    mnobservacionPag = "CREDITO";
+                                    break;
+                                case "G" :
+                                    mnTipoVenta = "G";
+                                    mnPagoID = 1;
+                                    mnTarjetaCreditoID = 0;
+                                    mnobservacionPag = "GRATUITA";
+                                    break;
+                                case "S" :
+                                    mnTipoDocumento = "98";
+                                    mnPagoID = 1;
+                                    mnTarjetaCreditoID = 0;
+                                    mnClienteID = "";
+                                    mnClienteRUC = "";
+                                    mnClienteRS = "";
+                                    mnCliernteDR = "";
+                                    mnNroPlaca = "";
+                                    break;
+                            }
+
+                            if(mnTipoPago == "S"){
+                                mnobservacionPag = "SERAFIN";
+                                mnTipoDocumento = "98";
+                                mnClienteID = "";
+                                mnClienteRUC = "";
+                                mnClienteRS = "";
+                                mnCliernteDR = "";
+                                mnNroPlaca = "";
+                            }
+
+                            if (mnClienteID.length() == 0 && mnTipoDocumento == "03") {
+                                mnClienteID = "11111111";
+                                mnClienteRUC = "";
+                                mnClienteRS = "CLIENTE VARIOS";
+                                mnCliernteDR = "";
+                                mnNroPlaca = "000-0000";
+                            }
+
+                            if (GlobalInfo.getpase11 == true) {
+
+                                findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento, mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR,
+                                        mnMtoDescuento, mnMtoSubTotal1, mnMtoImpuesto1, mnMtoTotal,
+                                        mnNroPlaca, mnKilometraje, mnTipoVenta, mnObservacion, mnReferencia,
+                                        mnTarjND, mnTarjetaPuntos, mnPtosGanados, mnPtosDisponibles,
+                                        mnMtoCanje, mnItem, mnFise, mnobservacionDet,
+                                        mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnmtoPagoUSD, mnobservacionPag);
+
+
+                            }
+
+
+                            GlobalInfo.getoptranTranID10     = 0;
+                            GlobalInfo.getoptranNroLado10    = "";
+                            GlobalInfo.getoptranManguera10   = "";
+                            GlobalInfo.getoptranFechaTran10  = "";
+                            GlobalInfo.getoptranArticuloID10 = "";
+                            GlobalInfo.getoptranProductoDs10 = "";
+                            GlobalInfo.getoptranPrecio10     = 0.00;
+                            GlobalInfo.getoptranGalones10    = 0.000;
+                            GlobalInfo.getoptranSoles10      = 0.00;
+                            GlobalInfo.getoptranOperador10   = "";
+                            GlobalInfo.getoptranCliente10    = "";
+                            GlobalInfo.getoptranUniMed10     = "";
+
+                            GlobalInfo.getcorrelativoFecha   = "";
+                            GlobalInfo.getcorrelativoSerie   = "";
+                            GlobalInfo.getcorrelativoNumero  = "";
+
+
+
+                            break;
                         }
+
                     }
 
-                    /** FIN Consultando datos de la lista por nrolado GRID*/
 
-                    /** Consultando datos del DOCUMENTO*/
-                    String mnTipoDocumento = "03";
-
-                    switch (mnTipoPago) {
-                        case "E" :
-                            if (mnClienteRUC.length() == 11) {
-                                mnClienteID = mnClienteRUC;
-                                mnTipoDocumento = "01";
-                            } else if (mnClienteRUC.length() == 0) {
-                                mnTipoDocumento = "03";
-                            }
-                            break;
-                        case "T" :
-                            if (mnClienteRUC.length() == 11) {
-                                mnClienteID = mnClienteRUC;
-                                mnTipoDocumento = "01";
-                            } else if (mnClienteRUC.length() == 0) {
-                                mnTipoDocumento = "03";
-                            }
-                            mnPagoID = 2;
-                            mnTarjetaCreditoID = Integer.valueOf(mnTarjetaCredito);
-                            break;
-                        case "C" :
-                            mnPagoID = 4;
-                            break;
-                        case "G" :
-                            mnTipoVenta = "G";
-                            break;
-                        case "S" :
-                            mnTipoDocumento = "98";
-                            mnClienteID = "";
-                            mnClienteRUC = "";
-                            mnClienteRS = "";
-                            mnCliernteDR = "";
-                            mnNroPlaca = "";
-                            break;
-                    }
-
-                    if(mnTipoPago == "S"){
-                        mnTipoDocumento = "98";
-                        mnClienteID = "";
-                        mnClienteRUC = "";
-                        mnClienteRS = "";
-                        mnCliernteDR = "";
-                        mnNroPlaca = "";
-                    }
-
-                    if (mnClienteID.length() == 0 && mnTipoDocumento == "03") {
-                        mnClienteID = "11111111";
-                        mnClienteRUC = "";
-                        mnClienteRS = "CLIENTE VARIOS";
-                        mnCliernteDR = "";
-                        mnNroPlaca = "000-0000";
-                    }
-
-                    findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento);
-
-                    String NumeroSerie = GlobalInfo.getcorrelativoSerie;
-                    String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
-
-                    if (NumeroSerie == null){
-                        return;
-                    }
-
-                    if (NumeroSerie.isEmpty()) {
-                        return;
-                    }
-
-                    if (NumeroDocumento == null){
-                        return;
-                    }
-
-                    if (NumeroDocumento.isEmpty()) {
-                        return;
-                    }
-
-                    String NroComprobante = GlobalInfo.getcorrelativoSerie + "-" + GlobalInfo.getcorrelativoNumero;
-
-                    /** Fecha de Impresión */
-                    Calendar calendarprint       = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
-                    SimpleDateFormat formatdate  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                    String xFechaHoraImpresion   = formatdate.format(calendarprint.getTime());
-                    String xFechaDocumento       = xFechaHoraImpresion.substring(6,10) + xFechaHoraImpresion.substring(3,5) + xFechaHoraImpresion.substring(0,2) + " " + xFechaHoraImpresion.substring(11,19);
-                    String xFechaDocumentoQR     = xFechaHoraImpresion.substring(6,10) + "-" + xFechaHoraImpresion.substring(3,5) + "-" + xFechaHoraImpresion.substring(0,2);
-
-                    /** FIN Consultando datos del DOCUMENTO-SERIE-CORRELATIVO*/
-
-
-                    /** GRABAR VENTA EN BASE DE DATOS*/
-
-
-                    grabarVentaCA(GlobalInfo.getterminalCompanyID10, mnTipoDocumento, GlobalInfo.getcorrelativoSerie, GlobalInfo.getcorrelativoNumero,
-                                  GlobalInfo.getterminalID10, mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR,
-                                  GlobalInfo.getterminalTurno10, GlobalInfo.getcorrelativoFecha, xFechaDocumento, GlobalInfo.getoptranFechaTran10,
-                                  mnMtoDescuento, mnMtoSubTotal1, mnMtoImpuesto1, mnMtoTotal,
-                                  mnNroPlaca, mnKilometraje, mnTipoVenta, mnObservacion, mnReferencia,
-                                  mnTarjND, mnTarjetaPuntos, mnPtosGanados, mnPtosDisponibles,
-                                  mnMtoCanje, GlobalInfo.getuserID10,
-                                  mnItem, GlobalInfo.getoptranArticuloID10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10, GlobalInfo.getterminalAlmacenID10,
-                                  GlobalInfo.getsettingImpuestoID110, GlobalInfo.getsettingImpuestoValor110, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
-                                  mnFise, GlobalInfo.getoptranTranID10, mCara, GlobalInfo.getoptranManguera10,
-                                  mnobservacionDet,
-                                  mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoTotal, mnmtoPagoUSD, mnobservacionPag);
-
-                    /** FIN GRABAR VENTA EN BASE DE DATOS*/
-
-
-                    /** IMPRESION DEL COMPROBANTE*/
-
-                    imprimirGR10(mnTipoDocumento, NroComprobante, xFechaHoraImpresion, GlobalInfo.getterminalTurno10,
-                                 GlobalInfo.getuserName10, mCara, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
-                                 GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
-                                 mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
-                                 mnPagoID, mnTarjetaCreditoID, mnOperacionREF);
-
-                    /** FIN IMPRESION DEL COMPROBANTE*/
-
-                    findDetalleVenta(GlobalInfo.getterminalImei10);
-
-                    GlobalInfo.getoptranTranID10     = 0;
-                    GlobalInfo.getoptranNroLado10    = "";
-                    GlobalInfo.getoptranManguera10   = "";
-                    GlobalInfo.getoptranFechaTran10  = "";
-                    GlobalInfo.getoptranArticuloID10 = "";
-                    GlobalInfo.getoptranProductoDs10 = "";
-                    GlobalInfo.getoptranPrecio10     = 0.00;
-                    GlobalInfo.getoptranGalones10    = 0.000;
-                    GlobalInfo.getoptranSoles10      = 0.00;
-                    GlobalInfo.getoptranOperador10   = "";
-                    GlobalInfo.getoptranCliente10    = "";
-                    GlobalInfo.getoptranUniMed10     = "";
-
-                    GlobalInfo.getcorrelativoFecha   = "";
-                    GlobalInfo.getcorrelativoSerie   = "";
-                    GlobalInfo.getcorrelativoNumero  = "";
 
                 }
                 /** FIN Consultando datos OPTRAN*/
@@ -1390,8 +1394,11 @@ public class VentaFragment extends Fragment{
                               String _ClienteID, String _ClienteRUC, String _ClienteRZ, String _ClienteDR, String _NroPlaca,
                               String _FechaQR, Integer _PagoID, Integer _TarjetaCreditoID, String _OperacionREF){
 
-        /** Logo de la Empresa */
-        Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
+
+        Bitmap logoRobles = Printama.getBitmapFromVector(getContext(), R.drawable.logoprincipal);
+      //  Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
+
+        String TipoDNI = "1";
 
         String NameCompany = GlobalInfo.getNameCompany10;
         String RUCCompany = GlobalInfo.getRucCompany10;
@@ -1402,22 +1409,12 @@ public class VentaFragment extends Fragment{
         String Branch1 = BranchCompany.substring(0,32);
         String Branch2 = BranchCompany.substring(35,51);
 
-        String TituloTk = "";
-        String TipoDNI = "1";
-
         switch (_TipoDocumento) {
             case "01" :
-                TituloTk = "FACTURA DE VENTA ELECTRONICA";
                 TipoDNI = "6";
                 break;
-            case "03" :
-                TituloTk = "BOLETA DE VENTA ELECTRONICA";
-                break;
             case "98" :
-                TituloTk = "NOTA DE DESPACHO";
-                break;
-            case "99" :
-                TituloTk = "TICKET SERAFIN";
+                TipoDNI = "0";
                 break;
         }
 
@@ -1459,7 +1456,22 @@ public class VentaFragment extends Fragment{
             printama.printTextlnBold("SUCURSAL: " + Branch1, Printama.CENTER);
             printama.printTextlnBold(Branch2, Printama.CENTER);
             printama.printTextlnBold("RUC: " + RUCCompany, Printama.CENTER);
-            printama.printTextlnBold("BOLETA DE VENTA ELECTRONICA", Printama.CENTER);
+
+            switch (_TipoDocumento) {
+                case "01" :
+                    printama.printTextlnBold("FACTURA DE VENTA ELECTRONICA", Printama.CENTER);
+                    break;
+                case "03" :
+                    printama.printTextlnBold("BOLETA DE VENTA ELECTRONICA", Printama.CENTER);
+                    break;
+                case "98" :
+                    printama.printTextlnBold("NOTA DE DESPACHO", Printama.CENTER);
+                    break;
+                case "99" :
+                    printama.printTextlnBold("TICKET SERAFIN", Printama.CENTER);
+                    break;
+            }
+
             printama.printTextlnBold(_NroDocumento,Printama.CENTER);
             printama.setSmallText();
             printama.printDoubleDashedLine();
@@ -1476,8 +1488,13 @@ public class VentaFragment extends Fragment{
                     printama.printTextln("Razon Social : "+ _ClienteRZ, Printama.LEFT);
                     break;
                 case "03" :
-                    printama.printTextln("DNI          : "+ _ClienteID , Printama.LEFT);
-                    printama.printTextln("Nombres      : "+ _ClienteRZ, Printama.LEFT);
+
+                    if (GlobalInfo.getsettingClienteID10.equals(_ClienteID)){
+
+                    }else {
+                        printama.printTextln("DNI          : "+ _ClienteID , Printama.LEFT);
+                        printama.printTextln("Nombres      : "+ _ClienteRZ, Printama.LEFT);
+                    }
                     break;
                 case "99" :
                     break;
@@ -1495,7 +1512,25 @@ public class VentaFragment extends Fragment{
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
             printama.setSmallText();
-            printama.printTextlnBold("TOTAL VENTA: S/ "+ MtoTotalFF , Printama.RIGHT);
+
+
+            switch (_TipoDocumento) {
+                case "01" :
+                    printama.printTextln("OP. GRAVADAS: S/ "+MtoSubTotalFF, Printama.RIGHT);
+                    printama.printTextln("I.G.V. 18%: S/  "+ MtoImpuestoFF, Printama.RIGHT);
+                    printama.printTextlnBold("TOTAL VENTA: S/ "+ MtoTotalFF , Printama.RIGHT);
+                    break;
+                case "03" :
+                    printama.printTextlnBold("TOTAL VENTA: S/ "+ MtoTotalFF , Printama.RIGHT);
+                    break;
+                case "98" :
+                    printama.printTextlnBold("TOTAL VENTA: S/ "+ MtoTotalFF , Printama.RIGHT);
+                    break;
+                case "99" :
+                    printama.printTextlnBold("TOTAL VENTA: S/ "+ MtoTotalFF , Printama.RIGHT);
+                    break;
+            }
+
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
@@ -1626,7 +1661,7 @@ public class VentaFragment extends Fragment{
 
                                 mnTipoDocumento = "01";
 
-                                findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento);
+                                /*findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento);*/
 
                                 String NumeroSerie = GlobalInfo.getcorrelativoSerie;
                                 String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
@@ -1667,7 +1702,7 @@ public class VentaFragment extends Fragment{
 
                                 mnTipoDocumento = "03";
 
-                                findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento);
+                                /*findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento);*/
 
                                 String NumeroSerie = GlobalInfo.getcorrelativoSerie;
                                 String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
@@ -1705,7 +1740,7 @@ public class VentaFragment extends Fragment{
                                 return;
                             }
 
-                            findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento);
+                            /*findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento);*/
 
                             String NumeroSerie = GlobalInfo.getcorrelativoSerie;
                             String NumeroDocumento = GlobalInfo.getcorrelativoNumero;
@@ -2512,9 +2547,13 @@ public class VentaFragment extends Fragment{
         }, this::showToast);
     }
 
-
     /** API SERVICE - Correlativo */
-    private void findCorrelativo(String id , String mnTipoDocumento){
+    private void findCorrelativo(String id , String mnTipoDocumento, String mnClienteID, String mnClienteRUC, String mnClienteRS, String mnCliernteDR,
+                                 Double mnMtoDescuento, Double mnMtoSubTotal1, Double mnMtoImpuesto1, Double mnMtoTotal,
+                                 String mnNroPlaca, String mnKilometraje, String mnTipoVenta, String mnObservacion, String mnReferencia,
+                                 String mnTarjND, String mnTarjetaPuntos, Double mnPtosGanados, Double mnPtosDisponibles,
+                                 Double mnMtoCanje, Integer mnItem, Double mnFise, String mnobservacionDet,
+                                 Integer mnPagoID, Integer mnTarjetaCreditoID, String mnOperacionREF, Double mnmtoPagoUSD, String mnobservacionPag){
 
         Call<List<Correlativo>> call = mAPIService.findCorrelativo(id,mnTipoDocumento);
 
@@ -2537,6 +2576,62 @@ public class VentaFragment extends Fragment{
                         GlobalInfo.getcorrelativoNumero = String.valueOf(correlativo.getNumero());
 
                     }
+
+                    /** Consultando datos del DOCUMENTO-SERIE-CORRELATIVO*/
+
+                    String GRFecProceso = GlobalInfo.getcorrelativoFecha;
+                    String GRNumeroSerie = GlobalInfo.getcorrelativoSerie;
+                    String GRNumeroDocumento = GlobalInfo.getcorrelativoNumero;
+
+                    String NroComprobante = GlobalInfo.getcorrelativoSerie + "-" + GlobalInfo.getcorrelativoNumero;
+
+                    /** Fecha de Impresión */
+                    Calendar calendarprint       = Calendar.getInstance(TimeZone.getTimeZone("America/Lima"));
+                    SimpleDateFormat formatdate  = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    String xFechaHoraImpresion   = formatdate.format(calendarprint.getTime());
+                    String xFechaDocumento       = xFechaHoraImpresion.substring(6,10) + xFechaHoraImpresion.substring(3,5) + xFechaHoraImpresion.substring(0,2) + " " + xFechaHoraImpresion.substring(11,19);
+                    String xFechaDocumentoQR     = xFechaHoraImpresion.substring(6,10) + "-" + xFechaHoraImpresion.substring(3,5) + "-" + xFechaHoraImpresion.substring(0,2);
+
+                    /** FIN Consultando datos del DOCUMENTO-SERIE-CORRELATIVO*/
+
+                    /** GRABAR VENTA EN BASE DE DATOS*/
+
+                    if (GlobalInfo.getoptranArticuloID10 == null){
+                        return;
+                    }
+
+                    if (GlobalInfo.getoptranArticuloID10.isEmpty()){
+                        return;
+                    }
+
+                    grabarVentaCA(GlobalInfo.getterminalCompanyID10, mnTipoDocumento, GlobalInfo.getcorrelativoSerie, GlobalInfo.getcorrelativoNumero,
+                                  GlobalInfo.getterminalID10, mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR,
+                                  GlobalInfo.getterminalTurno10, GlobalInfo.getcorrelativoFecha, xFechaDocumento, GlobalInfo.getoptranFechaTran10,
+                                  mnMtoDescuento, mnMtoSubTotal1, mnMtoImpuesto1, mnMtoTotal,
+                                  mnNroPlaca, mnKilometraje, mnTipoVenta, mnObservacion, mnReferencia,
+                                  mnTarjND, mnTarjetaPuntos, mnPtosGanados, mnPtosDisponibles,
+                                  mnMtoCanje, GlobalInfo.getuserID10,
+                                  mnItem, GlobalInfo.getoptranArticuloID10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10, GlobalInfo.getterminalAlmacenID10,
+                                  GlobalInfo.getsettingImpuestoID110, GlobalInfo.getsettingImpuestoValor110, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
+                                  mnFise, GlobalInfo.getoptranTranID10, mCara, GlobalInfo.getoptranManguera10,
+                                  mnobservacionDet,
+                                  mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoTotal, mnmtoPagoUSD, mnobservacionPag);
+
+                    /** FIN GRABAR VENTA EN BASE DE DATOS*/
+
+                    /** IMPRESION DEL COMPROBANTE*/
+
+                    imprimirGR10(mnTipoDocumento, NroComprobante, xFechaHoraImpresion, GlobalInfo.getterminalTurno10,
+                                 GlobalInfo.getuserName10, mCara, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
+                                 GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
+                                 mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
+                                 mnPagoID, mnTarjetaCreditoID, mnOperacionREF);
+
+                    /** FIN IMPRESION DEL COMPROBANTE*/
+
+                    findDetalleVenta(GlobalInfo.getterminalImei10);
+
+                    GlobalInfo.getpase11 = false;
 
                 }catch (Exception ex){
                     Toast.makeText(getContext(),ex.getMessage(), Toast.LENGTH_SHORT).show();

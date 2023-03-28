@@ -147,6 +147,7 @@ public class GlobalInfo {
     public static String  getcorrelativoNumero;
 
     public static Boolean getpase10 = false;
+    public static Boolean getpase11 = false;
 
     /**
      * Datos de la Cliente Sellecion
@@ -178,7 +179,7 @@ public class GlobalInfo {
     /**
      * URL - APIService
      */
-    public static final String BASE_URL = "http://192.168.1.227:8081/";
+    public static final String BASE_URL = "http://192.168.1.245:8081/";
 
     public static APIService getAPIService() {
         return RetrofitClient.getClient(BASE_URL).create(APIService.class);
