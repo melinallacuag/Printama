@@ -1,28 +1,19 @@
 package com.anggastudio.sample.Fragment;
-
-import static android.content.Context.MODE_PRIVATE;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.anggastudio.sample.Login;
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
@@ -30,12 +21,8 @@ import com.anggastudio.sample.WebApiSVEN.Models.CDia;
 import com.anggastudio.sample.WebApiSVEN.Models.CTurno;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
-import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
-
 import java.util.List;
-import java.util.Locale;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,34 +69,33 @@ public class DasboardFragment extends Fragment{
             @Override
             public void onClick(View view) {
 
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManagerVenta = getActivity().getSupportFragmentManager();
 
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentTransaction fragmentTransactionVenta = fragmentManagerVenta.beginTransaction();
 
-                int fragmentContainerId = R.id.fragment_container;
+                int fragmentContainerVenta = R.id.fragment_container;
                 VentaFragment ventaFragment = new VentaFragment();
-                fragmentTransaction.replace(fragmentContainerId, ventaFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                fragmentTransactionVenta.replace(fragmentContainerVenta, ventaFragment);
+                fragmentTransactionVenta.addToBackStack(null);
+                fragmentTransactionVenta.commit();
 
-             //   getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,ventaFragment).commit();
             }
         });
 
         btncierrex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentManager fragmentManagerCierreX = getActivity().getSupportFragmentManager();
 
-                int fragmentContainerId = R.id.fragment_container;
+                FragmentTransaction fragmentTransactionCierreX = fragmentManagerCierreX.beginTransaction();
+
+                int fragmentContainerCierreX = R.id.fragment_container;
                 CierreXFragment cierreXFragment = new CierreXFragment();
-                fragmentTransaction.replace(fragmentContainerId, cierreXFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                fragmentTransactionCierreX.replace(fragmentContainerCierreX, cierreXFragment);
+                fragmentTransactionCierreX.addToBackStack(null);
+                fragmentTransactionCierreX.commit();
 
-              //  getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,cierreXFragment).commit();
             }
         });
 
@@ -118,7 +104,6 @@ public class DasboardFragment extends Fragment{
         modalAlerta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         modalAlerta.setContentView(R.layout.cambioturno_inciodia_alerta);
         modalAlerta.setCancelable(true);
-
 
         /** Mostrar Modal de Cambio de Turno */
         modalCambioTurno = new Dialog(getContext());
@@ -164,7 +149,6 @@ public class DasboardFragment extends Fragment{
             }
         });
 
-
         /** Mostrar Modal de Inicio de Día */
         modalIcioDia = new Dialog(getContext());
         modalIcioDia.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -206,7 +190,6 @@ public class DasboardFragment extends Fragment{
                 });
               }
         });
-
 
         return view;
 
