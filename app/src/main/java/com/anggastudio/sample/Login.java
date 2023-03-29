@@ -60,7 +60,7 @@ public class Login extends AppCompatActivity {
         configuracion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Login.this,MainActivity.class));
+                startActivity(new Intent( getApplicationContext(),MainActivity.class));
             }
         });
 
@@ -111,7 +111,7 @@ public class Login extends AppCompatActivity {
                 try {
 
                     if(!response.isSuccessful()){
-                        Toast.makeText(Login.this, "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText( getApplicationContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -129,22 +129,22 @@ public class Login extends AppCompatActivity {
 
                     if(getPass.equals(GlobalInfo.getuserPass10) || getName.equals(GlobalInfo.getuserName10 )){
 
-                        Toast.makeText(Login.this, "Bienvenido al Sistema SVEN", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this,Menu.class));
+                        Toast.makeText( getApplicationContext(), "Bienvenido al Sistema SVEN", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent( getApplicationContext(),Menu.class));
 
                     }
                     else {
-                        Toast.makeText(Login.this, "El usuario o la contraseña son incorrectos", Toast.LENGTH_SHORT).show();
+                        Toast.makeText( getApplicationContext(), "El usuario o la contraseña son incorrectos", Toast.LENGTH_SHORT).show();
                     }
 
                 }catch (Exception ex){
-                    Toast.makeText(Login.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText( getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Users>> call, Throwable t) {
-                Toast.makeText(Login.this, "Error de conexión APICORE Users - RED - WIFI", Toast.LENGTH_SHORT).show();
+                Toast.makeText( getApplicationContext(), "Error de conexión APICORE Users - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -161,7 +161,7 @@ public class Login extends AppCompatActivity {
                 try {
 
                     if(!response.isSuccessful()){
-                        Toast.makeText(Login.this, "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText( getApplicationContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -201,20 +201,20 @@ public class Login extends AppCompatActivity {
                     if (GlobalInfo.getterminalID10.isEmpty() || GlobalInfo.getterminalID10 == null) {
 
                         imeii.setTextColor(getResources().getColor(R.color.colorError));
-                        Toast.makeText(Login.this, "Terminal no configurado, comuniquese con el administrador.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText( getApplicationContext(), "Terminal no configurado, comuniquese con el administrador.", Toast.LENGTH_SHORT).show();
                         return;
 
                     }
 
                 }catch (Exception ex){
-                    Toast.makeText(Login.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText( getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<List<Terminal>> call, Throwable t) {
-                Toast.makeText(Login.this, "Error de conexión APICORE Terminal - RED - WIFI", Toast.LENGTH_SHORT).show();
+                Toast.makeText( getApplicationContext(), "Error de conexión APICORE Terminal - RED - WIFI", Toast.LENGTH_SHORT).show();
             }
         });
 

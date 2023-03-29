@@ -12,6 +12,8 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -79,16 +81,35 @@ public class DasboardFragment extends Fragment{
         btnventa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                int fragmentContainerId = R.id.fragment_container;
                 VentaFragment ventaFragment = new VentaFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,ventaFragment).commit();
+                fragmentTransaction.replace(fragmentContainerId, ventaFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+             //   getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,ventaFragment).commit();
             }
         });
 
         btncierrex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                int fragmentContainerId = R.id.fragment_container;
                 CierreXFragment cierreXFragment = new CierreXFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,cierreXFragment).commit();
+                fragmentTransaction.replace(fragmentContainerId, cierreXFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+              //  getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,cierreXFragment).commit();
             }
         });
 

@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -67,17 +69,17 @@ public class Menu extends AppCompatActivity implements NavigationView.OnNavigati
 
             case R.id.nav_dasboard:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DasboardFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DasboardFragment()).addToBackStack(null).commit();
                 break;
 
             case R.id.nav_venta:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VentaFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VentaFragment()).addToBackStack(null).commit();
                 break;
 
             case R.id.nav_cierrex:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CierreXFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CierreXFragment()).addToBackStack(null).commit();
                 break;
 
             case R.id.nav_cambioturno:
@@ -186,7 +188,13 @@ public class Menu extends AppCompatActivity implements NavigationView.OnNavigati
     @Override
     public void onBackPressed() {
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DasboardFragment()).commit();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+               getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DasboardFragment()).commit();
+        }
+
+
 
     }
 

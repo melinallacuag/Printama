@@ -1,6 +1,7 @@
 package com.anggastudio.sample.Fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,8 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -107,12 +110,16 @@ public class VentaFragment extends Fragment{
     /** Formularios -  Dialog*/
     private Dialog modalBoleta,modalFactura,modalNDespacho,modalCliente,modalClienteRUC;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
 
+
+
         mAPIService  = GlobalInfo.getAPIService();
+
 
         /** Nombre de la Terminal ID */
         terminalID      = view.findViewById(R.id.terminalID);
@@ -183,6 +190,7 @@ public class VentaFragment extends Fragment{
             }
         });
 
+
         /** Mostrar Formulario de Boleta y Realizar la Operacion */
         modalBoleta = new Dialog(getContext());
         modalBoleta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -197,9 +205,7 @@ public class VentaFragment extends Fragment{
 
                     String mnCara = detalleVenta.getCara().toString();
 
-                    if(mCara == null){
-                        Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
-                    }else if(mnCara.equals(mCara)) {
+                    if(mnCara.equals(mCara)) {
 
                         modalBoleta.show();
 
@@ -489,16 +495,19 @@ public class VentaFragment extends Fragment{
                                 detalleVenta.setClienteDR(textdireccion.getText().toString());
                                 detalleVenta.setKilometraje(textkilometraje.getText().toString());
                                 detalleVenta.setObservacion(textobservacion.getText().toString());
+
                                 detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
 
-                                String datotipotarjeta =radioButton.getText().toString();
+
 
                                 detalleVenta.setTarjetaCredito("");
                                 detalleVenta.setOperacionREF("");
                                 detalleVenta.setMontoSoles(0.00);
 
+                                String datotipotarjeta = radioButton.getText().toString();
 
                                 if (datotipotarjeta.equals("Tarjeta")){
+
 
                                     Double value = Double.valueOf(textnpagoefectivo);
                                     DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -514,6 +523,7 @@ public class VentaFragment extends Fragment{
                                     }
 
                                 }else if (datotipotarjeta.equals("Credito")) {
+
 
                                     Double value = Double.valueOf(textnpagoefectivo);
                                     DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -539,6 +549,8 @@ public class VentaFragment extends Fragment{
                                 textobservacion.getText().clear();
                                 textNroOperacio.getText().clear();
                                 textpagoefectivo.setText("0");
+                                radioGroup.check(cbefectivo.getId());
+
                             }
                         });
                     }
@@ -546,6 +558,7 @@ public class VentaFragment extends Fragment{
 
             }
         });
+
 
         /** Mostrar Formulario de Factura y Realizar la Operacion */
         modalFactura = new Dialog(getContext());
@@ -561,9 +574,7 @@ public class VentaFragment extends Fragment{
 
                     String mnCara = detalleVenta.getCara().toString();
 
-                    if(mCara == null){
-                        Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
-                    } else if(mnCara.equals(mCara) ) {
+                    if(mnCara.equals(mCara) ) {
 
                         modalFactura.show();
 
@@ -633,29 +644,29 @@ public class VentaFragment extends Fragment{
                                 recyclerCliente.setLayoutManager(new LinearLayoutManager(getContext()));
 
                                 btncancelar.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
+                                    @Override
+                                    public void onClick(View view) {
 
-                                                modalClienteRUC.dismiss();
+                                        modalClienteRUC.dismiss();
 
-                                                buscadorUser.setQuery("", false);
+                                        buscadorUser.setQuery("", false);
 
-                                            }
-                                        });
+                                    }
+                                });
 
                                 /**  Buscador por Nombre - DNI */
                                 buscadorUser.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                                            @Override
-                                            public boolean onQueryTextSubmit(String query) {
-                                                return false;
-                                            }
+                                    @Override
+                                    public boolean onQueryTextSubmit(String query) {
+                                        return false;
+                                    }
 
-                                            @Override
-                                            public boolean onQueryTextChange(String newText) {
-                                                clienteAdapter.filtrado(newText);
-                                                return false;
-                                            }
-                                        });
+                                    @Override
+                                    public boolean onQueryTextChange(String newText) {
+                                        clienteAdapter.filtrado(newText);
+                                        return false;
+                                    }
+                                });
 
                                 return true;
                             }
@@ -844,15 +855,17 @@ public class VentaFragment extends Fragment{
                                 detalleVenta.setClienteDR(textdireccion.getText().toString());
                                 detalleVenta.setKilometraje(textkilometraje.getText().toString());
                                 detalleVenta.setObservacion(textobservacion.getText().toString());
-                                detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
 
-                                String datotipotarjeta =radioButton.getText().toString();
+                                detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
 
                                 detalleVenta.setTarjetaCredito("");
                                 detalleVenta.setOperacionREF("");
                                 detalleVenta.setMontoSoles(0.00);
 
+                                String datotipotarjeta =radioButton.getText().toString();
+
                                 if (datotipotarjeta.equals("Tarjeta")){
+
                                     Double value = Double.parseDouble(textnpagoefectivo);
                                     DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
@@ -893,12 +906,14 @@ public class VentaFragment extends Fragment{
                                 textobservacion.getText().clear();
                                 textNroOperacio.getText().clear();
                                 textpagoefectivo.setText("0");
+                                radioGroup.check(cbefectivo.getId());
                             }
                         });
                     }
                 }
             }
         });
+
 
         /** Mostrar Formulario de Nota de Despacho y Realizar la Operacion */
         modalNDespacho = new Dialog(getContext());
@@ -1076,11 +1091,16 @@ public class VentaFragment extends Fragment{
         return view;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
     private void startTimerGR1() {
 
         timer = new Timer();
 
-        registrarVenta();
+        registrarVENTA2023();
 
         timer.schedule(timerTask,0,1500);
 
@@ -1092,6 +1112,243 @@ public class VentaFragment extends Fragment{
         mTimerRunning = false;
         automatiStop.setText("Stop");
         automatiStop.setBackgroundColor(Color.parseColor("#6c757d"));
+    }
+
+    private void registrarVENTA2023() {
+
+        timerTask = new TimerTask() {
+
+            public void run() {
+
+                /** Consultando ventas pendientes por terminal*/
+                findOptran(GlobalInfo.getterminalImei10);
+
+                if (GlobalInfo.getpase10 == true) {
+
+                    String mnTipoPago = "";
+                    Double mnImpuesto = 0.00;
+                    String mnNroPlaca = "";
+                    String mnTarjetaPuntos = "";
+                    String mnClienteID = "";
+                    String mnClienteRUC = "";
+                    String mnClienteRS = "";
+                    String mnCliernteDR = "";
+                    String mnTarjND = "";
+                    String mnTarjetaCredito = "";
+                    String mnOperacionREF = "";
+                    String mnObservacion = "";
+                    String mnKilometraje = "";
+                    Double mnMontoSoles = 0.00;
+                    Double mnMtoSaldoCredito = 0.00;
+                    Double mnPtosDisponibles = 0.00;
+
+                    String mnTipoVenta = "V";
+                    String mnReferencia = "";
+
+                    Double mnPtosGanados = 0.00;
+
+                    Double mnMtoDescuento = 0.00;
+                    Double mnMtoCanje = 0.00;
+
+                    Double mnMtoSubTotal0 = 0.00;
+                    Double mnMtoSubTotal1 = 0.00;
+                    String mnMtoSubTotal2 = "";
+
+                    Double mnMtoImpuesto0 = 0.00;
+                    Double mnMtoImpuesto1 = 0.00;
+                    String mnMtoImpuesto2 = "";
+
+                    Double mnMtoTotal = 0.00;
+                    String mnMtoTotal2 = "";
+
+                    Integer mnItem = 1;
+                    Double mnFise = 0.00;
+                    String mnobservacionDet = "";
+
+                    Integer mnPagoID = 1;
+                    Integer mnTarjetaCreditoID = 0;
+                    Double mnmtoPagoUSD = 0.00;
+                    String mnobservacionPag = "";
+
+                    GlobalInfo.getpase10 = false;
+
+                    /** Consultando datos de la lista por nrolado GRID*/
+                    for (DetalleVenta detalleVenta : detalleVentaList) {
+
+                        String mnCara = detalleVenta.getCara().toString();
+
+                        if (mnCara.equals(GlobalInfo.getoptranNroLado10)) {
+
+                            mnTipoPago = detalleVenta.getTipoPago().toString();
+                            mnImpuesto = detalleVenta.getImpuesto();
+                            mnNroPlaca = detalleVenta.getNroPlaca();
+                            mnTarjetaPuntos = detalleVenta.getTarjetaPuntos();
+                            mnClienteID = detalleVenta.getClienteID();
+                            mnClienteRUC = detalleVenta.getClienteRUC();
+                            mnClienteRS = detalleVenta.getClienteRS().toString();
+                            mnCliernteDR = detalleVenta.getClienteDR().toString();
+                            mnTarjND = detalleVenta.getTarjetaND().toString();
+                            mnTarjetaCredito = detalleVenta.getTarjetaCredito().toString();
+                            mnOperacionREF = detalleVenta.getOperacionREF().toString();
+                            mnObservacion = detalleVenta.getObservacion().toString();
+                            mnKilometraje = detalleVenta.getKilometraje().toString();
+                            mnMontoSoles = detalleVenta.getMontoSoles();
+                            mnMtoSaldoCredito = detalleVenta.getMtoSaldoCredito();
+                            mnPtosDisponibles = detalleVenta.getPtosDisponible();
+
+                            GlobalInfo.getpase11 = true;
+
+                            if (GlobalInfo.getoptranNroLado10 == null){
+                                return;
+                            }
+
+                            if (GlobalInfo.getoptranNroLado10.isEmpty()){
+                                return;
+                            }
+
+                            if (GlobalInfo.getoptranArticuloID10 == null){
+                                return;
+                            }
+
+                            if (GlobalInfo.getoptranArticuloID10.isEmpty()){
+                                return;
+                            }
+
+
+                            /** CALCULAR TOTALES IGV-SUBTOTAL-TOTAL VENTA*/
+
+                            if (GlobalInfo.getoptranSoles10 == null){
+                                return;
+                            }
+
+                            if (GlobalInfo.getoptranSoles10 == 0){
+                                return;
+                            }
+
+                            mnMtoTotal = GlobalInfo.getoptranSoles10;
+                            mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                            mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                            mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                            mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                            mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                            mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                            mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+
+                            /** FIN CALCULAR TOTALES IGV-SUBTOTAL-TOTAL VENTA*/
+
+                            /** Consultando datos del DOCUMENTO*/
+                            String mnTipoDocumento = "";
+
+                            switch (mnTipoPago) {
+                                case "E" :
+                                    if (mnClienteRUC.length() == 11) {
+                                        mnClienteID = mnClienteRUC;
+                                        mnTipoDocumento = "01";
+                                    } else if (mnClienteRUC.length() == 0) {
+                                        mnTipoDocumento = "03";
+                                    }
+                                    mnPagoID = 1;
+                                    mnTarjetaCreditoID = 0;
+                                    mnobservacionPag = "CONTADO";
+                                    break;
+                                case "T" :
+                                    if (mnClienteRUC.length() == 11) {
+                                        mnClienteID = mnClienteRUC;
+                                        mnTipoDocumento = "01";
+                                    } else if (mnClienteRUC.length() == 0) {
+                                        mnTipoDocumento = "03";
+                                    }
+                                    mnPagoID = 2;
+                                    mnTarjetaCreditoID = Integer.valueOf(mnTarjetaCredito);
+                                    mnobservacionPag = "TARJETA";
+                                    break;
+                                case "C" :
+                                    mnPagoID = 4;
+                                    mnTarjetaCreditoID = 0;
+                                    mnobservacionPag = "CREDITO";
+                                    break;
+                                case "G" :
+                                    mnTipoVenta = "G";
+                                    mnPagoID = 1;
+                                    mnTarjetaCreditoID = 0;
+                                    mnobservacionPag = "GRATUITA";
+                                    break;
+                                case "S" :
+                                    mnTipoDocumento = "98";
+                                    mnPagoID = 1;
+                                    mnTarjetaCreditoID = 0;
+                                    mnClienteID = "";
+                                    mnClienteRUC = "";
+                                    mnClienteRS = "";
+                                    mnCliernteDR = "";
+                                    mnNroPlaca = "";
+                                    break;
+                            }
+
+                            if(mnTipoPago == "S"){
+                                mnobservacionPag = "SERAFIN";
+                                mnTipoDocumento = "98";
+                                mnClienteID = "";
+                                mnClienteRUC = "";
+                                mnClienteRS = "";
+                                mnCliernteDR = "";
+                                mnNroPlaca = "";
+                            }
+
+                            if (mnClienteID.length() == 0 && mnTipoDocumento == "03") {
+                                mnClienteID = "11111111";
+                                mnClienteRUC = "";
+                                mnClienteRS = "CLIENTE VARIOS";
+                                mnCliernteDR = "";
+                                mnNroPlaca = "000-0000";
+                            }
+
+                            if (GlobalInfo.getpase11 == true) {
+
+                                findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento, mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR,
+                                                mnMtoDescuento, mnMtoSubTotal1, mnMtoImpuesto1, mnMtoTotal,
+                                                mnNroPlaca, mnKilometraje, mnTipoVenta, mnObservacion, mnReferencia,
+                                                mnTarjND, mnTarjetaPuntos, mnPtosGanados, mnPtosDisponibles,
+                                                mnMtoCanje, mnItem, mnFise, mnobservacionDet,
+                                                mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnmtoPagoUSD, mnobservacionPag);
+
+                                GlobalInfo.getcorrelativoFecha   = "";
+                                GlobalInfo.getcorrelativoSerie   = "";
+                                GlobalInfo.getcorrelativoNumero  = "";
+
+                                GlobalInfo.getoptranTranID10     = 0;
+                                GlobalInfo.getoptranNroLado10    = "";
+                                GlobalInfo.getoptranManguera10   = "";
+                                GlobalInfo.getoptranFechaTran10  = "";
+                                GlobalInfo.getoptranArticuloID10 = "";
+                                GlobalInfo.getoptranProductoDs10 = "";
+                                GlobalInfo.getoptranPrecio10     = 0.00;
+                                GlobalInfo.getoptranGalones10    = 0.000;
+                                GlobalInfo.getoptranSoles10      = 0.00;
+                                GlobalInfo.getoptranOperador10   = "";
+                                GlobalInfo.getoptranCliente10    = "";
+                                GlobalInfo.getoptranUniMed10     = "";
+
+                            }
+
+                            break;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        };
+
+        mTimerRunning = true;
+        automatiStop.setText("Automático");
+        automatiStop.setBackgroundColor(Color.parseColor("#001E8A"));
+
     }
 
     private void registrarVenta(){
@@ -1395,9 +1652,9 @@ public class VentaFragment extends Fragment{
 
 
         Bitmap logoRobles = Printama.getBitmapFromVector(getContext(), R.drawable.logoprincipal);
-      //  Bitmap logoRobles = BitmapFactory.decodeResource(getResources(), R.drawable.logoprincipal);
 
         String TipoDNI = "1";
+        String CVarios = "11111111";
 
         String NameCompany = GlobalInfo.getNameCompany10;
         String RUCCompany = GlobalInfo.getRucCompany10;
@@ -1488,7 +1745,7 @@ public class VentaFragment extends Fragment{
                     break;
                 case "03" :
 
-                    if (GlobalInfo.getsettingClienteID10.equals(_ClienteID)){
+                    if (CVarios.equals(_ClienteID)){
 
                     }else {
                         printama.printTextln("DNI          : "+ _ClienteID , Printama.LEFT);
@@ -2576,6 +2833,43 @@ public class VentaFragment extends Fragment{
 
                     }
 
+                    if (GlobalInfo.getcorrelativoSerie == null){
+                        return;
+                    }
+
+                    if (GlobalInfo.getcorrelativoSerie.isEmpty()){
+                        return;
+                    }
+
+                    if (GlobalInfo.getcorrelativoNumero == null){
+                        return;
+                    }
+
+                    if (GlobalInfo.getcorrelativoNumero.isEmpty()){
+                        return;
+                    }
+
+                    if (GlobalInfo.getoptranArticuloID10 == null){
+                        return;
+                    }
+
+                    if (GlobalInfo.getoptranArticuloID10.isEmpty()){
+                        return;
+                    }
+
+                    if (GlobalInfo.getoptranSoles10 == null){
+                        return;
+                    }
+
+                    if (GlobalInfo.getoptranNroLado10 == null){
+                        return;
+                    }
+
+                    if (GlobalInfo.getoptranManguera10 == null){
+                        return;
+                    }
+
+
                     /** Consultando datos del DOCUMENTO-SERIE-CORRELATIVO*/
 
                     String GRFecProceso = GlobalInfo.getcorrelativoFecha;
@@ -2594,14 +2888,6 @@ public class VentaFragment extends Fragment{
                     /** FIN Consultando datos del DOCUMENTO-SERIE-CORRELATIVO*/
 
                     /** GRABAR VENTA EN BASE DE DATOS*/
-
-                    if (GlobalInfo.getoptranArticuloID10 == null){
-                        return;
-                    }
-
-                    if (GlobalInfo.getoptranArticuloID10.isEmpty()){
-                        return;
-                    }
 
                     grabarVentaCA(GlobalInfo.getterminalCompanyID10, mnTipoDocumento, GlobalInfo.getcorrelativoSerie, GlobalInfo.getcorrelativoNumero,
                                   GlobalInfo.getterminalID10, mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR,
@@ -2661,10 +2947,6 @@ public class VentaFragment extends Fragment{
                     }
 
                     List<Optran> optranList = response.body();
-
-                    if (optranList == null || optranList.isEmpty()) {
-                        return;
-                    }
 
                     for(Optran optran: optranList) {
                         GlobalInfo.getpase10 = true;
@@ -3081,7 +3363,6 @@ public class VentaFragment extends Fragment{
                         Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
                         return;
                     }
-
 
                     detalleVentaList = response.body();
 

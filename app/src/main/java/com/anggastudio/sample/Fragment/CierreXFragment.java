@@ -136,7 +136,11 @@ public class CierreXFragment extends Fragment {
 
         return view;
     }
+    @Override
+    public void onPause() {
+        super.onPause();
 
+    }
     /** API SERVICE - Venta por Contrometro */
     private void findVContometro(String id){
 
@@ -297,7 +301,9 @@ public class CierreXFragment extends Fragment {
             new Handler().postDelayed(printama::close, 2000);
         }, this::showToast);
     }
+
     private void showToast(String message) {
         Toast.makeText(getContext(), "Conectar Bluetooth", Toast.LENGTH_SHORT).show();
     }
+
 }
