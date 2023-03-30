@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="20sp"
+        android:background="@drawable/cardmodal"
+        android:backgroundTint="@color/white"
         android:paddingBottom="10sp"
         android:paddingStart="20sp"
         android:paddingEnd="20sp"

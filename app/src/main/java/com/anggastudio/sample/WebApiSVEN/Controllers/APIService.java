@@ -7,6 +7,7 @@ import com.anggastudio.sample.WebApiSVEN.Models.Card;
 import com.anggastudio.sample.WebApiSVEN.Models.Cliente;
 import com.anggastudio.sample.WebApiSVEN.Models.Company;
 import com.anggastudio.sample.WebApiSVEN.Models.Correlativo;
+import com.anggastudio.sample.WebApiSVEN.Models.Descuentos;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
@@ -206,5 +207,12 @@ public interface APIService {
      */
     @POST("api/cturno/cerrar/{id}")
     Call<CTurno> postCTurno(@Path("id") String id);
+
+    /**
+     * Descuentos
+     */
+
+    @GET("api/descuentos/listado/{id}")
+    Call<List<Descuentos>> findDescuentos(@Path("id") String id);
 
 }

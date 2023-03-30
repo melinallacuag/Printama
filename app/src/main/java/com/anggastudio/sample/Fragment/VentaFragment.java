@@ -78,7 +78,7 @@ public class VentaFragment extends Fragment{
 
     /**  Atributos de la Venta */
     TextView  terminalID;
-    Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos,automatiStop;
+    Button    btnlibre,btnsoles,btngalones,btnboleta,btnfactura,btnnotadespacho,btnserafin,btnpuntos,automatiStop,imprimirserafin;
 
     /**  AdapterList - Recycler */
     RecyclerView recyclerCara, recyclerManguera, recyclerDetalleVenta,recyclerCliente;
@@ -108,7 +108,7 @@ public class VentaFragment extends Fragment{
     SearchView buscadorUser;
 
     /** Formularios -  Dialog*/
-    private Dialog modalBoleta,modalFactura,modalNDespacho,modalCliente,modalClienteRUC;
+    private Dialog modalBoleta,modalFactura,modalNDespacho,modalCliente,modalClienteRUC,modalSerafin;
 
 
     @Override
@@ -494,8 +494,6 @@ public class VentaFragment extends Fragment{
                                 detalleVenta.setObservacion(textobservacion.getText().toString());
 
                                 detalleVenta.setTipoPago(radioButton.getText().toString().substring(0,1));
-
-
 
                                 detalleVenta.setTarjetaCredito("");
                                 detalleVenta.setOperacionREF("");
@@ -925,9 +923,7 @@ public class VentaFragment extends Fragment{
                 for (DetalleVenta detalleVenta : detalleVentaList){
                     String mnCara = detalleVenta.getCara().toString();
 
-                    if(mCara == null){
-                        Toast.makeText(getContext(),"Seleccionar Cara",Toast.LENGTH_SHORT).show();
-                    }else if(mnCara.equals(mCara) ) {
+                    if(mnCara.equals(mCara) ) {
 
                         modalNDespacho.show();
 
@@ -1048,13 +1044,58 @@ public class VentaFragment extends Fragment{
             }
         });
 
-        /** Operación de Serafin */
+
+        /** Mostrar Formulario Serafin y Realizar la Operacion */
+        modalSerafin = new Dialog(getContext());
+        modalSerafin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        modalSerafin.setContentView(R.layout.fragment_serafin);
+        modalSerafin.setCancelable(false);
         btnserafin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SerafinFragment serafinFragment = new SerafinFragment();
-                serafinFragment.show(getActivity().getSupportFragmentManager(), "Serafin");
-                serafinFragment.setCancelable(false);
+
+                for (DetalleVenta detalleVenta : detalleVentaList){
+                    String mnCara = detalleVenta.getCara().toString();
+
+                    if(mnCara.equals(mCara) ) {
+
+                        modalSerafin.show();
+
+                        btncancelar      = modalSerafin.findViewById(R.id.btncancelarserafin);
+                        imprimirserafin  = modalSerafin.findViewById(R.id.btnimprimirserafin);
+
+                        btncancelar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                modalSerafin.dismiss();
+                            }
+                        });
+
+                        imprimirserafin.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                detalleVenta.setNroPlaca("");
+                                detalleVenta.setTipoPago("S");
+                                detalleVenta.setClienteID("");
+                                detalleVenta.setClienteRUC("");
+                                detalleVenta.setClienteRS("");
+                                detalleVenta.setClienteDR("");
+                                detalleVenta.setKilometraje("");
+                                detalleVenta.setObservacion("");
+                                detalleVenta.setOperacionREF("");
+                                detalleVenta.setTarjetaCredito("");
+                                detalleVenta.setMontoSoles(0.00);
+
+
+                                recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
+
+                                Toast.makeText(getContext(), "SE GENERO SERAFIN", Toast.LENGTH_SHORT).show();
+                                modalSerafin.dismiss();
+                            }
+                        });
+                    }
+                }
             }
         });
 
@@ -1088,6 +1129,9 @@ public class VentaFragment extends Fragment{
         return view;
     }
 
+    /** Guardar - SERAFIN */
+
+
     @Override
     public void onPause() {
         super.onPause();
@@ -1099,7 +1143,7 @@ public class VentaFragment extends Fragment{
 
         registrarVENTA2023();
 
-        timer.schedule(timerTask,0,1500);
+        timer.schedule(timerTask,1000,1500);
 
     }
 
@@ -1168,6 +1212,7 @@ public class VentaFragment extends Fragment{
                     String mnobservacionPag = "";
 
                     GlobalInfo.getpase10 = false;
+                    String NroLadoVali = "";
 
                     /** Consultando datos de la lista por nrolado GRID*/
                     for (DetalleVenta detalleVenta : detalleVentaList) {
@@ -1304,6 +1349,8 @@ public class VentaFragment extends Fragment{
 
                             if (GlobalInfo.getpase11 == true) {
 
+                                NroLadoVali = GlobalInfo.getoptranNroLado10;
+
                                 findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento, mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR,
                                                 mnMtoDescuento, mnMtoSubTotal1, mnMtoImpuesto1, mnMtoTotal,
                                                 mnNroPlaca, mnKilometraje, mnTipoVenta, mnObservacion, mnReferencia,
@@ -1335,6 +1382,10 @@ public class VentaFragment extends Fragment{
                         }
 
                     }
+
+                    /** FIN Consultando datos de la lista por nrolado GRID*/
+
+                    NroLadoVali = "";
 
                 }
 
@@ -1718,10 +1769,10 @@ public class VentaFragment extends Fragment{
                     printama.printTextlnBold("BOLETA DE VENTA ELECTRONICA", Printama.CENTER);
                     break;
                 case "98" :
-                    printama.printTextlnBold("NOTA DE DESPACHO", Printama.CENTER);
+                    printama.printTextlnBold("TICKET SERAFIN", Printama.CENTER);
                     break;
                 case "99" :
-                    printama.printTextlnBold("TICKET SERAFIN", Printama.CENTER);
+                    printama.printTextlnBold("NOTA DE DESPACHO", Printama.CENTER);
                     break;
             }
 
@@ -1772,9 +1823,173 @@ public class VentaFragment extends Fragment{
                     printama.printTextln("OP. GRAVADAS: S/ "+MtoSubTotalFF, Printama.RIGHT);
                     printama.printTextln("I.G.V. 18%: S/  "+ MtoImpuestoFF, Printama.RIGHT);
                     printama.printTextlnBold("TOTAL VENTA: S/ "+ MtoTotalFF , Printama.RIGHT);
+
+                    printama.setSmallText();
+                    printama.printDoubleDashedLine();
+                    printama.addNewLine(1);
+                    printama.setSmallText();
+
+                    switch (_PagoID) {
+                        case 1 :
+                            printama.printTextlnBold("CONDICION DE PAGO:", Printama.LEFT);
+                            printama.printTextlnBold("CONTADO: S/ " + MtoTotalFF, Printama.RIGHT);
+                            break;
+                        case 2 :
+
+                            printama.printTextlnBold("CONDICION DE PAGO: CONTADO", Printama.LEFT);
+
+                            switch (_TarjetaCreditoID) {
+                                case 1 :
+                                    printama.printTextlnBold("VISA: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                                case 2 :
+                                    printama.printTextlnBold("MASTERCARD: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                                case 3 :
+                                    printama.printTextlnBold("DINERS: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                                case 4 :
+                                    printama.printTextlnBold("YAPE: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                                case 5 :
+                                    printama.printTextlnBold("AMERICAN EXPRES: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                                case 6 :
+                                    printama.printTextlnBold("PLIN: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                            }
+
+                            break;
+
+                        case 4 :
+                            printama.printTextlnBold("CONDICION DE PAGO: 30 DIAS DE", Printama.LEFT);
+                            printama.printTextlnBold("CREDITO: S/ " + MtoTotalFF, Printama.RIGHT);
+                            break;
+                    }
+
+                    printama.setSmallText();
+                    printama.printTextln("SON: " + LetraSoles, Printama.LEFT);
+                    printama.printTextln("                 ", Printama.CENTER);
+                    QRCodeWriter writer = new QRCodeWriter();
+                    BitMatrix bitMatrix;
+                    try {
+                        bitMatrix = writer.encode(qrSven, BarcodeFormat.QR_CODE, 200, 200);
+                        int width = bitMatrix.getWidth();
+                        int height = bitMatrix.getHeight();
+                        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                        for (int x = 0; x < width; x++) {
+                            for (int y = 0; y < height; y++) {
+                                int color = Color.WHITE;
+                                if (bitMatrix.get(x, y)) color = Color.BLACK;
+                                bitmap.setPixel(x, y, color);
+                            }
+                        }
+                        if (bitmap != null) {
+                            printama.printImage(bitmap);
+                        }
+                    } catch (WriterException e) {
+                        e.printStackTrace();
+                    }
+                    printama.setSmallText();
+                    printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la boleta de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
+
                     break;
                 case "03" :
                     printama.printTextlnBold("TOTAL VENTA: S/ "+ MtoTotalFF , Printama.RIGHT);
+
+                    printama.setSmallText();
+                    printama.printDoubleDashedLine();
+                    printama.addNewLine(1);
+                    printama.setSmallText();
+
+                    switch (_PagoID) {
+                        case 1 :
+                            printama.printTextlnBold("CONDICION DE PAGO:", Printama.LEFT);
+                            printama.printTextlnBold("CONTADO: S/ " + MtoTotalFF, Printama.RIGHT);
+                            break;
+                        case 2 :
+
+                            printama.printTextlnBold("CONDICION DE PAGO: CONTADO", Printama.LEFT);
+
+                            switch (_TarjetaCreditoID) {
+                                case 1 :
+                                    printama.printTextlnBold("VISA: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                                case 2 :
+                                    printama.printTextlnBold("MASTERCARD: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                                case 3 :
+                                    printama.printTextlnBold("DINERS: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                                case 4 :
+                                    printama.printTextlnBold("YAPE: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                                case 5 :
+                                    printama.printTextlnBold("AMERICAN EXPRES: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                                case 6 :
+                                    printama.printTextlnBold("PLIN: S/ " + MtoTotalFF, Printama.RIGHT);
+                                    printama.setSmallText();
+                                    printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
+                                    break;
+                            }
+
+                            break;
+
+                        case 4 :
+                            printama.printTextlnBold("CONDICION DE PAGO: 30 DIAS DE", Printama.LEFT);
+                            printama.printTextlnBold("CREDITO: S/ " + MtoTotalFF, Printama.RIGHT);
+                            break;
+                    }
+
+                    printama.setSmallText();
+                    printama.printTextln("SON: " + LetraSoles, Printama.LEFT);
+                    printama.printTextln("                 ", Printama.CENTER);
+                    QRCodeWriter writerB = new QRCodeWriter();
+                    BitMatrix bitMatrixB;
+                    try {
+                        bitMatrixB = writerB.encode(qrSven, BarcodeFormat.QR_CODE, 200, 200);
+                        int width = bitMatrixB.getWidth();
+                        int height = bitMatrixB.getHeight();
+                        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+                        for (int x = 0; x < width; x++) {
+                            for (int y = 0; y < height; y++) {
+                                int color = Color.WHITE;
+                                if (bitMatrixB.get(x, y)) color = Color.BLACK;
+                                bitmap.setPixel(x, y, color);
+                            }
+                        }
+                        if (bitmap != null) {
+                            printama.printImage(bitmap);
+                        }
+                    } catch (WriterException e) {
+                        e.printStackTrace();
+                    }
+                    printama.setSmallText();
+                    printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la boleta de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
+
                     break;
                 case "98" :
                     printama.printTextlnBold("TOTAL VENTA: S/ "+ MtoTotalFF , Printama.RIGHT);
@@ -1784,86 +1999,6 @@ public class VentaFragment extends Fragment{
                     break;
             }
 
-            printama.setSmallText();
-            printama.printDoubleDashedLine();
-            printama.addNewLine(1);
-            printama.setSmallText();
-
-            switch (_PagoID) {
-                case 1 :
-                    printama.printTextlnBold("CONDICION DE PAGO:", Printama.LEFT);
-                    printama.printTextlnBold("CONTADO: S/ " + MtoTotalFF, Printama.RIGHT);
-                    break;
-                case 2 :
-
-                    printama.printTextlnBold("CONDICION DE PAGO: CONTADO", Printama.LEFT);
-
-                    switch (_TarjetaCreditoID) {
-                        case 1 :
-                            printama.printTextlnBold("VISA: S/ " + MtoTotalFF, Printama.RIGHT);
-                            printama.setSmallText();
-                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
-                            break;
-                        case 2 :
-                            printama.printTextlnBold("MASTERCARD: S/ " + MtoTotalFF, Printama.RIGHT);
-                            printama.setSmallText();
-                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
-                            break;
-                        case 3 :
-                            printama.printTextlnBold("DINERS: S/ " + MtoTotalFF, Printama.RIGHT);
-                            printama.setSmallText();
-                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
-                            break;
-                        case 4 :
-                            printama.printTextlnBold("YAPE: S/ " + MtoTotalFF, Printama.RIGHT);
-                            printama.setSmallText();
-                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
-                            break;
-                        case 5 :
-                            printama.printTextlnBold("AMERICAN EXPRES: S/ " + MtoTotalFF, Printama.RIGHT);
-                            printama.setSmallText();
-                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
-                            break;
-                        case 6 :
-                            printama.printTextlnBold("PLIN: S/ " + MtoTotalFF, Printama.RIGHT);
-                            printama.setSmallText();
-                            printama.printTextln("NRO.OPERACION:" + _OperacionREF, Printama.LEFT);
-                            break;
-                    }
-
-                    break;
-
-                case 4 :
-                    printama.printTextlnBold("CONDICION DE PAGO: 30 DIAS DE", Printama.LEFT);
-                    printama.printTextlnBold("CREDITO: S/ " + MtoTotalFF, Printama.RIGHT);
-                    break;
-            }
-
-            printama.setSmallText();
-            printama.printTextln("SON: " + LetraSoles, Printama.LEFT);
-            printama.printTextln("                 ", Printama.CENTER);
-            QRCodeWriter writer = new QRCodeWriter();
-            BitMatrix bitMatrix;
-            try {
-                bitMatrix = writer.encode(qrSven, BarcodeFormat.QR_CODE, 200, 200);
-                int width = bitMatrix.getWidth();
-                int height = bitMatrix.getHeight();
-                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-                for (int x = 0; x < width; x++) {
-                    for (int y = 0; y < height; y++) {
-                        int color = Color.WHITE;
-                        if (bitMatrix.get(x, y)) color = Color.BLACK;
-                        bitmap.setPixel(x, y, color);
-                    }
-                }
-                if (bitmap != null) {
-                    printama.printImage(bitmap);
-                }
-            } catch (WriterException e) {
-                e.printStackTrace();
-            }
-            printama.setSmallText();
-            printama.printTextln("Autorizado mediante resolucion de Superintendencia Nro. 203-2015 SUNAT. Representacion impresa de la boleta de venta electronica. Consulte desde\n"+ "http://4-fact.com/sven/auth/consulta");
             printama.feedPaper();
             printama.close();
 
@@ -1974,11 +2109,27 @@ public class VentaFragment extends Fragment{
 
                     /** IMPRESION DEL COMPROBANTE*/
 
-                    imprimirGR10(mnTipoDocumento, NroComprobante, xFechaHoraImpresion, GlobalInfo.getterminalTurno10,
-                                 GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
-                                 GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
-                                 mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
-                                 mnPagoID, mnTarjetaCreditoID, mnOperacionREF);
+                    if (mnPagoID == 2) {
+
+                        for(int i = 0; i <= 1 ; i += 1){
+
+                            imprimirGR10(mnTipoDocumento, NroComprobante, xFechaHoraImpresion, GlobalInfo.getterminalTurno10,
+                                         GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
+                                         GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
+                                         mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
+                                         mnPagoID, mnTarjetaCreditoID, mnOperacionREF);
+
+                        }
+
+                    } else {
+
+                        imprimirGR10(mnTipoDocumento, NroComprobante, xFechaHoraImpresion, GlobalInfo.getterminalTurno10,
+                                     GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
+                                     GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
+                                     mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
+                                     mnPagoID, mnTarjetaCreditoID, mnOperacionREF);
+
+                    }
 
                     /** FIN IMPRESION DEL COMPROBANTE*/
 
@@ -1987,7 +2138,7 @@ public class VentaFragment extends Fragment{
                     GlobalInfo.getpase11 = false;
 
                 }catch (Exception ex){
-                  //  Toast.makeText(get(),ex.getMessage(), Toast.LENGTH_SHORT).show();
+                   Toast.makeText(getContext(),ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -2434,12 +2585,7 @@ public class VentaFragment extends Fragment{
 
                     detalleVentaList = response.body();
 
-                    detalleVentaAdapter = new DetalleVentaAdapter(detalleVentaList, getContext(), new DetalleVentaAdapter.OnItemClickListener() {
-                        @Override
-                        public int onItemClick(DetalleVenta item) {
-                            return 0;
-                        }
-                    });
+                    detalleVentaAdapter = new DetalleVentaAdapter(detalleVentaList, getContext());
                     recyclerDetalleVenta.setAdapter(detalleVentaAdapter);
 
                 }catch (Exception ex){

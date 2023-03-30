@@ -20,14 +20,9 @@ public class DetalleVentaAdapter extends RecyclerView.Adapter<DetalleVentaAdapte
     public List<DetalleVenta> detalleVentaList;
     private Context context;
 
-    public interface  OnItemClickListener{
-        int onItemClick(DetalleVenta item);
-    }
-
-    public DetalleVentaAdapter(List<DetalleVenta> detalleVentaList, Context context,DetalleVentaAdapter.OnItemClickListener listener){
+    public DetalleVentaAdapter(List<DetalleVenta> detalleVentaList, Context context){
         this.detalleVentaList = detalleVentaList;
         this.context    = context;
-        //this.listener  = listener;
     }
 
     @NonNull
@@ -56,16 +51,10 @@ public class DetalleVentaAdapter extends RecyclerView.Adapter<DetalleVentaAdapte
         holder.textNroOpe.setText(detalleVentaList.get(position).getOperacionREF());
         holder.textObservacion.setText(detalleVentaList.get(position).getObservacion());
         holder.textKilometraje.setText(detalleVentaList.get(position).getKilometraje());
-        holder.textMtoSoles.setText(String.valueOf(detalleVentaList.get(position).getMontoSoles()));
+        holder.textMtoSoles.setText(String.valueOf(String.format("%.2f",detalleVentaList.get(position).getMontoSoles())));
         holder.textSaldoCredito.setText(String.valueOf(detalleVentaList.get(position).getMtoSaldoCredito()));
         holder.textPtosDisponibles.setText(String.valueOf(detalleVentaList.get(position).getPtosDisponible()));
 
-       /* holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(detalleVenta);
-            }
-        });*/
     }
 
     @Override
