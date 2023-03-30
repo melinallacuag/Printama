@@ -117,6 +117,8 @@ public class GlobalInfo {
     /**
      * Datos de la Optran
      */
+    public static Boolean getpase10 = false;
+
     public static Integer  getoptranTranID10;
     public static String   getoptranNroLado10;
     public static String   getoptranManguera10;
@@ -139,15 +141,14 @@ public class GlobalInfo {
     /**
      * Datos de la Correlativo
      */
+    public static Boolean getpase11 = false;
+
     public static String  getcorrelativoTerminalID;
     public static String  getcorrelativoImei;
     public static String  getcorrelativoFecha;
     public static Integer getcorrelativoTurno;
     public static String  getcorrelativoSerie;
     public static String  getcorrelativoNumero;
-
-    public static Boolean getpase10 = false;
-    public static Boolean getpase11 = false;
 
     /**
      * Datos de la Cliente Sellecion
@@ -175,6 +176,22 @@ public class GlobalInfo {
     public static Double  getvcontomSoles10;
 
     public static Double getvcontomGalones101 = 0.00;
+
+
+    /**
+     * Datos del Descuento
+     */
+
+    public static Boolean getDescuentoPase = false;
+
+    public static String  getdescuentoClienteID10;
+    public static String  getdescuentoTipoID10;
+    public static String  getdescuentoArticuloID10;
+    public static Double  getdescuentoDescuento10;
+    public static String  getdescuentoTipoDescuento10;
+    public static String  getdescuentoTipoRango10;
+    public static Double  getdescuentoRango110;
+    public static Double  getdescuentoRango210;
 
     /**
      * URL - APIService

@@ -39,6 +39,7 @@ import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
 import com.anggastudio.sample.WebApiSVEN.Models.Card;
 import com.anggastudio.sample.WebApiSVEN.Models.Cliente;
 import com.anggastudio.sample.WebApiSVEN.Models.Correlativo;
+import com.anggastudio.sample.WebApiSVEN.Models.Descuentos;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
@@ -1129,8 +1130,6 @@ public class VentaFragment extends Fragment{
         return view;
     }
 
-    /** Guardar - SERAFIN */
-
 
     @Override
     public void onPause() {
@@ -1188,8 +1187,12 @@ public class VentaFragment extends Fragment{
 
                     Double mnPtosGanados = 0.00;
 
-                    Double mnMtoDescuento = 0.00;
+                    Double mnMtoDescuentoUnitario = 0.00;
                     Double mnMtoCanje = 0.00;
+
+                    Double mnMtoDescuento0 = 0.00;
+                    Double mnMtoDescuento1 = 0.00;
+                    String mnMtoDescuento2 = "";
 
                     Double mnMtoSubTotal0 = 0.00;
                     Double mnMtoSubTotal1 = 0.00;
@@ -1267,16 +1270,62 @@ public class VentaFragment extends Fragment{
                                 return;
                             }
 
-                            mnMtoTotal = GlobalInfo.getoptranSoles10;
-                            mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+                            if (!mnClienteID.equals(GlobalInfo.getsettingClienteID10)) {
 
-                            mnMtoSubTotal0 = mnMtoTotal / 1.18;
-                            mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
-                            mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+                                findDescuentos(mnClienteID);
 
-                            mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
-                            mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
-                            mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+                            }
+
+                            mnMtoDescuento1 = 0.00;
+                            mnMtoCanje = GlobalInfo.getoptranSoles10;
+
+                            if (GlobalInfo.getDescuentoPase == true) {
+
+                                GlobalInfo.getDescuentoPase = false;
+
+                                if(GlobalInfo.getdescuentoArticuloID10.equals(GlobalInfo.getoptranArticuloID10)){
+
+                                    mnMtoDescuentoUnitario = GlobalInfo.getdescuentoDescuento10;
+
+                                    mnMtoDescuento0 = mnMtoDescuentoUnitario * GlobalInfo.getoptranGalones10;
+                                    mnMtoDescuento1 = Math.round(mnMtoDescuento0*100.0)/100.0;
+                                    mnMtoDescuento2 = String.format("%.2f",mnMtoDescuento1);
+
+                                } else {
+                                    mnMtoDescuento1 = 0.00;
+                                }
+
+                                mnMtoTotal = GlobalInfo.getoptranSoles10 - mnMtoDescuento1;
+                                mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                                mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                                mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                                mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                                mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                                mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                                mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+
+
+                            } else {
+
+                                GlobalInfo.getDescuentoPase = false;
+
+                                mnMtoDescuento1 = 0.00;
+                                mnMtoCanje = 0.00;
+
+                                mnMtoTotal = GlobalInfo.getoptranSoles10;
+                                mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                                mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                                mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                                mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                                mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                                mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                                mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+
+                            }
 
                             /** FIN CALCULAR TOTALES IGV-SUBTOTAL-TOTAL VENTA*/
 
@@ -1352,11 +1401,18 @@ public class VentaFragment extends Fragment{
                                 NroLadoVali = GlobalInfo.getoptranNroLado10;
 
                                 findCorrelativo(GlobalInfo.getterminalImei10,mnTipoDocumento, mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR,
-                                                mnMtoDescuento, mnMtoSubTotal1, mnMtoImpuesto1, mnMtoTotal,
+                                                mnMtoDescuento1, mnMtoSubTotal1, mnMtoImpuesto1, mnMtoTotal,
                                                 mnNroPlaca, mnKilometraje, mnTipoVenta, mnObservacion, mnReferencia,
                                                 mnTarjND, mnTarjetaPuntos, mnPtosGanados, mnPtosDisponibles,
                                                 mnMtoCanje, mnItem, mnFise, mnobservacionDet,
                                                 mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnmtoPagoUSD, mnobservacionPag);
+
+
+                                GlobalInfo.getDescuentoPase = false;
+                                GlobalInfo.getdescuentoDescuento10 = 0.00;
+                                GlobalInfo.getdescuentoClienteID10 = "";
+                                GlobalInfo.getdescuentoTipoID10 = "";
+                                GlobalInfo.getdescuentoArticuloID10 = "";
 
                                 GlobalInfo.getcorrelativoFecha   = "";
                                 GlobalInfo.getcorrelativoSerie   = "";
@@ -1696,7 +1752,8 @@ public class VentaFragment extends Fragment{
                               String _Cajero, String _nroLado, String _ArticuloDS, String _ArticuloUMED,
                               Double _Precio, Double _Cantidad, Double _MtoTotal, Double _MtoSubTotal, Double _MtoImpuesto,
                               String _ClienteID, String _ClienteRUC, String _ClienteRZ, String _ClienteDR, String _NroPlaca,
-                              String _FechaQR, Integer _PagoID, Integer _TarjetaCreditoID, String _OperacionREF){
+                              String _FechaQR, Integer _PagoID, Integer _TarjetaCreditoID, String _OperacionREF,
+                              Double _mtoCanjeado, Double _mtoDescuento){
 
 
         Bitmap logoRobles = Printama.getBitmapFromVector(getContext(), R.drawable.logoprincipal);
@@ -1722,15 +1779,19 @@ public class VentaFragment extends Fragment{
                 break;
         }
 
-        String PrecioFF = String.format("%.2f",_Precio);
+        String PrecioFF      = String.format("%.2f",_Precio);
 
-        String CantidadFF = String.format("%.3f",_Cantidad);
+        String CantidadFF    = String.format("%.3f",_Cantidad);
 
         String MtoSubTotalFF = String.format("%.2f",_MtoSubTotal);
 
         String MtoImpuestoFF = String.format("%.2f",_MtoImpuesto);
 
-        String MtoTotalFF = String.format("%.2f",_MtoTotal);
+        String MtoTotalFF    = String.format("%.2f",_MtoTotal);
+
+        String MtoCanjeado   = String.format("%.2f",_mtoCanjeado);
+
+        String MtoDescuento  = String.format("%.2f",_mtoDescuento);
 
         /** Convertir número a letras */
         Numero_Letras NumLetra = new Numero_Letras();
@@ -1811,7 +1872,13 @@ public class VentaFragment extends Fragment{
             printama.printTextlnBold("PRODUCTO      "+"U/MED   "+"PRECIO   "+"CANTIDAD  "+"IMPORTE",Printama.RIGHT);
             printama.setSmallText();
             printama.printTextln(_ArticuloDS,Printama.LEFT);
-            printama.printTextln(_ArticuloUMED+"    " + PrecioFF + "      " + CantidadFF +"     "+ MtoTotalFF,Printama.RIGHT);
+
+            if (_mtoDescuento == 0.00) {
+                printama.printTextln(_ArticuloUMED+"    " + PrecioFF + "      " + CantidadFF +"     "+ MtoTotalFF,Printama.RIGHT);
+            } else {
+                printama.printTextln(_ArticuloUMED+"    " + PrecioFF + "      " + CantidadFF +"     "+ MtoCanjeado,Printama.RIGHT);
+            }
+
             printama.setSmallText();
             printama.printDoubleDashedLine();
             printama.addNewLine(1);
@@ -1820,9 +1887,14 @@ public class VentaFragment extends Fragment{
 
             switch (_TipoDocumento) {
                 case "01" :
-                    printama.printTextln("OP. GRAVADAS: S/ "+MtoSubTotalFF, Printama.RIGHT);
-                    printama.printTextln("I.G.V. 18%: S/  "+ MtoImpuestoFF, Printama.RIGHT);
-                    printama.printTextlnBold("TOTAL VENTA: S/ "+ MtoTotalFF , Printama.RIGHT);
+
+                    if (_mtoDescuento > 0) {
+                        printama.printTextln("DESCUENTO: S/ " + MtoDescuento, Printama.RIGHT);
+                    }
+
+                    printama.printTextln("OP. GRAVADAS: S/ " + MtoSubTotalFF, Printama.RIGHT);
+                    printama.printTextln("I.G.V. 18%: S/  " + MtoImpuestoFF, Printama.RIGHT);
+                    printama.printTextlnBold("TOTAL VENTA: S/ " + MtoTotalFF , Printama.RIGHT);
 
                     printama.setSmallText();
                     printama.printDoubleDashedLine();
@@ -1907,7 +1979,12 @@ public class VentaFragment extends Fragment{
 
                     break;
                 case "03" :
-                    printama.printTextlnBold("TOTAL VENTA: S/ "+ MtoTotalFF , Printama.RIGHT);
+
+                    if (_mtoDescuento > 0) {
+                        printama.printTextln("DESCUENTO: S/ " + MtoDescuento, Printama.RIGHT);
+                    }
+
+                    printama.printTextlnBold("TOTAL VENTA: S/ " + MtoTotalFF , Printama.RIGHT);
 
                     printama.setSmallText();
                     printama.printDoubleDashedLine();
@@ -2007,7 +2084,7 @@ public class VentaFragment extends Fragment{
     }
 
     /** API SERVICE - Correlativo */
-    private void findCorrelativo(String id , String mnTipoDocumento, String mnClienteID, String mnClienteRUC, String mnClienteRS, String mnCliernteDR,
+    private void findCorrelativo(String id, String mnTipoDocumento, String mnClienteID, String mnClienteRUC, String mnClienteRS, String mnCliernteDR,
                                  Double mnMtoDescuento, Double mnMtoSubTotal1, Double mnMtoImpuesto1, Double mnMtoTotal,
                                  String mnNroPlaca, String mnKilometraje, String mnTipoVenta, String mnObservacion, String mnReferencia,
                                  String mnTarjND, String mnTarjetaPuntos, Double mnPtosGanados, Double mnPtosDisponibles,
@@ -2117,7 +2194,7 @@ public class VentaFragment extends Fragment{
                                          GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
                                          GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
                                          mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
-                                         mnPagoID, mnTarjetaCreditoID, mnOperacionREF);
+                                         mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoCanje, mnMtoDescuento);
 
                         }
 
@@ -2127,7 +2204,7 @@ public class VentaFragment extends Fragment{
                                      GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
                                      GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
                                      mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
-                                     mnPagoID, mnTarjetaCreditoID, mnOperacionREF);
+                                     mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoCanje, mnMtoDescuento);
 
                     }
 
@@ -2149,6 +2226,57 @@ public class VentaFragment extends Fragment{
         });
     }
 
+
+    /** Guardar - Descuento */
+    private void findDescuentos(String id){
+
+        Call<List<Descuentos>> call = mAPIService.findDescuentos(id);
+
+       call.enqueue(new Callback<List<Descuentos>>() {
+           @Override
+           public void onResponse(Call<List<Descuentos>> call, Response<List<Descuentos>> response) {
+               try {
+
+                   if(!response.isSuccessful()){
+                       Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                       return;
+                   }
+
+                   List<Descuentos> descuentosList = response.body();
+
+                   GlobalInfo.getDescuentoPase = false;
+                   GlobalInfo.getdescuentoDescuento10 = 0.00;
+                   GlobalInfo.getdescuentoClienteID10 = "";
+                   GlobalInfo.getdescuentoTipoID10 = "";
+                   GlobalInfo.getdescuentoArticuloID10 = "";
+
+                   for(Descuentos descuentos: descuentosList) {
+
+                       GlobalInfo.getDescuentoPase = true;
+
+                       GlobalInfo.getdescuentoClienteID10     = String.valueOf(descuentos.getClienteID());
+                       GlobalInfo.getdescuentoTipoID10        = String.valueOf(descuentos.getTipoID());
+                       GlobalInfo.getdescuentoArticuloID10    = String.valueOf(descuentos.getArticuloID());
+                       GlobalInfo.getdescuentoDescuento10     = Double.valueOf(descuentos.getDescuento());
+                       GlobalInfo.getdescuentoTipoDescuento10 = String.valueOf(descuentos.getTipoDesc());
+                       GlobalInfo.getdescuentoTipoRango10     = String.valueOf(descuentos.getTipoRango());
+                       GlobalInfo.getdescuentoRango110        = Double.valueOf(descuentos.getRango1());
+                       GlobalInfo.getdescuentoRango210        = Double.valueOf(descuentos.getRango2());
+
+                   }
+
+               }catch (Exception ex){
+                   Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+               }
+           }
+
+           @Override
+           public void onFailure(Call<List<Descuentos>> call, Throwable t) {
+               Toast.makeText(getContext(), "Error de conexión APICORE Descuento - RED - WIFI", Toast.LENGTH_SHORT).show();
+           }
+       });
+
+    }
     /** API SERVICE - Optran */
     private void findOptran(String id){
 
