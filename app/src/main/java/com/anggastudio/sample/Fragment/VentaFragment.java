@@ -1143,7 +1143,7 @@ public class VentaFragment extends Fragment{
 
         registrarVENTA2023();
 
-        timer.schedule(timerTask,1000,1500);
+        timer.schedule(timerTask,1000,1000);
 
     }
 
@@ -1271,6 +1271,8 @@ public class VentaFragment extends Fragment{
                                 return;
                             }
 
+                            /*
+
                             if (!mnClienteID.equals(GlobalInfo.getsettingClienteID10)) {
 
                                 findDescuentos(mnClienteID);
@@ -1327,6 +1329,24 @@ public class VentaFragment extends Fragment{
                                 mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
 
                             }
+
+                            */
+
+                            GlobalInfo.getDescuentoPase = false;
+
+                            mnMtoDescuento1 = 0.00;
+                            mnMtoCanje = 0.00;
+
+                            mnMtoTotal = GlobalInfo.getoptranSoles10;
+                            mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                            mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                            mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                            mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                            mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                            mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                            mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
 
                             /** FIN CALCULAR TOTALES IGV-SUBTOTAL-TOTAL VENTA*/
 
