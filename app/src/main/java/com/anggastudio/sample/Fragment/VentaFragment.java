@@ -2,17 +2,24 @@ package com.anggastudio.sample.Fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -111,12 +118,10 @@ public class VentaFragment extends Fragment{
     /** Formularios -  Dialog*/
     private Dialog modalBoleta,modalFactura,modalNDespacho,modalCliente,modalClienteRUC,modalSerafin;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_venta, container, false);
-
         mAPIService  = GlobalInfo.getAPIService();
 
         /** Nombre de la Terminal ID */
@@ -602,6 +607,8 @@ public class VentaFragment extends Fragment{
                         btncancelar      = modalFactura.findViewById(R.id.btncancelar);
                         buscarruc        = modalFactura.findViewById(R.id.btnsunat);
                         buscarplaca      = modalFactura.findViewById(R.id.btnplaca);
+
+
 
                         cbcredito.setEnabled(false);
 
@@ -1128,12 +1135,6 @@ public class VentaFragment extends Fragment{
         findSetting(GlobalInfo.getterminalCompanyID10);
 
         return view;
-    }
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     private void startTimerGR1() {
