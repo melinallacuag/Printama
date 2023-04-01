@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="@string/btn_imprimir"
+                android:text="ACEPTAR"
                 android:textAllCaps="true"
                 android:backgroundTint="@color/colorSuccess"
                 android:textColor="@color/white"
