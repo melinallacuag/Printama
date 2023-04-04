@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:inputType="textCapCharacters"
             android:layout_marginTop="5sp"
+            app:queryHint="Buscar Razon Social"
             android:background="@drawable/input_border" />
 
         <androidx.cardview.widget.CardView
