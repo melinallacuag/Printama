@@ -1,7 +1,6 @@
 package com.anggastudio.sample.Fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -16,6 +15,8 @@ import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,6 +79,10 @@ import retrofit2.Response;
 
 public class VentaFragment extends Fragment{
 
+
+    /** Listado de Comprobantes */
+    Button btnlistacomprobantes;
+
     private APIService mAPIService;
     AlertDialog.Builder builder;
 
@@ -125,6 +130,9 @@ public class VentaFragment extends Fragment{
         mAPIService  = GlobalInfo.getAPIService();
 
         /** Nombre de la Terminal ID */
+
+        btnlistacomprobantes = view.findViewById(R.id.btnlistado);
+
         terminalID      = view.findViewById(R.id.terminalID);
         automatiStop    = view.findViewById(R.id.automatiStop);
         btnlibre        = view.findViewById(R.id.btnlibre);
@@ -138,6 +146,23 @@ public class VentaFragment extends Fragment{
 
         terminalID.setText(GlobalInfo.getterminalID10 + " - "+ "TURNO: " + GlobalInfo.getterminalTurno10.toString() );
 
+        /** Boton Listado */
+        btnlistacomprobantes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fragmentManagerComprobante = getActivity().getSupportFragmentManager();
+
+                FragmentTransaction fragmentTransactionComprobante = fragmentManagerComprobante.beginTransaction();
+
+                int fragmentContainerVenta = R.id.fragment_container;
+                ListaComprobantesFragment listaComprobantesFragment = new ListaComprobantesFragment();
+                fragmentTransactionComprobante.replace(fragmentContainerVenta, listaComprobantesFragment);
+                fragmentTransactionComprobante.addToBackStack(null);
+                fragmentTransactionComprobante.commit();
+
+            }
+        });
 
         /** Boton Time Task */
         automatiStop.setOnClickListener(new View.OnClickListener() {
@@ -1894,6 +1919,7 @@ public class VentaFragment extends Fragment{
                 case "01" :
                     printama.printTextln("RUC          : "+ _ClienteID , Printama.LEFT);
                     printama.printTextln("Razon Social : "+ _ClienteRZ, Printama.LEFT);
+                    printama.printTextln("Dirección    : "+ _ClienteDR, Printama.LEFT);
                     break;
                 case "03" :
 
@@ -1902,6 +1928,7 @@ public class VentaFragment extends Fragment{
                     }else {
                         printama.printTextln("DNI          : "+ _ClienteID , Printama.LEFT);
                         printama.printTextln("Nombres      : "+ _ClienteRZ, Printama.LEFT);
+                        printama.printTextln("Dirección    : "+ _ClienteDR, Printama.LEFT);
                     }
                     break;
                 case "99" :

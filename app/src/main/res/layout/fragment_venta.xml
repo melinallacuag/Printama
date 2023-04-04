@@ -18,17 +18,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/automatiStop"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/colorSecondary"
-            android:fontFamily="@font/nunito_black"
-            android:text="@string/btn_stop"
-            android:textColor="@color/white"
-            android:textSize="10sp"
-            app:cornerRadius="10sp" />
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/automatiStop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorSecondary"
+                android:fontFamily="@font/nunito_black"
+                android:text="@string/btn_stop"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:cornerRadius="10sp" />
+
+            <Button
+                android:id="@+id/btnlistado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2sp"
+                android:layout_weight="0"
+                android:backgroundTint="@color/colorSuccess"
+                android:fontFamily="@font/nunito_black"
+                android:gravity="center"
+                android:text="Listado"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:cornerRadius="10sp" />
+
+        </LinearLayout>
+
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

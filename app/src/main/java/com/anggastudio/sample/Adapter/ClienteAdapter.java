@@ -68,6 +68,7 @@ public class ClienteAdapter  extends RecyclerView.Adapter<ClienteAdapter.ViewHol
     public int getItemCount() {
         return clienteList.size();
     }
+
     public void filtrado(final String txtBuscar) {
 
         int longitud = txtBuscar.length();

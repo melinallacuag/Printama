@@ -55,7 +55,6 @@ public class CaraAdapter extends RecyclerView.Adapter<CaraAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
 
-
                 int previousItem = selectedItem;
                 selectedItem = position;
                 notifyItemChanged(previousItem);
@@ -70,6 +69,7 @@ public class CaraAdapter extends RecyclerView.Adapter<CaraAdapter.ViewHolder>{
     public int getItemCount() {
         return caraList.size();
     }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public CardView cardView;
         private TextView txtcara;

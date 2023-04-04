@@ -61,6 +61,7 @@ public class DetalleVentaAdapter extends RecyclerView.Adapter<DetalleVentaAdapte
     public int getItemCount() {
         return detalleVentaList.size();
     }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public CardView cardView;
         private TextView textLado;
