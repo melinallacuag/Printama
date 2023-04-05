@@ -2285,7 +2285,7 @@ public class VentaFragment extends Fragment{
                     GlobalInfo.getpase11 = false;
 
                 }catch (Exception ex){
-                    Toast.makeText(getContext(),ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
