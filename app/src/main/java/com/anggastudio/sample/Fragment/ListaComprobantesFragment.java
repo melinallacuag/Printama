@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anggastudio.printama.Printama;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListaComprobantesFragment extends Fragment  implements  SearchView.OnQueryTextListener {
+public class ListaComprobantesFragment extends Fragment  {
 
     RecyclerView recyclerLComprobante ;
     ListaComprobanteAdapter listaComprobanteAdapter;
@@ -42,7 +43,6 @@ public class ListaComprobantesFragment extends Fragment  implements  SearchView.
 
     SearchView buscadorRSocial;
 
-    List<ListaComprobante> listatemporal = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,9 +51,27 @@ public class ListaComprobantesFragment extends Fragment  implements  SearchView.
 
         buscadorRSocial   = view.findViewById(R.id.searchView);
 
-        buscadorRSocial.setOnQueryTextListener(this);
 
-        listatemporal = listaComprobanteList;
+        buscadorRSocial.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                if (listaComprobanteList.isEmpty()) {
+
+                    Toast.makeText(getContext(), "No se encontró el dato", Toast.LENGTH_SHORT).show();
+
+                }
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                listaComprobanteAdapter.filtrado(newText);
+                return false;
+            }
+        });
+
 
 
         recyclerLComprobante = view.findViewById(R.id.recyclerListaComprobante);
@@ -94,16 +112,15 @@ public class ListaComprobantesFragment extends Fragment  implements  SearchView.
             listaComprobanteList.add(new ListaComprobante("20/05/2022 09:10","10700912748","JUANA ROJAS",66.00,"NO"));
         }
 
+        /** Mostrar Modal de Cambio de Turno */
+        modalReimpresion = new Dialog(getContext());
+        modalReimpresion.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        modalReimpresion.setContentView(R.layout.modal_reimprimir);
+        modalReimpresion.setCancelable(false);
 
         listaComprobanteAdapter = new ListaComprobanteAdapter(listaComprobanteList, getContext(),new ListaComprobanteAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(ListaComprobante item) {
-
-                /** Mostrar Modal de Cambio de Turno */
-                modalReimpresion = new Dialog(getContext());
-                modalReimpresion.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                modalReimpresion.setContentView(R.layout.modal_reimprimir);
-                modalReimpresion.setCancelable(false);
 
                 modalReimpresion.show();
 
@@ -151,15 +168,5 @@ public class ListaComprobantesFragment extends Fragment  implements  SearchView.
         return view;
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String s) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-        listaComprobanteAdapter.filtrado(s);
-        return false;
-    }
 
 }
