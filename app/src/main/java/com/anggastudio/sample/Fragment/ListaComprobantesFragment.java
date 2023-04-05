@@ -153,6 +153,7 @@ public class ListaComprobantesFragment extends Fragment  {
                             printama.close();
 
                         });
+                        modalReimpresion.dismiss();
                     }
                 });
 
