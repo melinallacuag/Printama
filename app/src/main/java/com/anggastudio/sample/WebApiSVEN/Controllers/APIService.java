@@ -10,6 +10,7 @@ import com.anggastudio.sample.WebApiSVEN.Models.Correlativo;
 import com.anggastudio.sample.WebApiSVEN.Models.Descuentos;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.Lados;
+import com.anggastudio.sample.WebApiSVEN.Models.ListaComprobante;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Models.Placa;
@@ -214,5 +215,12 @@ public interface APIService {
 
     @GET("api/descuentos/listado/{id}")
     Call<List<Descuentos>> findDescuentos(@Path("id") String id);
+
+    /**
+     * Consultar Venta
+     */
+
+    @GET("api/consultarventa/listado/{id}")
+    Call<List<ListaComprobante>> findConsultarVenta(@Path("id") String id);
 
 }

@@ -61,10 +61,10 @@ public class ListaComprobanteAdapter  extends RecyclerView.Adapter<ListaComproba
 
         ListaComprobante listaComprobante = listaComprobanteList.get(position);
 
-        holder.textCFechaEmision.setText(listaComprobanteList.get(position).getFechaEmision());
-        holder.textCRUC.setText(listaComprobanteList.get(position).getNroRUC());
-        holder.textCRazonSocial.setText(String.valueOf(listaComprobanteList.get(position).getRazonSocial()));
-        holder.textCTotal.setText(String.valueOf(listaComprobanteList.get(position).getTotalMonto()));
+        holder.textCFechaEmision.setText(listaComprobanteList.get(position).getFecha());
+        holder.textCRUC.setText(listaComprobanteList.get(position).getClienteID());
+        holder.textCRazonSocial.setText(listaComprobanteList.get(position).getClienteRZ());
+        holder.textCTotal.setText(String.valueOf(listaComprobanteList.get(position).getMtoTotal()));
         holder.textCAnulado.setText(listaComprobanteList.get(position).getAnulado());
 
         holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.white));
@@ -101,13 +101,13 @@ public class ListaComprobanteAdapter  extends RecyclerView.Adapter<ListaComproba
         } else {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                 List<ListaComprobante> collecion = listaComprobanteList.stream()
-                        .filter(i -> i.getRazonSocial().toLowerCase().contains(txtBuscar.toLowerCase()))
+                        .filter(i -> i.getClienteRZ().toLowerCase().contains(txtBuscar.toLowerCase()))
                         .collect(Collectors.toList());
                 listaComprobanteList.clear();
                 listaComprobanteList.addAll(collecion);
             } else {
                 for (ListaComprobante a : listaOriginal) {
-                    if (a.getRazonSocial().toLowerCase().contains(txtBuscar.toLowerCase())) {
+                    if (a.getClienteRZ().toLowerCase().contains(txtBuscar.toLowerCase())) {
                         listaComprobanteList.add(a);
 
                     }

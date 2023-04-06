@@ -2,50 +2,77 @@ package com.anggastudio.sample.WebApiSVEN.Models;
 
 public class ListaComprobante {
 
-    private String fechaEmision;
-    private String nroRUC;
-    private String razonSocial;
-    private Double totalMonto;
+    private String fecha;
+    private String tipoDocumento;
+    private String serieDocumento;
+    private String nroDocumento;
+    private String clienteID;
+    private String clienteRZ;
+    private Double mtoTotal;
     private String anulado;
 
-    public ListaComprobante(String fechaEmision, String nroRUC, String razonSocial, Double totalMonto, String anulado) {
-        this.fechaEmision = fechaEmision;
-        this.nroRUC = nroRUC;
-        this.razonSocial = razonSocial;
-        this.totalMonto = totalMonto;
+    public ListaComprobante(String fecha, String clienteID, String clienteRZ, Double mtoTotal, String anulado) {
+        this.fecha = fecha;
+        this.clienteID = clienteID;
+        this.clienteRZ = clienteRZ;
+        this.mtoTotal = mtoTotal;
         this.anulado = anulado;
     }
 
-    public String getFechaEmision() {
-        return fechaEmision;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setFechaEmision(String fechaEmision) {
-        this.fechaEmision = fechaEmision;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
-    public String getNroRUC() {
-        return nroRUC;
+    public String getTipoDocumento() {
+        return tipoDocumento;
     }
 
-    public void setNroRUC(String nroRUC) {
-        this.nroRUC = nroRUC;
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
     }
 
-    public String getRazonSocial() {
-        return razonSocial;
+    public String getSerieDocumento() {
+        return serieDocumento;
     }
 
-    public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
+    public void setSerieDocumento(String serieDocumento) {
+        this.serieDocumento = serieDocumento;
     }
 
-    public Double getTotalMonto() {
-        return totalMonto;
+    public String getNroDocumento() {
+        return nroDocumento;
     }
 
-    public void setTotalMonto(Double totalMonto) {
-        this.totalMonto = totalMonto;
+    public void setNroDocumento(String nroDocumento) {
+        this.nroDocumento = nroDocumento;
+    }
+
+    public String getClienteID() {
+        return clienteID;
+    }
+
+    public void setClienteID(String clienteID) {
+        this.clienteID = clienteID;
+    }
+
+    public String getClienteRZ() {
+        return clienteRZ;
+    }
+
+    public void setClienteRZ(String clienteRZ) {
+        this.clienteRZ = clienteRZ;
+    }
+
+    public Double getMtoTotal() {
+        return mtoTotal;
+    }
+
+    public void setMtoTotal(Double mtoTotal) {
+        this.mtoTotal = mtoTotal;
     }
 
     public String getAnulado() {
