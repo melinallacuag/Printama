@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,11 +27,14 @@ import com.anggastudio.sample.Adapter.ListaComprobanteAdapter;
 import com.anggastudio.sample.Login;
 import com.anggastudio.sample.R;
 import com.anggastudio.sample.WebApiSVEN.Controllers.APIService;
+import com.anggastudio.sample.WebApiSVEN.Models.Anular;
+import com.anggastudio.sample.WebApiSVEN.Models.CTurno;
 import com.anggastudio.sample.WebApiSVEN.Models.Cliente;
 import com.anggastudio.sample.WebApiSVEN.Models.Descuentos;
 import com.anggastudio.sample.WebApiSVEN.Models.DetalleVenta;
 import com.anggastudio.sample.WebApiSVEN.Models.ListaComprobante;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
+import com.anggastudio.sample.WebApiSVEN.Models.Placa;
 import com.anggastudio.sample.WebApiSVEN.Parameters.GlobalInfo;
 
 import java.util.ArrayList;
@@ -61,6 +65,8 @@ public class ListaComprobantesFragment extends Fragment  {
         mAPIService  = GlobalInfo.getAPIService();
 
         buscadorRSocial   = view.findViewById(R.id.searchView);
+
+
 
 
         /** Listado de Consulta Venta  */
@@ -120,7 +126,11 @@ public class ListaComprobantesFragment extends Fragment  {
                         @Override
                         public void onItemClick(ListaComprobante item) {
 
+                            moveToDescription(item);
+
                             modalReimpresion.show();
+
+                            final FragmentManager fragmentManager = getFragmentManager();
 
                             btncancelar    = modalReimpresion.findViewById(R.id.btncancelarreimpresion);
                             btnaceptar     = modalReimpresion.findViewById(R.id.btnagregarreimpresion);
@@ -129,7 +139,19 @@ public class ListaComprobantesFragment extends Fragment  {
                             btnanular.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    modalReimpresion.dismiss();
+
+                                    if (GlobalInfo.getconsultaventaAnulado10.equals("NO")) {
+
+                                        Anular(GlobalInfo.getconsultaventaTipoDocumentoID10,GlobalInfo.getconsultaventaSerieDocumento10 ,GlobalInfo.getconsultaventaNroDocumento10,GlobalInfo.getuserID10);
+
+                                        fragmentManager.popBackStack();
+
+                                        modalReimpresion.dismiss();
+
+                                    } else {
+                                        Toast.makeText(getContext(), "Documento se encuntra anulado", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
                             });
 
@@ -178,6 +200,37 @@ public class ListaComprobantesFragment extends Fragment  {
             @Override
             public void onFailure(Call<List<ListaComprobante>> call, Throwable t) {
                 Toast.makeText(getContext(), "Error de conexión APICORE Consulta Venta - RED - WIFI", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    public void moveToDescription(ListaComprobante item){
+
+        GlobalInfo.getconsultaventaTipoDocumentoID10  = item.getTipoDocumento();
+        GlobalInfo.getconsultaventaSerieDocumento10   = item.getSerieDocumento();
+        GlobalInfo.getconsultaventaNroDocumento10     = item.getNroDocumento();
+        GlobalInfo.getconsultaventaAnulado10          = item.getAnulado();
+
+        Toast.makeText(getContext(),  GlobalInfo.getconsultaventaAnulado10, Toast.LENGTH_SHORT).show();
+    }
+
+    private void Anular(String tipodoc, String seriedoc, String nrodoc, String anuladoid){
+
+        Call<Anular> call = mAPIService.postAnular(tipodoc,seriedoc,nrodoc,anuladoid);
+
+        call.enqueue(new Callback<Anular>() {
+            @Override
+            public void onResponse(Call<Anular> call, Response<Anular> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Anular> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión APICORE", Toast.LENGTH_SHORT).show();
+
             }
         });
 

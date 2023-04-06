@@ -194,6 +194,20 @@ public class GlobalInfo {
     public static Double  getdescuentoRango210;
 
     /**
+     * Datos Consulta Venta
+     */
+
+    public static String  getconsultaventaFecha10;
+    public static String  getconsultaventaTipoDocumentoID10;
+    public static String  getconsultaventaSerieDocumento10;
+    public static String  getconsultaventaNroDocumento10;
+    public static String  getconsultaventaClienteID10;
+    public static String  getconsultaventaClienteRZ10;
+    public static Double  getconsultaventaMtoTotal10;
+    public static String  getconsultaventaAnulado10;
+
+
+    /**
      * URL - APIService
      */
     public static final String BASE_URL = "http://192.168.1.227:8081/";

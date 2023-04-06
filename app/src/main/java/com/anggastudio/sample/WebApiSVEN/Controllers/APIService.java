@@ -1,6 +1,7 @@
 package com.anggastudio.sample.WebApiSVEN.Controllers;
 
 import com.anggastudio.sample.Adapter.Grias;
+import com.anggastudio.sample.WebApiSVEN.Models.Anular;
 import com.anggastudio.sample.WebApiSVEN.Models.CDia;
 import com.anggastudio.sample.WebApiSVEN.Models.CTurno;
 import com.anggastudio.sample.WebApiSVEN.Models.Card;
@@ -222,5 +223,12 @@ public interface APIService {
 
     @GET("api/consultarventa/listado/{id}")
     Call<List<ListaComprobante>> findConsultarVenta(@Path("id") String id);
+
+    /**
+     * Anular
+     */
+    @POST("api/anular/anular/{tipodoc}/{seriedoc}/{nrodoc}/{anuladoid}")
+    Call<Anular> postAnular(@Path("tipodoc") String tipodoc,@Path("seriedoc") String seriedoc,@Path("nrodoc") String nrodoc,@Path("anuladoid") String anuladoid);
+
 
 }
