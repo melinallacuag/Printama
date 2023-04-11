@@ -15,6 +15,7 @@ import com.anggastudio.sample.WebApiSVEN.Models.ListaComprobante;
 import com.anggastudio.sample.WebApiSVEN.Models.Optran;
 import com.anggastudio.sample.WebApiSVEN.Models.Picos;
 import com.anggastudio.sample.WebApiSVEN.Models.Placa;
+import com.anggastudio.sample.WebApiSVEN.Models.Reimpresion;
 import com.anggastudio.sample.WebApiSVEN.Models.Setting;
 import com.anggastudio.sample.WebApiSVEN.Models.SettingTask;
 import com.anggastudio.sample.WebApiSVEN.Models.Terminal;
@@ -230,5 +231,11 @@ public interface APIService {
     @POST("api/anular/anular/{tipodoc}/{seriedoc}/{nrodoc}/{anuladoid}")
     Call<Anular> postAnular(@Path("tipodoc") String tipodoc,@Path("seriedoc") String seriedoc,@Path("nrodoc") String nrodoc,@Path("anuladoid") String anuladoid);
 
+    /**
+     * Reimprimir
+     */
+
+    @GET("api/reimpresion/listado/{tipodoc}/{seriedoc}/{nrodoc}")
+    Call<List<Reimpresion>> findReimpresion(@Path("tipodoc") String tipodoc, @Path("seriedoc") String seriedoc, @Path("nrodoc") String nrodoc);
 
 }

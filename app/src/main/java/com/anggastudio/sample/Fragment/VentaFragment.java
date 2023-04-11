@@ -1173,7 +1173,7 @@ public class VentaFragment extends Fragment{
 
         insertarDespacho();
 
-        timer.schedule(timerTask,2000,2000);
+        timer.schedule(timerTask,3000,3000);
 
     }
 
@@ -1913,13 +1913,20 @@ public class VentaFragment extends Fragment{
             printama.printTextln("Fecha - Hora : "+ _FechaDocumento + "  Turno: "+ _Turno,Printama.LEFT);
             printama.printTextln("Cajero       : "+ _Cajero , Printama.LEFT);
             printama.printTextln("Lado         : "+ _nroLado, Printama.LEFT);
-            printama.printTextln("Nro. PLaca   : "+ _NroPlaca, Printama.LEFT);
+
+            if (!_NroPlaca.isEmpty()) {
+                printama.printTextln("Nro. PLaca   : "+ _NroPlaca, Printama.LEFT);
+            }
 
             switch (_TipoDocumento) {
                 case "01" :
                     printama.printTextln("RUC          : "+ _ClienteID , Printama.LEFT);
                     printama.printTextln("Razon Social : "+ _ClienteRZ, Printama.LEFT);
-                    printama.printTextln("Dirección    : "+ _ClienteDR, Printama.LEFT);
+
+                    if (!_ClienteDR.isEmpty()) {
+                        printama.printTextln("Dirección    : "+ _ClienteDR, Printama.LEFT);
+                    }
+
                     break;
                 case "03" :
 
@@ -1928,7 +1935,11 @@ public class VentaFragment extends Fragment{
                     }else {
                         printama.printTextln("DNI          : "+ _ClienteID , Printama.LEFT);
                         printama.printTextln("Nombres      : "+ _ClienteRZ, Printama.LEFT);
-                        printama.printTextln("Dirección    : "+ _ClienteDR, Printama.LEFT);
+
+                        if (!_ClienteDR.isEmpty()) {
+                            printama.printTextln("Dirección    : "+ _ClienteDR, Printama.LEFT);
+                        }
+
                     }
                     break;
                 case "99" :
@@ -2240,17 +2251,17 @@ public class VentaFragment extends Fragment{
                     /** GRABAR VENTA EN BASE DE DATOS*/
 
                     grabarVentaCA(GlobalInfo.getterminalCompanyID10, mnTipoDocumento, GlobalInfo.getcorrelativoSerie, GlobalInfo.getcorrelativoNumero,
-                            GlobalInfo.getterminalID10, mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR,
-                            GlobalInfo.getterminalTurno10, GlobalInfo.getcorrelativoFecha, xFechaDocumento, GlobalInfo.getoptranFechaTran10,
-                            mnMtoDescuento, mnMtoSubTotal1, mnMtoImpuesto1, mnMtoTotal,
-                            mnNroPlaca, mnKilometraje, mnTipoVenta, mnObservacion, mnReferencia,
-                            mnTarjND, mnTarjetaPuntos, mnPtosGanados, mnPtosDisponibles,
-                            mnMtoCanje, GlobalInfo.getuserID10,
-                            mnItem, GlobalInfo.getoptranArticuloID10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10, GlobalInfo.getterminalAlmacenID10,
-                            GlobalInfo.getsettingImpuestoID110, GlobalInfo.getsettingImpuestoValor110, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
-                            mnFise, GlobalInfo.getoptranTranID10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10,
-                            mnobservacionDet,
-                            mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoTotal, mnmtoPagoUSD, mnobservacionPag);
+                                  GlobalInfo.getterminalID10, mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR,
+                                  GlobalInfo.getterminalTurno10, GlobalInfo.getcorrelativoFecha, xFechaDocumento, GlobalInfo.getoptranFechaTran10,
+                                  mnMtoDescuento, mnMtoSubTotal1, mnMtoImpuesto1, mnMtoTotal,
+                                  mnNroPlaca, mnKilometraje, mnTipoVenta, mnObservacion, mnReferencia,
+                                  mnTarjND, mnTarjetaPuntos, mnPtosGanados, mnPtosDisponibles,
+                                  mnMtoCanje, GlobalInfo.getuserID10,
+                                  mnItem, GlobalInfo.getoptranArticuloID10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10, GlobalInfo.getterminalAlmacenID10,
+                                  GlobalInfo.getsettingImpuestoID110, GlobalInfo.getsettingImpuestoValor110, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10,
+                                  mnFise, GlobalInfo.getoptranTranID10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranManguera10,
+                                  mnobservacionDet,
+                                  mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoTotal, mnmtoPagoUSD, mnobservacionPag);
 
                     /** FIN GRABAR VENTA EN BASE DE DATOS*/
 
@@ -2261,20 +2272,20 @@ public class VentaFragment extends Fragment{
                         for(int i = 0; i <= 1 ; i += 1){
 
                             imprimirGR10(mnTipoDocumento, NroComprobante, xFechaHoraImpresion, GlobalInfo.getterminalTurno10,
-                                    GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
-                                    GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
-                                    mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
-                                    mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoCanje, mnMtoDescuento);
+                                         GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
+                                         GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
+                                         mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
+                                         mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoCanje, mnMtoDescuento);
 
                         }
 
                     } else {
 
                         imprimirGR10(mnTipoDocumento, NroComprobante, xFechaHoraImpresion, GlobalInfo.getterminalTurno10,
-                                GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
-                                GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
-                                mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
-                                mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoCanje, mnMtoDescuento);
+                                     GlobalInfo.getuserName10, GlobalInfo.getoptranNroLado10, GlobalInfo.getoptranProductoDs10, GlobalInfo.getoptranUniMed10,
+                                     GlobalInfo.getoptranPrecio10, GlobalInfo.getoptranGalones10, mnMtoTotal, mnMtoSubTotal1, mnMtoImpuesto1,
+                                     mnClienteID, mnClienteRUC, mnClienteRS, mnCliernteDR, mnNroPlaca, xFechaDocumentoQR,
+                                     mnPagoID, mnTarjetaCreditoID, mnOperacionREF, mnMtoCanje, mnMtoDescuento);
 
                     }
 
@@ -2533,7 +2544,7 @@ public class VentaFragment extends Fragment{
 
                         if (!mnClienteID.equals(GlobalInfo.getsettingClienteID10)) {
 
-                            if (GlobalInfo.getdescuentoArticuloID10.equals(GlobalInfo.getoptranArticuloID10) && GlobalInfo.getoptranSoles10 >= 70.00) {
+                            if (GlobalInfo.getoptranArticuloID10.equals("05") && GlobalInfo.getoptranSoles10 >= 70.00) {
 
                                 if (mnTipoDocumento == "98") {
 
@@ -2569,7 +2580,115 @@ public class VentaFragment extends Fragment{
 
                                 }
 
-                            } else {
+                            } else if (GlobalInfo.getoptranArticuloID10.equals("92") && GlobalInfo.getoptranSoles10 >= 50.00) {
+
+                                if (mnTipoDocumento == "98") {
+
+                                    mnMtoTotal = GlobalInfo.getoptranSoles10;
+                                    mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                                    mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                                    mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                                    mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                                    mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                                    mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                                    mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+
+                                } else {
+
+                                    mnMtoDescuentoUnitario = 0.20;
+
+                                    mnMtoDescuento0 = mnMtoDescuentoUnitario * GlobalInfo.getoptranGalones10;
+                                    mnMtoDescuento1 = Math.round(mnMtoDescuento0*100.0)/100.0;
+                                    mnMtoDescuento2 = String.format("%.2f",mnMtoDescuento1);
+
+                                    mnMtoTotal = GlobalInfo.getoptranSoles10 - mnMtoDescuento1;
+                                    mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                                    mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                                    mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                                    mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                                    mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                                    mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                                    mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+
+                                }
+
+                            } else if (GlobalInfo.getoptranArticuloID10.equals("93") && GlobalInfo.getoptranSoles10 >= 9999.00) {
+
+                                if (mnTipoDocumento == "98") {
+
+                                    mnMtoTotal = GlobalInfo.getoptranSoles10;
+                                    mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                                    mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                                    mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                                    mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                                    mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                                    mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                                    mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+
+                                } else {
+
+                                    mnMtoDescuentoUnitario = 0.20;
+
+                                    mnMtoDescuento0 = mnMtoDescuentoUnitario * GlobalInfo.getoptranGalones10;
+                                    mnMtoDescuento1 = Math.round(mnMtoDescuento0*100.0)/100.0;
+                                    mnMtoDescuento2 = String.format("%.2f",mnMtoDescuento1);
+
+                                    mnMtoTotal = GlobalInfo.getoptranSoles10 - mnMtoDescuento1;
+                                    mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                                    mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                                    mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                                    mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                                    mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                                    mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                                    mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+
+                                }
+
+                            } else if (GlobalInfo.getoptranArticuloID10.equals("07") && GlobalInfo.getoptranSoles10 >= 30.00) {
+
+                                if (mnTipoDocumento == "98") {
+
+                                    mnMtoTotal = GlobalInfo.getoptranSoles10;
+                                    mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                                    mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                                    mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                                    mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                                    mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                                    mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                                    mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+
+                                } else {
+
+                                    mnMtoDescuentoUnitario = 0.10;
+
+                                    mnMtoDescuento0 = mnMtoDescuentoUnitario * GlobalInfo.getoptranGalones10;
+                                    mnMtoDescuento1 = Math.round(mnMtoDescuento0*100.0)/100.0;
+                                    mnMtoDescuento2 = String.format("%.2f",mnMtoDescuento1);
+
+                                    mnMtoTotal = GlobalInfo.getoptranSoles10 - mnMtoDescuento1;
+                                    mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
+
+                                    mnMtoSubTotal0 = mnMtoTotal / 1.18;
+                                    mnMtoSubTotal1 = Math.round(mnMtoSubTotal0*100.0)/100.0;
+                                    mnMtoSubTotal2 = String.format("%.2f",mnMtoSubTotal1);
+
+                                    mnMtoImpuesto0 = mnMtoTotal - mnMtoSubTotal1;
+                                    mnMtoImpuesto1 = Math.round(mnMtoImpuesto0*100.0)/100.0;
+                                    mnMtoImpuesto2 = String.format("%.2f",mnMtoImpuesto1);
+
+                                }
+
+                            }else {
 
                                 mnMtoTotal = GlobalInfo.getoptranSoles10;
                                 mnMtoTotal2 = String.format("%.2f",mnMtoTotal);
